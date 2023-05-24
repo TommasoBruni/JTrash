@@ -1,20 +1,17 @@
 package eu.uniroma1.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Frame;
-
-import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
+import eu.uniroma1.controller.Controller;
 
 /**
  * Classe per creare il frame di gioco
  */
 public class FrameDiGioco extends JFrame
-{	
+{
+	private Controller controller;
+	
 	/**
 	 * Costruttore frame di gioco 
 	 */
@@ -23,6 +20,7 @@ public class FrameDiGioco extends JFrame
 		/* Imposta il nome al frame */
 		super("JTrash");
 		Integer[] possibileNumeroGiocatori = { 2, 3, 4 };
+		controller = new Controller();
 		
 		/* Imposta una grandezza iniziale */
 		setSize(800, 500);
@@ -46,5 +44,6 @@ public class FrameDiGioco extends JFrame
         
         if (numeroGiocatori < 0)
         	System.exit(0);
+        controller.aggiornaNumeroGiocatori(numeroGiocatori);
 	}
 }

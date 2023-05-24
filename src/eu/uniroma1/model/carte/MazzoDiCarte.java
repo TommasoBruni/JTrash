@@ -12,7 +12,7 @@ public class MazzoDiCarte implements Iterable<Carte>
 		mazzo = Carte.values();
 	}
 	
-	public void shuffle()
+	public void mischia()
 	{
 		Random random=new Random();
 		int j;
@@ -26,7 +26,15 @@ public class MazzoDiCarte implements Iterable<Carte>
 			mazzo[j] = tmp;
 		}
 	}
-
+	
+	public void combina(MazzoDiCarte nuovoMazzo)
+	{
+	    Carte[] result = Arrays.copyOf(mazzo, mazzo.length + nuovoMazzo.mazzo.length);
+	    
+	    System.arraycopy(nuovoMazzo.mazzo, 0, result, mazzo.length, nuovoMazzo.mazzo.length);
+	    nuovoMazzo.mazzo = result;		
+	}
+	
 	@Override
 	public Iterator<Carte> iterator() 
 	{
