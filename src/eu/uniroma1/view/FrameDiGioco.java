@@ -1,9 +1,13 @@
 package eu.uniroma1.view;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.beans.PropertyVetoException;
+import java.util.Timer;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import eu.uniroma1.controller.Controller;
 
@@ -13,17 +17,38 @@ import eu.uniroma1.controller.Controller;
 public class FrameDiGioco extends JFrame
 {
 	private Controller controller;
+	private JLabel pippo;
+	private JLabel pippo2;
 	
 	private static void setupPerInserimentoDati(FrameDiGioco frameDiGioco)
 	{
-		JDesktopPane desktop;
-        FrameInserimentoDati frame = new FrameInserimentoDati(frameDiGioco.controller);
-        frame.setVisible(true);        
-		
-		desktop = new JDesktopPane();
-		frameDiGioco.setContentPane(desktop);
+		JDesktopPane desktop = new JDesktopPane();
 		desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-		desktop.add(frame);
+        FrameInserimentoDati frame = new FrameInserimentoDati(frameDiGioco.controller, desktop, frameDiGioco);
+        frame.setVisible(true);        
+        
+		frameDiGioco.setContentPane(desktop);
+		desktop.add(frame, BorderLayout.CENTER);
+	}
+	
+	public void mostraInserimentoNumeroGiocatori()
+	{
+		Integer[] possibileNumeroGiocatori = { 2, 3, 4 };
+        int numeroGiocatori = JOptionPane.showOptionDialog(this, "Numero giocatori:",
+                "Inserimento numero giocatori",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, possibileNumeroGiocatori,
+                possibileNumeroGiocatori[0]);
+        
+        if (numeroGiocatori < 0)
+        	System.exit(0);
+        setupPerInserimentoDati(this);
+        controller.aggiornaNumeroGiocatori(numeroGiocatori + 2);
+	}
+	
+	public void setBorderLayout()
+	{
+		setLayout(new BorderLayout());
+		add(pippo, BorderLayout.LINE_START);
 	}
 	
 	/**
@@ -33,9 +58,9 @@ public class FrameDiGioco extends JFrame
 	{
 		/* Imposta il nome al frame */
 		super("JTrash");
-		Integer[] possibileNumeroGiocatori = { 2, 3, 4 };
 		controller = new Controller();
-
+		pippo = new JLabel("Ciaooo");
+		pippo2 = new JLabel("Ciaooo");
 		
 		/* Imposta una grandezza iniziale */
 		setSize(800, 500);
@@ -46,20 +71,10 @@ public class FrameDiGioco extends JFrame
 		/* Imposta il fatto di chiudere l'applicazione quando viene chiuso il frame */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		/* Imposta il layout */
-		setLayout(new BorderLayout());
+		/* Il layout si imposta in seguito */
 		
 		/* Imposta il frame visibile */
 		setVisible(true);
-		
-        int numeroGiocatori = JOptionPane.showOptionDialog(this, "Numero giocatori:",
-                "Inserimento numero giocatori",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, possibileNumeroGiocatori,
-                possibileNumeroGiocatori[0]);
-        
-        if (numeroGiocatori < 0)
-        	System.exit(0);
-        controller.aggiornaNumeroGiocatori(numeroGiocatori);
-        setupPerInserimentoDati(this);
+		mostraInserimentoNumeroGiocatori();
 	}
 }
