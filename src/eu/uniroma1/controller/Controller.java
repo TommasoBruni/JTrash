@@ -1,5 +1,7 @@
 package eu.uniroma1.controller;
 
+import java.util.List;
+
 import javax.swing.Icon;
 
 import eu.uniroma1.model.Database;
@@ -28,6 +30,11 @@ public class Controller
 	public void aggiungiGiocatore(String nomeGiocatore, String nickname, Icon avatar)
 	{
 		databaseGicoatori.add(new Giocatore(nomeGiocatore, nickname, avatar));
+	}
+	
+	public List<Giocatore> getListaGiocatori()
+	{
+		return databaseGicoatori.getGiocatori();
 	}
 	
 	public Controller()

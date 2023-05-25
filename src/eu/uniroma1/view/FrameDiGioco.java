@@ -1,14 +1,14 @@
 package eu.uniroma1.view;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.beans.PropertyVetoException;
-import java.util.Timer;
+import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import eu.uniroma1.controller.Controller;
 
 /**
@@ -17,17 +17,16 @@ import eu.uniroma1.controller.Controller;
 public class FrameDiGioco extends JFrame
 {
 	private Controller controller;
-	private JLabel pippo;
-	private JLabel pippo2;
+	private PannelloGiocatore pannelloGiocatore;
 	
-	private static void setupPerInserimentoDati(FrameDiGioco frameDiGioco)
+	private void setupPerInserimentoDati()
 	{
 		JDesktopPane desktop = new JDesktopPane();
 		desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-        FrameInserimentoDati frame = new FrameInserimentoDati(frameDiGioco.controller, desktop, frameDiGioco);
+        FrameInserimentoDati frame = new FrameInserimentoDati(controller, desktop, this);
         frame.setVisible(true);        
         
-		frameDiGioco.setContentPane(desktop);
+		setContentPane(desktop);
 		desktop.add(frame, BorderLayout.CENTER);
 	}
 	
@@ -41,26 +40,28 @@ public class FrameDiGioco extends JFrame
         
         if (numeroGiocatori < 0)
         	System.exit(0);
-        setupPerInserimentoDati(this);
+        /* Sono consecutivi */
+        setupPerInserimentoDati();
+        /* +2 perché il metodo sopra restituisce l'indice all'interno dell'array */
         controller.aggiornaNumeroGiocatori(numeroGiocatori + 2);
 	}
 	
 	public void setBorderLayout()
 	{
 		setLayout(new BorderLayout());
-		add(pippo, BorderLayout.LINE_START);
+		revalidate();
+		repaint();
 	}
 	
 	/**
-	 * Costruttore frame di gioco 
+	 * Costruttore frame di gioco
 	 */
 	public FrameDiGioco()
 	{
 		/* Imposta il nome al frame */
 		super("JTrash");
 		controller = new Controller();
-		pippo = new JLabel("Ciaooo");
-		pippo2 = new JLabel("Ciaooo");
+		pannelloGiocatore = new PannelloGiocatore();
 		
 		/* Imposta una grandezza iniziale */
 		setSize(800, 500);
@@ -72,9 +73,16 @@ public class FrameDiGioco extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		/* Il layout si imposta in seguito */
+		setBorderLayout();
+		add(pannelloGiocatore, BorderLayout.PAGE_END);
 		
 		/* Imposta il frame visibile */
+		
 		setVisible(true);
+		/*
 		mostraInserimentoNumeroGiocatori();
+		
+		pannelloGiocatore = new PannelloGiocatore();
+		*/
 	}
 }

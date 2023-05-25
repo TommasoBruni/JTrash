@@ -2,6 +2,7 @@ package eu.uniroma1.view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -52,7 +54,10 @@ public class FrameInserimentoDati extends JInternalFrame
 				
 				/* Si controlla che non siano vuoti e che non contengano solamente spazi vuoti */
 				if (nomeUtente.isBlank() || nickname.isBlank())
+				{
+					JOptionPane.showMessageDialog(new JFrame(), "Inserire dati validi!", "Errore inserimento dati", JOptionPane.OK_OPTION);
 					return;
+				}
 				controller.aggiungiGiocatore(nomeUtente, nickname, null);
 				/* Rimuove esattamente questa finestra */
 				parentDesktop.getComponent(0).setVisible(false);
@@ -68,8 +73,6 @@ public class FrameInserimentoDati extends JInternalFrame
 				frameParent.mostraInserimentoNumeroGiocatori();				
 			}
 		});
-		
-		buttonAnnulla.addActionListener(null);
 
 		setSize(200, 175);
 		setLocation(300, 150);

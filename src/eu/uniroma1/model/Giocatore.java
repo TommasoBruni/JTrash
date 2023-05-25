@@ -16,6 +16,54 @@ public class Giocatore
 		this.nome = nome;
 		this.nickname = nickname;
 		this.avatar = avatar;
-		livello = Livello.PRINCIPIANTE;
+		this.livello = Livello.PRINCIPIANTE;
+	}
+
+	public Livello getLivello() {
+		return livello;
+	}
+
+	public void setLivello(Livello livello) {
+		this.livello = livello;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public long getPartiteVinte() {
+		return partiteVinte;
+	}
+
+	public void setPartiteVinte(long partiteVinte) {
+		this.partiteVinte = partiteVinte;
+	}
+
+	public long getPartitePerse() {
+		return partitePerse;
+	}
+
+	public void setPartitePerse(long partitePerse) {
+		this.partitePerse = partitePerse;
+	}
+
+	public Icon getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(Icon avatar) {
+		this.avatar = avatar;
 	}
 }
