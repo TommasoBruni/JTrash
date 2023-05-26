@@ -17,7 +17,11 @@ import eu.uniroma1.controller.Controller;
 public class FrameDiGioco extends JFrame
 {
 	private Controller controller;
-	private PannelloGiocatore pannelloGiocatore;
+	private PannelloGiocatore pannelloGiocatorePrincipale;
+	private PannelloGiocatore pannelloGiocatoreRobotDx;
+	private PannelloGiocatore pannelloGiocatoreRobotSx;
+	private PannelloGiocatore pannelloGiocatoreRobotDiFronte;
+	private PannelloMazzoDiCarte pannelloMazzoDiCarte;
 	
 	private void setupPerInserimentoDati()
 	{
@@ -61,7 +65,11 @@ public class FrameDiGioco extends JFrame
 		/* Imposta il nome al frame */
 		super("JTrash");
 		controller = new Controller();
-		pannelloGiocatore = new PannelloGiocatore();
+		pannelloGiocatorePrincipale = new PannelloGiocatore();
+		pannelloGiocatoreRobotDiFronte = new PannelloGiocatore();
+		pannelloGiocatoreRobotDx = new PannelloGiocatore();
+		pannelloGiocatoreRobotSx = new PannelloGiocatore();
+		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
 		
 		/* Imposta una grandezza iniziale */
 		setSize(800, 500);
@@ -74,12 +82,17 @@ public class FrameDiGioco extends JFrame
 		
 		/* Il layout si imposta in seguito */
 		setBorderLayout();
-		add(pannelloGiocatore, BorderLayout.PAGE_END);
+		add(pannelloGiocatorePrincipale, BorderLayout.PAGE_END);
+		add(pannelloGiocatoreRobotDiFronte, BorderLayout.PAGE_START);
+		add(pannelloGiocatoreRobotDx, BorderLayout.LINE_END);
+		add(pannelloGiocatoreRobotSx, BorderLayout.LINE_START);
+		add(pannelloMazzoDiCarte, BorderLayout.CENTER);
 		
 		/* Imposta il frame visibile */
 		
 		setVisible(true);
-		/*
+		/* TODO: aggiungere questo prima di mostrare il campo da gioco
+		  
 		mostraInserimentoNumeroGiocatori();
 		
 		pannelloGiocatore = new PannelloGiocatore();
