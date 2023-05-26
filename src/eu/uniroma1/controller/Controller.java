@@ -9,8 +9,8 @@ import eu.uniroma1.model.Giocatore;
 
 public class Controller 
 {
-	private int numeroGiocatori;
-	private Database databaseGicoatori;
+	private int numeroGiocatoriInPartita;
+	private Database databaseGiocatori;
 	
 	/**
 	 * Aggiorna i giocatori che attualmente stanno giocando (2, 3 o 4) 
@@ -18,7 +18,16 @@ public class Controller
 	 */
 	public void aggiornaNumeroGiocatori(int nGiocatori)
 	{
-		numeroGiocatori = nGiocatori;
+		numeroGiocatoriInPartita = nGiocatori;
+	}
+	
+	/**
+	 * Restituisce il numero di giocatori in partita
+	 * @return numero giocatori attualmente in partita 
+	 */
+	public int getNumeroGiocatoriInPartita()
+	{
+		return numeroGiocatoriInPartita;
 	}
 	
 	/**
@@ -29,16 +38,25 @@ public class Controller
 	 */
 	public void aggiungiGiocatore(String nomeGiocatore, String nickname, Icon avatar)
 	{
-		databaseGicoatori.add(new Giocatore(nomeGiocatore, nickname, avatar));
+		databaseGiocatori.add(new Giocatore(nomeGiocatore, nickname, avatar));
+	}
+	
+	/**
+	 * Ritorna il nome dell'ultimo giocatore, ovvero quello che sta giocando
+	 * @return Nome ultimo giocatore 
+	 */
+	public String getNomeUltimoGiocatore()
+	{
+		return databaseGiocatori.getGiocatori().get(databaseGiocatori.getGiocatori().size() - 1).getNome();
 	}
 	
 	public List<Giocatore> getListaGiocatori()
 	{
-		return databaseGicoatori.getGiocatori();
+		return databaseGiocatori.getGiocatori();
 	}
 	
 	public Controller()
 	{
-		databaseGicoatori = new Database();
+		databaseGiocatori = new Database();
 	}
 }

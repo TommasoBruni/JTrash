@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
-import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,13 +25,19 @@ public class FrameDiGioco extends JFrame
 	
 	private void setupPerInserimentoDati()
 	{
-		JDesktopPane desktop = new JDesktopPane();
-		desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-        FrameInserimentoDati frame = new FrameInserimentoDati(controller, desktop, this);
+		JPanel pannelloPerInternalFrame = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.CENTER;
+        FrameInserimentoDati frame = new FrameInserimentoDati(controller, pannelloPerInternalFrame, this);
         frame.setVisible(true);        
         
-		setContentPane(desktop);
-		desktop.add(frame, BorderLayout.CENTER);
+        pannelloPerInternalFrame.add(frame, gbc);
+        add(pannelloPerInternalFrame);
 	}
 	
 	public void mostraInserimentoNumeroGiocatori()
@@ -48,18 +52,66 @@ public class FrameDiGioco extends JFrame
         	System.exit(0);
         /* Sono consecutivi */
         setupPerInserimentoDati();
-        /* +2 perché il metodo sopra restituisce l'indice all'interno dell'array */
-        controller.aggiornaNumeroGiocatori(numeroGiocatori + 2);
-	}
-	
-	public void setBorderLayout()
-	{
-		setLayout(new BorderLayout());
+        controller.aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
 	}
 	
 	public void setGridBagLayout()
 	{
 		setLayout(new GridBagLayout());
+	}
+	
+	public void impostaCampoDiGioco()
+	{
+		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
+		pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore());
+		pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco");
+		pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca");
+		pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo");
+		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		setGridBagLayout();
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.anchor = GridBagConstraints.PAGE_END;
+		add(pannelloGiocatorePrincipale, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.PAGE_START;
+		add(pannelloGiocatoreRobotDiFronte, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		add(pannelloMazzoDiCarte, gbc);
+		
+		if (controller.getNumeroGiocatoriInPartita() > 2)
+		{
+			gbc.gridx = 0;
+			gbc.gridy = 1;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+			gbc.anchor = GridBagConstraints.LINE_END;
+			add(pannelloGiocatoreRobotDx, gbc);
+		}
+		
+		if (controller.getNumeroGiocatoriInPartita() > 3)
+		{		
+			gbc.gridx = 0;
+			gbc.gridy = 1;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+			gbc.anchor = GridBagConstraints.LINE_START;
+			add(pannelloGiocatoreRobotSx, gbc);
+		}
 	}
 	
 	/**
@@ -70,12 +122,6 @@ public class FrameDiGioco extends JFrame
 		/* Imposta il nome al frame */
 		super("JTrash");
 		controller = new Controller();
-		pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale();
-		pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale();
-		pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale();
-		pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale();
-		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
-		GridBagConstraints gbc = new GridBagConstraints();
 		
 		/* Imposta una grandezza iniziale */
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -87,54 +133,11 @@ public class FrameDiGioco extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		/* Il layout si imposta in seguito */
-		//setBorderLayout();
-		
-		setGridBagLayout();
-		/*
-		add(pannelloGiocatorePrincipale, BorderLayout.PAGE_END);
-		add(pannelloGiocatoreRobotDiFronte, BorderLayout.PAGE_START);
-		add(pannelloGiocatoreRobotDx, BorderLayout.LINE_END);
-		add(pannelloGiocatoreRobotSx, BorderLayout.LINE_START);
-		add(pannelloMazzoDiCarte, BorderLayout.CENTER);
-		*/
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.anchor = GridBagConstraints.PAGE_END;
-		add(pannelloGiocatorePrincipale, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.PAGE_START;
-		add(pannelloGiocatoreRobotDiFronte, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.LINE_END;
-		add(pannelloGiocatoreRobotDx, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		add(pannelloGiocatoreRobotSx, gbc);
-		
-		//add(pannelloGiocatoreRobotDx, BorderLayout.LINE_END);
-		//add(pannelloGiocatoreRobotSx, BorderLayout.LINE_START);
-		//add(pannelloMazzoDiCarte, BorderLayout.CENTER);
 		
 		/* Imposta il frame visibile */
-		
 		setVisible(true);
-		/* TODO: aggiungere questo prima di mostrare il campo da gioco
-		  
-		mostraInserimentoNumeroGiocatori();
+		AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
 		
-		pannelloGiocatore = new PannelloGiocatore();
-		*/
+		mostraInserimentoNumeroGiocatori();
 	}
 }

@@ -18,15 +18,17 @@ public abstract class PannelloGiocatore extends JPanel
 	private JButton[] carte;
 	private Timer animationTimer;
 	private static int velocitaAnimazioneMS = 12;
+	private String nomeGiocatore;
 	
-	public PannelloGiocatore(String fileName, int larghezzaCarta, int altezzaCarta,
+	public PannelloGiocatore(String nomeGiocatore, String fileName, int larghezzaCarta, int altezzaCarta,
 							 int numeroColonne, int numeroRighe, int gapVerticale, int gapOrizzontale)
 	{
+		this.nomeGiocatore = nomeGiocatore;
 		animationTimer = new Timer();
 		int i;
 		boolean isLarger = larghezzaCarta > altezzaCarta;
 		ImageIcon icon;
-		Border bordoInterno = BorderFactory.createTitledBorder("Player");
+		Border bordoInterno = BorderFactory.createTitledBorder(this.nomeGiocatore);
 		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 0, 0, 0);
 		Border bordoComposto = BorderFactory.createCompoundBorder(bordoEsterno, bordoInterno);
 		JPanel pannelloCarteSuperiori = new JPanel();
@@ -39,6 +41,8 @@ public abstract class PannelloGiocatore extends JPanel
 		
 		setBorder(bordoComposto);
 		setLayout(new GridBagLayout());
+		
+		setPreferredSize(new Dimension(600, 600));
 		
 		carte = new JButton[10];
 		
@@ -67,6 +71,7 @@ public abstract class PannelloGiocatore extends JPanel
 			carte[i].setPreferredSize(new Dimension(larghezzaCarta, altezzaCarta));
 			pannelloCarteInferiori.add(carte[i]);
 		}
+
 		if (isLarger)
 			gbc.insets = new Insets(0, 0, 0, 10);
 		else

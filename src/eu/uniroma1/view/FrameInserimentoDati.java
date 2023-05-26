@@ -2,6 +2,7 @@ package eu.uniroma1.view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -29,7 +31,7 @@ public class FrameInserimentoDati extends JInternalFrame
 	private JButton buttonOk;
 	private JButton buttonAnnulla;
 	
-	public FrameInserimentoDati(Controller controller, JDesktopPane parentDesktop, FrameDiGioco frameParent)
+	public FrameInserimentoDati(Controller controller, Container parentComponent, FrameDiGioco frameParent)
 	{
 		super("Inserimento dati",
 		          false, //resizable
@@ -60,8 +62,8 @@ public class FrameInserimentoDati extends JInternalFrame
 				}
 				controller.aggiungiGiocatore(nomeUtente, nickname, null);
 				/* Rimuove esattamente questa finestra */
-				parentDesktop.getComponent(0).setVisible(false);
-				frameParent.setBorderLayout();
+				parentComponent.getComponent(0).setVisible(false);
+				frameParent.impostaCampoDiGioco();
 			}
 		});
 		
@@ -69,13 +71,12 @@ public class FrameInserimentoDati extends JInternalFrame
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				/* Rimuove esattamente questa finestra */
-				parentDesktop.getComponent(0).setVisible(false);
+				parentComponent.getComponent(0).setVisible(false);
 				frameParent.mostraInserimentoNumeroGiocatori();				
 			}
 		});
-
-		setSize(200, 175);
-		setLocation(300, 150);
+		
+		setPreferredSize(new Dimension(200, 175));
 		
 		pannelloContenitore.add(labelNomeUtente);
 		pannelloContenitore.add(textFieldNomeUtente);

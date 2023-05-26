@@ -24,7 +24,7 @@ public class PannelloMazzoDiCarte extends JPanel
 		try
 		{
 			/* Leggo l'immagine salvata nella directory "resources" dentro il progetto */
-			icon = new ImageIcon(System.getProperty("user.dir").concat("\\resources\\carta_da_gioco.jpg"));
+			icon = new ImageIcon(System.getProperty("user.dir").concat("\\resources\\carta_da_gioco_verticale.jpg"));
 		} 
 		catch (Exception ex) 
 		{

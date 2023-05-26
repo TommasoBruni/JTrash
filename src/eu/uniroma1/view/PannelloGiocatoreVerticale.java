@@ -26,8 +26,8 @@ public class PannelloGiocatoreVerticale extends PannelloGiocatore
 	private static final int gapVerticale = 0;
 	private static final int gapOrizzontale = 50;
 	
-	public PannelloGiocatoreVerticale()
+	public PannelloGiocatoreVerticale(String nomeGiocatore)
 	{
-		super(nomeFile, larghezzaCarta, altezzaCarta, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale);
+		super(nomeGiocatore, nomeFile, larghezzaCarta, altezzaCarta, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale);
 	}
 }
