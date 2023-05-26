@@ -3,6 +3,8 @@ package eu.uniroma1.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -53,8 +55,11 @@ public class FrameDiGioco extends JFrame
 	public void setBorderLayout()
 	{
 		setLayout(new BorderLayout());
-		revalidate();
-		repaint();
+	}
+	
+	public void setGridBagLayout()
+	{
+		setLayout(new GridBagLayout());
 	}
 	
 	/**
@@ -65,28 +70,62 @@ public class FrameDiGioco extends JFrame
 		/* Imposta il nome al frame */
 		super("JTrash");
 		controller = new Controller();
-		pannelloGiocatorePrincipale = new PannelloGiocatore();
-		pannelloGiocatoreRobotDiFronte = new PannelloGiocatore();
-		pannelloGiocatoreRobotDx = new PannelloGiocatore();
-		pannelloGiocatoreRobotSx = new PannelloGiocatore();
+		pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale();
+		pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale();
+		pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale();
+		pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale();
 		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
+		GridBagConstraints gbc = new GridBagConstraints();
 		
 		/* Imposta una grandezza iniziale */
-		setSize(800, 500);
-		
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		/* Imposta a 200 pixel dal lato sinistro e 200 dall'alto */
-		setLocation(200, 200);
+		setLocation(0, 0);
 		
 		/* Imposta il fatto di chiudere l'applicazione quando viene chiuso il frame */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		/* Il layout si imposta in seguito */
-		setBorderLayout();
+		//setBorderLayout();
+		
+		setGridBagLayout();
+		/*
 		add(pannelloGiocatorePrincipale, BorderLayout.PAGE_END);
 		add(pannelloGiocatoreRobotDiFronte, BorderLayout.PAGE_START);
 		add(pannelloGiocatoreRobotDx, BorderLayout.LINE_END);
 		add(pannelloGiocatoreRobotSx, BorderLayout.LINE_START);
 		add(pannelloMazzoDiCarte, BorderLayout.CENTER);
+		*/
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.anchor = GridBagConstraints.PAGE_END;
+		add(pannelloGiocatorePrincipale, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.PAGE_START;
+		add(pannelloGiocatoreRobotDiFronte, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.LINE_END;
+		add(pannelloGiocatoreRobotDx, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.LINE_START;
+		add(pannelloGiocatoreRobotSx, gbc);
+		
+		//add(pannelloGiocatoreRobotDx, BorderLayout.LINE_END);
+		//add(pannelloGiocatoreRobotSx, BorderLayout.LINE_START);
+		//add(pannelloMazzoDiCarte, BorderLayout.CENTER);
 		
 		/* Imposta il frame visibile */
 		
