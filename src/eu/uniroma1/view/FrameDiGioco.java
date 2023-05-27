@@ -34,7 +34,7 @@ public class FrameDiGioco extends JFrame
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
         FrameInserimentoDati frame = new FrameInserimentoDati(controller, pannelloPerInternalFrame, this);
-        frame.setVisible(true);        
+        frame.setVisible(true);
         
         pannelloPerInternalFrame.add(frame, gbc);
         add(pannelloPerInternalFrame);
@@ -62,6 +62,7 @@ public class FrameDiGioco extends JFrame
 	
 	public void impostaCampoDiGioco()
 	{
+		PannelloAnimazione pannelloAnimazione;
 		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
 		pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore());
 		pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco");
@@ -70,8 +71,26 @@ public class FrameDiGioco extends JFrame
 		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		setGridBagLayout();
-
+		//setGridBagLayout();
+		
+		/*
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		*/
+		pannelloAnimazione = new PannelloAnimazione();
+		add(pannelloAnimazione);
+		/*
+		// Inserisco il mazzo
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		add(pannelloMazzoDiCarte, gbc);
+		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.weightx = 1;
@@ -85,13 +104,6 @@ public class FrameDiGioco extends JFrame
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.PAGE_START;
 		add(pannelloGiocatoreRobotDiFronte, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		add(pannelloMazzoDiCarte, gbc);
 		
 		if (controller.getNumeroGiocatoriInPartita() > 2)
 		{
@@ -112,6 +124,7 @@ public class FrameDiGioco extends JFrame
 			gbc.anchor = GridBagConstraints.LINE_START;
 			add(pannelloGiocatoreRobotSx, gbc);
 		}
+		*/
 	}
 	
 	/**
@@ -136,7 +149,7 @@ public class FrameDiGioco extends JFrame
 		
 		/* Imposta il frame visibile */
 		setVisible(true);
-		AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
+		//AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
 		
 		mostraInserimentoNumeroGiocatori();
 	}

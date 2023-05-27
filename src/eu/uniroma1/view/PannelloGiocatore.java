@@ -1,11 +1,15 @@
 package eu.uniroma1.view;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.util.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -19,12 +23,13 @@ public abstract class PannelloGiocatore extends JPanel
 	private Timer animationTimer;
 	private static int velocitaAnimazioneMS = 12;
 	private String nomeGiocatore;
+	private ImageIcon icon;
 	
 	public PannelloGiocatore(String nomeGiocatore, String fileName, int larghezzaCarta, int altezzaCarta,
 							 int numeroColonne, int numeroRighe, int gapVerticale, int gapOrizzontale)
 	{
 		this.nomeGiocatore = nomeGiocatore;
-		animationTimer = new Timer();
+		//animationTimer = new Timer();
 		int i;
 		boolean isLarger = larghezzaCarta > altezzaCarta;
 		ImageIcon icon;
@@ -95,17 +100,5 @@ public abstract class PannelloGiocatore extends JPanel
 		    gbc.gridy = 1;
 		}
 		add(pannelloCarteInferiori, gbc);
-		/* TODO: aggiungere animazione per distribuire carte
-		animationTimer.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				int x = carte[1].getLocation().x - 5;
-				int y = carte[1].getLocation().y - 5;
-				
-				carte[1].setLocation(x, y);
-			}
-		}, 0, velocitaAnimazioneMS);
-		*/
 	}
 }
