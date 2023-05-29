@@ -18,8 +18,12 @@ public class DialogSelezioneAvatar extends JDialog
 {
     private String selectedAvatar;
     private ImageIcon[] avatarArray;
-    private JLabel avatarLabel1;
+    private JButton avatarButton;
     private int indiceIcone;
+    private String[] pathsOfAvatars = new String[] {
+    		System.getProperty("user.dir").concat("\\resources\\avatar_numero1.png"),
+    		System.getProperty("user.dir").concat("\\resources\\avatar_numero2.png")
+    };
 
     public DialogSelezioneAvatar(Frame parent) 
     {
@@ -38,15 +42,27 @@ public class DialogSelezioneAvatar extends JDialog
         scorriASinistra.setBackground(Color.ORANGE);
         setBackground(Color.WHITE);
         //setMinimumSize(new Dimension(300, 300));
-        avatarLabel1 = new JLabel(avatarArray[indiceIcone]);
-        avatarLabel1.addMouseListener(new AvatarSelectionListener(System.getProperty("user.dir").concat("\\resources\\avatar_numero1.png")));
+        avatarButton = new JButton(avatarArray[indiceIcone]);
+		avatarButton.setPreferredSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+		avatarButton.setMaximumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+		avatarButton.setMinimumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+        avatarButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				selectedAvatar = pathsOfAvatars[indiceIcone];
+				dispose();
+			}
+		});
+        //avatarLabel1.addMouseListener(new AvatarSelectionListener(System.getProperty("user.dir").concat("\\resources\\avatar_numero1.png")));
         
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
-        panel.add(avatarLabel1, gbc);
+        panel.add(avatarButton, gbc);
 
         JButton cancelButton = new JButton("Annulla");
         cancelButton.addActionListener(new ActionListener() {
@@ -63,18 +79,27 @@ public class DialogSelezioneAvatar extends JDialog
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (indiceIcone + 1 < avatarArray.length)
-					avatarLabel1.setIcon(avatarArray[++indiceIcone]);
+				{
+					avatarButton.setIcon(avatarArray[++indiceIcone]);
+					avatarButton.setPreferredSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+					avatarButton.setMaximumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+					avatarButton.setMinimumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+				}
 				pack();
 			}
 		});
         
         scorriADestra.setPreferredSize(new Dimension(50, 50));
         scorriASinistra.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (indiceIcone - 1 >= 0)
-					avatarLabel1.setIcon(avatarArray[--indiceIcone]);
+				{
+					avatarButton.setIcon(avatarArray[--indiceIcone]);
+					avatarButton.setPreferredSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+					avatarButton.setMaximumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+					avatarButton.setMinimumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+				}
 				pack();
 			}
 		});
@@ -99,9 +124,9 @@ public class DialogSelezioneAvatar extends JDialog
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.anchor = GridBagConstraints.PAGE_END;
-		gbc.insets = new Insets(10, 0, 0, 0);
+		//gbc.insets = new Insets(10, 0, 0, 0);
 		gbc.ipadx = 50;
-		gbc.ipady = 20;
+		gbc.ipady = 10;
         panel.add(cancelButton, gbc);
 
         add(panel);

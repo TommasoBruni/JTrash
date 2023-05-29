@@ -32,6 +32,7 @@ public class FrameDiGioco extends JFrame
 	private PannelloGiocatore pannelloGiocatoreRobotSx;
 	private PannelloGiocatore pannelloGiocatoreRobotDiFronte;
 	private PannelloMazzoDiCarte pannelloMazzoDiCarte;
+	private FrameInserimentoDati frameInserimentoDati;
 	
 	private void setupPerInserimentoDati()
 	{
@@ -43,10 +44,10 @@ public class FrameDiGioco extends JFrame
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
-        FrameInserimentoDati frame = new FrameInserimentoDati(controller, pannelloPerInternalFrame, this);
-        frame.setVisible(true);
+		frameInserimentoDati = new FrameInserimentoDati(controller, pannelloPerInternalFrame, this);
+		frameInserimentoDati.setVisible(true);
         
-        pannelloPerInternalFrame.add(frame, gbc);
+        pannelloPerInternalFrame.add(frameInserimentoDati, gbc);
         add(pannelloPerInternalFrame);
 	}
 	
@@ -71,11 +72,9 @@ public class FrameDiGioco extends JFrame
 	}
 	
 	public void impostaCampoDiGioco()
-		{
+	{
 			PannelloAnimazione pannelloAnimazione;
 			/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-			pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca");
-			pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo");
 			pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
 			GridBagConstraints gbc = new GridBagConstraints();
 			
@@ -99,7 +98,7 @@ public class FrameDiGioco extends JFrame
 			gbc.anchor = GridBagConstraints.CENTER;
 			add(pannelloMazzoDiCarte, gbc);
 			
-			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore());
+			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore(), frameInserimentoDati.getPathAvatarSelezionato());
 			
 			gbc.gridx = 0;
 			gbc.gridy = 2;
@@ -109,7 +108,7 @@ public class FrameDiGioco extends JFrame
 			add(pannelloGiocatorePrincipale, gbc);
 			
 			//pannelloGiocatorePrincipale.startAnimazione();
-			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco");
+			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco", frameInserimentoDati.getPathAvatarSelezionato());
 	
 			gbc.gridx = 0;
 			gbc.gridy = 0;
@@ -120,6 +119,7 @@ public class FrameDiGioco extends JFrame
 			
 			if (controller.getNumeroGiocatoriInPartita() > 2)
 			{
+				pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca", frameInserimentoDati.getPathAvatarSelezionato());
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -130,6 +130,7 @@ public class FrameDiGioco extends JFrame
 			
 			if (controller.getNumeroGiocatoriInPartita() > 3)
 			{
+				pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo", frameInserimentoDati.getPathAvatarSelezionato());
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;

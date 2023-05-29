@@ -22,6 +22,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -79,7 +80,7 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 	}
 	
 	public PannelloGiocatore(String nomeGiocatore, String fileName, int numeroColonne, int numeroRighe,
-							 int gapVerticale, int gapOrizzontale)
+							 int gapVerticale, int gapOrizzontale, String avatarPath)
 	{
 		this.nomeGiocatore = nomeGiocatore;
 		//animationTimer = new Timer();
@@ -137,14 +138,43 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 			pannelloCarteInferiori.add(carte[i]);
 		}
 
+		if (!isLarger)
+		{
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+		}
+		else
+		{
+			gbc.gridx = 0;
+			gbc.gridy = 1;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+			gbc.insets = new Insets(10, 0, 0, 0);
+		}
+		
+		add(new JLabel(new ImageIcon(avatarPath)), gbc);
+		
 		if (isLarger)
 			gbc.insets = new Insets(0, 0, 0, 10);
 		else
 			gbc.insets = new Insets(0, 0, 10, 0);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
+		
+		if (!isLarger)
+		{
+			gbc.gridx = 1;
+			gbc.gridy = 0;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+		}
+		else
+		{
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+		}
 		
 		add(pannelloCarteSuperiori, gbc);
 		gbc.weightx = 1;
@@ -156,7 +186,7 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 		}
 		else
 		{
-		    gbc.gridx = 0;
+		    gbc.gridx = 1;
 		    gbc.gridy = 1;
 		}
 		add(pannelloCarteInferiori, gbc);

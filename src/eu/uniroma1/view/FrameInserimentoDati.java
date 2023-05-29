@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JButton;
@@ -32,7 +34,12 @@ public class FrameInserimentoDati extends JInternalFrame
 	private JButton buttonOk;
 	private JButton buttonAnnulla;
 	private JButton buttonSelezionaAvatar;
-	private String pathAvatarSelezionato;
+	private DialogSelezioneAvatar dialogSelezioneAvatar;
+	
+	public String getPathAvatarSelezionato()
+	{
+		return dialogSelezioneAvatar.getSelectedAvatar();
+	}
 	
 	public FrameInserimentoDati(Controller controller, Container parentComponent, FrameDiGioco frameParent)
 	{
@@ -65,7 +72,7 @@ public class FrameInserimentoDati extends JInternalFrame
 					return;
 				}
 				
-				if (pathAvatarSelezionato == null)
+				if (dialogSelezioneAvatar.getSelectedAvatar() == null)
 				{
 					JOptionPane.showMessageDialog(new JFrame(), "Selezionare avatar!", "Errore inserimento dati", JOptionPane.OK_OPTION);
 					return;
@@ -92,7 +99,7 @@ public class FrameInserimentoDati extends JInternalFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				pathAvatarSelezionato = new DialogSelezioneAvatar(new JFrame()).getSelectedAvatar();
+				dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame());
 			}
 		});
 		
@@ -105,7 +112,6 @@ public class FrameInserimentoDati extends JInternalFrame
 		pannelloContenitore.add(buttonSelezionaAvatar);
 		pannelloContenitore.add(buttonOk);
 		pannelloContenitore.add(buttonAnnulla);
-		
 		add(pannelloContenitore);
 	}
 }

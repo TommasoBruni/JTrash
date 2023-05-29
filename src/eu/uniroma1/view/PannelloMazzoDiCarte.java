@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,6 +27,7 @@ public class PannelloMazzoDiCarte extends JPanel
 	{
 		ImageIcon icon;
 		carteDaPescare = new JButton();
+		carteScartate = new JButton();
 		
 		try
 		{
@@ -42,25 +44,37 @@ public class PannelloMazzoDiCarte extends JPanel
 		carteDaPescare.setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		carteDaPescare.setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		
-        //setBorder(new EmptyBorder(10, 10, 10, 10));
-		/*
+		carteScartate.setIcon(icon);
+		carteScartate.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+		carteScartate.setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+		carteScartate.setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+		
+        //setBorder(new EmptyBorder(10, 10, 10, 10));	
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        //gbc.anchor = GridBagConstraints.NORTH;
-
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		gbc.weightx = 0.01;
+		gbc.weighty = 0.01;
+		gbc.anchor = GridBagConstraints.LINE_END;
         
         JPanel buttons = new JPanel(new GridBagLayout());
         buttons.add(carteDaPescare, gbc);
         
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		
+		gbc.weightx = 0.01;
+		gbc.weighty = 0.01;
+		
+		gbc.anchor = GridBagConstraints.LINE_START;
+		
+		/* Per inserire un po' di spazio tra le carte da pescare e quelle scartate */
+		gbc.insets = new Insets(0, 20, 0, 0);
+		buttons.add(carteScartate, gbc);
+        
         add(buttons);
-        */
-		setLayout(new BorderLayout());
-		JPanel buttons = new JPanel(new BorderLayout());
-		buttons.add(carteDaPescare, BorderLayout.CENTER);
-		add(buttons, BorderLayout.CENTER);
 	}
 }
