@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.awt.*;
 
 import eu.uniroma1.controller.Controller;
 
@@ -64,14 +65,12 @@ public class FrameDiGioco extends JFrame
 	{
 		PannelloAnimazione pannelloAnimazione;
 		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-		pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore());
-		pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco");
 		pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca");
 		pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo");
 		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		//setGridBagLayout();
+		setGridBagLayout();
 		
 		/*
 		gbc.gridx = 0;
@@ -80,16 +79,35 @@ public class FrameDiGioco extends JFrame
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		*/
-		pannelloAnimazione = new PannelloAnimazione();
-		add(pannelloAnimazione);
-		/*
+		//pannelloAnimazione = new PannelloAnimazione();
+		//add(pannelloAnimazione);
 		// Inserisco il mazzo
+		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		add(pannelloMazzoDiCarte, gbc);
+		
+		pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore());
+		
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.anchor = GridBagConstraints.PAGE_END;
+		add(pannelloGiocatorePrincipale, gbc);
+		
+		pannelloGiocatorePrincipale.startAnimazione();
+		pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco");
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.PAGE_START;
+		add(pannelloGiocatoreRobotDiFronte, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -124,7 +142,6 @@ public class FrameDiGioco extends JFrame
 			gbc.anchor = GridBagConstraints.LINE_START;
 			add(pannelloGiocatoreRobotSx, gbc);
 		}
-		*/
 	}
 	
 	/**

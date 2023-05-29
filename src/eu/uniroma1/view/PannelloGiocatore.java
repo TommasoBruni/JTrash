@@ -1,5 +1,7 @@
 package eu.uniroma1.view;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,23 +9,74 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import javax.swing.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public abstract class PannelloGiocatore extends JPanel
+public abstract class PannelloGiocatore extends JPanel implements ActionListener
 {
 	private JButton[] carte;
 	private Timer animationTimer;
-	private static int velocitaAnimazioneMS = 12;
 	private String nomeGiocatore;
+	private String fileName;
 	private ImageIcon icon;
+	private boolean firstTime;
+	private int xMovement;
+	private int yMovement;
+	
+	/*
+	@Override
+	public void paint(Graphics g)
+	{
+		// TODO Auto-generated method stub
+		super.paint(g);
+		Graphics2D graphic2D = (Graphics2D) frameToDraw.getParent().getGraphics();
+		
+		if (firstTime)
+		{
+			System.out.println(frameToDraw);
+			xMovement = frameToDraw.getCarteDaPescareButton().getBounds().x;
+			yMovement = frameToDraw.getCarteDaPescareButton().getBounds().y;
+			firstTime = false;
+		}
+		try
+		{
+			icon = new ImageIcon(System.getProperty("user.dir").concat("\\resources\\" + fileName));
+		} 
+		catch (Exception ex) 
+		{
+		    throw ex;
+		}
+		//frameToDraw.draw(icon, xMovement, yMovement);
+		graphic2D.drawImage(icon.getImage(), xMovement, yMovement, null);
+	}
+	*/
+	
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		xMovement += 5;
+		yMovement += 5;
+		repaint();
+	}
+	
+	public void startAnimazione()
+	{
+		animationTimer = new Timer(50, this);
+		animationTimer.restart();
+	}
 	
 	public PannelloGiocatore(String nomeGiocatore, String fileName, int larghezzaCarta, int altezzaCarta,
 							 int numeroColonne, int numeroRighe, int gapVerticale, int gapOrizzontale)
@@ -39,6 +92,8 @@ public abstract class PannelloGiocatore extends JPanel
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
+		firstTime = true;
+		this.fileName = fileName;
 		
 		pannelloCarteSuperiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
 		pannelloCarteInferiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));

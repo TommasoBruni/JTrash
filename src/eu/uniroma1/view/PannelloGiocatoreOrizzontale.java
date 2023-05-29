@@ -1,5 +1,10 @@
 package eu.uniroma1.view;
 
+import java.awt.Container;
+import java.awt.Point;
+
+import javax.swing.JFrame;
+
 public class PannelloGiocatoreOrizzontale extends PannelloGiocatore
 {
 	private static final String nomeFile = "carta_da_gioco_orizzontale.jpg";

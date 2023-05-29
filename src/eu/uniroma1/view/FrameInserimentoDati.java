@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -30,6 +31,7 @@ public class FrameInserimentoDati extends JInternalFrame
 	private JTextField textFieldNickname;
 	private JButton buttonOk;
 	private JButton buttonAnnulla;
+	private JButton buttonSelezionaAvatar;
 	
 	public FrameInserimentoDati(Controller controller, Container parentComponent, FrameDiGioco frameParent)
 	{
@@ -47,6 +49,7 @@ public class FrameInserimentoDati extends JInternalFrame
 		buttonOk.setSize(new Dimension(50, 50));
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
+		buttonSelezionaAvatar = new JButton("Seleziona avatar");
 		
 		buttonOk.addActionListener(new ActionListener() {
 			@Override
@@ -61,8 +64,8 @@ public class FrameInserimentoDati extends JInternalFrame
 					return;
 				}
 				controller.aggiungiGiocatore(nomeUtente, nickname, null);
-				/* Rimuove esattamente questa finestra */
-				parentComponent.getComponent(0).setVisible(false);
+				/* Dispose utile per chiudere la finestra corrente */
+				dispose();
 				frameParent.impostaCampoDiGioco();
 			}
 		});
@@ -76,14 +79,25 @@ public class FrameInserimentoDati extends JInternalFrame
 			}
 		});
 		
-		setPreferredSize(new Dimension(200, 175));
+		buttonSelezionaAvatar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new DialogSelezioneAvatar(new JFrame());
+			}
+		});
+		
+		setPreferredSize(new Dimension(200, 200));
 		
 		pannelloContenitore.add(labelNomeUtente);
 		pannelloContenitore.add(textFieldNomeUtente);
 		pannelloContenitore.add(labelNickname);
 		pannelloContenitore.add(textFieldNickname);
+		pannelloContenitore.add(buttonSelezionaAvatar);
 		pannelloContenitore.add(buttonOk);
 		pannelloContenitore.add(buttonAnnulla);
+		
 		add(pannelloContenitore);
 	}
 }

@@ -4,19 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.border.Border;
+import javax.swing.*;
 
 import java.io.*;
 import java.util.*;
 import java.awt.*;
 
-public class PannelloGiocatoreVerticale extends PannelloGiocatore 
+public class PannelloGiocatoreVerticale extends PannelloGiocatore
 {
 	private static final String nomeFile = "carta_da_gioco_verticale.jpg";
 	private static final int larghezzaCarta = 39;

@@ -2,6 +2,7 @@ package eu.uniroma1.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -51,7 +52,7 @@ public class PannelloMazzoDiCarte extends JPanel
         
         JPanel buttons = new JPanel(new GridBagLayout());
         buttons.add(carteDaPescare, gbc);
-
+        
         add(buttons, gbc);
 	}
 }

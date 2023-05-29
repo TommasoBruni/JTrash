@@ -7,8 +7,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,36 +22,35 @@ import javax.swing.border.EmptyBorder;
 
 public class PannelloAnimazione extends JPanel implements ActionListener
 {
-	private int x;
-	private int y;
+	private int xMovement;
+	private int yMovement;
 	private int xSpeed = 15;
 	private int ySpeed = 15;
 	private ImageIcon moveIcon;
 	private JButton mazzoDiCarte;
 	private Timer animationTimer;
-	private int i;
+	private boolean firstTime;
 	
 	@Override
-	public void paint(Graphics g) 
+	public void paint(Graphics g)
 	{
 		super.paint(g);
 		Graphics2D graphic2D = (Graphics2D)g;
 		
-		if (i < 1)
+		if (firstTime)
 		{
-			x = getWidth()/2 - moveIcon.getIconWidth()/2;
-			y = getHeight()/2 - moveIcon.getIconHeight()/2;	
+			xMovement = mazzoDiCarte.getLocation().x;
+			yMovement = mazzoDiCarte.getLocation().y;
+			firstTime = false;
 		}
-		graphic2D.drawImage(moveIcon.getImage(), x, y, null);
-		i++;
+		graphic2D.drawImage(moveIcon.getImage(), xMovement, yMovement, null);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		x += xSpeed;
-		y += ySpeed;
-		//carteDaPescare2.setLocation(x, y);
+		xMovement -= xSpeed;
+		yMovement += ySpeed;
 		repaint();
 	}
 	
@@ -64,7 +67,7 @@ public class PannelloAnimazione extends JPanel implements ActionListener
 			/* Lanciare un'altra eccezione */
 		    throw ex;
 		}
-		
+		firstTime = true;
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
