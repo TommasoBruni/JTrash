@@ -78,13 +78,13 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 		animationTimer.restart();
 	}
 	
-	public PannelloGiocatore(String nomeGiocatore, String fileName, int larghezzaCarta, int altezzaCarta,
-							 int numeroColonne, int numeroRighe, int gapVerticale, int gapOrizzontale)
+	public PannelloGiocatore(String nomeGiocatore, String fileName, int numeroColonne, int numeroRighe,
+							 int gapVerticale, int gapOrizzontale)
 	{
 		this.nomeGiocatore = nomeGiocatore;
 		//animationTimer = new Timer();
 		int i;
-		boolean isLarger = larghezzaCarta > altezzaCarta;
+		boolean isLarger;
 		ImageIcon icon;
 		Border bordoInterno = BorderFactory.createTitledBorder(this.nomeGiocatore);
 		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 0, 0, 0);
@@ -102,7 +102,7 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 		setBorder(bordoComposto);
 		setLayout(new GridBagLayout());
 		
-		setPreferredSize(new Dimension(600, 600));
+		setPreferredSize(new Dimension(600, 650));
 		
 		carte = new JButton[10];
 		
@@ -116,19 +116,24 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 			/* Lanciare un'altra eccezione */
 		    throw ex;
 		}
+		isLarger = icon.getIconWidth() > icon.getIconHeight();
 		
 		for (i = 0; i < carte.length / 2; i++)
 		{
 			carte[i] = new JButton();
+			carte[i].setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+			carte[i].setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+			carte[i].setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 			carte[i].setIcon(icon);
-			carte[i].setPreferredSize(new Dimension(larghezzaCarta, altezzaCarta));
 			pannelloCarteSuperiori.add(carte[i]);
 		}
 		for (; i < carte.length; i++)
 		{
 			carte[i] = new JButton();
-			carte[i].setIcon(icon);
-			carte[i].setPreferredSize(new Dimension(larghezzaCarta, altezzaCarta));
+			carte[i].setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+			carte[i].setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+			carte[i].setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+			carte[i].setIcon(icon);		
 			pannelloCarteInferiori.add(carte[i]);
 		}
 

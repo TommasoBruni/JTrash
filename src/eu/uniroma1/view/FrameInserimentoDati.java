@@ -32,6 +32,7 @@ public class FrameInserimentoDati extends JInternalFrame
 	private JButton buttonOk;
 	private JButton buttonAnnulla;
 	private JButton buttonSelezionaAvatar;
+	private String pathAvatarSelezionato;
 	
 	public FrameInserimentoDati(Controller controller, Container parentComponent, FrameDiGioco frameParent)
 	{
@@ -63,6 +64,13 @@ public class FrameInserimentoDati extends JInternalFrame
 					JOptionPane.showMessageDialog(new JFrame(), "Inserire dati validi!", "Errore inserimento dati", JOptionPane.OK_OPTION);
 					return;
 				}
+				
+				if (pathAvatarSelezionato == null)
+				{
+					JOptionPane.showMessageDialog(new JFrame(), "Selezionare avatar!", "Errore inserimento dati", JOptionPane.OK_OPTION);
+					return;
+				}
+					
 				controller.aggiungiGiocatore(nomeUtente, nickname, null);
 				/* Dispose utile per chiudere la finestra corrente */
 				dispose();
@@ -74,7 +82,7 @@ public class FrameInserimentoDati extends JInternalFrame
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				/* Rimuove esattamente questa finestra */
-				parentComponent.getComponent(0).setVisible(false);
+				dispose();
 				frameParent.mostraInserimentoNumeroGiocatori();				
 			}
 		});
@@ -84,7 +92,7 @@ public class FrameInserimentoDati extends JInternalFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				new DialogSelezioneAvatar(new JFrame());
+				pathAvatarSelezionato = new DialogSelezioneAvatar(new JFrame()).getSelectedAvatar();
 			}
 		});
 		

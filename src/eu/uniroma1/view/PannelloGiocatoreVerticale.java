@@ -15,8 +15,6 @@ import java.awt.*;
 public class PannelloGiocatoreVerticale extends PannelloGiocatore
 {
 	private static final String nomeFile = "carta_da_gioco_verticale.jpg";
-	private static final int larghezzaCarta = 39;
-	private static final int altezzaCarta = 55;
 	private static final int numeroColonne = 5;
 	private static final int numeroRighe = 1;
 	private static final int gapVerticale = 0;
@@ -24,6 +22,6 @@ public class PannelloGiocatoreVerticale extends PannelloGiocatore
 	
 	public PannelloGiocatoreVerticale(String nomeGiocatore)
 	{
-		super(nomeGiocatore, nomeFile, larghezzaCarta, altezzaCarta, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale);
+		super(nomeGiocatore, nomeFile, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale);
 	}
 }

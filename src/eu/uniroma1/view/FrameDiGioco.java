@@ -71,74 +71,74 @@ public class FrameDiGioco extends JFrame
 	}
 	
 	public void impostaCampoDiGioco()
-	{
-		PannelloAnimazione pannelloAnimazione;
-		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-		pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca");
-		pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo");
-		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		setGridBagLayout();
-		
-		/*
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		*/
-		//pannelloAnimazione = new PannelloAnimazione();
-		//add(pannelloAnimazione);
-		
-		// Inserisco il mazzo
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		add(pannelloMazzoDiCarte, gbc);
-		
-		pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore());
-		
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.anchor = GridBagConstraints.PAGE_END;
-		add(pannelloGiocatorePrincipale, gbc);
-		
-		//pannelloGiocatorePrincipale.startAnimazione();
-		pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco");
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.PAGE_START;
-		add(pannelloGiocatoreRobotDiFronte, gbc);
-		
-		if (controller.getNumeroGiocatoriInPartita() > 2)
 		{
+			PannelloAnimazione pannelloAnimazione;
+			/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
+			pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca");
+			pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo");
+			pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
+			GridBagConstraints gbc = new GridBagConstraints();
+			
+			setGridBagLayout();
+			
+			/*
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.weightx = 0.1;
 			gbc.weighty = 0.1;
-			gbc.anchor = GridBagConstraints.LINE_END;
-			add(pannelloGiocatoreRobotDx, gbc);
-		}
-		
-		if (controller.getNumeroGiocatoriInPartita() > 3)
-		{
+			gbc.anchor = GridBagConstraints.CENTER;
+			*/
+			//pannelloAnimazione = new PannelloAnimazione();
+			//add(pannelloAnimazione);
+			
+			// Inserisco il mazzo
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.weightx = 0.1;
 			gbc.weighty = 0.1;
-			gbc.anchor = GridBagConstraints.LINE_START;
-			add(pannelloGiocatoreRobotSx, gbc);
+			gbc.anchor = GridBagConstraints.CENTER;
+			add(pannelloMazzoDiCarte, gbc);
+			
+			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore());
+			
+			gbc.gridx = 0;
+			gbc.gridy = 2;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+			gbc.anchor = GridBagConstraints.PAGE_END;
+			add(pannelloGiocatorePrincipale, gbc);
+			
+			//pannelloGiocatorePrincipale.startAnimazione();
+			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco");
+	
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+			gbc.anchor = GridBagConstraints.PAGE_START;
+			add(pannelloGiocatoreRobotDiFronte, gbc);
+			
+			if (controller.getNumeroGiocatoriInPartita() > 2)
+			{
+				gbc.gridx = 0;
+				gbc.gridy = 1;
+				gbc.weightx = 0.1;
+				gbc.weighty = 0.1;
+				gbc.anchor = GridBagConstraints.LINE_END;
+				add(pannelloGiocatoreRobotDx, gbc);
+			}
+			
+			if (controller.getNumeroGiocatoriInPartita() > 3)
+			{
+				gbc.gridx = 0;
+				gbc.gridy = 1;
+				gbc.weightx = 0.1;
+				gbc.weighty = 0.1;
+				gbc.anchor = GridBagConstraints.LINE_START;
+				add(pannelloGiocatoreRobotSx, gbc);
+			}
+			setJMenuBar(creaBarraMenu());
 		}
-		setJMenuBar(creaBarraMenu());
-	}
 	
 	private JMenuBar creaBarraMenu()
 	{
@@ -157,11 +157,6 @@ public class FrameDiGioco extends JFrame
 											  JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (azioneFinestra == JOptionPane.OK_OPTION)
 					System.exit(0);
-				/* Per lo showInputDialog si fa così: */
-				/*String nomeUtente = JOptionPane.showInputDialog(Frame.this, "Inserisci nome utente", "Inserimento utente", JOptionPane.QUESTION_MESSAGE);*/
-				
-				/* Per l'error dialog, per cambiare icona basta cambiare l'ultimo parametro  */
-				/*JOptionPane.showMessageDialog(Frame.this, "Errore nell'inserimento dei dati", "Errore!", JOptionPane.ERROR_MESSAGE);*/
 			}
 		});
 		

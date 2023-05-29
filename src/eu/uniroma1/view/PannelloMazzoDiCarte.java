@@ -34,13 +34,16 @@ public class PannelloMazzoDiCarte extends JPanel
 		} 
 		catch (Exception ex) 
 		{
-			/* Lanciare un'altra eccezione */
+			/* TODO: Lanciare un'altra eccezione */
 		    throw ex;
 		}
 		carteDaPescare.setIcon(icon);
-		carteDaPescare.setPreferredSize(new Dimension(40, 55));
+		carteDaPescare.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+		carteDaPescare.setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+		carteDaPescare.setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		
-        setBorder(new EmptyBorder(10, 10, 10, 10));
+        //setBorder(new EmptyBorder(10, 10, 10, 10));
+		/*
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -53,6 +56,11 @@ public class PannelloMazzoDiCarte extends JPanel
         JPanel buttons = new JPanel(new GridBagLayout());
         buttons.add(carteDaPescare, gbc);
         
-        add(buttons, gbc);
+        add(buttons);
+        */
+		setLayout(new BorderLayout());
+		JPanel buttons = new JPanel(new BorderLayout());
+		buttons.add(carteDaPescare, BorderLayout.CENTER);
+		add(buttons, BorderLayout.CENTER);
 	}
 }
