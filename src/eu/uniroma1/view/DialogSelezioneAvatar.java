@@ -25,7 +25,7 @@ public class DialogSelezioneAvatar extends JDialog
     {
         super(parent, "Selezione Avatar", true);
         avatarArray = new ImageIcon[] { new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero1.png")),
-        								new ImageIcon(System.getProperty("user.dir").concat("\\resources\\carta_da_gioco_verticale.jpg"))};
+        								new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero2.png"))};
         selectedAvatar = null;
         GridBagConstraints gbc = new GridBagConstraints();
 
