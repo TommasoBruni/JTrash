@@ -38,12 +38,14 @@ public class ButtonCarta extends JButton
 			if (isHorizontal)
 			{
 				AffineTransform affineTransform = new AffineTransform();
-				affineTransform.rotate(155);
-				//affineTransform.rotate(150);
+				// questo funzionicchia --> affineTransform.rotate(158);
+				//affineTransform.rotate(160, 5, 25);
+				affineTransform.rotate(-(Math.PI / 2));
 				//affineTransform.rotate(Math.toRadians(330), 5, 25);
 				Font rotatedFont = font.deriveFont(affineTransform);
 				g.setFont(rotatedFont);
-				g.drawString(valoreCarta, 27, 30);
+				//insieme a funzionicchia --> g.drawString(valoreCarta, 27, 30);
+				g.drawString(valoreCarta, 25, 32);
 			}
 			else
 			{
