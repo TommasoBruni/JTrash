@@ -1,6 +1,9 @@
 package eu.uniroma1.model;
 
+import java.awt.Image;
+
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class Giocatore 
 {
@@ -9,9 +12,9 @@ public class Giocatore
 	private String nickname;
 	private long partiteVinte;
 	private long partitePerse;
-	private Icon avatar;
+	private ImageIcon avatar;
 	
-	public Giocatore(String nome, String nickname, Icon avatar)
+	public Giocatore(String nome, String nickname, ImageIcon avatar)
 	{
 		this.nome = nome;
 		this.nickname = nickname;
@@ -59,11 +62,11 @@ public class Giocatore
 		this.partitePerse = partitePerse;
 	}
 
-	public Icon getAvatar() {
+	public ImageIcon getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(Icon avatar) {
+	public void setAvatar(ImageIcon avatar) {
 		this.avatar = avatar;
 	}
 }

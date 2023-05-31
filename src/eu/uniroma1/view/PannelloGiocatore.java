@@ -14,6 +14,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.stream.Collectors;
 
 import javax.swing.Timer;
@@ -26,16 +28,30 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public abstract class PannelloGiocatore extends JPanel implements ActionListener
+public abstract class PannelloGiocatore extends JPanel implements Observer
 {
 	private JButton[] carte;
 	private Timer animationTimer;
 	private String nomeGiocatore;
 	private String fileName;
+	private JLabel labelIcon;
 	private ImageIcon icon;
 	private boolean firstTime;
 	private int xMovement;
 	private int yMovement;
+	
+	@Override
+	public void update(Observable o, Object arg) 
+	{
+		/* Primo nome giocatore, secondo nickname e terzo icona */
+		Object[] datiGiocatore = (Object[])arg;
+		Border bordoInterno = BorderFactory.createTitledBorder((String)datiGiocatore[0]);
+		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+		Border bordoComposto = BorderFactory.createCompoundBorder(bordoEsterno, bordoInterno);
+		
+		setBorder(bordoComposto);
+		labelIcon.setIcon((ImageIcon)datiGiocatore[2]);
+	}
 	
 	/*
 	@Override
@@ -65,6 +81,7 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 	}
 	*/
 	
+	/*
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -78,15 +95,20 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 		animationTimer = new Timer(50, this);
 		animationTimer.restart();
 	}
+	*/
+	public PannelloGiocatore(String nomeGiocatore, String fileName, int numeroColonne, int numeroRighe,
+			 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon)
+	{
+		this(nomeGiocatore, fileName, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale, avatarIcon, null);
+	}
 	
 	public PannelloGiocatore(String nomeGiocatore, String fileName, int numeroColonne, int numeroRighe,
-							 int gapVerticale, int gapOrizzontale, String avatarPath)
+							 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon, Observable observable)
 	{
 		this.nomeGiocatore = nomeGiocatore;
 		//animationTimer = new Timer();
 		int i;
 		boolean isLarger;
-		ImageIcon icon;
 		Border bordoInterno = BorderFactory.createTitledBorder(this.nomeGiocatore);
 		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 0, 0, 0);
 		Border bordoComposto = BorderFactory.createCompoundBorder(bordoEsterno, bordoInterno);
@@ -95,6 +117,10 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 		GridBagConstraints gbc = new GridBagConstraints();
 		firstTime = true;
 		this.fileName = fileName;
+		labelIcon = new JLabel(avatarIcon);
+		
+		if (observable != null)
+			observable.addObserver(this);
 		
 		pannelloCarteSuperiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
 		pannelloCarteInferiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
@@ -154,7 +180,7 @@ public abstract class PannelloGiocatore extends JPanel implements ActionListener
 			gbc.insets = new Insets(10, 0, 0, 0);
 		}
 		
-		add(new JLabel(new ImageIcon(avatarPath)), gbc);
+		add(labelIcon, gbc);
 		
 		if (isLarger)
 			gbc.insets = new Insets(0, 0, 0, 10);

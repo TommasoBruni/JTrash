@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -71,6 +73,21 @@ public class FrameDiGioco extends JFrame
 		setLayout(new GridBagLayout());
 	}
 	
+	public Controller getController()
+	{
+		return controller;
+	}
+	
+	public void enableCampoDiGioco()
+	{
+		this.setEnabled(true);
+	}
+	
+	public void disableCampoDiGioco()
+	{
+		this.setEnabled(false);
+	}
+	
 	public void impostaCampoDiGioco()
 	{
 			PannelloAnimazione pannelloAnimazione;
@@ -98,7 +115,9 @@ public class FrameDiGioco extends JFrame
 			gbc.anchor = GridBagConstraints.CENTER;
 			add(pannelloMazzoDiCarte, gbc);
 			
-			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore(), frameInserimentoDati.getPathAvatarSelezionato());
+			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore(), 
+																		 frameInserimentoDati.getAvatarSelezionato(),
+																		 controller);
 			
 			gbc.gridx = 0;
 			gbc.gridy = 2;
@@ -108,7 +127,8 @@ public class FrameDiGioco extends JFrame
 			add(pannelloGiocatorePrincipale, gbc);
 			
 			//pannelloGiocatorePrincipale.startAnimazione();
-			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco", frameInserimentoDati.getPathAvatarSelezionato());
+			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco", 
+																			frameInserimentoDati.getAvatarSelezionato());
 	
 			gbc.gridx = 0;
 			gbc.gridy = 0;
@@ -119,7 +139,8 @@ public class FrameDiGioco extends JFrame
 			
 			if (controller.getNumeroGiocatoriInPartita() > 2)
 			{
-				pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca", frameInserimentoDati.getPathAvatarSelezionato());
+				pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca", 
+																			frameInserimentoDati.getAvatarSelezionato());
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -130,7 +151,8 @@ public class FrameDiGioco extends JFrame
 			
 			if (controller.getNumeroGiocatoriInPartita() > 3)
 			{
-				pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo", frameInserimentoDati.getPathAvatarSelezionato());
+				pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo", 
+																			frameInserimentoDati.getAvatarSelezionato());
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -145,8 +167,17 @@ public class FrameDiGioco extends JFrame
 	{
 		JMenuBar barraMenu = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
-		
+		JMenuItem profiloUtente = new JMenuItem("Profilo");
 		JMenuItem menuItemEsci = new JMenuItem("Esci");
+		
+		profiloUtente.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				disableCampoDiGioco();
+				DialogProfilo dialogProfilo = new DialogProfilo(FrameDiGioco.this, controller);
+			}
+		});
 		
 		menuItemEsci.addActionListener(new ActionListener() {
 			
@@ -163,6 +194,7 @@ public class FrameDiGioco extends JFrame
 		
 		
 		/* Per aggiungere un separatore logico tra gli item importa/esporta ed esci */
+		menuFile.add(profiloUtente);
 		menuFile.addSeparator();
 		menuFile.add(menuItemEsci);
 		

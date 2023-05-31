@@ -36,6 +36,19 @@ public class MazzoDiCarte implements Iterable<Carte>
 	}
 	
 	@Override
+	public String toString() 
+	{
+		StringBuffer strB = new StringBuffer();
+		
+		strB.append("[");
+		for (Carte c : this)
+			strB.append(c + ", ");
+		strB.replace(strB.length() - 2, strB.length() - 2, "");
+		strB.append("]");
+		return strB.toString();
+	}
+	
+	@Override
 	public Iterator<Carte> iterator() 
 	{
 		return new Iterator<Carte>() 

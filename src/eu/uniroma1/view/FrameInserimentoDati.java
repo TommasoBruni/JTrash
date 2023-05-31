@@ -12,6 +12,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.beans.PropertyVetoException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
@@ -36,7 +37,7 @@ public class FrameInserimentoDati extends JInternalFrame
 	private JButton buttonSelezionaAvatar;
 	private DialogSelezioneAvatar dialogSelezioneAvatar;
 	
-	public String getPathAvatarSelezionato()
+	public ImageIcon getAvatarSelezionato()
 	{
 		return dialogSelezioneAvatar.getSelectedAvatar();
 	}
@@ -54,10 +55,10 @@ public class FrameInserimentoDati extends JInternalFrame
 		textFieldNickname = new JTextField(15);
 		pannelloContenitore = new JPanel();
 		buttonOk = new JButton("Ok");
-		buttonOk.setSize(new Dimension(50, 50));
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Seleziona avatar");
+		dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame());
 		
 		buttonOk.addActionListener(new ActionListener() {
 			@Override
@@ -78,7 +79,7 @@ public class FrameInserimentoDati extends JInternalFrame
 					return;
 				}
 					
-				controller.aggiungiGiocatore(nomeUtente, nickname, null);
+				controller.aggiungiGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
 				/* Dispose utile per chiudere la finestra corrente */
 				dispose();
 				frameParent.impostaCampoDiGioco();
@@ -99,7 +100,7 @@ public class FrameInserimentoDati extends JInternalFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame());
+				dialogSelezioneAvatar.setVisible(true);
 			}
 		});
 		

@@ -1,35 +1,43 @@
 package eu.uniroma1.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JDialog;
+import javax.swing.border.Border;
 import javax.swing.*;
 
 public class DialogSelezioneAvatar extends JDialog
 {
-    private String selectedAvatar;
+    private ImageIcon selectedAvatar;
     private ImageIcon[] avatarArray;
     private JButton avatarButton;
     private int indiceIcone;
-    private String[] pathsOfAvatars = new String[] {
-    		System.getProperty("user.dir").concat("\\resources\\avatar_numero1.png"),
-    		System.getProperty("user.dir").concat("\\resources\\avatar_numero2.png")
-    };
-
-    public DialogSelezioneAvatar(Frame parent) 
+    
+    public DialogSelezioneAvatar(Frame parent)
+    {
+    	this(parent, null);
+    }
+    
+    public DialogSelezioneAvatar(Frame parent, String defaultAvatarDescr) 
     {
         super(parent, "Selezione Avatar", true);
-        avatarArray = new ImageIcon[] { new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero1.png")),
-        								new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero2.png"))};
+        avatarArray = new ImageIcon[] { new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero1.png"), "avatar Naruto"),
+					  new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero2.png"), "avatar Sasuke")};
+        if (defaultAvatarDescr != null)
+        {
+        	while (indiceIcone < avatarArray.length &&
+        		   !defaultAvatarDescr.equals(avatarArray[indiceIcone].getDescription()))
+        		indiceIcone++;
+        }
         selectedAvatar = null;
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -40,18 +48,20 @@ public class DialogSelezioneAvatar extends JDialog
 
         scorriADestra.setBackground(Color.ORANGE);
         scorriASinistra.setBackground(Color.ORANGE);
+        
         setBackground(Color.WHITE);
         //setMinimumSize(new Dimension(300, 300));
         avatarButton = new JButton(avatarArray[indiceIcone]);
 		avatarButton.setPreferredSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
 		avatarButton.setMaximumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
 		avatarButton.setMinimumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+
         avatarButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				selectedAvatar = pathsOfAvatars[indiceIcone];
+				selectedAvatar = avatarArray[indiceIcone];
 				dispose();
 			}
 		});
@@ -132,23 +142,10 @@ public class DialogSelezioneAvatar extends JDialog
         add(panel);
         pack();
         setLocationRelativeTo(parent);
-        setVisible(true);
+        //setVisible(true);
     }
 
-    public String getSelectedAvatar() {
+    public ImageIcon getSelectedAvatar() {
         return selectedAvatar;
-    }
-
-    private class AvatarSelectionListener extends MouseAdapter {
-        private String avatarPath;
-
-        public AvatarSelectionListener(String avatarPath) {
-            this.avatarPath = avatarPath;
-        }
-
-        public void mouseClicked(MouseEvent e) {
-            selectedAvatar = avatarPath;
-            dispose();
-        }
     }
 }

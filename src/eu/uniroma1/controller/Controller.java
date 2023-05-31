@@ -1,13 +1,15 @@
 package eu.uniroma1.controller;
 
 import java.util.List;
+import java.util.Observable;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 import eu.uniroma1.model.Database;
 import eu.uniroma1.model.Giocatore;
 
-public class Controller 
+public class Controller extends Observable
 {
 	private int numeroGiocatoriInPartita;
 	private Database databaseGiocatori;
@@ -36,7 +38,7 @@ public class Controller
 	 * @param nickname nickname giocatore
 	 * @param avatar avatar giocatore
 	 */
-	public void aggiungiGiocatore(String nomeGiocatore, String nickname, Icon avatar)
+	public void aggiungiGiocatore(String nomeGiocatore, String nickname, ImageIcon avatar)
 	{
 		databaseGiocatori.add(new Giocatore(nomeGiocatore, nickname, avatar));
 	}
@@ -50,9 +52,27 @@ public class Controller
 		return databaseGiocatori.getGiocatori().get(databaseGiocatori.getGiocatori().size() - 1).getNome();
 	}
 	
+	public String getNicknameUltimoGiocatore()
+	{
+		return databaseGiocatori.getGiocatori().get(databaseGiocatori.getGiocatori().size() - 1).getNickname();
+	}
+	
+	public ImageIcon getAvatarUltimoGiocatore()
+	{
+		return databaseGiocatori.getGiocatori().get(databaseGiocatori.getGiocatori().size() - 1).getAvatar();
+	}
+	
 	public List<Giocatore> getListaGiocatori()
 	{
 		return databaseGiocatori.getGiocatori();
+	}
+	
+	public void aggiornaDatiUltimoGiocatore(String nomeGiocatore, String nickname, ImageIcon avatar)
+	{
+		Object[] datiGiocatore = { nomeGiocatore, nickname, avatar };
+		databaseGiocatori.modificaDatiUltimoGiocatore(new Giocatore(nomeGiocatore, nickname, avatar));
+		setChanged();
+		notifyObservers(datiGiocatore);
 	}
 	
 	public Controller()

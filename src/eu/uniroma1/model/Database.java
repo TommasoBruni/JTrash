@@ -12,6 +12,12 @@ public class Database
 		giocatori.add(giocatore);
 	}
 	
+	public void modificaDatiUltimoGiocatore(Giocatore newGiocatore)
+	{
+		giocatori.remove(giocatori.size() - 1);
+		giocatori.add(newGiocatore);
+	}
+	
 	public List<Giocatore> getGiocatori()
 	{
 		return giocatori;
