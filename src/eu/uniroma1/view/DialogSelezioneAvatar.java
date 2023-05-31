@@ -142,7 +142,6 @@ public class DialogSelezioneAvatar extends JDialog
         add(panel);
         pack();
         setLocationRelativeTo(parent);
-        //setVisible(true);
     }
 
     public ImageIcon getSelectedAvatar() {

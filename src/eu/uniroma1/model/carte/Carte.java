@@ -82,5 +82,4 @@ public enum Carte
 	{
 		return seme.toString()+"_"+valore.toString();
 	}
-	
 }

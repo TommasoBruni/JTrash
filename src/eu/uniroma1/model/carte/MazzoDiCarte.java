@@ -32,7 +32,7 @@ public class MazzoDiCarte implements Iterable<Carte>
 	    Carte[] result = Arrays.copyOf(mazzo, mazzo.length + nuovoMazzo.mazzo.length);
 	    
 	    System.arraycopy(nuovoMazzo.mazzo, 0, result, mazzo.length, nuovoMazzo.mazzo.length);
-	    nuovoMazzo.mazzo = result;		
+	    mazzo = result;		
 	}
 	
 	@Override
@@ -42,7 +42,7 @@ public class MazzoDiCarte implements Iterable<Carte>
 		
 		strB.append("[");
 		for (Carte c : this)
-			strB.append(c + ", ");
+			strB.append(c + ", \n");
 		strB.replace(strB.length() - 2, strB.length() - 2, "");
 		strB.append("]");
 		return strB.toString();

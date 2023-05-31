@@ -2,19 +2,19 @@ package eu.uniroma1.model.carte;
 
 public enum Valori
 {
-	ASSO("asso"),
-	DUE("due"),
-	TRE("tre"),
-	QUATTRO("tre"),
-	CINQUE("tre"),
-	SEI("tre"),
-	SETTE("tre"),
-	OTTO("tre"),
-	NOVE("tre"),
-	DIECI("tre"),
-	JACK("tre"),
-	QUEEN("queen"),
-	KING("king");
+	ASSO("1"),
+	DUE("2"),
+	TRE("3"),
+	QUATTRO("4"),
+	CINQUE("5"),
+	SEI("6"),
+	SETTE("7"),
+	OTTO("8"),
+	NOVE("9"),
+	DIECI("10"),
+	JACK("J"),
+	QUEEN("Q"),
+	KING("K");
 
 	String nome;
 	

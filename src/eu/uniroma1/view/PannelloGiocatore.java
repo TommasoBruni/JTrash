@@ -25,31 +25,37 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 public abstract class PannelloGiocatore extends JPanel implements Observer
 {
-	private JButton[] carte;
+	private ButtonCarta[] carte;
 	private Timer animationTimer;
 	private String nomeGiocatore;
-	private String fileName;
 	private JLabel labelIcon;
 	private ImageIcon icon;
 	private boolean firstTime;
 	private int xMovement;
 	private int yMovement;
 	
-	@Override
-	public void update(Observable o, Object arg) 
+	private void setBorderWithName(String nomeGiocatore)
 	{
-		/* Primo nome giocatore, secondo nickname e terzo icona */
-		Object[] datiGiocatore = (Object[])arg;
-		Border bordoInterno = BorderFactory.createTitledBorder((String)datiGiocatore[0]);
+		Border bordoInterno = BorderFactory.createTitledBorder(nomeGiocatore);
 		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 0, 0, 0);
 		Border bordoComposto = BorderFactory.createCompoundBorder(bordoEsterno, bordoInterno);
 		
 		setBorder(bordoComposto);
+	}
+	
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		/* Primo nome giocatore, secondo nickname e terzo icona */
+		Object[] datiGiocatore = (Object[])arg;
+		setBorderWithName((String)datiGiocatore[0]);
+
 		labelIcon.setIcon((ImageIcon)datiGiocatore[2]);
 	}
 	
@@ -96,27 +102,24 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		animationTimer.restart();
 	}
 	*/
-	public PannelloGiocatore(String nomeGiocatore, String fileName, int numeroColonne, int numeroRighe,
+	public PannelloGiocatore(String nomeGiocatore, int numeroColonne, int numeroRighe,
 			 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon)
 	{
-		this(nomeGiocatore, fileName, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale, avatarIcon, null);
+		this(nomeGiocatore, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale, avatarIcon, null);
 	}
 	
-	public PannelloGiocatore(String nomeGiocatore, String fileName, int numeroColonne, int numeroRighe,
+	public PannelloGiocatore(String nomeGiocatore, int numeroColonne, int numeroRighe,
 							 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon, Observable observable)
 	{
 		this.nomeGiocatore = nomeGiocatore;
 		//animationTimer = new Timer();
 		int i;
-		boolean isLarger;
-		Border bordoInterno = BorderFactory.createTitledBorder(this.nomeGiocatore);
-		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 0, 0, 0);
-		Border bordoComposto = BorderFactory.createCompoundBorder(bordoEsterno, bordoInterno);
+		boolean isHorizontal = numeroColonne < numeroRighe;
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
+		
 		firstTime = true;
-		this.fileName = fileName;
 		labelIcon = new JLabel(avatarIcon);
 		
 		if (observable != null)
@@ -125,46 +128,26 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		pannelloCarteSuperiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
 		pannelloCarteInferiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
 		
-		
-		setBorder(bordoComposto);
+		setBorderWithName(this.nomeGiocatore);
 		setLayout(new GridBagLayout());
 		
 		setPreferredSize(new Dimension(600, 650));
 		
-		carte = new JButton[10];
-		
-		try
-		{
-			/* Leggo l'immagine salvata nella directory "resources" dentro il progetto */
-			icon = new ImageIcon(System.getProperty("user.dir").concat("\\resources\\" + fileName));
-		} 
-		catch (Exception ex) 
-		{
-			/* Lanciare un'altra eccezione */
-		    throw ex;
-		}
-		isLarger = icon.getIconWidth() > icon.getIconHeight();
+		carte = new ButtonCarta[10];
 		
 		for (i = 0; i < carte.length / 2; i++)
 		{
-			carte[i] = new JButton();
-			carte[i].setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-			carte[i].setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-			carte[i].setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-			carte[i].setIcon(icon);
+			carte[i] = new ButtonCarta(isHorizontal, "♠1");
 			pannelloCarteSuperiori.add(carte[i]);
 		}
 		for (; i < carte.length; i++)
 		{
-			carte[i] = new JButton();
-			carte[i].setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-			carte[i].setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-			carte[i].setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-			carte[i].setIcon(icon);		
+			carte[i] = new ButtonCarta(isHorizontal, "♥1");
 			pannelloCarteInferiori.add(carte[i]);
 		}
-
-		if (!isLarger)
+		carte[0].gira();
+		
+		if (!isHorizontal)
 		{
 			gbc.gridx = 0;
 			gbc.gridy = 0;
@@ -182,12 +165,12 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		
 		add(labelIcon, gbc);
 		
-		if (isLarger)
+		if (isHorizontal)
 			gbc.insets = new Insets(0, 0, 0, 10);
 		else
 			gbc.insets = new Insets(0, 0, 10, 0);
 		
-		if (!isLarger)
+		if (!isHorizontal)
 		{
 			gbc.gridx = 1;
 			gbc.gridy = 0;
@@ -205,7 +188,7 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		add(pannelloCarteSuperiori, gbc);
 		gbc.weightx = 1;
 		gbc.weighty = 1;
-		if (isLarger)
+		if (isHorizontal)
 		{
 		    gbc.gridx = 1;
 		    gbc.gridy = 0;
