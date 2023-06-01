@@ -28,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import eu.uniroma1.model.*;
 
 public abstract class PannelloGiocatore extends JPanel implements Observer
 {
@@ -53,10 +54,10 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 	public void update(Observable o, Object arg)
 	{
 		/* Primo nome giocatore, secondo nickname e terzo icona */
-		Object[] datiGiocatore = (Object[])arg;
-		setBorderWithName((String)datiGiocatore[0]);
+		Giocatore giocatore = (Giocatore)arg;
+		setBorderWithName(giocatore.getNome());
 
-		labelIcon.setIcon((ImageIcon)datiGiocatore[2]);
+		labelIcon.setIcon(giocatore.getAvatar());
 	}
 	
 	/*
@@ -138,7 +139,7 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		
 		for (i = 0; i < carte.length / 2; i++)
 		{
-			carte[i] = new ButtonCarta("♠10", posizioneDelMazzo);
+			carte[i] = new ButtonCarta("Jolly", posizioneDelMazzo);
 			pannelloCarteSuperiori.add(carte[i]);
 		}
 		for (; i < carte.length; i++)

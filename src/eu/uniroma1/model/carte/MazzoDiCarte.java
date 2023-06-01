@@ -7,34 +7,6 @@ public class MazzoDiCarte implements Iterable<Carte>
 {
 	private Carte[] mazzo;
 	
-	public MazzoDiCarte()
-	{
-		mazzo = Carte.values();
-	}
-	
-	public void mischia()
-	{
-		Random random=new Random();
-		int j;
-		Carte tmp;
-		
-		for (int i = 0; i < mazzo.length; i++)
-		{
-			j = random.nextInt(mazzo.length);
-			tmp = mazzo[i];
-			mazzo[i] = mazzo[j];
-			mazzo[j] = tmp;
-		}
-	}
-	
-	public void combina(MazzoDiCarte nuovoMazzo)
-	{
-	    Carte[] result = Arrays.copyOf(mazzo, mazzo.length + nuovoMazzo.mazzo.length);
-	    
-	    System.arraycopy(nuovoMazzo.mazzo, 0, result, mazzo.length, nuovoMazzo.mazzo.length);
-	    mazzo = result;		
-	}
-	
 	@Override
 	public String toString() 
 	{
@@ -67,5 +39,50 @@ public class MazzoDiCarte implements Iterable<Carte>
 				return indice < mazzo.length;
 			}
 		};
+	}
+	
+	private MazzoDiCarte(Carte[] mazzo)
+	{
+		this.mazzo = mazzo;
+	}
+	
+	public static class MazzoDiCarteBuilder
+	{
+		private Carte[] mazzo;
+		
+		public MazzoDiCarte build()
+		{
+			return new MazzoDiCarte(mazzo);
+		}
+		
+		public MazzoDiCarteBuilder mischia()
+		{
+			Random random=new Random();
+			int j;
+			Carte tmp;
+			
+			for (int i = 0; i < mazzo.length; i++)
+			{
+				j = random.nextInt(mazzo.length);
+				tmp = mazzo[i];
+				mazzo[i] = mazzo[j];
+				mazzo[j] = tmp;
+			}
+			return this;
+		} 
+		
+		public MazzoDiCarteBuilder combina(MazzoDiCarte newMazzoDiCarte)
+		{
+		    Carte[] result = Arrays.copyOf(mazzo, mazzo.length + newMazzoDiCarte.mazzo.length);
+		    
+		    System.arraycopy(newMazzoDiCarte.mazzo, 0, result, mazzo.length, newMazzoDiCarte.mazzo.length);
+		    mazzo = result;
+		    return this;
+		}
+		
+		public MazzoDiCarteBuilder()
+		{
+			mazzo = Carte.values();
+		}
 	}
 }

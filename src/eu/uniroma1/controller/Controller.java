@@ -8,12 +8,15 @@ import javax.swing.ImageIcon;
 
 import eu.uniroma1.model.Database;
 import eu.uniroma1.model.Giocatore;
+import eu.uniroma1.model.carte.*;
+import eu.uniroma1.model.carte.MazzoDiCarte.MazzoDiCarteBuilder;
 
 public class Controller extends Observable
 {
 	private int numeroGiocatoriInPartita;
 	private Database databaseGiocatori;
 	private static Controller controller;
+	private MazzoDiCarte mazzoDiCarte;
 	
 	/**
 	 * Aggiorna i giocatori che attualmente stanno giocando (2, 3 o 4) 
@@ -70,10 +73,25 @@ public class Controller extends Observable
 	
 	public void aggiornaDatiUltimoGiocatore(String nomeGiocatore, String nickname, ImageIcon avatar)
 	{
-		Object[] datiGiocatore = { nomeGiocatore, nickname, avatar };
-		databaseGiocatori.modificaDatiUltimoGiocatore(new Giocatore(nomeGiocatore, nickname, avatar));
+		Giocatore giocatore = new Giocatore(nomeGiocatore, nickname, avatar);
+		
+		databaseGiocatori.modificaDatiUltimoGiocatore(giocatore);
 		setChanged();
-		notifyObservers(datiGiocatore);
+		notifyObservers(giocatore);
+	}
+	
+	public void iniziaPartita()
+	{
+		mazzoDiCarte = switch(numeroGiocatoriInPartita)
+					   {
+					        case 2 -> new MazzoDiCarteBuilder()
+							.mischia()
+							.build();
+					        default-> new MazzoDiCarteBuilder()
+					        .combina(new MazzoDiCarteBuilder().build())
+							.mischia()
+							.build(); 
+					   };
 	}
 	
 	public static Controller getInstance()

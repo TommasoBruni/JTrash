@@ -1,6 +1,6 @@
 package eu.uniroma1.model.carte;
 
-public enum Carte 
+public enum Carte
 {
 	C1(Seme.CUORI, Valori.ASSO),
 	Q1(Seme.QUADRI, Valori.ASSO),
