@@ -13,6 +13,7 @@ public class Controller extends Observable
 {
 	private int numeroGiocatoriInPartita;
 	private Database databaseGiocatori;
+	private static Controller controller;
 	
 	/**
 	 * Aggiorna i giocatori che attualmente stanno giocando (2, 3 o 4) 
@@ -75,7 +76,14 @@ public class Controller extends Observable
 		notifyObservers(datiGiocatore);
 	}
 	
-	public Controller()
+	public static Controller getInstance()
+	{
+		if (controller == null)
+			controller = new Controller();
+		return controller;
+	}
+	
+	private Controller()
 	{
 		databaseGiocatori = new Database();
 	}

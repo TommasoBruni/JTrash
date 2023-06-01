@@ -33,7 +33,7 @@ public class DialogProfilo extends JDialog
 	private JButton buttonSelezionaAvatar;
 	private DialogSelezioneAvatar dialogSelezioneAvatar;
 	
-	public DialogProfilo(FrameDiGioco ownerFrame, Controller controller)
+	public DialogProfilo(FrameDiGioco ownerFrame)
 	{
 		super(ownerFrame, "Profilo", false);
 		setResizable(false);
@@ -41,16 +41,16 @@ public class DialogProfilo extends JDialog
 		
 		labelNome = new JLabel("Nome utente");
 		fieldNome = new JTextField(15);
-		fieldNome.setText(controller.getNomeUltimoGiocatore());
+		fieldNome.setText(Controller.getInstance().getNomeUltimoGiocatore());
 		labelNickname = new JLabel("Nickname");
 		fieldNickname = new JTextField(15);
-		fieldNickname.setText(controller.getNicknameUltimoGiocatore());
+		fieldNickname.setText(Controller.getInstance().getNicknameUltimoGiocatore());
 		buttonOk = new JButton("Ok");
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Cambia avatar");
 		dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame(), 
-				  controller.getAvatarUltimoGiocatore().getDescription());
+				  Controller.getInstance().getAvatarUltimoGiocatore().getDescription());
 		
 		buttonSelezionaAvatar.addActionListener(new ActionListener() {
 			@Override
@@ -80,7 +80,7 @@ public class DialogProfilo extends JDialog
 					JOptionPane.showMessageDialog(new JFrame(), "Selezionare avatar!", "Errore inserimento dati", JOptionPane.OK_OPTION);
 					return;
 				}
-				controller.aggiornaDatiUltimoGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
+				Controller.getInstance().aggiornaDatiUltimoGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
 				ownerFrame.enableCampoDiGioco();
 				dispose();
 			}

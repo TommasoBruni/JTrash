@@ -103,13 +103,14 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 	}
 	*/
 	public PannelloGiocatore(String nomeGiocatore, int numeroColonne, int numeroRighe,
-			 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon)
+			 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon, PosizioneDelMazzo posizionedelMazzo)
 	{
-		this(nomeGiocatore, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale, avatarIcon, null);
+		this(nomeGiocatore, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale, avatarIcon, posizionedelMazzo, null);
 	}
 	
 	public PannelloGiocatore(String nomeGiocatore, int numeroColonne, int numeroRighe,
-							 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon, Observable observable)
+							 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon,
+							 PosizioneDelMazzo posizioneDelMazzo, Observable observable)
 	{
 		this.nomeGiocatore = nomeGiocatore;
 		//animationTimer = new Timer();
@@ -137,12 +138,12 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		
 		for (i = 0; i < carte.length / 2; i++)
 		{
-			carte[i] = new ButtonCarta(isHorizontal, "♠1");
+			carte[i] = new ButtonCarta("♠10", posizioneDelMazzo);
 			pannelloCarteSuperiori.add(carte[i]);
 		}
 		for (; i < carte.length; i++)
 		{
-			carte[i] = new ButtonCarta(isHorizontal, "♥1");
+			carte[i] = new ButtonCarta("♥10", posizioneDelMazzo);
 			pannelloCarteInferiori.add(carte[i]);
 		}
 		carte[0].gira();

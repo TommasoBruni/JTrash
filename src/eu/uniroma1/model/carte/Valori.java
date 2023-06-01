@@ -2,7 +2,7 @@ package eu.uniroma1.model.carte;
 
 public enum Valori
 {
-	ASSO("1"),
+	ASSO("A"),
 	DUE("2"),
 	TRE("3"),
 	QUATTRO("4"),

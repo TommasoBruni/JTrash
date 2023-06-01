@@ -28,7 +28,6 @@ import eu.uniroma1.controller.Controller;
  */
 public class FrameDiGioco extends JFrame
 {
-	private Controller controller;
 	private PannelloGiocatore pannelloGiocatorePrincipale;
 	private PannelloGiocatore pannelloGiocatoreRobotDx;
 	private PannelloGiocatore pannelloGiocatoreRobotSx;
@@ -46,7 +45,7 @@ public class FrameDiGioco extends JFrame
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
-		frameInserimentoDati = new FrameInserimentoDati(controller, pannelloPerInternalFrame, this);
+		frameInserimentoDati = new FrameInserimentoDati(pannelloPerInternalFrame, this);
 		frameInserimentoDati.setVisible(true);
         
         pannelloPerInternalFrame.add(frameInserimentoDati, gbc);
@@ -65,17 +64,12 @@ public class FrameDiGioco extends JFrame
         	System.exit(0);
         /* Sono consecutivi */
         setupPerInserimentoDati();
-        controller.aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
+        Controller.getInstance().aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
 	}
 	
 	public void setGridBagLayout()
 	{
 		setLayout(new GridBagLayout());
-	}
-	
-	public Controller getController()
-	{
-		return controller;
 	}
 	
 	public void enableCampoDiGioco()
@@ -115,9 +109,10 @@ public class FrameDiGioco extends JFrame
 			gbc.anchor = GridBagConstraints.CENTER;
 			add(pannelloMazzoDiCarte, gbc);
 			
-			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(controller.getNomeUltimoGiocatore(), 
+			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(Controller.getInstance().getNomeUltimoGiocatore(),
 																		 frameInserimentoDati.getAvatarSelezionato(),
-																		 controller);
+																		 PosizioneDelMazzo.IN_ALTO,
+																		 Controller.getInstance());
 			
 			gbc.gridx = 0;
 			gbc.gridy = 2;
@@ -127,7 +122,8 @@ public class FrameDiGioco extends JFrame
 			add(pannelloGiocatorePrincipale, gbc);
 			
 			//pannelloGiocatorePrincipale.startAnimazione();
-			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco", 
+			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco",
+																			PosizioneDelMazzo.IN_BASSO,
 																			frameInserimentoDati.getAvatarSelezionato());
 	
 			gbc.gridx = 0;
@@ -137,9 +133,10 @@ public class FrameDiGioco extends JFrame
 			gbc.anchor = GridBagConstraints.PAGE_START;
 			add(pannelloGiocatoreRobotDiFronte, gbc);
 			
-			if (controller.getNumeroGiocatoriInPartita() > 2)
+			if (Controller.getInstance().getNumeroGiocatoriInPartita() > 2)
 			{
 				pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca", 
+																			PosizioneDelMazzo.SULLA_SX,
 																			frameInserimentoDati.getAvatarSelezionato());
 				gbc.gridx = 0;
 				gbc.gridy = 1;
@@ -149,9 +146,10 @@ public class FrameDiGioco extends JFrame
 				add(pannelloGiocatoreRobotDx, gbc);
 			}
 			
-			if (controller.getNumeroGiocatoriInPartita() > 3)
+			if (Controller.getInstance().getNumeroGiocatoriInPartita() > 3)
 			{
-				pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo", 
+				pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo",
+																		    PosizioneDelMazzo.SULLA_DX,
 																			frameInserimentoDati.getAvatarSelezionato());
 				gbc.gridx = 0;
 				gbc.gridy = 1;
@@ -175,7 +173,7 @@ public class FrameDiGioco extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				disableCampoDiGioco();
-				DialogProfilo dialogProfilo = new DialogProfilo(FrameDiGioco.this, controller);
+				DialogProfilo dialogProfilo = new DialogProfilo(FrameDiGioco.this);
 			}
 		});
 		
@@ -210,7 +208,6 @@ public class FrameDiGioco extends JFrame
 	{
 		/* Imposta il nome al frame */
 		super("JTrash");
-		controller = new Controller();
 		
 		/* Imposta una grandezza iniziale */
 		setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -42,7 +42,7 @@ public class FrameInserimentoDati extends JInternalFrame
 		return dialogSelezioneAvatar.getSelectedAvatar();
 	}
 	
-	public FrameInserimentoDati(Controller controller, Container parentComponent, FrameDiGioco frameParent)
+	public FrameInserimentoDati(Container parentComponent, FrameDiGioco frameParent)
 	{
 		super("Inserimento dati",
 		          false, //resizable
@@ -79,7 +79,7 @@ public class FrameInserimentoDati extends JInternalFrame
 					return;
 				}
 					
-				controller.aggiungiGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
+				Controller.getInstance().aggiungiGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
 				/* Dispose utile per chiudere la finestra corrente */
 				dispose();
 				frameParent.impostaCampoDiGioco();

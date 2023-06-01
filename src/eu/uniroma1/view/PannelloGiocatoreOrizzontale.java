@@ -14,14 +14,16 @@ public class PannelloGiocatoreOrizzontale extends PannelloGiocatore
 	private static final int gapVerticale = 50;
 	private static final int gapOrizzontale = 0;
 	
-	public PannelloGiocatoreOrizzontale(String nomeGiocatore, ImageIcon avatarIcon)
+	public PannelloGiocatoreOrizzontale(String nomeGiocatore, PosizioneDelMazzo posizioneDelMazzo,
+										ImageIcon avatarIcon)
 	{
-		this(nomeGiocatore, avatarIcon, null);
+		this(nomeGiocatore, avatarIcon, posizioneDelMazzo, null);
 	}
 	
-	public PannelloGiocatoreOrizzontale(String nomeGiocatore, ImageIcon avatarIcon, Observable observable)
+	public PannelloGiocatoreOrizzontale(String nomeGiocatore, ImageIcon avatarIcon,
+										PosizioneDelMazzo posizioneDelMazzo, Observable observable)
 	{
 		super(nomeGiocatore, numeroColonne, numeroRighe, 
-			  gapVerticale, gapOrizzontale, avatarIcon, observable);
+			  gapVerticale, gapOrizzontale, avatarIcon, posizioneDelMazzo, observable);
 	}
 }
