@@ -1,4 +1,4 @@
-package eu.uniroma1.view;
+package eu.uniroma1.view.dialog;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import eu.uniroma1.controller.Controller;
+import eu.uniroma1.view.FrameDiGioco;
 
 public class DialogProfilo extends JDialog
 {

@@ -24,6 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import eu.uniroma1.controller.Controller;
+import eu.uniroma1.model.eccezioni.MazzoFinitoException;
+import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
+import eu.uniroma1.view.dialog.DialogSelezioneAvatar;
 
 public class FrameInserimentoDati extends JInternalFrame 
 {

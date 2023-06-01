@@ -1,4 +1,4 @@
-package eu.uniroma1.view;
+package eu.uniroma1.view.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

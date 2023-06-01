@@ -1,4 +1,4 @@
-package eu.uniroma1.view;
+package eu.uniroma1.view.panel;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -28,7 +28,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
+import eu.uniroma1.controller.Controller;
 import eu.uniroma1.model.*;
+import eu.uniroma1.model.eccezioni.MazzoFinitoException;
+import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
+import eu.uniroma1.view.ButtonCarta;
+import eu.uniroma1.view.PosizioneDelMazzo;
 
 public abstract class PannelloGiocatore extends JPanel implements Observer
 {
@@ -104,14 +110,14 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 	}
 	*/
 	public PannelloGiocatore(String nomeGiocatore, int numeroColonne, int numeroRighe,
-			 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon, PosizioneDelMazzo posizionedelMazzo)
+			 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon, PosizioneDelMazzo posizionedelMazzo) throws PartitaNonInCorsoException, MazzoFinitoException
 	{
 		this(nomeGiocatore, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale, avatarIcon, posizionedelMazzo, null);
 	}
 	
 	public PannelloGiocatore(String nomeGiocatore, int numeroColonne, int numeroRighe,
 							 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon,
-							 PosizioneDelMazzo posizioneDelMazzo, Observable observable)
+							 PosizioneDelMazzo posizioneDelMazzo, Observable observable) throws PartitaNonInCorsoException, MazzoFinitoException
 	{
 		this.nomeGiocatore = nomeGiocatore;
 		//animationTimer = new Timer();
@@ -139,15 +145,15 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		
 		for (i = 0; i < carte.length / 2; i++)
 		{
-			carte[i] = new ButtonCarta("Jolly", posizioneDelMazzo);
+			carte[i] = new ButtonCarta(Controller.getInstance().prossimaCarta(), posizioneDelMazzo);
 			pannelloCarteSuperiori.add(carte[i]);
 		}
 		for (; i < carte.length; i++)
 		{
-			carte[i] = new ButtonCarta("♥10", posizioneDelMazzo);
+			carte[i] = new ButtonCarta(Controller.getInstance().prossimaCarta(), posizioneDelMazzo);
 			pannelloCarteInferiori.add(carte[i]);
 		}
-		carte[0].gira();
+		Arrays.stream(carte).forEach((carta) -> carta.gira());
 		
 		if (!isHorizontal)
 		{

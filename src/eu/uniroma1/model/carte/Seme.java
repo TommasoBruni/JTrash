@@ -5,21 +5,17 @@ package eu.uniroma1.model.carte;
  */
 public enum Seme
 {
-	CUORI(), 
-	QUADRI("quadri", "♦"), 
-	FIORI("fiori", "♣"), 
-	PICCHE("picche", "♠");
+	NESSUNO(),
+	CUORI("♥"), 
+	QUADRI("♦"), 
+	FIORI("♣"), 
+	PICCHE("♠");
 	
 	@Override
 	public String toString() 
 	{
-		return nome;
+		return simbolo;
 	}
-	
-	/**
-	 * Nome del seme
-	 */
-	String nome;
 	
 	/**
 	 * Simbolo del seme 
@@ -29,9 +25,8 @@ public enum Seme
 	/**
 	 * Costruttore enumerato seme
 	 */
-	Seme(String nome, String simbolo)
+	Seme(String simbolo)
 	{
-		this.nome=nome;
 		this.simbolo = simbolo;
 	}
 	
@@ -40,6 +35,6 @@ public enum Seme
 	 */
 	Seme()
 	{
-		this("cuori", "♥");
+		this("");
 	}
 }

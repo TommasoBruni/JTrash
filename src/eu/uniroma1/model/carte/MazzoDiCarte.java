@@ -1,11 +1,15 @@
 package eu.uniroma1.model.carte;
 
 import java.util.Iterator;
+
+import eu.uniroma1.model.eccezioni.MazzoFinitoException;
+
 import java.util.*;
 
 public class MazzoDiCarte implements Iterable<Carte>
 {
 	private Carte[] mazzo;
+	private int indiceCorrente;
 	
 	@Override
 	public String toString() 
@@ -18,6 +22,13 @@ public class MazzoDiCarte implements Iterable<Carte>
 		strB.replace(strB.length() - 2, strB.length() - 2, "");
 		strB.append("]");
 		return strB.toString();
+	}
+	
+	public Carte prossimaCarta() throws MazzoFinitoException
+	{
+		if (indiceCorrente + 1 >= mazzo.length)
+			throw new MazzoFinitoException();
+		return mazzo[indiceCorrente++];
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package eu.uniroma1.view;
+package eu.uniroma1.view.dialog;
 
 import java.awt.Color;
 import java.awt.Component;

@@ -14,7 +14,8 @@ public enum Valori
 	DIECI("10"),
 	JACK("J"),
 	QUEEN("Q"),
-	KING("K");
+	KING("K"),
+	JOLLY("Jolly");
 
 	String nome;
 	
