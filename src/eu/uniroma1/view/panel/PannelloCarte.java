@@ -33,37 +33,17 @@ import eu.uniroma1.controller.Controller;
 import eu.uniroma1.model.*;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
-import eu.uniroma1.view.ButtonCarta;
-import eu.uniroma1.view.PosizioneDelMazzo;
 import eu.uniroma1.view.border.BordoPannelloGiocatore;
+import eu.uniroma1.view.button.ButtonCarta;
+import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
-public abstract class PannelloGiocatore extends JPanel implements Observer
+public abstract class PannelloCarte extends JPanel
 {
 	private ButtonCarta[] carte;
 	private Timer animationTimer;
-	private String nomeGiocatore;
-	private JLabel labelIcon;
-	private ImageIcon icon;
 	private boolean firstTime;
 	private int xMovement;
 	private int yMovement;
-	private BordoPannelloGiocatore bordoPannelloGiocatore;
-	
-	private void setBorderWithName(String nomeGiocatore)
-	{
-		bordoPannelloGiocatore = new BordoPannelloGiocatore(nomeGiocatore);
-		
-		setBorder(bordoPannelloGiocatore);
-	}
-	
-	@Override
-	public void update(Observable o, Object arg)
-	{
-		Giocatore giocatore = (Giocatore)arg;
-		setBorderWithName(giocatore.getNome());
-
-		labelIcon.setIcon(giocatore.getAvatar());
-	}
 	
 	/*
 	@Override
@@ -108,37 +88,26 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		animationTimer.restart();
 	}
 	*/
-	public PannelloGiocatore(String nomeGiocatore, int numeroColonne, int numeroRighe,
-			 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon, PosizioneDelMazzo posizionedelMazzo) throws PartitaNonInCorsoException, MazzoFinitoException
-	{
-		this(nomeGiocatore, numeroColonne, numeroRighe, gapVerticale, gapOrizzontale, avatarIcon, posizionedelMazzo, null);
-	}
 	
-	public PannelloGiocatore(String nomeGiocatore, int numeroColonne, int numeroRighe,
-							 int gapVerticale, int gapOrizzontale, ImageIcon avatarIcon,
-							 PosizioneDelMazzo posizioneDelMazzo, Observable observable) throws PartitaNonInCorsoException, MazzoFinitoException
+	public PannelloCarte(PosizioneDelMazzo posizioneDelMazzo) throws PartitaNonInCorsoException, MazzoFinitoException
 	{
-		this.nomeGiocatore = nomeGiocatore;
 		//animationTimer = new Timer();
-		int i;
-		boolean isHorizontal = numeroColonne < numeroRighe;
+		int i, j;
+		boolean isHorizontal = (posizioneDelMazzo == PosizioneDelMazzo.SULLA_DX || posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX);
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();
-		GridBagConstraints gbc = new GridBagConstraints();
+		GridBagConstraints gbcTraPanelInfESup = new GridBagConstraints();
+		GridBagConstraints gbcPerCarte = new GridBagConstraints();
 		
 		firstTime = true;
-		labelIcon = new JLabel(avatarIcon);
 		
-		if (observable != null)
-			observable.addObserver(this);
-		
+		/*
 		pannelloCarteSuperiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
 		pannelloCarteInferiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
-		
-		setBorderWithName(this.nomeGiocatore);
+		*/
+		pannelloCarteSuperiori.setLayout(new GridBagLayout());
+		pannelloCarteInferiori.setLayout(new GridBagLayout());
 		setLayout(new GridBagLayout());
-		
-		setPreferredSize(new Dimension(600, 650));
 		
 		carte = new ButtonCarta[10];
 		
@@ -153,12 +122,26 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 					c.gira();
 				}
 			});
-			pannelloCarteSuperiori.add(carte[i]);
+			if (isHorizontal)
+			{
+				gbcPerCarte.gridx = 0;
+				gbcPerCarte.gridy = i;
+				gbcPerCarte.insets = new Insets(0, 0, 15, 0);
+			}
+			else
+			{
+				gbcPerCarte.gridx = i;
+				gbcPerCarte.gridy = 0;
+				gbcPerCarte.insets = new Insets(0, 0, 0, 15);
+			}
+			
+			pannelloCarteSuperiori.add(carte[i], gbcPerCarte);
 		}
-		for (; i < carte.length; i++)
+		
+		for (j = 0; j + i < carte.length; j++)
 		{
-			carte[i] = new ButtonCarta(Controller.getInstance().prossimaCarta(), posizioneDelMazzo);
-			carte[i].addActionListener(new ActionListener() {	
+			carte[j + i] = new ButtonCarta(Controller.getInstance().prossimaCarta(), posizioneDelMazzo);
+			carte[j + i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
@@ -166,60 +149,54 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 					c.gira();
 				}
 			});
-			pannelloCarteInferiori.add(carte[i]);
+			if (isHorizontal)
+			{
+				gbcPerCarte.gridx = 0;
+				gbcPerCarte.gridy = j;
+				gbcPerCarte.insets = new Insets(0, 0, 15, 0);
+			}
+			else
+			{
+				gbcPerCarte.gridx = j;
+				gbcPerCarte.gridy = 0;
+				gbcPerCarte.insets = new Insets(0, 0, 0, 15);
+			}
+			pannelloCarteInferiori.add(carte[j + i], gbcPerCarte);
 		}
+		
+		if (isHorizontal)
+			gbcTraPanelInfESup.insets = new Insets(0, 0, 0, 5);
+		else
+			gbcTraPanelInfESup.insets = new Insets(0, 0, 5, 0);
 		
 		if (!isHorizontal)
 		{
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			gbc.weightx = 0.1;
-			gbc.weighty = 0.1;
+			gbcTraPanelInfESup.gridx = 1;
+			gbcTraPanelInfESup.gridy = 0;
+			gbcTraPanelInfESup.weightx = 0.1;
+			gbcTraPanelInfESup.weighty = 0.1;
 		}
 		else
 		{
-			gbc.gridx = 0;
-			gbc.gridy = 1;
-			gbc.weightx = 0.1;
-			gbc.weighty = 0.1;
-			gbc.insets = new Insets(10, 0, 0, 0);
+			gbcTraPanelInfESup.gridx = 0;
+			gbcTraPanelInfESup.gridy = 0;
+			gbcTraPanelInfESup.weightx = 0.1;
+			gbcTraPanelInfESup.weighty = 0.1;
 		}
 		
-		add(labelIcon, gbc);
-		
-		if (isHorizontal)
-			gbc.insets = new Insets(0, 0, 0, 10);
-		else
-			gbc.insets = new Insets(0, 0, 10, 0);
-		
-		if (!isHorizontal)
-		{
-			gbc.gridx = 1;
-			gbc.gridy = 0;
-			gbc.weightx = 0.1;
-			gbc.weighty = 0.1;
-		}
-		else
-		{
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			gbc.weightx = 0.1;
-			gbc.weighty = 0.1;
-		}
-		
-		add(pannelloCarteSuperiori, gbc);
-		gbc.weightx = 1;
-		gbc.weighty = 1;
+		add(pannelloCarteSuperiori, gbcTraPanelInfESup);
+		gbcTraPanelInfESup.weightx = 1;
+		gbcTraPanelInfESup.weighty = 1;
 		if (isHorizontal)
 		{
-		    gbc.gridx = 1;
-		    gbc.gridy = 0;
+		    gbcTraPanelInfESup.gridx = 1;
+		    gbcTraPanelInfESup.gridy = 0;
 		}
 		else
 		{
-		    gbc.gridx = 1;
-		    gbc.gridy = 1;
+		    gbcTraPanelInfESup.gridx = 1;
+		    gbcTraPanelInfESup.gridy = 1;
 		}
-		add(pannelloCarteInferiori, gbc);
+		add(pannelloCarteInferiori, gbcTraPanelInfESup);
 	}
 }

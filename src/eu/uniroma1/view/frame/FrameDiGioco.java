@@ -1,4 +1,4 @@
-package eu.uniroma1.view;
+package eu.uniroma1.view.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,20 +26,23 @@ import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.dialog.DialogProfilo;
 import eu.uniroma1.view.panel.PannelloAnimazione;
-import eu.uniroma1.view.panel.PannelloGiocatore;
-import eu.uniroma1.view.panel.PannelloGiocatoreOrizzontale;
-import eu.uniroma1.view.panel.PannelloGiocatoreVerticale;
+import eu.uniroma1.view.panel.PannelloAvatarPunteggio;
+import eu.uniroma1.view.panel.PannelloCarte;
+import eu.uniroma1.view.panel.PannelloCarteOrizzontale;
+import eu.uniroma1.view.panel.PannelloCarteVerticale;
+import eu.uniroma1.view.panel.PannelloContenitore;
 import eu.uniroma1.view.panel.PannelloMazzoDiCarte;
+import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
 /**
  * Classe per creare il frame di gioco
  */
 public class FrameDiGioco extends JFrame
 {
-	private PannelloGiocatore pannelloGiocatorePrincipale;
-	private PannelloGiocatore pannelloGiocatoreRobotDx;
-	private PannelloGiocatore pannelloGiocatoreRobotSx;
-	private PannelloGiocatore pannelloGiocatoreRobotDiFronte;
+	private PannelloContenitore pannelloGiocatorePrincipale;
+	private PannelloContenitore pannelloGiocatoreRobotDx;
+	private PannelloContenitore pannelloGiocatoreRobotSx;
+	private PannelloContenitore pannelloGiocatoreRobotDiFronte;
 	private PannelloMazzoDiCarte pannelloMazzoDiCarte;
 	private FrameInserimentoDati frameInserimentoDati;
 	
@@ -121,10 +124,12 @@ public class FrameDiGioco extends JFrame
 		
 		try 
 		{
-			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(Controller.getInstance().getNomeUltimoGiocatore(),
-																		 frameInserimentoDati.getAvatarSelezionato(),
-																		 PosizioneDelMazzo.IN_ALTO,
-																		 Controller.getInstance());
+			pannelloGiocatorePrincipale = new PannelloContenitore(new PannelloCarteVerticale(PosizioneDelMazzo.IN_ALTO),
+																  new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
+																		  					  Controller.getInstance().getAvatarUltimoGiocatore(),
+																		  					  Controller.getInstance()),
+																  PosizioneDelMazzo.IN_ALTO);
+			
 			gbc.gridx = 0;
 			gbc.gridy = 2;
 			gbc.weightx = 0.1;
@@ -142,9 +147,11 @@ public class FrameDiGioco extends JFrame
 		//pannelloGiocatorePrincipale.startAnimazione();
 		try 
 		{
-			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco",
-																		PosizioneDelMazzo.IN_BASSO,
-																		frameInserimentoDati.getAvatarSelezionato());
+			pannelloGiocatoreRobotDiFronte = new PannelloContenitore(new PannelloCarteVerticale(PosizioneDelMazzo.IN_BASSO),
+																	 new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
+																			  					  Controller.getInstance().getAvatarUltimoGiocatore(),
+																			  					  null),
+																	  PosizioneDelMazzo.IN_BASSO);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.weightx = 0.1;
@@ -163,9 +170,11 @@ public class FrameDiGioco extends JFrame
 		{
 			try
 			{
-				pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca", 
-																			PosizioneDelMazzo.SULLA_SX,
-																			frameInserimentoDati.getAvatarSelezionato());
+				pannelloGiocatoreRobotDx = new PannelloContenitore(new PannelloCarteOrizzontale(PosizioneDelMazzo.SULLA_SX),
+																   new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
+																			  				   Controller.getInstance().getAvatarUltimoGiocatore(),
+																			  				   null),
+																   PosizioneDelMazzo.SULLA_SX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -185,9 +194,11 @@ public class FrameDiGioco extends JFrame
 		{
 			try 
 			{
-				pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo",
-																		    PosizioneDelMazzo.SULLA_DX,
-																			frameInserimentoDati.getAvatarSelezionato());
+				pannelloGiocatoreRobotSx = new PannelloContenitore(new PannelloCarteOrizzontale(PosizioneDelMazzo.SULLA_DX),
+																   new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
+																			  				   Controller.getInstance().getAvatarUltimoGiocatore(),
+																			  				   null),
+																   PosizioneDelMazzo.SULLA_DX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;

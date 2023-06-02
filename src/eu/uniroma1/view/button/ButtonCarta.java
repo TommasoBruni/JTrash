@@ -1,4 +1,4 @@
-package eu.uniroma1.view;
+package eu.uniroma1.view.button;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,6 +11,7 @@ import javax.swing.JButton;
 
 import eu.uniroma1.model.carte.Carte;
 import eu.uniroma1.model.carte.Colore;
+import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
 import java.awt.geom.AffineTransform;
 import java.awt.Graphics2D;

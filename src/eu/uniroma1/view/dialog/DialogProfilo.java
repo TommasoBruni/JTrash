@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import eu.uniroma1.controller.Controller;
-import eu.uniroma1.view.FrameDiGioco;
+import eu.uniroma1.view.frame.FrameDiGioco;
 
 public class DialogProfilo extends JDialog
 {

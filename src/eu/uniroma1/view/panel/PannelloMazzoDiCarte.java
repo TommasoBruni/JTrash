@@ -7,16 +7,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import eu.uniroma1.controller.Controller;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
-import eu.uniroma1.view.ButtonCarta;
-import eu.uniroma1.view.PosizioneDelMazzo;
+import eu.uniroma1.view.button.ButtonCarta;
+import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
 import javax.swing.*;
 

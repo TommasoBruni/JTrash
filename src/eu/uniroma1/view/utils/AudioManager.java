@@ -1,4 +1,4 @@
-package eu.uniroma1.view;
+package eu.uniroma1.view.utils;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
