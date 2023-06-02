@@ -36,7 +36,7 @@ public class DialogProfilo extends JDialog
 	
 	public DialogProfilo(FrameDiGioco ownerFrame)
 	{
-		super(ownerFrame, "Profilo", false);
+		super(ownerFrame, "Profilo", true);
 		setResizable(false);
 		JPanel pannelloContenitore = new JPanel();
 		
