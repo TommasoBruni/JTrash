@@ -31,7 +31,7 @@ public class DialogSelezioneAvatar extends JDialog
     {
         super(parent, "Selezione Avatar", true);
         avatarArray = new ImageIcon[] { new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero1.png"), "avatar Naruto"),
-					  new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero2.png"), "avatar Sasuke")};
+					  new ImageIcon(System.getProperty("user.dir").concat("\\resources\\avatar_numero2.jpg"), "avatar Sasuke")};
         if (defaultAvatarDescr != null)
         {
         	while (indiceIcone < avatarArray.length &&
@@ -40,7 +40,7 @@ public class DialogSelezioneAvatar extends JDialog
         }
         selectedAvatar = null;
         GridBagConstraints gbc = new GridBagConstraints();
-
+        
         setResizable(false);
         JPanel panel = new JPanel(new GridBagLayout());
         JButton scorriADestra = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_a_destra.png")));
@@ -49,9 +49,9 @@ public class DialogSelezioneAvatar extends JDialog
         scorriADestra.setBackground(Color.ORANGE);
         scorriASinistra.setBackground(Color.ORANGE);
         
-        setBackground(Color.WHITE);
         //setMinimumSize(new Dimension(300, 300));
         avatarButton = new JButton(avatarArray[indiceIcone]);
+        
 		avatarButton.setPreferredSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
 		avatarButton.setMaximumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
 		avatarButton.setMinimumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
