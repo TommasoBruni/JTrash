@@ -69,19 +69,16 @@ public class DialogProfilo extends JDialog
 				String nomeUtente = fieldNome.getText();
 				String nickname = fieldNickname.getText();
 				
-				/* Si controlla che non siano vuoti e che non contengano solamente spazi vuoti */
+				/* Si controlla che non siano vuoti e che non contengano solamente spazi */
 				if (nomeUtente.isBlank() || nickname.isBlank())
 				{
 					JOptionPane.showMessageDialog(new JFrame(), "Inserire dati validi!", "Errore inserimento dati", JOptionPane.OK_OPTION);
 					return;
 				}
 				
-				if (dialogSelezioneAvatar.getSelectedAvatar() == null)
-				{
-					JOptionPane.showMessageDialog(new JFrame(), "Selezionare avatar!", "Errore inserimento dati", JOptionPane.OK_OPTION);
-					return;
-				}
-				Controller.getInstance().aggiornaDatiUltimoGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
+				Controller.getInstance().aggiornaDatiUltimoGiocatore(nomeUtente, nickname, 
+																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
+																	 Controller.getInstance().getAvatarUltimoGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
 				ownerFrame.enableCampoDiGioco();
 				dispose();
 			}

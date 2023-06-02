@@ -35,6 +35,7 @@ import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.ButtonCarta;
 import eu.uniroma1.view.PosizioneDelMazzo;
+import eu.uniroma1.view.border.BordoPannelloGiocatore;
 
 public abstract class PannelloGiocatore extends JPanel implements Observer
 {
@@ -46,20 +47,18 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 	private boolean firstTime;
 	private int xMovement;
 	private int yMovement;
+	private BordoPannelloGiocatore bordoPannelloGiocatore;
 	
 	private void setBorderWithName(String nomeGiocatore)
 	{
-		Border bordoInterno = BorderFactory.createTitledBorder(nomeGiocatore);
-		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 0, 0, 0);
-		Border bordoComposto = BorderFactory.createCompoundBorder(bordoEsterno, bordoInterno);
+		bordoPannelloGiocatore = new BordoPannelloGiocatore(nomeGiocatore);
 		
-		setBorder(bordoComposto);
+		setBorder(bordoPannelloGiocatore);
 	}
 	
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		/* Primo nome giocatore, secondo nickname e terzo icona */
 		Giocatore giocatore = (Giocatore)arg;
 		setBorderWithName(giocatore.getNome());
 
@@ -146,14 +145,29 @@ public abstract class PannelloGiocatore extends JPanel implements Observer
 		for (i = 0; i < carte.length / 2; i++)
 		{
 			carte[i] = new ButtonCarta(Controller.getInstance().prossimaCarta(), posizioneDelMazzo);
+			carte[i].addActionListener(new ActionListener() {	
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					ButtonCarta c = (ButtonCarta)e.getSource();
+					c.gira();
+				}
+			});
 			pannelloCarteSuperiori.add(carte[i]);
 		}
 		for (; i < carte.length; i++)
 		{
 			carte[i] = new ButtonCarta(Controller.getInstance().prossimaCarta(), posizioneDelMazzo);
+			carte[i].addActionListener(new ActionListener() {	
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					ButtonCarta c = (ButtonCarta)e.getSource();
+					c.gira();
+				}
+			});
 			pannelloCarteInferiori.add(carte[i]);
 		}
-		Arrays.stream(carte).forEach((carta) -> carta.gira());
 		
 		if (!isHorizontal)
 		{

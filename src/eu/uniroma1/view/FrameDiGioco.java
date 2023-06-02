@@ -92,118 +92,118 @@ public class FrameDiGioco extends JFrame
 	
 	public void impostaCampoDiGioco()
 	{
-			PannelloAnimazione pannelloAnimazione;
-			/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-			pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
-			GridBagConstraints gbc = new GridBagConstraints();
-			
-			setGridBagLayout();
-			/* Dice al controller di iniziare la partita */
-			Controller.getInstance().iniziaPartita();
-			
-			/*
+		/* Dice al controller di iniziare la partita */
+		Controller.getInstance().iniziaPartita();
+		PannelloAnimazione pannelloAnimazione;
+		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
+		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		setGridBagLayout();
+		
+		/*
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		*/
+		//pannelloAnimazione = new PannelloAnimazione();
+		//add(pannelloAnimazione);
+		
+		// Inserisco il mazzo
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		add(pannelloMazzoDiCarte, gbc);
+		
+		try 
+		{
+			pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(Controller.getInstance().getNomeUltimoGiocatore(),
+																		 frameInserimentoDati.getAvatarSelezionato(),
+																		 PosizioneDelMazzo.IN_ALTO,
+																		 Controller.getInstance());
 			gbc.gridx = 0;
-			gbc.gridy = 1;
+			gbc.gridy = 2;
 			gbc.weightx = 0.1;
 			gbc.weighty = 0.1;
-			gbc.anchor = GridBagConstraints.CENTER;
-			*/
-			//pannelloAnimazione = new PannelloAnimazione();
-			//add(pannelloAnimazione);
-			
-			// Inserisco il mazzo
+			gbc.anchor = GridBagConstraints.PAGE_END;
+			add(pannelloGiocatorePrincipale, gbc);
+		} 
+		catch (PartitaNonInCorsoException | MazzoFinitoException e) 
+		{
+			/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
+			 * momento la partita */
+			e.printStackTrace();
+		}			
+		
+		//pannelloGiocatorePrincipale.startAnimazione();
+		try 
+		{
+			pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco",
+																		PosizioneDelMazzo.IN_BASSO,
+																		frameInserimentoDati.getAvatarSelezionato());
 			gbc.gridx = 0;
-			gbc.gridy = 1;
+			gbc.gridy = 0;
 			gbc.weightx = 0.1;
 			gbc.weighty = 0.1;
-			gbc.anchor = GridBagConstraints.CENTER;
-			add(pannelloMazzoDiCarte, gbc);
-			
-			try 
+			gbc.anchor = GridBagConstraints.PAGE_START;
+			add(pannelloGiocatoreRobotDiFronte, gbc);
+		} 
+		catch (PartitaNonInCorsoException | MazzoFinitoException e) 
+		{
+			/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
+			 * momento la partita */
+			e.printStackTrace();
+		}
+		
+		if (Controller.getInstance().getNumeroGiocatoriInPartita() > 2)
+		{
+			try
 			{
-				pannelloGiocatorePrincipale = new PannelloGiocatoreVerticale(Controller.getInstance().getNomeUltimoGiocatore(),
-																			 frameInserimentoDati.getAvatarSelezionato(),
-																			 PosizioneDelMazzo.IN_ALTO,
-																			 Controller.getInstance());
-				gbc.gridx = 0;
-				gbc.gridy = 2;
-				gbc.weightx = 0.1;
-				gbc.weighty = 0.1;
-				gbc.anchor = GridBagConstraints.PAGE_END;
-				add(pannelloGiocatorePrincipale, gbc);
-			} 
-			catch (PartitaNonInCorsoException | MazzoFinitoException e) 
-			{
-				/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
-				 * momento la partita */
-				e.printStackTrace();
-			}			
-			
-			//pannelloGiocatorePrincipale.startAnimazione();
-			try 
-			{
-				pannelloGiocatoreRobotDiFronte = new PannelloGiocatoreVerticale("Franco",
-																			PosizioneDelMazzo.IN_BASSO,
+				pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca", 
+																			PosizioneDelMazzo.SULLA_SX,
 																			frameInserimentoDati.getAvatarSelezionato());
 				gbc.gridx = 0;
-				gbc.gridy = 0;
+				gbc.gridy = 1;
 				gbc.weightx = 0.1;
 				gbc.weighty = 0.1;
-				gbc.anchor = GridBagConstraints.PAGE_START;
-				add(pannelloGiocatoreRobotDiFronte, gbc);
+				gbc.anchor = GridBagConstraints.LINE_END;
+				add(pannelloGiocatoreRobotDx, gbc);
 			} 
-			catch (PartitaNonInCorsoException | MazzoFinitoException e) 
+			catch (PartitaNonInCorsoException | MazzoFinitoException e)
 			{
 				/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
 				 * momento la partita */
 				e.printStackTrace();
 			}
-			
-			if (Controller.getInstance().getNumeroGiocatoriInPartita() > 2)
-			{
-				try
-				{
-					pannelloGiocatoreRobotDx = new PannelloGiocatoreOrizzontale("Luca", 
-																				PosizioneDelMazzo.SULLA_SX,
-																				frameInserimentoDati.getAvatarSelezionato());
-					gbc.gridx = 0;
-					gbc.gridy = 1;
-					gbc.weightx = 0.1;
-					gbc.weighty = 0.1;
-					gbc.anchor = GridBagConstraints.LINE_END;
-					add(pannelloGiocatoreRobotDx, gbc);
-				} 
-				catch (PartitaNonInCorsoException | MazzoFinitoException e)
-				{
-					/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
-					 * momento la partita */
-					e.printStackTrace();
-				}
-			}
-			
-			if (Controller.getInstance().getNumeroGiocatoriInPartita() > 3)
-			{
-				try 
-				{
-					pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo",
-																			    PosizioneDelMazzo.SULLA_DX,
-																				frameInserimentoDati.getAvatarSelezionato());
-					gbc.gridx = 0;
-					gbc.gridy = 1;
-					gbc.weightx = 0.1;
-					gbc.weighty = 0.1;
-					gbc.anchor = GridBagConstraints.LINE_START;
-					add(pannelloGiocatoreRobotSx, gbc);
-				} 
-				catch (PartitaNonInCorsoException | MazzoFinitoException e)
-				{
-					/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
-					 * momento la partita */
-					e.printStackTrace();
-				}				
-			}
-			setJMenuBar(creaBarraMenu());
 		}
+		
+		if (Controller.getInstance().getNumeroGiocatoriInPartita() > 3)
+		{
+			try 
+			{
+				pannelloGiocatoreRobotSx = new PannelloGiocatoreOrizzontale("Paolo",
+																		    PosizioneDelMazzo.SULLA_DX,
+																			frameInserimentoDati.getAvatarSelezionato());
+				gbc.gridx = 0;
+				gbc.gridy = 1;
+				gbc.weightx = 0.1;
+				gbc.weighty = 0.1;
+				gbc.anchor = GridBagConstraints.LINE_START;
+				add(pannelloGiocatoreRobotSx, gbc);
+			} 
+			catch (PartitaNonInCorsoException | MazzoFinitoException e)
+			{
+				/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
+				 * momento la partita */
+				e.printStackTrace();
+			}				
+		}
+		setJMenuBar(creaBarraMenu());
+	}
 	
 	private JMenuBar creaBarraMenu()
 	{

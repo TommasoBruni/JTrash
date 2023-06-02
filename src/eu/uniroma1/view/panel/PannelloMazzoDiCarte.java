@@ -11,12 +11,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import eu.uniroma1.controller.Controller;
+import eu.uniroma1.model.eccezioni.MazzoFinitoException;
+import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
+import eu.uniroma1.view.ButtonCarta;
+import eu.uniroma1.view.PosizioneDelMazzo;
+
 import javax.swing.*;
 
 public class PannelloMazzoDiCarte extends JPanel
 {
-	private JButton carteDaPescare;
-	private JButton carteScartate;
+	private ButtonCarta carteDaPescare;
+	private ButtonCarta carteScartate;
 	
 	public JButton getCarteDaPescareButton()
 	{
@@ -25,29 +32,17 @@ public class PannelloMazzoDiCarte extends JPanel
 	
 	public PannelloMazzoDiCarte()
 	{
-		ImageIcon icon;
-		carteDaPescare = new JButton();
-		carteScartate = new JButton();
-		
-		try
+		try 
 		{
-			/* Leggo l'immagine salvata nella directory "resources" dentro il progetto */
-			icon = new ImageIcon(System.getProperty("user.dir").concat("\\resources\\carta_da_gioco_verticale.jpg"));
+			carteDaPescare = new ButtonCarta(Controller.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
+			carteScartate = new ButtonCarta(Controller.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
+			carteScartate.gira();
 		} 
-		catch (Exception ex) 
+		catch (PartitaNonInCorsoException | MazzoFinitoException e)
 		{
-			/* TODO: Lanciare un'altra eccezione */
-		    throw ex;
+			/* Non accadrà mai stiamo creando adesso il campo di gioco */
+			e.printStackTrace();
 		}
-		carteDaPescare.setIcon(icon);
-		carteDaPescare.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-		carteDaPescare.setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-		carteDaPescare.setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-		
-		carteScartate.setIcon(icon);
-		carteScartate.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-		carteScartate.setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-		carteScartate.setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		
         //setBorder(new EmptyBorder(10, 10, 10, 10));	
         setLayout(new GridBagLayout());

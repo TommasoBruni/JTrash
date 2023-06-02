@@ -46,21 +46,17 @@ public class ButtonCarta extends JButton
 	        if (carta == Carte.JOLLY_NERO || carta == Carte.JOLLY_ROSSO)
 	        	font = new Font("Arial", Font.BOLD, 12);
 	        else
-	        	font = new Font("Arial", Font.BOLD, 20);
+	        	font = new Font("Arial", Font.BOLD, 18);
 	        AffineTransform affineTransform = new AffineTransform();
 	        Font rotatedFont;
 	        
 	        switch(posizioneDelMazzo)
 	        {
 	        case SULLA_SX:
-				// questo funzionicchia --> affineTransform.rotate(158);
-				//affineTransform.rotate(160, 5, 25);
 				/* REF: https://www.codejava.net/java-se/graphics/how-to-draw-text-vertically-with-graphics2d */
 				affineTransform.rotate(-(Math.PI / 2));
-				//affineTransform.rotate(Math.toRadians(330), 5, 25);
 				rotatedFont = font.deriveFont(affineTransform);
 				g.setFont(rotatedFont);
-				//insieme a funzionicchia --> g.drawString(valoreCarta, 27, 30);
 				g.drawString(carta.toString(), 26, 34);
 	        	break;
 	        case SULLA_DX:
