@@ -1,10 +1,5 @@
 package eu.uniroma1.view.frame;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -28,8 +23,6 @@ import eu.uniroma1.view.dialog.DialogProfilo;
 import eu.uniroma1.view.panel.PannelloAnimazione;
 import eu.uniroma1.view.panel.PannelloAvatarPunteggio;
 import eu.uniroma1.view.panel.PannelloCarte;
-import eu.uniroma1.view.panel.PannelloCarteOrizzontale;
-import eu.uniroma1.view.panel.PannelloCarteVerticale;
 import eu.uniroma1.view.panel.PannelloContenitore;
 import eu.uniroma1.view.panel.PannelloMazzoDiCarte;
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
@@ -103,7 +96,6 @@ public class FrameDiGioco extends JFrame
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setGridBagLayout();
-		
 		/*
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -124,7 +116,7 @@ public class FrameDiGioco extends JFrame
 		
 		try 
 		{
-			pannelloGiocatorePrincipale = new PannelloContenitore(new PannelloCarteVerticale(PosizioneDelMazzo.IN_ALTO),
+			pannelloGiocatorePrincipale = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_ALTO),
 																  new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
 																		  					  Controller.getInstance().getAvatarUltimoGiocatore(),
 																		  					  Controller.getInstance()),
@@ -147,7 +139,7 @@ public class FrameDiGioco extends JFrame
 		//pannelloGiocatorePrincipale.startAnimazione();
 		try 
 		{
-			pannelloGiocatoreRobotDiFronte = new PannelloContenitore(new PannelloCarteVerticale(PosizioneDelMazzo.IN_BASSO),
+			pannelloGiocatoreRobotDiFronte = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_BASSO),
 																	 new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
 																			  					  Controller.getInstance().getAvatarUltimoGiocatore(),
 																			  					  null),
@@ -170,7 +162,7 @@ public class FrameDiGioco extends JFrame
 		{
 			try
 			{
-				pannelloGiocatoreRobotDx = new PannelloContenitore(new PannelloCarteOrizzontale(PosizioneDelMazzo.SULLA_SX),
+				pannelloGiocatoreRobotDx = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.SULLA_SX),
 																   new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
 																			  				   Controller.getInstance().getAvatarUltimoGiocatore(),
 																			  				   null),
@@ -194,7 +186,7 @@ public class FrameDiGioco extends JFrame
 		{
 			try 
 			{
-				pannelloGiocatoreRobotSx = new PannelloContenitore(new PannelloCarteOrizzontale(PosizioneDelMazzo.SULLA_DX),
+				pannelloGiocatoreRobotSx = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.SULLA_DX),
 																   new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
 																			  				   Controller.getInstance().getAvatarUltimoGiocatore(),
 																			  				   null),

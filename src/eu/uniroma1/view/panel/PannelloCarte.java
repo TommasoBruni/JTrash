@@ -37,7 +37,7 @@ import eu.uniroma1.view.border.BordoPannelloGiocatore;
 import eu.uniroma1.view.button.ButtonCarta;
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
-public abstract class PannelloCarte extends JPanel
+public class PannelloCarte extends JPanel
 {
 	private ButtonCarta[] carte;
 	private Timer animationTimer;
@@ -101,10 +101,6 @@ public abstract class PannelloCarte extends JPanel
 		
 		firstTime = true;
 		
-		/*
-		pannelloCarteSuperiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
-		pannelloCarteInferiori.setLayout(new GridLayout(numeroRighe, numeroColonne, gapOrizzontale, gapVerticale));
-		*/
 		pannelloCarteSuperiori.setLayout(new GridBagLayout());
 		pannelloCarteInferiori.setLayout(new GridBagLayout());
 		setLayout(new GridBagLayout());
