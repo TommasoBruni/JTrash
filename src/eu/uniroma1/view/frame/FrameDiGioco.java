@@ -16,11 +16,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.*;
 
-import eu.uniroma1.controller.Controller;
+import eu.uniroma1.controller.ControllerCampoDiGioco;
+import eu.uniroma1.controller.ControllerGiocatore;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.dialog.DialogProfilo;
-import eu.uniroma1.view.interfaces.Closeable;
+import eu.uniroma1.view.utils.interfaces.Closeable;
 import eu.uniroma1.view.panel.PannelloAnimazione;
 import eu.uniroma1.view.panel.PannelloAvatarPunteggio;
 import eu.uniroma1.view.panel.PannelloCarte;
@@ -69,7 +70,7 @@ public class FrameDiGioco extends JFrame implements Closeable
         	System.exit(0);
         /* Sono consecutivi */
         setupPerInserimentoDati();
-        Controller.getInstance().aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
+        ControllerGiocatore.getInstance().aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
 	}
 	
 	public void setGridBagLayout()
@@ -92,7 +93,7 @@ public class FrameDiGioco extends JFrame implements Closeable
 	public void impostaCampoDiGioco()
 	{
 		/* Dice al controller di iniziare la partita */
-		Controller.getInstance().iniziaPartita();
+		ControllerCampoDiGioco.getInstance().iniziaPartita();
 		PannelloAnimazione pannelloAnimazione;
 		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
 		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
@@ -120,9 +121,12 @@ public class FrameDiGioco extends JFrame implements Closeable
 		try 
 		{
 			pannelloGiocatorePrincipale = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_ALTO),
-																  new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
-																		  					  Controller.getInstance().getAvatarUltimoGiocatore(),
-																		  					  Controller.getInstance()),
+																  new PannelloAvatarPunteggio(ControllerGiocatore.getInstance().getNomeGiocatore(),
+																		  					  ControllerGiocatore.getInstance().getAvatarGiocatore(),
+																		  					  ControllerGiocatore.getInstance().getPartiteGiocateGiocatore(),
+																		  					  ControllerGiocatore.getInstance().getPartiteVinteGiocatore(),
+																		  					  ControllerGiocatore.getInstance().getPartitePerseGiocatore(),
+																		  					  ControllerGiocatore.getInstance()),
 																  PosizioneDelMazzo.IN_ALTO);
 			
 			gbc.gridx = 0;
@@ -137,15 +141,14 @@ public class FrameDiGioco extends JFrame implements Closeable
 			/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
 			 * momento la partita */
 			e.printStackTrace();
-		}			
+		}
 		
 		//pannelloGiocatorePrincipale.startAnimazione();
 		try 
 		{
 			pannelloGiocatoreRobotDiFronte = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_BASSO),
-																	 new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
-																			  					  Controller.getInstance().getAvatarUltimoGiocatore(),
-																			  					  null),
+																	 new PannelloAvatarPunteggio(ControllerGiocatore.getInstance().getNomeGiocatore(),
+																			 					 ControllerGiocatore.getInstance().getAvatarGiocatore()),
 																	  PosizioneDelMazzo.IN_BASSO);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
@@ -161,14 +164,13 @@ public class FrameDiGioco extends JFrame implements Closeable
 			e.printStackTrace();
 		}
 		
-		if (Controller.getInstance().getNumeroGiocatoriInPartita() > 2)
+		if (ControllerGiocatore.getInstance().getNumeroGiocatoriInPartita() > 2)
 		{
 			try
 			{
 				pannelloGiocatoreRobotDx = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.SULLA_SX),
-																   new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
-																			  				   Controller.getInstance().getAvatarUltimoGiocatore(),
-																			  				   null),
+																   new PannelloAvatarPunteggio(ControllerGiocatore.getInstance().getNomeGiocatore(),
+																		   				       ControllerGiocatore.getInstance().getAvatarGiocatore()),
 																   PosizioneDelMazzo.SULLA_SX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
@@ -185,14 +187,13 @@ public class FrameDiGioco extends JFrame implements Closeable
 			}
 		}
 		
-		if (Controller.getInstance().getNumeroGiocatoriInPartita() > 3)
+		if (ControllerGiocatore.getInstance().getNumeroGiocatoriInPartita() > 3)
 		{
 			try 
 			{
 				pannelloGiocatoreRobotSx = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.SULLA_DX),
-																   new PannelloAvatarPunteggio(Controller.getInstance().getNomeUltimoGiocatore(),
-																			  				   Controller.getInstance().getAvatarUltimoGiocatore(),
-																			  				   null),
+																   new PannelloAvatarPunteggio(ControllerGiocatore.getInstance().getNomeGiocatore(),
+																		   					   ControllerGiocatore.getInstance().getAvatarGiocatore()),
 																   PosizioneDelMazzo.SULLA_DX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
@@ -224,6 +225,7 @@ public class FrameDiGioco extends JFrame implements Closeable
 			public void actionPerformed(ActionEvent e) {
 				disableComponent();
 				DialogProfilo dialogProfilo = new DialogProfilo(FrameDiGioco.this);
+				dialogProfilo.setVisible(true);
 			}
 		});
 		

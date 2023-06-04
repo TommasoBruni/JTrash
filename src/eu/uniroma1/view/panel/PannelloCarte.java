@@ -29,11 +29,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.controller.Controller;
+import eu.uniroma1.controller.ControllerCampoDiGioco;
 import eu.uniroma1.model.*;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
-import eu.uniroma1.view.border.BordoPannelloGiocatore;
 import eu.uniroma1.view.button.ButtonCarta;
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
@@ -109,7 +108,7 @@ public class PannelloCarte extends JPanel
 		
 		for (i = 0; i < carte.length / 2; i++)
 		{
-			carte[i] = new ButtonCarta(Controller.getInstance().prossimaCarta(), posizioneDelMazzo);
+			carte[i] = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta(), posizioneDelMazzo);
 			carte[i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
@@ -136,7 +135,7 @@ public class PannelloCarte extends JPanel
 		
 		for (j = 0; j + i < carte.length; j++)
 		{
-			carte[j + i] = new ButtonCarta(Controller.getInstance().prossimaCarta(), posizioneDelMazzo);
+			carte[j + i] = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta(), posizioneDelMazzo);
 			carte[j + i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 

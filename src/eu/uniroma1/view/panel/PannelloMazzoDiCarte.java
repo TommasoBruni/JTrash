@@ -6,11 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import eu.uniroma1.controller.Controller;
+import eu.uniroma1.controller.ControllerCampoDiGioco;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
@@ -21,7 +23,10 @@ import javax.swing.*;
 public class PannelloMazzoDiCarte extends JPanel
 {
 	private ButtonCarta carteDaPescare;
-	private ButtonCarta carteScartate;
+	private PannelloTrash trashSpace;
+	private ButtonCarta cartaPescata;
+	private JPanel contenitoreCarte;
+	private boolean firstCard;
 	
 	public JButton getCarteDaPescareButton()
 	{
@@ -30,17 +35,47 @@ public class PannelloMazzoDiCarte extends JPanel
 	
 	public PannelloMazzoDiCarte()
 	{
+		firstCard = true;
 		try 
 		{
-			carteDaPescare = new ButtonCarta(Controller.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
-			carteScartate = new ButtonCarta(Controller.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
-			carteScartate.gira();
+			carteDaPescare = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
+			trashSpace = new PannelloTrash();
+			cartaPescata = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta());
+			cartaPescata.gira();
+			cartaPescata.setVisible(false);
 		} 
 		catch (PartitaNonInCorsoException | MazzoFinitoException e)
 		{
 			/* Non accadrà mai stiamo creando adesso il campo di gioco */
 			e.printStackTrace();
 		}
+		
+		carteDaPescare.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				if (!firstCard)
+				{
+					try 
+					{
+						cartaPescata.cambiaCarta(ControllerCampoDiGioco.getInstance().prossimaCarta());
+					} 
+					catch (PartitaNonInCorsoException | MazzoFinitoException e1) 
+					{
+						carteDaPescare.setVisible(false);
+						JOptionPane.showMessageDialog(new JFrame(), "Non ci sono più carte!", "Partita finita!", JOptionPane.OK_OPTION);
+						return;
+					}
+				}
+				
+				/* Se è la prima carta basta solo impostare il button visibile
+				 * altrimenti bisogna cambiare la carta */
+				cartaPescata.setVisible(true);
+				
+				firstCard = false;
+			}
+		});
 		
         //setBorder(new EmptyBorder(10, 10, 10, 10));	
         setLayout(new GridBagLayout());
@@ -53,8 +88,8 @@ public class PannelloMazzoDiCarte extends JPanel
 		gbc.weighty = 0.01;
 		gbc.anchor = GridBagConstraints.LINE_END;
         
-        JPanel buttons = new JPanel(new GridBagLayout());
-        buttons.add(carteDaPescare, gbc);
+		contenitoreCarte = new JPanel(new GridBagLayout());
+		contenitoreCarte.add(carteDaPescare, gbc);
         
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -63,11 +98,21 @@ public class PannelloMazzoDiCarte extends JPanel
 		gbc.weighty = 0.01;
 		
 		gbc.anchor = GridBagConstraints.LINE_START;
-		
-		/* Per inserire un po' di spazio tra le carte da pescare e quelle scartate */
-		gbc.insets = new Insets(0, 20, 0, 0);
-		buttons.add(carteScartate, gbc);
+		gbc.insets = new Insets(0, 5, 0, 0);
+		contenitoreCarte.add(cartaPescata, gbc);
         
-        add(buttons);
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		
+		gbc.weightx = 0.01;
+		gbc.weighty = 0.01;
+		
+		gbc.anchor = GridBagConstraints.LINE_START;
+		
+		/* Per inserire un po' di spazio tra le carte da pescare, la pescata e quelle scartate */
+		gbc.insets = new Insets(0, 30, 0, 0);
+		contenitoreCarte.add(trashSpace, gbc);
+        
+        add(contenitoreCarte);
 	}
 }

@@ -95,7 +95,18 @@ public class ButtonCarta extends JButton
 		
 		repaint();
 	}
-
+	
+	public void cambiaCarta(Carte carta)
+	{
+		this.carta = carta;
+		repaint();
+	}
+	
+	public ButtonCarta(Carte carta)
+	{
+		this(carta, PosizioneDelMazzo.IN_ALTO);
+	}
+	
 	public ButtonCarta(Carte carta, PosizioneDelMazzo posizioneDelMazzo)
 	{
 		super();

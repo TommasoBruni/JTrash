@@ -20,9 +20,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import eu.uniroma1.controller.Controller;
+import eu.uniroma1.controller.ControllerCampoDiGioco;
+import eu.uniroma1.controller.ControllerGiocatore;
 import eu.uniroma1.view.frame.FrameDiGioco;
-import eu.uniroma1.view.interfaces.Closeable;
+import eu.uniroma1.view.utils.interfaces.Closeable;
 
 public class DialogProfilo extends JDialog
 {
@@ -43,16 +44,16 @@ public class DialogProfilo extends JDialog
 		
 		labelNome = new JLabel("Nome utente");
 		fieldNome = new JTextField(15);
-		fieldNome.setText(Controller.getInstance().getNomeUltimoGiocatore());
+		fieldNome.setText(ControllerGiocatore.getInstance().getNomeGiocatore());
 		labelNickname = new JLabel("Nickname");
 		fieldNickname = new JTextField(15);
-		fieldNickname.setText(Controller.getInstance().getNicknameUltimoGiocatore());
+		fieldNickname.setText(ControllerGiocatore.getInstance().getNicknameGiocatore());
 		buttonOk = new JButton("Ok");
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Cambia avatar");
 		dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame(), 
-				  Controller.getInstance().getAvatarUltimoGiocatore().getDescription());
+				ControllerGiocatore.getInstance().getAvatarGiocatore().getDescription());
 		
 		buttonSelezionaAvatar.addActionListener(new ActionListener() {
 			@Override
@@ -77,9 +78,9 @@ public class DialogProfilo extends JDialog
 					return;
 				}
 				
-				Controller.getInstance().aggiornaDatiUltimoGiocatore(nomeUtente, nickname, 
+				ControllerGiocatore.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, 
 																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
-																	 Controller.getInstance().getAvatarUltimoGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
+																	 ControllerGiocatore.getInstance().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
 				ownerFrame.enableComponent();
 				dispose();
 			}
@@ -108,6 +109,5 @@ public class DialogProfilo extends JDialog
 		
 		setLocationRelativeTo(ownerFrame);
 		pack();
-		setVisible(true);
 	}
 }

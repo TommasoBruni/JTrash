@@ -50,16 +50,18 @@ public class Giocatore
 		return partiteVinte;
 	}
 
-	public void setPartiteVinte(long partiteVinte) {
-		this.partiteVinte = partiteVinte;
+	public void incrementaPartiteVinte()
+	{
+		this.partiteVinte++;
 	}
 
 	public long getPartitePerse() {
 		return partitePerse;
 	}
 
-	public void setPartitePerse(long partitePerse) {
-		this.partitePerse = partitePerse;
+	public void incrementaPartitePerse()
+	{
+		this.partitePerse++;
 	}
 
 	public ImageIcon getAvatar() {
