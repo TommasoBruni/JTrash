@@ -20,6 +20,7 @@ import eu.uniroma1.controller.Controller;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.dialog.DialogProfilo;
+import eu.uniroma1.view.interfaces.Closeable;
 import eu.uniroma1.view.panel.PannelloAnimazione;
 import eu.uniroma1.view.panel.PannelloAvatarPunteggio;
 import eu.uniroma1.view.panel.PannelloCarte;
@@ -30,7 +31,7 @@ import eu.uniroma1.view.utils.PosizioneDelMazzo;
 /**
  * Classe per creare il frame di gioco
  */
-public class FrameDiGioco extends JFrame
+public class FrameDiGioco extends JFrame implements Closeable
 {
 	private PannelloContenitore pannelloGiocatorePrincipale;
 	private PannelloContenitore pannelloGiocatoreRobotDx;
@@ -76,12 +77,14 @@ public class FrameDiGioco extends JFrame
 		setLayout(new GridBagLayout());
 	}
 	
-	public void enableCampoDiGioco()
+	@Override
+	public void enableComponent()
 	{
 		this.setEnabled(true);
 	}
 	
-	public void disableCampoDiGioco()
+	@Override
+	public void disableComponent()
 	{
 		this.setEnabled(false);
 	}
@@ -219,7 +222,7 @@ public class FrameDiGioco extends JFrame
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				disableCampoDiGioco();
+				disableComponent();
 				DialogProfilo dialogProfilo = new DialogProfilo(FrameDiGioco.this);
 			}
 		});

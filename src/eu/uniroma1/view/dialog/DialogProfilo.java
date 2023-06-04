@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 import eu.uniroma1.controller.Controller;
 import eu.uniroma1.view.frame.FrameDiGioco;
+import eu.uniroma1.view.interfaces.Closeable;
 
 public class DialogProfilo extends JDialog
 {
@@ -34,7 +35,7 @@ public class DialogProfilo extends JDialog
 	private JButton buttonSelezionaAvatar;
 	private DialogSelezioneAvatar dialogSelezioneAvatar;
 	
-	public DialogProfilo(FrameDiGioco ownerFrame)
+	public <T extends Frame & Closeable> DialogProfilo(T ownerFrame)
 	{
 		super(ownerFrame, "Profilo", true);
 		setResizable(false);
@@ -79,7 +80,7 @@ public class DialogProfilo extends JDialog
 				Controller.getInstance().aggiornaDatiUltimoGiocatore(nomeUtente, nickname, 
 																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
 																	 Controller.getInstance().getAvatarUltimoGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
-				ownerFrame.enableCampoDiGioco();
+				ownerFrame.enableComponent();
 				dispose();
 			}
 		});
@@ -88,7 +89,7 @@ public class DialogProfilo extends JDialog
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				ownerFrame.enableCampoDiGioco();
+				ownerFrame.enableComponent();
 				dispose();
 			}
 		});
