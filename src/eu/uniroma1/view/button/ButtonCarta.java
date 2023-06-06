@@ -86,20 +86,19 @@ public class ButtonCarta extends JButton
 		{
 			setIcon(null);
 			isScoperta = true;
+			repaint();
 		}
-		else
-		{
-			setIcon(icon);
-			isScoperta = false;
-		}
-		
-		repaint();
 	}
 	
 	public void cambiaCarta(Carte carta)
 	{
 		this.carta = carta;
 		repaint();
+	}
+	
+	public Carte getCarta()
+	{
+		return carta;
 	}
 	
 	public ButtonCarta(Carte carta)
@@ -109,7 +108,6 @@ public class ButtonCarta extends JButton
 	
 	public ButtonCarta(Carte carta, PosizioneDelMazzo posizioneDelMazzo)
 	{
-		super();
 		this.carta = carta;
 		this.posizioneDelMazzo = posizioneDelMazzo;
 		try

@@ -1,5 +1,6 @@
 package eu.uniroma1.view.panel;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -31,12 +32,13 @@ import javax.swing.border.Border;
 
 import eu.uniroma1.controller.ControllerCampoDiGioco;
 import eu.uniroma1.model.*;
+import eu.uniroma1.model.carte.Colore;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
-public class PannelloCarte extends JPanel
+public class PannelloCarte extends JPanel implements Observer
 {
 	private ButtonCarta[] carte;
 	private Timer animationTimer;
@@ -88,6 +90,11 @@ public class PannelloCarte extends JPanel
 	}
 	*/
 	
+	@Override
+	public void update(Observable o, Object arg) 
+	{
+	}
+	
 	public PannelloCarte(PosizioneDelMazzo posizioneDelMazzo) throws PartitaNonInCorsoException, MazzoFinitoException
 	{
 		//animationTimer = new Timer();
@@ -117,6 +124,7 @@ public class PannelloCarte extends JPanel
 					c.gira();
 				}
 			});
+			
 			if (isHorizontal)
 			{
 				gbcPerCarte.gridx = 0;
@@ -136,7 +144,7 @@ public class PannelloCarte extends JPanel
 		for (j = 0; j + i < carte.length; j++)
 		{
 			carte[j + i] = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta(), posizioneDelMazzo);
-			carte[j + i].addActionListener(new ActionListener() {	
+			carte[j + i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{

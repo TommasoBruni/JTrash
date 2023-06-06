@@ -15,6 +15,7 @@ public class ControllerCampoDiGioco extends Observable
 {
 	private static ControllerCampoDiGioco controller;
 	private MazzoDiCarte mazzoDiCarte;
+	private Carte ultimaCartaScartataSelezionata;
 	
 	public void iniziaPartita()
 	{
@@ -53,6 +54,11 @@ public class ControllerCampoDiGioco extends Observable
 			throw ex;
 		}
 		return carta;
+	}
+	
+	public void ultimaCartaScartataSelezionata(Carte carta)
+	{
+		ultimaCartaScartataSelezionata = carta;
 	}
 	
 	public static ControllerCampoDiGioco getInstance()
