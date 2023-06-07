@@ -40,7 +40,7 @@ public class PannelloTrash extends JPanel implements Closeable
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					ControllerCampoDiGioco.getInstance().ultimaCartaScartataSelezionata(carteScartate.getCarta());
+					ControllerCampoDiGioco.getInstance().ultimaCartaSelezionata(carteScartate.getCarta());
 				}
 			});
 			carteScartate.gira();

@@ -55,7 +55,7 @@ public class PannelloMazzoDiCarte extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				ControllerCampoDiGioco.getInstance().ultimaCartaScartataSelezionata(cartaPescata.getCarta());
+				ControllerCampoDiGioco.getInstance().ultimaCartaSelezionata(cartaPescata.getCarta());
 			}
 		});
 		

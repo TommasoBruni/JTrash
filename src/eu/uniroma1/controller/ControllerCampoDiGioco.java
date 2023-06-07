@@ -56,7 +56,7 @@ public class ControllerCampoDiGioco extends Observable
 		return carta;
 	}
 	
-	public void ultimaCartaScartataSelezionata(Carte carta)
+	public void ultimaCartaSelezionata(Carte carta)
 	{
 		ultimaCartaScartataSelezionata = carta;
 		setChanged();
