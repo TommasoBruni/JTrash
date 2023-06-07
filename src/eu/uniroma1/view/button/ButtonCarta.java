@@ -11,6 +11,7 @@ import javax.swing.JButton;
 
 import eu.uniroma1.model.carte.Carte;
 import eu.uniroma1.model.carte.Colore;
+import eu.uniroma1.model.carte.Valori;
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
 import java.awt.geom.AffineTransform;
@@ -22,6 +23,7 @@ public class ButtonCarta extends JButton
 	private Carte carta;
 	private static final String fileCartaGiocoVerticale = "carta_da_gioco_verticale.jpg";
 	private static final String fileCartaGiocoOrizzontale = "carta_da_gioco_orizzontale.jpg";
+	private static final String fileCartaGiocoVerticalePerSuggerimento = "carta_da_gioco_verticale_per_suggerimento.jpg";
 	private boolean isScoperta;
 	private PosizioneDelMazzo posizioneDelMazzo;
 	
@@ -96,6 +98,42 @@ public class ButtonCarta extends JButton
 		repaint();
 	}
 	
+	public void setHintCard()
+	{
+		if (isScoperta)
+			return;
+		setIconP(fileCartaGiocoVerticalePerSuggerimento);
+	}
+	
+	/**
+	 * Re-imposta l'immagine che c'era inizialmente solo se girata
+	 */
+	public void restoreCardImage()
+	{
+		if (isScoperta)
+			return;
+		setIconP(posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX || 
+				  posizioneDelMazzo == PosizioneDelMazzo.SULLA_DX ?
+				  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale);
+	}
+	
+	private void setIconP(String s)
+	{
+		try
+		{
+			/* Leggo l'immagine salvata nella directory "resources" dentro il progetto */
+			icon = new ImageIcon(System.getProperty("user.dir").
+						concat("\\resources\\" + s));
+		} 
+		catch (Exception ex) 
+		{
+			/* Lanciare un'altra eccezione */
+		    throw ex;
+		}
+		
+		setIcon(icon);
+	}
+	
 	public Carte getCarta()
 	{
 		return carta;
@@ -110,21 +148,9 @@ public class ButtonCarta extends JButton
 	{
 		this.carta = carta;
 		this.posizioneDelMazzo = posizioneDelMazzo;
-		try
-		{
-			/* Leggo l'immagine salvata nella directory "resources" dentro il progetto */
-			icon = new ImageIcon(System.getProperty("user.dir").
-						concat("\\resources\\" + (posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX || 
+		setIconP(posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX || 
 												  posizioneDelMazzo == PosizioneDelMazzo.SULLA_DX ?
-												  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale)));
-		} 
-		catch (Exception ex) 
-		{
-			/* Lanciare un'altra eccezione */
-		    throw ex;
-		}
-		
-		setIcon(icon);
+												  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale);
 		setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));

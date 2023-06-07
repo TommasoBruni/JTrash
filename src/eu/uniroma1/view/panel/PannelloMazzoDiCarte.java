@@ -50,6 +50,15 @@ public class PannelloMazzoDiCarte extends JPanel
 			e.printStackTrace();
 		}
 		
+		cartaPescata.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				ControllerCampoDiGioco.getInstance().ultimaCartaScartataSelezionata(cartaPescata.getCarta());
+			}
+		});
+		
 		carteDaPescare.addActionListener(new ActionListener() {
 			
 			@Override

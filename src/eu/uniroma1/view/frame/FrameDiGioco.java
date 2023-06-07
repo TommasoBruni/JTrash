@@ -120,7 +120,7 @@ public class FrameDiGioco extends JFrame implements Closeable
 		
 		try 
 		{
-			pannelloGiocatorePrincipale = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_ALTO),
+			pannelloGiocatorePrincipale = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_ALTO, ControllerCampoDiGioco.getInstance()),
 																  new PannelloAvatarPunteggio(ControllerGiocatore.getInstance().getNomeGiocatore(),
 																		  					  ControllerGiocatore.getInstance().getAvatarGiocatore(),
 																		  					  ControllerGiocatore.getInstance().getPartiteGiocateGiocatore(),

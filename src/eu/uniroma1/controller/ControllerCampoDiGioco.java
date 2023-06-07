@@ -59,6 +59,8 @@ public class ControllerCampoDiGioco extends Observable
 	public void ultimaCartaScartataSelezionata(Carte carta)
 	{
 		ultimaCartaScartataSelezionata = carta;
+		setChanged();
+		notifyObservers(ultimaCartaScartataSelezionata);
 	}
 	
 	public static ControllerCampoDiGioco getInstance()

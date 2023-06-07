@@ -32,7 +32,9 @@ import javax.swing.border.Border;
 
 import eu.uniroma1.controller.ControllerCampoDiGioco;
 import eu.uniroma1.model.*;
+import eu.uniroma1.model.carte.Carte;
 import eu.uniroma1.model.carte.Colore;
+import eu.uniroma1.model.carte.Valori;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
@@ -93,9 +95,45 @@ public class PannelloCarte extends JPanel implements Observer
 	@Override
 	public void update(Observable o, Object arg) 
 	{
+		Valori valore = ((Carte)arg).getValore();
+		int intValue;
+		
+		/* Si re-impostano le immagini originali */
+		for (ButtonCarta carta : carte)
+			carta.restoreCardImage();
+		
+		try
+		{
+			intValue = Integer.parseInt(valore.toString()) - 1;
+		}
+		catch(NumberFormatException ex)
+		{
+			if (valore.toString().equals(Valori.ASSO.toString()))
+			{
+				intValue = 0;
+			}
+			else if (valore.toString().equals(Valori.KING.toString()) || 
+					 valore.toString().equals(Valori.JOLLY.toString()))
+			{
+				for (ButtonCarta carta : carte)
+					carta.setHintCard();
+				return;
+			}
+			else
+			{
+				return;
+			}
+		}
+		
+		carte[intValue].setHintCard();
 	}
 	
 	public PannelloCarte(PosizioneDelMazzo posizioneDelMazzo) throws PartitaNonInCorsoException, MazzoFinitoException
+	{
+		this(posizioneDelMazzo, null);
+	}
+	
+	public PannelloCarte(PosizioneDelMazzo posizioneDelMazzo, Observable observable) throws PartitaNonInCorsoException, MazzoFinitoException
 	{
 		//animationTimer = new Timer();
 		int i, j;
@@ -104,6 +142,9 @@ public class PannelloCarte extends JPanel implements Observer
 		JPanel pannelloCarteInferiori = new JPanel();
 		GridBagConstraints gbcTraPanelInfESup = new GridBagConstraints();
 		GridBagConstraints gbcPerCarte = new GridBagConstraints();
+		
+		if (observable != null)
+			observable.addObserver(this);
 		
 		firstTime = true;
 		

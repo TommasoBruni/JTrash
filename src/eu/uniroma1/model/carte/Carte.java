@@ -74,13 +74,6 @@ public enum Carte
 	Seme seme;
 	Colore colore;
 	
-	Carte(Seme seme, Valori valore, Colore colore)
-	{
-		this.seme = seme;
-		this.valore = valore;
-		this.colore = colore;
-	}
-	
 	@Override
 	public String toString()
 	{
@@ -90,5 +83,17 @@ public enum Carte
 	public Colore getColore()
 	{
 		return colore;
+	}
+	
+	public Valori getValore()
+	{
+		return valore;
+	}
+	
+	Carte(Seme seme, Valori valore, Colore colore)
+	{
+		this.seme = seme;
+		this.valore = valore;
+		this.colore = colore;
 	}
 }

@@ -19,13 +19,13 @@ public enum Valori
 
 	String nome;
 	
-	Valori(String nome) 
-	{
-		this.nome=nome;
-	}
-	
 	public String toString()
 	{
 		return nome;
+	}
+	
+	Valori(String nome) 
+	{
+		this.nome=nome;
 	}
 }
