@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 
 public class Giocatore 
 {
+	private static int idCounter;
+	private int id;
 	private Livello livello;
 	private String nome;
 	private String nickname;
@@ -20,6 +22,11 @@ public class Giocatore
 		this.nickname = nickname;
 		this.avatar = avatar;
 		this.livello = Livello.PRINCIPIANTE;
+		id = idCounter++;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public Livello getLivello() {

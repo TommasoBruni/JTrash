@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 import eu.uniroma1.controller.PlayingFieldController;
-import eu.uniroma1.controller.PlayerController;
+import eu.uniroma1.controller.PlayersController;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.dialog.DialogProfilo;
@@ -70,7 +70,7 @@ public class FrameDiGioco extends JFrame implements Closeable
         	System.exit(0);
         /* Sono consecutivi */
         setupPerInserimentoDati();
-        PlayerController.getInstance().aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
+        PlayersController.getInstance().aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
 	}
 	
 	public void setGridBagLayout()
@@ -121,12 +121,12 @@ public class FrameDiGioco extends JFrame implements Closeable
 		try 
 		{
 			pannelloGiocatorePrincipale = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_ALTO, PlayingFieldController.getInstance().getObservableForHintCard()),
-																  new PannelloAvatarPunteggio(PlayerController.getInstance().getNomeGiocatore(),
-																		  					  PlayerController.getInstance().getAvatarGiocatore(),
-																		  					  PlayerController.getInstance().getPartiteGiocateGiocatore(),
-																		  					  PlayerController.getInstance().getPartiteVinteGiocatore(),
-																		  					  PlayerController.getInstance().getPartitePerseGiocatore(),
-																		  					  PlayerController.getInstance()),
+																  new PannelloAvatarPunteggio(PlayersController.getInstance().getNomeGiocatore(),
+																		  					  PlayersController.getInstance().getAvatarGiocatore(),
+																		  					  PlayersController.getInstance().getPartiteGiocateGiocatore(),
+																		  					  PlayersController.getInstance().getPartiteVinteGiocatore(),
+																		  					  PlayersController.getInstance().getPartitePerseGiocatore(),
+																		  					  PlayersController.getInstance()),
 																  PosizioneDelMazzo.IN_ALTO);
 			
 			gbc.gridx = 0;
@@ -147,8 +147,8 @@ public class FrameDiGioco extends JFrame implements Closeable
 		try 
 		{
 			pannelloGiocatoreRobotDiFronte = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_BASSO),
-																	 new PannelloAvatarPunteggio(PlayerController.getInstance().getNomeGiocatore(),
-																			 					 PlayerController.getInstance().getAvatarGiocatore()),
+																	 new PannelloAvatarPunteggio(PlayersController.getInstance().getNomeGiocatore(),
+																			 					 PlayersController.getInstance().getAvatarGiocatore()),
 																	  PosizioneDelMazzo.IN_BASSO);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
@@ -164,13 +164,13 @@ public class FrameDiGioco extends JFrame implements Closeable
 			e.printStackTrace();
 		}
 		
-		if (PlayerController.getInstance().getNumeroGiocatoriInPartita() > 2)
+		if (PlayersController.getInstance().getNumeroGiocatoriInPartita() > 2)
 		{
 			try
 			{
 				pannelloGiocatoreRobotDx = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.SULLA_SX),
-																   new PannelloAvatarPunteggio(PlayerController.getInstance().getNomeGiocatore(),
-																		   				       PlayerController.getInstance().getAvatarGiocatore()),
+																   new PannelloAvatarPunteggio(PlayersController.getInstance().getNomeGiocatore(),
+																		   				       PlayersController.getInstance().getAvatarGiocatore()),
 																   PosizioneDelMazzo.SULLA_SX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
@@ -187,13 +187,13 @@ public class FrameDiGioco extends JFrame implements Closeable
 			}
 		}
 		
-		if (PlayerController.getInstance().getNumeroGiocatoriInPartita() > 3)
+		if (PlayersController.getInstance().getNumeroGiocatoriInPartita() > 3)
 		{
 			try 
 			{
 				pannelloGiocatoreRobotSx = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.SULLA_DX),
-																   new PannelloAvatarPunteggio(PlayerController.getInstance().getNomeGiocatore(),
-																		   					   PlayerController.getInstance().getAvatarGiocatore()),
+																   new PannelloAvatarPunteggio(PlayersController.getInstance().getNomeGiocatore(),
+																		   					   PlayersController.getInstance().getAvatarGiocatore()),
 																   PosizioneDelMazzo.SULLA_DX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;

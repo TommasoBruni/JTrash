@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import eu.uniroma1.controller.PlayingFieldController;
-import eu.uniroma1.controller.PlayerController;
+import eu.uniroma1.controller.PlayersController;
 import eu.uniroma1.view.frame.FrameDiGioco;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
@@ -44,16 +44,16 @@ public class DialogProfilo extends JDialog
 		
 		labelNome = new JLabel("Nome utente");
 		fieldNome = new JTextField(15);
-		fieldNome.setText(PlayerController.getInstance().getNomeGiocatore());
+		fieldNome.setText(PlayersController.getInstance().getNomeGiocatore());
 		labelNickname = new JLabel("Nickname");
 		fieldNickname = new JTextField(15);
-		fieldNickname.setText(PlayerController.getInstance().getNicknameGiocatore());
+		fieldNickname.setText(PlayersController.getInstance().getNicknameGiocatore());
 		buttonOk = new JButton("Ok");
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Cambia avatar");
 		dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame(), 
-				PlayerController.getInstance().getAvatarGiocatore().getDescription());
+				PlayersController.getInstance().getAvatarGiocatore().getDescription());
 		
 		buttonSelezionaAvatar.addActionListener(new ActionListener() {
 			@Override
@@ -78,9 +78,9 @@ public class DialogProfilo extends JDialog
 					return;
 				}
 				
-				PlayerController.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, 
+				PlayersController.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, 
 																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
-																	 PlayerController.getInstance().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
+																	 PlayersController.getInstance().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
 				ownerFrame.enableComponent();
 				dispose();
 			}

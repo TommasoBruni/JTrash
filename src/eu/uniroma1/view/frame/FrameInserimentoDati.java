@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import eu.uniroma1.controller.PlayingFieldController;
-import eu.uniroma1.controller.PlayerController;
+import eu.uniroma1.controller.PlayersController;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.dialog.DialogSelezioneAvatar;
@@ -83,7 +83,7 @@ public class FrameInserimentoDati extends JInternalFrame
 					return;
 				}
 					
-				PlayerController.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
+				PlayersController.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
 				/* Dispose utile per chiudere la finestra corrente */
 				dispose();
 				frameParent.impostaCampoDiGioco();

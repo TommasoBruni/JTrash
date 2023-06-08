@@ -20,7 +20,7 @@ public class PlayingFieldController
 	
 	public void startGame()
 	{
-		deck = switch(PlayerController.getInstance().getNumeroGiocatoriInPartita())
+		deck = switch(PlayersController.getInstance().getNumeroGiocatoriInPartita())
 					   {
 					        case 2 -> new MazzoDiCarteBuilder()
 							.mischia()
