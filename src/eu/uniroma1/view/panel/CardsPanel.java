@@ -37,6 +37,7 @@ import eu.uniroma1.model.carte.CardColor;
 import eu.uniroma1.model.carte.Value;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
+import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
 import eu.uniroma1.view.utils.DeckPosition;
 
@@ -145,12 +146,12 @@ public class CardsPanel extends JPanel implements Observer
 		cards[intValue].setHintCard();
 	}
 	
-	public CardsPanel(DeckPosition posizioneDelMazzo) throws GameNotInProgressException, DeckFinishedException
+	public CardsPanel(DeckPosition posizioneDelMazzo) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		this(posizioneDelMazzo, null);
 	}
 	
-	public CardsPanel(DeckPosition posizioneDelMazzo, Observable observable) throws GameNotInProgressException, DeckFinishedException
+	public CardsPanel(DeckPosition posizioneDelMazzo, Observable observable) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		//animationTimer = new Timer();
 		int i, j;
@@ -173,13 +174,21 @@ public class CardsPanel extends JPanel implements Observer
 		
 		for (i = 0; i < cards.length / 2; i++)
 		{
-			cards[i] = new CardButton(MainPlayerFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i);
+			cards[i] = new CardButton(MainPlayerFieldController.getInstance().nextCard(), posizioneDelMazzo, i);
 			cards[i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
 					CardButton c = (CardButton)e.getSource();
-					Card newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					Card newCard;
+					try 
+					{
+						newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					}
+					catch (MoveNotAllowedException e1) 
+					{
+						return;
+					}
 					
 					if (newCard == null)
 						return;
@@ -208,13 +217,22 @@ public class CardsPanel extends JPanel implements Observer
 		
 		for (j = 0; j + i < cards.length; j++)
 		{
-			cards[j + i] = new CardButton(MainPlayerFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i + j);
+			cards[j + i] = new CardButton(MainPlayerFieldController.getInstance().nextCard(), posizioneDelMazzo, i + j);
 			cards[j + i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
 					CardButton c = (CardButton)e.getSource();
-					Card newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					Card newCard;
+					
+					try 
+					{
+						newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					} 
+					catch (MoveNotAllowedException e1) 
+					{
+						return;
+					}
 					
 					if (newCard == null)
 						return;

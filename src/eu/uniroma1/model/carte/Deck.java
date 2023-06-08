@@ -8,8 +8,8 @@ import java.util.*;
 
 public class Deck implements Iterable<Card>
 {
-	private Card[] mazzo;
-	private int indiceCorrente;
+	private Card[] cards;
+	private int currentIndex;
 	
 	@Override
 	public String toString() 
@@ -24,11 +24,11 @@ public class Deck implements Iterable<Card>
 		return strB.toString();
 	}
 	
-	public Card prossimaCarta() throws DeckFinishedException
+	public Card nextCard() throws DeckFinishedException
 	{
-		if (indiceCorrente + 1 >= mazzo.length)
+		if (currentIndex + 1 >= cards.length)
 			throw new DeckFinishedException();
-		return mazzo[indiceCorrente++];
+		return cards[currentIndex++];
 	}
 	
 	@Override
@@ -36,64 +36,64 @@ public class Deck implements Iterable<Card>
 	{
 		return new Iterator<Card>() 
 		{
-			private int indice;
+			private int index;
 			
 			@Override
 			public Card next()
 			{
-				return mazzo[indice++];
+				return cards[index++];
 			}
 			
 			@Override
 			public boolean hasNext() 
 			{
-				return indice < mazzo.length;
+				return index < cards.length;
 			}
 		};
 	}
 	
 	private Deck(Card[] mazzo)
 	{
-		this.mazzo = mazzo;
+		this.cards = mazzo;
 	}
 	
 	public static class MazzoDiCarteBuilder
 	{
-		private Card[] mazzo;
+		private Card[] deck;
 		
 		public Deck build()
 		{
-			return new Deck(mazzo);
+			return new Deck(deck);
 		}
 		
-		public MazzoDiCarteBuilder mischia()
+		public MazzoDiCarteBuilder shuffle()
 		{
 			Random random=new Random();
 			int j;
 			Card tmp;
 			
-			for (int i = 0; i < mazzo.length; i++)
+			for (int i = 0; i < deck.length; i++)
 			{
-				j = random.nextInt(mazzo.length);
-				tmp = mazzo[i];
-				mazzo[i] = mazzo[j];
-				mazzo[j] = tmp;
+				j = random.nextInt(deck.length);
+				tmp = deck[i];
+				deck[i] = deck[j];
+				deck[j] = tmp;
 			}
 			return this;
 		} 
 		
-		public MazzoDiCarteBuilder combina(Deck newMazzoDiCarte)
+		public MazzoDiCarteBuilder join(Deck newMazzoDiCarte)
 		{
-		    Card[] result = Arrays.copyOf(mazzo, mazzo.length + newMazzoDiCarte.mazzo.length);
+		    Card[] result = Arrays.copyOf(deck, deck.length + newMazzoDiCarte.cards.length);
 		    
-		    System.arraycopy(newMazzoDiCarte.mazzo, 0, result, mazzo.length, newMazzoDiCarte.mazzo.length);
-		    mazzo = result;
+		    System.arraycopy(newMazzoDiCarte.cards, 0, result, deck.length, newMazzoDiCarte.cards.length);
+		    deck = result;
 		    return this;
 		}
 		
 		public MazzoDiCarteBuilder()
 		{
-			mazzo = Card.values();
+			deck = Card.values();
 		}
 	}
 }

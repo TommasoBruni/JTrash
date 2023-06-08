@@ -18,6 +18,7 @@ import eu.uniroma1.controller.MainPlayerFieldController;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
+import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
@@ -61,7 +62,7 @@ public class TrashPanel extends JPanel implements Closeable
 		discardedCards = new ArrayList<>();
 		try 
 		{
-			Card firstCard = MainPlayerFieldController.getInstance().prossimaCarta();
+			Card firstCard = MainPlayerFieldController.getInstance().nextCard();
 			
 			discardedCards.add(firstCard);
 			carteScartate = new CardButton(firstCard);
@@ -69,14 +70,22 @@ public class TrashPanel extends JPanel implements Closeable
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					MainPlayerFieldController.getInstance().lastSelectedCard(carteScartate.getCarta());
+					try 
+					{
+						MainPlayerFieldController.getInstance().cardSelectedFromTrash(carteScartate.getCarta());
+					}
+					catch (MoveNotAllowedException e1)
+					{
+						/* Ignore */
+					}
 				}
 			});
 			carteScartate.gira();
 		} 
-		catch (GameNotInProgressException | DeckFinishedException e)
+		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e)
 		{
-			/* Non succederà mai, stiamo creando ora il campo di gioco */
+			/* Non accadrà mai stiamo creando adesso il campo di gioco */
+			e.printStackTrace();
 		}
 		Border bordoInterno = BorderFactory.createTitledBorder("Trash");
 		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 5, 5, 5);

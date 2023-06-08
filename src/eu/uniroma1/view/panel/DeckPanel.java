@@ -18,6 +18,7 @@ import eu.uniroma1.controller.MainPlayerFieldController;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
+import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
 import eu.uniroma1.view.utils.DeckPosition;
 
@@ -51,26 +52,17 @@ public class DeckPanel extends JPanel implements Observer
 		firstCard = true;
 		try 
 		{
-			carteDaPescare = new CardButton(MainPlayerFieldController.getInstance().prossimaCarta(), DeckPosition.IN_ALTO);
+			carteDaPescare = new CardButton(MainPlayerFieldController.getInstance().nextCard(), DeckPosition.IN_ALTO);
 			trashSpace = new TrashPanel();
-			cartaPescata = new CardButton(MainPlayerFieldController.getInstance().prossimaCarta());
+			cartaPescata = new CardButton(MainPlayerFieldController.getInstance().nextCard());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);
 		} 
-		catch (GameNotInProgressException | DeckFinishedException e)
+		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e)
 		{
 			/* Non accadrà mai stiamo creando adesso il campo di gioco */
 			e.printStackTrace();
 		}
-		
-		cartaPescata.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				MainPlayerFieldController.getInstance().lastSelectedCard(cartaPescata.getCarta());
-			}
-		});
 		
 		carteDaPescare.addActionListener(new ActionListener() {
 			
@@ -83,8 +75,12 @@ public class DeckPanel extends JPanel implements Observer
 				{
 					try 
 					{
-						cartaPescata.changeCard(MainPlayerFieldController.getInstance().prossimaCarta());
-					} 
+						cartaPescata.changeCard(MainPlayerFieldController.getInstance().nextCard());
+					}
+					catch(MoveNotAllowedException e1)
+					{
+						return;
+					}
 					catch (GameNotInProgressException | DeckFinishedException e1) 
 					{
 						carteDaPescare.setVisible(false);
@@ -93,11 +89,20 @@ public class DeckPanel extends JPanel implements Observer
 					}
 				}
 				
+				carta = cartaPescata.getCarta();
+				
+				try 
+				{
+					MainPlayerFieldController.getInstance().cardSelectedFromDeck(carta);
+				} 
+				catch (MoveNotAllowedException e1) 
+				{
+					return;
+				}
+				
 				/* Se è la prima carta basta solo impostare il button visibile
 				 * altrimenti bisogna cambiare la carta */
 				cartaPescata.setVisible(true);
-				carta = cartaPescata.getCarta();
-				MainPlayerFieldController.getInstance().lastSelectedCard(carta);
 				
 				firstCard = false;
 			}

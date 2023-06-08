@@ -19,6 +19,7 @@ import java.awt.*;
 import eu.uniroma1.controller.MainPlayerFieldController;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
+import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.controller.PlayersController;
 import eu.uniroma1.view.dialog.ProfileDialog;
 import eu.uniroma1.view.utils.interfaces.Closeable;
@@ -136,7 +137,7 @@ public class GameFrame extends JFrame implements Closeable
 			gbc.anchor = GridBagConstraints.PAGE_END;
 			add(mainPlayerPanel, gbc);
 		} 
-		catch (GameNotInProgressException | DeckFinishedException e) 
+		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
 		{
 			/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
 			 * momento la partita */
@@ -157,7 +158,7 @@ public class GameFrame extends JFrame implements Closeable
 			gbc.anchor = GridBagConstraints.PAGE_START;
 			add(robotFrontPlayerPanel, gbc);
 		} 
-		catch (GameNotInProgressException | DeckFinishedException e) 
+		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
 		{
 			/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
 			 * momento la partita */
@@ -179,7 +180,7 @@ public class GameFrame extends JFrame implements Closeable
 				gbc.anchor = GridBagConstraints.LINE_END;
 				add(robotDxPlayerPanel, gbc);
 			} 
-			catch (GameNotInProgressException | DeckFinishedException e)
+			catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
 			{
 				/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
 				 * momento la partita */
@@ -202,7 +203,7 @@ public class GameFrame extends JFrame implements Closeable
 				gbc.anchor = GridBagConstraints.LINE_START;
 				add(robotSxPlayerPanel, gbc);
 			} 
-			catch (GameNotInProgressException | DeckFinishedException e)
+			catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e)
 			{
 				/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
 				 * momento la partita */
