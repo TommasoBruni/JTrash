@@ -19,6 +19,7 @@ public enum Value
 
 	String nome;
 	
+	@Override
 	public String toString()
 	{
 		return nome;

@@ -16,7 +16,8 @@ public class PlayingFieldController
 	private static PlayingFieldController controller;
 	private Deck deck;
 	private Card lastSelectedCard;
-	private ObservableForHintCard observableForHint;
+	private CardsHandleObservable observableForHint;
+	private CardsHandleObservable observableForReplacingCards;
 	
 	public void startGame()
 	{
@@ -69,12 +70,17 @@ public class PlayingFieldController
 		return observableForHint;
 	}
 	
+	public Observable getObservableForReplacingCards()
+	{
+		return observableForReplacingCards;
+	}
+	
 	private boolean goodCard(int position)
 	{
 		return lastSelectedCard.getValore().toString().equals("" + (position)) || 
-			   lastSelectedCard.getValore().toString().equals(Value.KING.toString()) ||
-			   lastSelectedCard.getValore().toString().equals(Value.JOLLY.toString()) ||
-			   (lastSelectedCard.getValore().toString().equals(Value.ASSO.toString()) && position == 1);
+			   lastSelectedCard.getValore().equals(Value.KING) ||
+			   lastSelectedCard.getValore().equals(Value.JOLLY) ||
+			   (lastSelectedCard.getValore().equals(Value.ASSO) && position == 1);
 	}
 	
 	/**
@@ -91,6 +97,9 @@ public class PlayingFieldController
 			return null;
 		Card result = lastSelectedCard;
 		
+		observableForReplacingCards.setStatusChanged();
+		observableForReplacingCards.notifyObservers(result);
+		
 		lastSelectedCard = null;
 		return result;
 	}
@@ -104,6 +113,7 @@ public class PlayingFieldController
 	
 	private PlayingFieldController()
 	{
-		observableForHint = new ObservableForHintCard();
+		observableForHint = new CardsHandleObservable();
+		observableForReplacingCards = new CardsHandleObservable();
 	}
 }

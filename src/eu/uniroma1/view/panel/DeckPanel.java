@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -21,21 +23,31 @@ import eu.uniroma1.view.utils.DeckPosition;
 
 import javax.swing.*;
 
-public class DeckPanel extends JPanel
+public class DeckPanel extends JPanel implements Observer
 {
 	private CardButton carteDaPescare;
 	private TrashPanel trashSpace;
 	private CardButton cartaPescata;
 	private JPanel contenitoreCarte;
+	private JPanel pickedCardSpace;
 	private boolean firstCard;
-	
-	public JButton getCarteDaPescareButton()
+
+	@Override
+	public void update(Observable o, Object arg) 
 	{
-		return carteDaPescare;
+		Card selectedCard = (Card)arg;
+		Card discardedCard = trashSpace.getLastCard();
+		
+		if (selectedCard.equals(discardedCard))
+			trashSpace.removeCardFromTop();
+		else
+			cartaPescata.setVisible(false);
 	}
 	
-	public DeckPanel()
+	public DeckPanel(Observable observable)
 	{
+		pickedCardSpace = new JPanel();
+		observable.addObserver(this);
 		firstCard = true;
 		try 
 		{
@@ -113,7 +125,10 @@ public class DeckPanel extends JPanel
 		
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = new Insets(0, 5, 0, 0);
-		contenitoreCarte.add(cartaPescata, gbc);
+		
+		pickedCardSpace.setPreferredSize(new Dimension(60, 63));
+		pickedCardSpace.add(cartaPescata);
+		contenitoreCarte.add(pickedCardSpace, gbc);
         
 		gbc.gridx = 2;
 		gbc.gridy = 0;
@@ -127,6 +142,7 @@ public class DeckPanel extends JPanel
 		gbc.insets = new Insets(0, 30, 0, 0);
 		contenitoreCarte.add(trashSpace, gbc);
         
+		setPreferredSize(new Dimension(500, 95));
         add(contenitoreCarte);
 	}
 }

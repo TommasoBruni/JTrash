@@ -34,12 +34,12 @@ import eu.uniroma1.view.utils.DeckPosition;
  */
 public class GameFrame extends JFrame implements Closeable
 {
-	private ContainerPanel pannelloGiocatorePrincipale;
-	private ContainerPanel pannelloGiocatoreRobotDx;
-	private ContainerPanel pannelloGiocatoreRobotSx;
-	private ContainerPanel pannelloGiocatoreRobotDiFronte;
-	private DeckPanel pannelloMazzoDiCarte;
-	private InsertionDataFrame frameInserimentoDati;
+	private ContainerPanel mainPlayerPanel;
+	private ContainerPanel robotDxPlayerPanel;
+	private ContainerPanel robotSxPlayerPanel;
+	private ContainerPanel robotFrontPlayerPanel;
+	private DeckPanel deckPanel;
+	private InsertionDataFrame dataInsertionFrame;
 	
 	private void setupPerInserimentoDati()
 	{
@@ -51,10 +51,10 @@ public class GameFrame extends JFrame implements Closeable
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
-		frameInserimentoDati = new InsertionDataFrame(pannelloPerInternalFrame, this);
-		frameInserimentoDati.setVisible(true);
+		dataInsertionFrame = new InsertionDataFrame(pannelloPerInternalFrame, this);
+		dataInsertionFrame.setVisible(true);
         
-        pannelloPerInternalFrame.add(frameInserimentoDati, gbc);
+        pannelloPerInternalFrame.add(dataInsertionFrame, gbc);
         add(pannelloPerInternalFrame);
 	}
 	
@@ -96,7 +96,7 @@ public class GameFrame extends JFrame implements Closeable
 		PlayingFieldController.getInstance().startGame();
 		AnimationPanel pannelloAnimazione;
 		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-		pannelloMazzoDiCarte = new DeckPanel();
+		deckPanel = new DeckPanel(PlayingFieldController.getInstance().getObservableForReplacingCards());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setGridBagLayout();
@@ -116,11 +116,11 @@ public class GameFrame extends JFrame implements Closeable
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
-		add(pannelloMazzoDiCarte, gbc);
+		add(deckPanel, gbc);
 		
 		try 
 		{
-			pannelloGiocatorePrincipale = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, PlayingFieldController.getInstance().getObservableForHintCard()),
+			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, PlayingFieldController.getInstance().getObservableForHintCard()),
 																  new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																		  					  PlayersController.getInstance().getAvatarGiocatore(),
 																		  					  PlayersController.getInstance().getPartiteGiocateGiocatore(),
@@ -134,7 +134,7 @@ public class GameFrame extends JFrame implements Closeable
 			gbc.weightx = 0.1;
 			gbc.weighty = 0.1;
 			gbc.anchor = GridBagConstraints.PAGE_END;
-			add(pannelloGiocatorePrincipale, gbc);
+			add(mainPlayerPanel, gbc);
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e) 
 		{
@@ -146,7 +146,7 @@ public class GameFrame extends JFrame implements Closeable
 		//pannelloGiocatorePrincipale.startAnimazione();
 		try 
 		{
-			pannelloGiocatoreRobotDiFronte = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO),
+			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO),
 																	 new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																			 					 PlayersController.getInstance().getAvatarGiocatore()),
 																	  DeckPosition.IN_BASSO);
@@ -155,7 +155,7 @@ public class GameFrame extends JFrame implements Closeable
 			gbc.weightx = 0.1;
 			gbc.weighty = 0.1;
 			gbc.anchor = GridBagConstraints.PAGE_START;
-			add(pannelloGiocatoreRobotDiFronte, gbc);
+			add(robotFrontPlayerPanel, gbc);
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e) 
 		{
@@ -168,7 +168,7 @@ public class GameFrame extends JFrame implements Closeable
 		{
 			try
 			{
-				pannelloGiocatoreRobotDx = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX),
+				robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX),
 																   new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																		   				       PlayersController.getInstance().getAvatarGiocatore()),
 																   DeckPosition.SULLA_SX);
@@ -177,7 +177,7 @@ public class GameFrame extends JFrame implements Closeable
 				gbc.weightx = 0.1;
 				gbc.weighty = 0.1;
 				gbc.anchor = GridBagConstraints.LINE_END;
-				add(pannelloGiocatoreRobotDx, gbc);
+				add(robotDxPlayerPanel, gbc);
 			} 
 			catch (GameNotInProgressException | DeckFinishedException e)
 			{
@@ -191,7 +191,7 @@ public class GameFrame extends JFrame implements Closeable
 		{
 			try 
 			{
-				pannelloGiocatoreRobotSx = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX),
+				robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX),
 																   new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																		   					   PlayersController.getInstance().getAvatarGiocatore()),
 																   DeckPosition.SULLA_DX);
@@ -200,7 +200,7 @@ public class GameFrame extends JFrame implements Closeable
 				gbc.weightx = 0.1;
 				gbc.weighty = 0.1;
 				gbc.anchor = GridBagConstraints.LINE_START;
-				add(pannelloGiocatoreRobotSx, gbc);
+				add(robotSxPlayerPanel, gbc);
 			} 
 			catch (GameNotInProgressException | DeckFinishedException e)
 			{

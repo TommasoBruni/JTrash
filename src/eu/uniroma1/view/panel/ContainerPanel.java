@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -18,13 +20,13 @@ public class ContainerPanel extends JPanel
 	private AvatarScorePanel pannelloAvatarPunteggio;
 	
 	public ContainerPanel(CardsPanel pannelloCarte, AvatarScorePanel pannelloAvatarPunteggio,
-							   DeckPosition posizioneDelMazzo)
+						  DeckPosition posizioneDelMazzo)
 	{
 		this.pannelloAvatarPunteggio = pannelloAvatarPunteggio;
 		this.pannelloCarte = pannelloCarte;
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(new GridBagLayout());
-		
+
 		/*
 		setPreferredSize(new Dimension(this.pannelloAvatarPunteggio.getPreferredSize().width + this.pannelloCarte.getPreferredSize().width,
 									   this.pannelloAvatarPunteggio.getPreferredSize().height + this.pannelloCarte.getPreferredSize().height));

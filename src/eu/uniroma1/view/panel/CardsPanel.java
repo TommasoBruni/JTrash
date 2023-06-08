@@ -42,7 +42,7 @@ import eu.uniroma1.view.utils.DeckPosition;
 
 public class CardsPanel extends JPanel implements Observer
 {
-	private CardButton[] carte;
+	private CardButton[] cards;
 	private Timer animationTimer;
 	private boolean firstTime;
 	private int xMovement;
@@ -92,10 +92,22 @@ public class CardsPanel extends JPanel implements Observer
 	}
 	*/
 	
+	public void disableAllCards()
+	{
+		for (CardButton card : cards)
+			card.setEnabled(false);
+	}
+	
+	public void enableAllCards()
+	{
+		for (CardButton card : cards)
+			card.setEnabled(true);
+	}
+	
 	public void restoreAllCardImage()
 	{
 		/* Restore all card images */
-		for (CardButton carta : carte)
+		for (CardButton carta : cards)
 			carta.restoreCardImage();
 	}
 	
@@ -120,7 +132,7 @@ public class CardsPanel extends JPanel implements Observer
 			else if (valore.toString().equals(Value.KING.toString()) || 
 					 valore.toString().equals(Value.JOLLY.toString()))
 			{
-				for (CardButton carta : carte)
+				for (CardButton carta : cards)
 					carta.setHintCard();
 				return;
 			}
@@ -130,7 +142,7 @@ public class CardsPanel extends JPanel implements Observer
 			}
 		}
 		
-		carte[intValue].setHintCard();
+		cards[intValue].setHintCard();
 	}
 	
 	public CardsPanel(DeckPosition posizioneDelMazzo) throws GameNotInProgressException, DeckFinishedException
@@ -157,12 +169,12 @@ public class CardsPanel extends JPanel implements Observer
 		pannelloCarteInferiori.setLayout(new GridBagLayout());
 		setLayout(new GridBagLayout());
 		
-		carte = new CardButton[10];
+		cards = new CardButton[10];
 		
-		for (i = 0; i < carte.length / 2; i++)
+		for (i = 0; i < cards.length / 2; i++)
 		{
-			carte[i] = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i);
-			carte[i].addActionListener(new ActionListener() {	
+			cards[i] = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i);
+			cards[i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
@@ -171,8 +183,8 @@ public class CardsPanel extends JPanel implements Observer
 					
 					if (newCard == null)
 						return;
-					/* TODO: remember the old card and take it as icon while the next move
-					 * is not chosen */
+					/* TODO: remember the old card and take it as icon until the next move
+					 * is chosen */
 					c.changeCard(newCard);
 					restoreAllCardImage();
 				}
@@ -191,13 +203,13 @@ public class CardsPanel extends JPanel implements Observer
 				gbcPerCarte.insets = new Insets(0, 0, 0, 15);
 			}
 			
-			pannelloCarteSuperiori.add(carte[i], gbcPerCarte);
+			pannelloCarteSuperiori.add(cards[i], gbcPerCarte);
 		}
 		
-		for (j = 0; j + i < carte.length; j++)
+		for (j = 0; j + i < cards.length; j++)
 		{
-			carte[j + i] = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i + j);
-			carte[j + i].addActionListener(new ActionListener() {
+			cards[j + i] = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i + j);
+			cards[j + i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
@@ -223,7 +235,7 @@ public class CardsPanel extends JPanel implements Observer
 				gbcPerCarte.gridy = 0;
 				gbcPerCarte.insets = new Insets(0, 0, 0, 15);
 			}
-			pannelloCarteInferiori.add(carte[j + i], gbcPerCarte);
+			pannelloCarteInferiori.add(cards[j + i], gbcPerCarte);
 		}
 		
 		if (isHorizontal)

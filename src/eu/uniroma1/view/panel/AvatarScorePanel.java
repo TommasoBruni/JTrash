@@ -49,9 +49,9 @@ public class AvatarScorePanel extends JPanel implements Observer
 			pannelloPerPunteggi = new JPanel();
 			pannelloPerPunteggi.setLayout(new GridBagLayout());
 			/* Significa che è il giocatore reale e non un robot */
-			labelPartiteGiocate = new JLabel("Partite giocate: " + partiteGiocate + " ");
-			labelPartiteVinte = new JLabel("Partite vinte: " + partiteVinte + " ");
-			labelPartitePerse = new JLabel("Partite perse: " + partitePerse + " ");
+			labelPartiteGiocate = new JLabel("Giocate: " + partiteGiocate + " ");
+			labelPartiteVinte = new JLabel("Vinte: " + partiteVinte + " ");
+			labelPartitePerse = new JLabel("Perse: " + partitePerse + " ");
 			observable.addObserver(this);
 		}
 
