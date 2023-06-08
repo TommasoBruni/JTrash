@@ -1,4 +1,4 @@
-package eu.uniroma1.model.eccezioni;
+package eu.uniroma1.model.exceptions;
 
 public class MazzoFinitoException extends Exception
 {

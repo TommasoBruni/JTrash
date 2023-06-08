@@ -2,7 +2,7 @@ package eu.uniroma1.model.carte;
 
 import java.util.Iterator;
 
-import eu.uniroma1.model.eccezioni.MazzoFinitoException;
+import eu.uniroma1.model.exceptions.MazzoFinitoException;
 
 import java.util.*;
 

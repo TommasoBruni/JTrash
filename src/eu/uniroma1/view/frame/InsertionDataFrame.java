@@ -24,12 +24,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.model.exceptions.MazzoFinitoException;
+import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
 import eu.uniroma1.controller.PlayersController;
-import eu.uniroma1.model.eccezioni.MazzoFinitoException;
-import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.dialog.DialogSelezioneAvatar;
 
-public class FrameInserimentoDati extends JInternalFrame 
+public class InsertionDataFrame extends JInternalFrame 
 {
 	private JPanel pannelloContenitore;
 	private JLabel labelNomeUtente;
@@ -46,7 +46,7 @@ public class FrameInserimentoDati extends JInternalFrame
 		return dialogSelezioneAvatar.getSelectedAvatar();
 	}
 	
-	public FrameInserimentoDati(Container parentComponent, FrameDiGioco frameParent)
+	public InsertionDataFrame(Container parentComponent, GameFrame frameParent)
 	{
 		super("Inserimento dati",
 		          false, //resizable

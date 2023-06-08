@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.model.Giocatore;
+import eu.uniroma1.model.Player;
 
 public class PannelloAvatarPunteggio extends JPanel implements Observer
 {
@@ -27,7 +27,7 @@ public class PannelloAvatarPunteggio extends JPanel implements Observer
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		Giocatore giocatore = (Giocatore)arg;
+		Player giocatore = (Player)arg;
 		
 		labelNomeGiocatore.setText(giocatore.getNome());
 		labelIcon.setIcon(giocatore.getAvatar());

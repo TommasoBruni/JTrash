@@ -1,6 +1,6 @@
 package eu.uniroma1.view;
 
-import eu.uniroma1.view.frame.FrameDiGioco;
+import eu.uniroma1.view.frame.GameFrame;
 
 public class Main 
 {
@@ -11,6 +11,6 @@ public class Main
 	 */
 	public static void main(String[] args) 
 	{
-		FrameDiGioco frameDiGioco = new FrameDiGioco();
+		GameFrame frameDiGioco = new GameFrame();
 	}
 }

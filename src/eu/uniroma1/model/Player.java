@@ -5,23 +5,23 @@ import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class Giocatore 
+public class Player 
 {
 	private static int idCounter;
 	private int id;
-	private Livello livello;
+	private Level livello;
 	private String nome;
 	private String nickname;
 	private long partiteVinte;
 	private long partitePerse;
 	private ImageIcon avatar;
 	
-	public Giocatore(String nome, String nickname, ImageIcon avatar)
+	public Player(String nome, String nickname, ImageIcon avatar)
 	{
 		this.nome = nome;
 		this.nickname = nickname;
 		this.avatar = avatar;
-		this.livello = Livello.PRINCIPIANTE;
+		this.livello = Level.PRINCIPIANTE;
 		id = idCounter++;
 	}
 	
@@ -29,11 +29,11 @@ public class Giocatore
 		return id;
 	}
 
-	public Livello getLivello() {
+	public Level getLivello() {
 		return livello;
 	}
 
-	public void setLivello(Livello livello) {
+	public void setLivello(Level livello) {
 		this.livello = livello;
 	}
 

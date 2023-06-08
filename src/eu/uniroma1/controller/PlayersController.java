@@ -5,11 +5,11 @@ import java.util.Observable;
 
 import javax.swing.ImageIcon;
 
-import eu.uniroma1.model.Giocatore;
+import eu.uniroma1.model.Player;
 
 public class PlayersController extends Observable
 {
-	private Giocatore giocatore;
+	private Player giocatore;
 	private int numeroGiocatoriInPartita;
 	private static PlayersController controller;
 	
@@ -77,7 +77,7 @@ public class PlayersController extends Observable
 	
 	public void aggiornaDatiGiocatore(String nomeGiocatore, String nickname, ImageIcon avatar)
 	{
-		giocatore = new Giocatore(nomeGiocatore, nickname, avatar);
+		giocatore = new Player(nomeGiocatore, nickname, avatar);
 		
 		setChanged();
 		notifyObservers(giocatore);

@@ -35,8 +35,8 @@ import eu.uniroma1.model.*;
 import eu.uniroma1.model.carte.Carte;
 import eu.uniroma1.model.carte.Colore;
 import eu.uniroma1.model.carte.Valori;
-import eu.uniroma1.model.eccezioni.MazzoFinitoException;
-import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
+import eu.uniroma1.model.exceptions.MazzoFinitoException;
+import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
 

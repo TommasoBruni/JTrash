@@ -5,11 +5,11 @@ import java.util.Observable;
 
 import javax.swing.ImageIcon;
 
-import eu.uniroma1.model.Giocatore;
+import eu.uniroma1.model.Player;
 import eu.uniroma1.model.carte.*;
 import eu.uniroma1.model.carte.MazzoDiCarte.MazzoDiCarteBuilder;
-import eu.uniroma1.model.eccezioni.MazzoFinitoException;
-import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
+import eu.uniroma1.model.exceptions.MazzoFinitoException;
+import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
 
 public class PlayingFieldController
 {

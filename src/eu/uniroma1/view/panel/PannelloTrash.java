@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import eu.uniroma1.controller.PlayingFieldController;
-import eu.uniroma1.model.eccezioni.MazzoFinitoException;
-import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
+import eu.uniroma1.model.exceptions.MazzoFinitoException;
+import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 

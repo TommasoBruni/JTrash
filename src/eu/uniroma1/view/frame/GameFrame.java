@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.model.exceptions.MazzoFinitoException;
+import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
 import eu.uniroma1.controller.PlayersController;
-import eu.uniroma1.model.eccezioni.MazzoFinitoException;
-import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.dialog.DialogProfilo;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 import eu.uniroma1.view.panel.PannelloAnimazione;
@@ -32,14 +32,14 @@ import eu.uniroma1.view.utils.PosizioneDelMazzo;
 /**
  * Classe per creare il frame di gioco
  */
-public class FrameDiGioco extends JFrame implements Closeable
+public class GameFrame extends JFrame implements Closeable
 {
 	private PannelloContenitore pannelloGiocatorePrincipale;
 	private PannelloContenitore pannelloGiocatoreRobotDx;
 	private PannelloContenitore pannelloGiocatoreRobotSx;
 	private PannelloContenitore pannelloGiocatoreRobotDiFronte;
 	private PannelloMazzoDiCarte pannelloMazzoDiCarte;
-	private FrameInserimentoDati frameInserimentoDati;
+	private InsertionDataFrame frameInserimentoDati;
 	
 	private void setupPerInserimentoDati()
 	{
@@ -51,7 +51,7 @@ public class FrameDiGioco extends JFrame implements Closeable
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
-		frameInserimentoDati = new FrameInserimentoDati(pannelloPerInternalFrame, this);
+		frameInserimentoDati = new InsertionDataFrame(pannelloPerInternalFrame, this);
 		frameInserimentoDati.setVisible(true);
         
         pannelloPerInternalFrame.add(frameInserimentoDati, gbc);
@@ -224,7 +224,7 @@ public class FrameDiGioco extends JFrame implements Closeable
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				disableComponent();
-				DialogProfilo dialogProfilo = new DialogProfilo(FrameDiGioco.this);
+				DialogProfilo dialogProfilo = new DialogProfilo(GameFrame.this);
 				dialogProfilo.setVisible(true);
 			}
 		});
@@ -256,7 +256,7 @@ public class FrameDiGioco extends JFrame implements Closeable
 	/**
 	 * Costruttore frame di gioco
 	 */
-	public FrameDiGioco()
+	public GameFrame()
 	{
 		/* Imposta il nome al frame */
 		super("JTrash");

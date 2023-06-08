@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 
 import eu.uniroma1.controller.PlayingFieldController;
 import eu.uniroma1.controller.PlayersController;
-import eu.uniroma1.view.frame.FrameDiGioco;
+import eu.uniroma1.view.frame.GameFrame;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
 public class DialogProfilo extends JDialog

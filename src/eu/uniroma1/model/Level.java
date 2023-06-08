@@ -1,6 +1,6 @@
 package eu.uniroma1.model;
 
-public enum Livello 
+public enum Level 
 {
 	PRINCIPIANTE,
 	INTERMEDIO,
