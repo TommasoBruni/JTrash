@@ -21,10 +21,10 @@ import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
 import javax.swing.*;
 
-public class PannelloMazzoDiCarte extends JPanel
+public class DeckPanel extends JPanel
 {
 	private ButtonCarta carteDaPescare;
-	private PannelloTrash trashSpace;
+	private TrashPanel trashSpace;
 	private ButtonCarta cartaPescata;
 	private JPanel contenitoreCarte;
 	private boolean firstCard;
@@ -34,13 +34,13 @@ public class PannelloMazzoDiCarte extends JPanel
 		return carteDaPescare;
 	}
 	
-	public PannelloMazzoDiCarte()
+	public DeckPanel()
 	{
 		firstCard = true;
 		try 
 		{
 			carteDaPescare = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
-			trashSpace = new PannelloTrash();
+			trashSpace = new TrashPanel();
 			cartaPescata = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);

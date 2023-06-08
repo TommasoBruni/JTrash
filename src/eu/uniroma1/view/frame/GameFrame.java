@@ -22,11 +22,11 @@ import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
 import eu.uniroma1.controller.PlayersController;
 import eu.uniroma1.view.dialog.DialogProfilo;
 import eu.uniroma1.view.utils.interfaces.Closeable;
-import eu.uniroma1.view.panel.PannelloAnimazione;
-import eu.uniroma1.view.panel.PannelloAvatarPunteggio;
-import eu.uniroma1.view.panel.PannelloCarte;
-import eu.uniroma1.view.panel.PannelloContenitore;
-import eu.uniroma1.view.panel.PannelloMazzoDiCarte;
+import eu.uniroma1.view.panel.AnimationPanel;
+import eu.uniroma1.view.panel.AvatarScorePanel;
+import eu.uniroma1.view.panel.CardsPanel;
+import eu.uniroma1.view.panel.ContainerPanel;
+import eu.uniroma1.view.panel.DeckPanel;
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
 /**
@@ -34,11 +34,11 @@ import eu.uniroma1.view.utils.PosizioneDelMazzo;
  */
 public class GameFrame extends JFrame implements Closeable
 {
-	private PannelloContenitore pannelloGiocatorePrincipale;
-	private PannelloContenitore pannelloGiocatoreRobotDx;
-	private PannelloContenitore pannelloGiocatoreRobotSx;
-	private PannelloContenitore pannelloGiocatoreRobotDiFronte;
-	private PannelloMazzoDiCarte pannelloMazzoDiCarte;
+	private ContainerPanel pannelloGiocatorePrincipale;
+	private ContainerPanel pannelloGiocatoreRobotDx;
+	private ContainerPanel pannelloGiocatoreRobotSx;
+	private ContainerPanel pannelloGiocatoreRobotDiFronte;
+	private DeckPanel pannelloMazzoDiCarte;
 	private InsertionDataFrame frameInserimentoDati;
 	
 	private void setupPerInserimentoDati()
@@ -94,9 +94,9 @@ public class GameFrame extends JFrame implements Closeable
 	{
 		/* Dice al controller di iniziare la partita */
 		PlayingFieldController.getInstance().startGame();
-		PannelloAnimazione pannelloAnimazione;
+		AnimationPanel pannelloAnimazione;
 		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-		pannelloMazzoDiCarte = new PannelloMazzoDiCarte();
+		pannelloMazzoDiCarte = new DeckPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setGridBagLayout();
@@ -120,8 +120,8 @@ public class GameFrame extends JFrame implements Closeable
 		
 		try 
 		{
-			pannelloGiocatorePrincipale = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_ALTO, PlayingFieldController.getInstance().getObservableForHintCard()),
-																  new PannelloAvatarPunteggio(PlayersController.getInstance().getNomeGiocatore(),
+			pannelloGiocatorePrincipale = new ContainerPanel(new CardsPanel(PosizioneDelMazzo.IN_ALTO, PlayingFieldController.getInstance().getObservableForHintCard()),
+																  new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																		  					  PlayersController.getInstance().getAvatarGiocatore(),
 																		  					  PlayersController.getInstance().getPartiteGiocateGiocatore(),
 																		  					  PlayersController.getInstance().getPartiteVinteGiocatore(),
@@ -146,8 +146,8 @@ public class GameFrame extends JFrame implements Closeable
 		//pannelloGiocatorePrincipale.startAnimazione();
 		try 
 		{
-			pannelloGiocatoreRobotDiFronte = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.IN_BASSO),
-																	 new PannelloAvatarPunteggio(PlayersController.getInstance().getNomeGiocatore(),
+			pannelloGiocatoreRobotDiFronte = new ContainerPanel(new CardsPanel(PosizioneDelMazzo.IN_BASSO),
+																	 new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																			 					 PlayersController.getInstance().getAvatarGiocatore()),
 																	  PosizioneDelMazzo.IN_BASSO);
 			gbc.gridx = 0;
@@ -168,8 +168,8 @@ public class GameFrame extends JFrame implements Closeable
 		{
 			try
 			{
-				pannelloGiocatoreRobotDx = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.SULLA_SX),
-																   new PannelloAvatarPunteggio(PlayersController.getInstance().getNomeGiocatore(),
+				pannelloGiocatoreRobotDx = new ContainerPanel(new CardsPanel(PosizioneDelMazzo.SULLA_SX),
+																   new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																		   				       PlayersController.getInstance().getAvatarGiocatore()),
 																   PosizioneDelMazzo.SULLA_SX);
 				gbc.gridx = 0;
@@ -191,8 +191,8 @@ public class GameFrame extends JFrame implements Closeable
 		{
 			try 
 			{
-				pannelloGiocatoreRobotSx = new PannelloContenitore(new PannelloCarte(PosizioneDelMazzo.SULLA_DX),
-																   new PannelloAvatarPunteggio(PlayersController.getInstance().getNomeGiocatore(),
+				pannelloGiocatoreRobotSx = new ContainerPanel(new CardsPanel(PosizioneDelMazzo.SULLA_DX),
+																   new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																		   					   PlayersController.getInstance().getAvatarGiocatore()),
 																   PosizioneDelMazzo.SULLA_DX);
 				gbc.gridx = 0;

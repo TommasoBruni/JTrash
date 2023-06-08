@@ -15,7 +15,7 @@ import javax.swing.border.Border;
 
 import eu.uniroma1.model.Player;
 
-public class PannelloAvatarPunteggio extends JPanel implements Observer
+public class AvatarScorePanel extends JPanel implements Observer
 {
 	private JLabel labelIcon;
 	private JPanel pannelloPerPunteggi;
@@ -33,12 +33,12 @@ public class PannelloAvatarPunteggio extends JPanel implements Observer
 		labelIcon.setIcon(giocatore.getAvatar());
 	}
 	
-	public PannelloAvatarPunteggio(String nomeGiocatore, ImageIcon avatarIcon)
+	public AvatarScorePanel(String nomeGiocatore, ImageIcon avatarIcon)
 	{
 		this(nomeGiocatore, avatarIcon, 0, 0, 0, null);
 	}
 	
-	public PannelloAvatarPunteggio(String nomeGiocatore, ImageIcon avatarIcon, long partiteGiocate, 
+	public AvatarScorePanel(String nomeGiocatore, ImageIcon avatarIcon, long partiteGiocate, 
 								   long partiteVinte, long partitePerse, Observable observable)
 	{
 		labelNomeGiocatore = new JLabel(nomeGiocatore);

@@ -12,12 +12,12 @@ import javax.swing.border.Border;
 
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
-public class PannelloContenitore extends JPanel
+public class ContainerPanel extends JPanel
 {
-	private PannelloCarte pannelloCarte;
-	private PannelloAvatarPunteggio pannelloAvatarPunteggio;
+	private CardsPanel pannelloCarte;
+	private AvatarScorePanel pannelloAvatarPunteggio;
 	
-	public PannelloContenitore(PannelloCarte pannelloCarte, PannelloAvatarPunteggio pannelloAvatarPunteggio,
+	public ContainerPanel(CardsPanel pannelloCarte, AvatarScorePanel pannelloAvatarPunteggio,
 							   PosizioneDelMazzo posizioneDelMazzo)
 	{
 		this.pannelloAvatarPunteggio = pannelloAvatarPunteggio;

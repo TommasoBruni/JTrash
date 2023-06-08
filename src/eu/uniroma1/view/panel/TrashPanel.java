@@ -15,7 +15,7 @@ import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
-public class PannelloTrash extends JPanel implements Closeable
+public class TrashPanel extends JPanel implements Closeable
 {
 	private ButtonCarta carteScartate;
 	
@@ -31,7 +31,7 @@ public class PannelloTrash extends JPanel implements Closeable
 		setEnabled(false);
 	}
 	
-	public PannelloTrash()
+	public TrashPanel()
 	{
 		try 
 		{

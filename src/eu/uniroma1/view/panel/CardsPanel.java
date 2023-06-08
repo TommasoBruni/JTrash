@@ -40,7 +40,7 @@ import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
 import eu.uniroma1.view.utils.PosizioneDelMazzo;
 
-public class PannelloCarte extends JPanel implements Observer
+public class CardsPanel extends JPanel implements Observer
 {
 	private ButtonCarta[] carte;
 	private Timer animationTimer;
@@ -133,12 +133,12 @@ public class PannelloCarte extends JPanel implements Observer
 		carte[intValue].setHintCard();
 	}
 	
-	public PannelloCarte(PosizioneDelMazzo posizioneDelMazzo) throws PartitaNonInCorsoException, MazzoFinitoException
+	public CardsPanel(PosizioneDelMazzo posizioneDelMazzo) throws PartitaNonInCorsoException, MazzoFinitoException
 	{
 		this(posizioneDelMazzo, null);
 	}
 	
-	public PannelloCarte(PosizioneDelMazzo posizioneDelMazzo, Observable observable) throws PartitaNonInCorsoException, MazzoFinitoException
+	public CardsPanel(PosizioneDelMazzo posizioneDelMazzo, Observable observable) throws PartitaNonInCorsoException, MazzoFinitoException
 	{
 		//animationTimer = new Timer();
 		int i, j;

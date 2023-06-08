@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-public class PannelloAnimazione extends JPanel implements ActionListener
+public class AnimationPanel extends JPanel implements ActionListener
 {
 	private int xMovement;
 	private int yMovement;
@@ -54,7 +54,7 @@ public class PannelloAnimazione extends JPanel implements ActionListener
 		repaint();
 	}
 	
-	public PannelloAnimazione()
+	public AnimationPanel()
 	{
 		//setPreferredSize(new Dimension(500, 500));
 		try
