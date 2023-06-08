@@ -11,9 +11,9 @@ import eu.uniroma1.model.carte.Deck.MazzoDiCarteBuilder;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 
-public class PlayingFieldController
+public class MainPlayerFieldController
 {
-	private static PlayingFieldController controller;
+	private static MainPlayerFieldController controller;
 	private Deck deck;
 	private Card lastSelectedCard;
 	private CardsHandleObservable observableForHint;
@@ -104,14 +104,14 @@ public class PlayingFieldController
 		return result;
 	}
 	
-	public static PlayingFieldController getInstance()
+	public static MainPlayerFieldController getInstance()
 	{
 		if (controller == null)
-			controller = new PlayingFieldController();
+			controller = new MainPlayerFieldController();
 		return controller;
 	}
 	
-	private PlayingFieldController()
+	private MainPlayerFieldController()
 	{
 		observableForHint = new CardsHandleObservable();
 		observableForReplacingCards = new CardsHandleObservable();

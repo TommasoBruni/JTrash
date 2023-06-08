@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.controller.MainPlayerFieldController;
 import eu.uniroma1.controller.PlayersController;
 import eu.uniroma1.view.frame.GameFrame;
 import eu.uniroma1.view.utils.interfaces.Closeable;

@@ -14,7 +14,7 @@ import java.util.Observer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.controller.MainPlayerFieldController;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
@@ -51,9 +51,9 @@ public class DeckPanel extends JPanel implements Observer
 		firstCard = true;
 		try 
 		{
-			carteDaPescare = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), DeckPosition.IN_ALTO);
+			carteDaPescare = new CardButton(MainPlayerFieldController.getInstance().prossimaCarta(), DeckPosition.IN_ALTO);
 			trashSpace = new TrashPanel();
-			cartaPescata = new CardButton(PlayingFieldController.getInstance().prossimaCarta());
+			cartaPescata = new CardButton(MainPlayerFieldController.getInstance().prossimaCarta());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);
 		} 
@@ -68,7 +68,7 @@ public class DeckPanel extends JPanel implements Observer
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				PlayingFieldController.getInstance().lastSelectedCard(cartaPescata.getCarta());
+				MainPlayerFieldController.getInstance().lastSelectedCard(cartaPescata.getCarta());
 			}
 		});
 		
@@ -83,7 +83,7 @@ public class DeckPanel extends JPanel implements Observer
 				{
 					try 
 					{
-						cartaPescata.changeCard(PlayingFieldController.getInstance().prossimaCarta());
+						cartaPescata.changeCard(MainPlayerFieldController.getInstance().prossimaCarta());
 					} 
 					catch (GameNotInProgressException | DeckFinishedException e1) 
 					{
@@ -97,7 +97,7 @@ public class DeckPanel extends JPanel implements Observer
 				 * altrimenti bisogna cambiare la carta */
 				cartaPescata.setVisible(true);
 				carta = cartaPescata.getCarta();
-				PlayingFieldController.getInstance().lastSelectedCard(carta);
+				MainPlayerFieldController.getInstance().lastSelectedCard(carta);
 				
 				firstCard = false;
 			}

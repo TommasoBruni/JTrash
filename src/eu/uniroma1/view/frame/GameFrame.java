@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.*;
 
-import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.controller.MainPlayerFieldController;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.controller.PlayersController;
@@ -93,10 +93,10 @@ public class GameFrame extends JFrame implements Closeable
 	public void impostaCampoDiGioco()
 	{
 		/* Dice al controller di iniziare la partita */
-		PlayingFieldController.getInstance().startGame();
+		MainPlayerFieldController.getInstance().startGame();
 		AnimationPanel pannelloAnimazione;
 		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-		deckPanel = new DeckPanel(PlayingFieldController.getInstance().getObservableForReplacingCards());
+		deckPanel = new DeckPanel(MainPlayerFieldController.getInstance().getObservableForReplacingCards());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setGridBagLayout();
@@ -120,7 +120,7 @@ public class GameFrame extends JFrame implements Closeable
 		
 		try 
 		{
-			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, PlayingFieldController.getInstance().getObservableForHintCard()),
+			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerFieldController.getInstance().getObservableForHintCard()),
 																  new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
 																		  					  PlayersController.getInstance().getAvatarGiocatore(),
 																		  					  PlayersController.getInstance().getPartiteGiocateGiocatore(),

@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.controller.MainPlayerFieldController;
 import eu.uniroma1.model.*;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.CardColor;
@@ -173,13 +173,13 @@ public class CardsPanel extends JPanel implements Observer
 		
 		for (i = 0; i < cards.length / 2; i++)
 		{
-			cards[i] = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i);
+			cards[i] = new CardButton(MainPlayerFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i);
 			cards[i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
 					CardButton c = (CardButton)e.getSource();
-					Card newCard = PlayingFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					Card newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
 					
 					if (newCard == null)
 						return;
@@ -208,13 +208,13 @@ public class CardsPanel extends JPanel implements Observer
 		
 		for (j = 0; j + i < cards.length; j++)
 		{
-			cards[j + i] = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i + j);
+			cards[j + i] = new CardButton(MainPlayerFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i + j);
 			cards[j + i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
 					CardButton c = (CardButton)e.getSource();
-					Card newCard = PlayingFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					Card newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
 					
 					if (newCard == null)
 						return;

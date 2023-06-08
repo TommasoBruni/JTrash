@@ -14,7 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.controller.MainPlayerFieldController;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
@@ -61,7 +61,7 @@ public class TrashPanel extends JPanel implements Closeable
 		discardedCards = new ArrayList<>();
 		try 
 		{
-			Card firstCard = PlayingFieldController.getInstance().prossimaCarta();
+			Card firstCard = MainPlayerFieldController.getInstance().prossimaCarta();
 			
 			discardedCards.add(firstCard);
 			carteScartate = new CardButton(firstCard);
@@ -69,7 +69,7 @@ public class TrashPanel extends JPanel implements Closeable
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					PlayingFieldController.getInstance().lastSelectedCard(carteScartate.getCarta());
+					MainPlayerFieldController.getInstance().lastSelectedCard(carteScartate.getCarta());
 				}
 			});
 			carteScartate.gira();
