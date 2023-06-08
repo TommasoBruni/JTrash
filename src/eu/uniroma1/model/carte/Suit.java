@@ -3,7 +3,7 @@ package eu.uniroma1.model.carte;
 /**
  * Enumerato dei semi 
  */
-public enum Seme
+public enum Suit
 {
 	NESSUNO(),
 	CUORI("♥"), 
@@ -25,7 +25,7 @@ public enum Seme
 	/**
 	 * Costruttore enumerato seme
 	 */
-	Seme(String simbolo)
+	Suit(String simbolo)
 	{
 		this.simbolo = simbolo;
 	}
@@ -33,7 +33,7 @@ public enum Seme
 	/**
 	 * Costruttore enumerato seme
 	 */
-	Seme()
+	Suit()
 	{
 		this("");
 	}

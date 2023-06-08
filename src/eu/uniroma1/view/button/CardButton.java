@@ -9,23 +9,23 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import eu.uniroma1.model.carte.Carte;
-import eu.uniroma1.model.carte.Colore;
-import eu.uniroma1.model.carte.Valori;
-import eu.uniroma1.view.utils.PosizioneDelMazzo;
+import eu.uniroma1.model.carte.Card;
+import eu.uniroma1.model.carte.CardColor;
+import eu.uniroma1.model.carte.Value;
+import eu.uniroma1.view.utils.DeckPosition;
 
 import java.awt.geom.AffineTransform;
 import java.awt.Graphics2D;
 
-public class ButtonCarta extends JButton
+public class CardButton extends JButton
 {
 	private ImageIcon icon;
-	private Carte carta;
+	private Card carta;
 	private static final String fileCartaGiocoVerticale = "carta_da_gioco_verticale.jpg";
 	private static final String fileCartaGiocoOrizzontale = "carta_da_gioco_orizzontale.jpg";
 	private static final String fileCartaGiocoVerticalePerSuggerimento = "carta_da_gioco_verticale_per_suggerimento.jpg";
 	private boolean faceUp;
-	private PosizioneDelMazzo posizioneDelMazzo;
+	private DeckPosition posizioneDelMazzo;
 	private int positionInTheField;
 	
 	@Override
@@ -44,10 +44,10 @@ public class ButtonCarta extends JButton
 	        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 	        
 	        /* Se fosse una carta rossa imposta il rosso come colore */
-	        if (carta.getColore() == Colore.ROSSO)
+	        if (carta.getColore() == CardColor.ROSSO)
 	        	g.setColor(Color.RED);
 	        Font font;
-	        if (carta == Carte.JOLLY_NERO || carta == Carte.JOLLY_ROSSO)
+	        if (carta == Card.JOLLY_NERO || carta == Card.JOLLY_ROSSO)
 	        	font = new Font("Arial", Font.BOLD, 12);
 	        else
 	        	font = new Font("Arial", Font.BOLD, 18);
@@ -93,9 +93,9 @@ public class ButtonCarta extends JButton
 		}
 	}
 	
-	public Carte changeCard(Carte carta)
+	public Card changeCard(Card carta)
 	{
-		Carte oldCard = this.carta;
+		Card oldCard = this.carta;
 		
 		faceUp = true;
 		this.carta = carta;
@@ -117,8 +117,8 @@ public class ButtonCarta extends JButton
 	{
 		if (faceUp)
 			return;
-		setIconP(posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX || 
-				  posizioneDelMazzo == PosizioneDelMazzo.SULLA_DX ?
+		setIconP(posizioneDelMazzo == DeckPosition.SULLA_SX || 
+				  posizioneDelMazzo == DeckPosition.SULLA_DX ?
 				  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale);
 	}
 	
@@ -144,7 +144,7 @@ public class ButtonCarta extends JButton
 		setIcon(icon);
 	}
 	
-	public Carte getCarta()
+	public Card getCarta()
 	{
 		return carta;
 	}
@@ -154,23 +154,23 @@ public class ButtonCarta extends JButton
 		return positionInTheField;
 	}
 	
-	public ButtonCarta(Carte carta)
+	public CardButton(Card carta)
 	{
-		this(carta, PosizioneDelMazzo.IN_ALTO);
+		this(carta, DeckPosition.IN_ALTO);
 	}
 	
-	public ButtonCarta(Carte carta, PosizioneDelMazzo posizioneDelMazzo)
+	public CardButton(Card carta, DeckPosition posizioneDelMazzo)
 	{
 		this(carta, posizioneDelMazzo, 0);
 	}
 	
-	public ButtonCarta(Carte carta, PosizioneDelMazzo posizioneDelMazzo, int positionInTheField)
+	public CardButton(Card carta, DeckPosition posizioneDelMazzo, int positionInTheField)
 	{
 		this.carta = carta;
 		this.posizioneDelMazzo = posizioneDelMazzo;
 		this.positionInTheField = positionInTheField;
-		setIconP(posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX || 
-												  posizioneDelMazzo == PosizioneDelMazzo.SULLA_DX ?
+		setIconP(posizioneDelMazzo == DeckPosition.SULLA_SX || 
+												  posizioneDelMazzo == DeckPosition.SULLA_DX ?
 												  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale);
 		setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));

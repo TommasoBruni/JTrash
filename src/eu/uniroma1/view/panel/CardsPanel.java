@@ -32,17 +32,17 @@ import javax.swing.border.Border;
 
 import eu.uniroma1.controller.PlayingFieldController;
 import eu.uniroma1.model.*;
-import eu.uniroma1.model.carte.Carte;
-import eu.uniroma1.model.carte.Colore;
-import eu.uniroma1.model.carte.Valori;
-import eu.uniroma1.model.exceptions.MazzoFinitoException;
-import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
-import eu.uniroma1.view.button.ButtonCarta;
-import eu.uniroma1.view.utils.PosizioneDelMazzo;
+import eu.uniroma1.model.carte.Card;
+import eu.uniroma1.model.carte.CardColor;
+import eu.uniroma1.model.carte.Value;
+import eu.uniroma1.model.exceptions.DeckFinishedException;
+import eu.uniroma1.model.exceptions.GameNotInProgressException;
+import eu.uniroma1.view.button.CardButton;
+import eu.uniroma1.view.utils.DeckPosition;
 
 public class CardsPanel extends JPanel implements Observer
 {
-	private ButtonCarta[] carte;
+	private CardButton[] carte;
 	private Timer animationTimer;
 	private boolean firstTime;
 	private int xMovement;
@@ -95,14 +95,14 @@ public class CardsPanel extends JPanel implements Observer
 	public void restoreAllCardImage()
 	{
 		/* Restore all card images */
-		for (ButtonCarta carta : carte)
+		for (CardButton carta : carte)
 			carta.restoreCardImage();
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		Valori valore = ((Carte)arg).getValore();
+		Value valore = ((Card)arg).getValore();
 		int intValue;
 		
 		restoreAllCardImage();
@@ -113,14 +113,14 @@ public class CardsPanel extends JPanel implements Observer
 		}
 		catch(NumberFormatException ex)
 		{
-			if (valore.toString().equals(Valori.ASSO.toString()))
+			if (valore.toString().equals(Value.ASSO.toString()))
 			{
 				intValue = 0;
 			}
-			else if (valore.toString().equals(Valori.KING.toString()) || 
-					 valore.toString().equals(Valori.JOLLY.toString()))
+			else if (valore.toString().equals(Value.KING.toString()) || 
+					 valore.toString().equals(Value.JOLLY.toString()))
 			{
-				for (ButtonCarta carta : carte)
+				for (CardButton carta : carte)
 					carta.setHintCard();
 				return;
 			}
@@ -133,16 +133,16 @@ public class CardsPanel extends JPanel implements Observer
 		carte[intValue].setHintCard();
 	}
 	
-	public CardsPanel(PosizioneDelMazzo posizioneDelMazzo) throws PartitaNonInCorsoException, MazzoFinitoException
+	public CardsPanel(DeckPosition posizioneDelMazzo) throws GameNotInProgressException, DeckFinishedException
 	{
 		this(posizioneDelMazzo, null);
 	}
 	
-	public CardsPanel(PosizioneDelMazzo posizioneDelMazzo, Observable observable) throws PartitaNonInCorsoException, MazzoFinitoException
+	public CardsPanel(DeckPosition posizioneDelMazzo, Observable observable) throws GameNotInProgressException, DeckFinishedException
 	{
 		//animationTimer = new Timer();
 		int i, j;
-		boolean isHorizontal = (posizioneDelMazzo == PosizioneDelMazzo.SULLA_DX || posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX);
+		boolean isHorizontal = (posizioneDelMazzo == DeckPosition.SULLA_DX || posizioneDelMazzo == DeckPosition.SULLA_SX);
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();
 		GridBagConstraints gbcTraPanelInfESup = new GridBagConstraints();
@@ -157,17 +157,17 @@ public class CardsPanel extends JPanel implements Observer
 		pannelloCarteInferiori.setLayout(new GridBagLayout());
 		setLayout(new GridBagLayout());
 		
-		carte = new ButtonCarta[10];
+		carte = new CardButton[10];
 		
 		for (i = 0; i < carte.length / 2; i++)
 		{
-			carte[i] = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i);
+			carte[i] = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i);
 			carte[i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					ButtonCarta c = (ButtonCarta)e.getSource();
-					Carte newCard = PlayingFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					CardButton c = (CardButton)e.getSource();
+					Card newCard = PlayingFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
 					
 					if (newCard == null)
 						return;
@@ -196,13 +196,13 @@ public class CardsPanel extends JPanel implements Observer
 		
 		for (j = 0; j + i < carte.length; j++)
 		{
-			carte[j + i] = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i + j);
+			carte[j + i] = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i + j);
 			carte[j + i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					ButtonCarta c = (ButtonCarta)e.getSource();
-					Carte newCard = PlayingFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					CardButton c = (CardButton)e.getSource();
+					Card newCard = PlayingFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
 					
 					if (newCard == null)
 						return;

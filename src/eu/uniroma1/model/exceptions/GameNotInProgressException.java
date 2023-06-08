@@ -1,8 +1,8 @@
 package eu.uniroma1.model.exceptions;
 
-public class PartitaNonInCorsoException extends Exception
+public class GameNotInProgressException extends Exception
 {
-	public PartitaNonInCorsoException()
+	public GameNotInProgressException()
 	{
 		super("La partita non è ancora iniziata!");
 	}

@@ -7,15 +7,15 @@ import javax.swing.ImageIcon;
 
 import eu.uniroma1.model.Player;
 import eu.uniroma1.model.carte.*;
-import eu.uniroma1.model.carte.MazzoDiCarte.MazzoDiCarteBuilder;
-import eu.uniroma1.model.exceptions.MazzoFinitoException;
-import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
+import eu.uniroma1.model.carte.Deck.MazzoDiCarteBuilder;
+import eu.uniroma1.model.exceptions.DeckFinishedException;
+import eu.uniroma1.model.exceptions.GameNotInProgressException;
 
 public class PlayingFieldController
 {
 	private static PlayingFieldController controller;
-	private MazzoDiCarte deck;
-	private Carte lastSelectedCard;
+	private Deck deck;
+	private Card lastSelectedCard;
 	private ObservableForHintCard observableForHint;
 	
 	public void startGame()
@@ -35,20 +35,20 @@ public class PlayingFieldController
 	/**
 	 * Ritorna la carta successiva nel mazzo se presente
 	 * @return carta successiva nel mazzo
-	 * @throws PartitaNonInCorsoException se la partita non è iniziata oppure è appena finita
-	 * @throws MazzoFinitoException se non ci sono più carte nel mazzo 
+	 * @throws GameNotInProgressException se la partita non è iniziata oppure è appena finita
+	 * @throws DeckFinishedException se non ci sono più carte nel mazzo 
 	 */
-	public Carte prossimaCarta() throws PartitaNonInCorsoException, MazzoFinitoException
+	public Card prossimaCarta() throws GameNotInProgressException, DeckFinishedException
 	{
-		Carte carta;
+		Card carta;
 		
 		if (deck == null)
-			throw new PartitaNonInCorsoException();
+			throw new GameNotInProgressException();
 		try
 		{
 			carta = deck.prossimaCarta();
 		}
-		catch(MazzoFinitoException ex)
+		catch(DeckFinishedException ex)
 		{
 			/* Partita finita. */
 			deck = null;
@@ -57,7 +57,7 @@ public class PlayingFieldController
 		return carta;
 	}
 	
-	public void lastSelectedCard(Carte carta)
+	public void lastSelectedCard(Card carta)
 	{
 		lastSelectedCard = carta;
 		observableForHint.setStatusChanged();
@@ -72,9 +72,9 @@ public class PlayingFieldController
 	private boolean goodCard(int position)
 	{
 		return lastSelectedCard.getValore().toString().equals("" + (position)) || 
-			   lastSelectedCard.getValore().toString().equals(Valori.KING.toString()) ||
-			   lastSelectedCard.getValore().toString().equals(Valori.JOLLY.toString()) ||
-			   (lastSelectedCard.getValore().toString().equals(Valori.ASSO.toString()) && position == 1);
+			   lastSelectedCard.getValore().toString().equals(Value.KING.toString()) ||
+			   lastSelectedCard.getValore().toString().equals(Value.JOLLY.toString()) ||
+			   (lastSelectedCard.getValore().toString().equals(Value.ASSO.toString()) && position == 1);
 	}
 	
 	/**
@@ -82,14 +82,14 @@ public class PlayingFieldController
 	 * good one for replacing.
 	 * If yes return the last card selected otherwise null.
 	 * @param position of the current client
-	 * @return {@link Carte} card or null if the position doesn't match the value
+	 * @return {@link Card} card or null if the position doesn't match the value
 	 * of the last card
 	 */
-	public Carte getCardForReplacing(int position)
+	public Card getCardForReplacing(int position)
 	{
 		if (lastSelectedCard == null || !goodCard(position + 1))
 			return null;
-		Carte result = lastSelectedCard;
+		Card result = lastSelectedCard;
 		
 		lastSelectedCard = null;
 		return result;

@@ -1,6 +1,6 @@
 package eu.uniroma1.model.carte;
 
-public enum Colore 
+public enum CardColor 
 {
 	ROSSO,
 	NERO

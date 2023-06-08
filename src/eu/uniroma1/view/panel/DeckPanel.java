@@ -13,19 +13,19 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import eu.uniroma1.controller.PlayingFieldController;
-import eu.uniroma1.model.carte.Carte;
-import eu.uniroma1.model.exceptions.MazzoFinitoException;
-import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
-import eu.uniroma1.view.button.ButtonCarta;
-import eu.uniroma1.view.utils.PosizioneDelMazzo;
+import eu.uniroma1.model.carte.Card;
+import eu.uniroma1.model.exceptions.DeckFinishedException;
+import eu.uniroma1.model.exceptions.GameNotInProgressException;
+import eu.uniroma1.view.button.CardButton;
+import eu.uniroma1.view.utils.DeckPosition;
 
 import javax.swing.*;
 
 public class DeckPanel extends JPanel
 {
-	private ButtonCarta carteDaPescare;
+	private CardButton carteDaPescare;
 	private TrashPanel trashSpace;
-	private ButtonCarta cartaPescata;
+	private CardButton cartaPescata;
 	private JPanel contenitoreCarte;
 	private boolean firstCard;
 	
@@ -39,13 +39,13 @@ public class DeckPanel extends JPanel
 		firstCard = true;
 		try 
 		{
-			carteDaPescare = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
+			carteDaPescare = new CardButton(PlayingFieldController.getInstance().prossimaCarta(), DeckPosition.IN_ALTO);
 			trashSpace = new TrashPanel();
-			cartaPescata = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta());
+			cartaPescata = new CardButton(PlayingFieldController.getInstance().prossimaCarta());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);
 		} 
-		catch (PartitaNonInCorsoException | MazzoFinitoException e)
+		catch (GameNotInProgressException | DeckFinishedException e)
 		{
 			/* Non accadrà mai stiamo creando adesso il campo di gioco */
 			e.printStackTrace();
@@ -65,7 +65,7 @@ public class DeckPanel extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Carte carta;
+				Card carta;
 				
 				if (!firstCard)
 				{
@@ -73,7 +73,7 @@ public class DeckPanel extends JPanel
 					{
 						cartaPescata.changeCard(PlayingFieldController.getInstance().prossimaCarta());
 					} 
-					catch (PartitaNonInCorsoException | MazzoFinitoException e1) 
+					catch (GameNotInProgressException | DeckFinishedException e1) 
 					{
 						carteDaPescare.setVisible(false);
 						JOptionPane.showMessageDialog(new JFrame(), "Non ci sono più carte!", "Partita finita!", JOptionPane.OK_OPTION);

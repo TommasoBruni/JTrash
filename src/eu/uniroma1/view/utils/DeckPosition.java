@@ -1,6 +1,6 @@
 package eu.uniroma1.view.utils;
 
-public enum PosizioneDelMazzo 
+public enum DeckPosition 
 {
 	SULLA_SX,
 	SULLA_DX,

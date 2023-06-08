@@ -1,6 +1,6 @@
 package eu.uniroma1.model.carte;
 
-public enum Valori
+public enum Value
 {
 	ASSO("A"),
 	DUE("2"),
@@ -24,7 +24,7 @@ public enum Valori
 		return nome;
 	}
 	
-	Valori(String nome) 
+	Value(String nome) 
 	{
 		this.nome=nome;
 	}

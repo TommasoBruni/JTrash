@@ -25,7 +25,7 @@ import eu.uniroma1.controller.PlayersController;
 import eu.uniroma1.view.frame.GameFrame;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
-public class DialogProfilo extends JDialog
+public class ProfileDialog extends JDialog
 {
 	private JLabel labelNome;
 	private JTextField fieldNome;
@@ -34,9 +34,9 @@ public class DialogProfilo extends JDialog
 	private JButton buttonOk;
 	private JButton buttonAnnulla;
 	private JButton buttonSelezionaAvatar;
-	private DialogSelezioneAvatar dialogSelezioneAvatar;
+	private AvatarSelectionDialog dialogSelezioneAvatar;
 	
-	public <T extends Frame & Closeable> DialogProfilo(T ownerFrame)
+	public <T extends Frame & Closeable> ProfileDialog(T ownerFrame)
 	{
 		super(ownerFrame, "Profilo", true);
 		setResizable(false);
@@ -52,7 +52,7 @@ public class DialogProfilo extends JDialog
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Cambia avatar");
-		dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame(), 
+		dialogSelezioneAvatar = new AvatarSelectionDialog(new JFrame(), 
 				PlayersController.getInstance().getAvatarGiocatore().getDescription());
 		
 		buttonSelezionaAvatar.addActionListener(new ActionListener() {

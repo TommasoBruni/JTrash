@@ -24,10 +24,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import eu.uniroma1.controller.PlayingFieldController;
-import eu.uniroma1.model.exceptions.MazzoFinitoException;
-import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
+import eu.uniroma1.model.exceptions.DeckFinishedException;
+import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.controller.PlayersController;
-import eu.uniroma1.view.dialog.DialogSelezioneAvatar;
+import eu.uniroma1.view.dialog.AvatarSelectionDialog;
 
 public class InsertionDataFrame extends JInternalFrame 
 {
@@ -39,7 +39,7 @@ public class InsertionDataFrame extends JInternalFrame
 	private JButton buttonOk;
 	private JButton buttonAnnulla;
 	private JButton buttonSelezionaAvatar;
-	private DialogSelezioneAvatar dialogSelezioneAvatar;
+	private AvatarSelectionDialog dialogSelezioneAvatar;
 	
 	public ImageIcon getAvatarSelezionato()
 	{
@@ -62,7 +62,7 @@ public class InsertionDataFrame extends JInternalFrame
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Seleziona avatar");
-		dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame());
+		dialogSelezioneAvatar = new AvatarSelectionDialog(new JFrame());
 		
 		buttonOk.addActionListener(new ActionListener() {
 			@Override

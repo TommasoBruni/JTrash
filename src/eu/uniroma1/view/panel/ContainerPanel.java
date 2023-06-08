@@ -10,7 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.view.utils.PosizioneDelMazzo;
+import eu.uniroma1.view.utils.DeckPosition;
 
 public class ContainerPanel extends JPanel
 {
@@ -18,7 +18,7 @@ public class ContainerPanel extends JPanel
 	private AvatarScorePanel pannelloAvatarPunteggio;
 	
 	public ContainerPanel(CardsPanel pannelloCarte, AvatarScorePanel pannelloAvatarPunteggio,
-							   PosizioneDelMazzo posizioneDelMazzo)
+							   DeckPosition posizioneDelMazzo)
 	{
 		this.pannelloAvatarPunteggio = pannelloAvatarPunteggio;
 		this.pannelloCarte = pannelloCarte;

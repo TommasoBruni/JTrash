@@ -4,9 +4,9 @@ import java.awt.Frame;
 
 import javax.swing.JDialog;
 
-public class DialogSelezionaNemici extends JDialog
+public class EnemiesSelectionDialog extends JDialog
 {
-	public DialogSelezionaNemici(Frame owner)
+	public EnemiesSelectionDialog(Frame owner)
 	{
 		//super("Seleziona nemici");
 	}

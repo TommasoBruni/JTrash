@@ -17,19 +17,19 @@ import javax.swing.JDialog;
 import javax.swing.border.Border;
 import javax.swing.*;
 
-public class DialogSelezioneAvatar extends JDialog
+public class AvatarSelectionDialog extends JDialog
 {
     private ImageIcon selectedAvatar;
     private ImageIcon[] avatarArray;
     private JLabel avatarLabel;
     private int indiceIcone;
     
-    public DialogSelezioneAvatar(Frame parent)
+    public AvatarSelectionDialog(Frame parent)
     {
     	this(parent, null);
     }
     
-    public DialogSelezioneAvatar(Frame parent, String defaultAvatarDescr) 
+    public AvatarSelectionDialog(Frame parent, String defaultAvatarDescr) 
     {
         super(parent, "Selezione Avatar", true);
         avatarArray = new ImageIcon[] { new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_3.gif"), "Naruto gif"),

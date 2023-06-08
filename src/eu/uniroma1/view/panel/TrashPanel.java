@@ -10,14 +10,14 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import eu.uniroma1.controller.PlayingFieldController;
-import eu.uniroma1.model.exceptions.MazzoFinitoException;
-import eu.uniroma1.model.exceptions.PartitaNonInCorsoException;
-import eu.uniroma1.view.button.ButtonCarta;
+import eu.uniroma1.model.exceptions.DeckFinishedException;
+import eu.uniroma1.model.exceptions.GameNotInProgressException;
+import eu.uniroma1.view.button.CardButton;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
 public class TrashPanel extends JPanel implements Closeable
 {
-	private ButtonCarta carteScartate;
+	private CardButton carteScartate;
 	
 	@Override
 	public void enableComponent() 
@@ -35,7 +35,7 @@ public class TrashPanel extends JPanel implements Closeable
 	{
 		try 
 		{
-			carteScartate = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta());
+			carteScartate = new CardButton(PlayingFieldController.getInstance().prossimaCarta());
 			carteScartate.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 
@@ -45,7 +45,7 @@ public class TrashPanel extends JPanel implements Closeable
 			});
 			carteScartate.gira();
 		} 
-		catch (PartitaNonInCorsoException | MazzoFinitoException e)
+		catch (GameNotInProgressException | DeckFinishedException e)
 		{
 			/* Non succederà mai, stiamo creando ora il campo di gioco */
 		}
