@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.controller.ControllerCampoDiGioco;
+import eu.uniroma1.controller.PlayingFieldController;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
@@ -35,12 +35,12 @@ public class PannelloTrash extends JPanel implements Closeable
 	{
 		try 
 		{
-			carteScartate = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta());
+			carteScartate = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta());
 			carteScartate.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					ControllerCampoDiGioco.getInstance().ultimaCartaSelezionata(carteScartate.getCarta());
+					PlayingFieldController.getInstance().lastSelectedCard(carteScartate.getCarta());
 				}
 			});
 			carteScartate.gira();

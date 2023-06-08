@@ -24,14 +24,15 @@ public class ButtonCarta extends JButton
 	private static final String fileCartaGiocoVerticale = "carta_da_gioco_verticale.jpg";
 	private static final String fileCartaGiocoOrizzontale = "carta_da_gioco_orizzontale.jpg";
 	private static final String fileCartaGiocoVerticalePerSuggerimento = "carta_da_gioco_verticale_per_suggerimento.jpg";
-	private boolean isScoperta;
+	private boolean faceUp;
 	private PosizioneDelMazzo posizioneDelMazzo;
+	private int positionInTheField;
 	
 	@Override
 	public void paint(Graphics g) 
 	{
 		super.paint(g);
-		if (isScoperta)
+		if (faceUp)
 		{
 			/* Imposta il colore bianco */
 			g.setColor(Color.WHITE);
@@ -84,23 +85,27 @@ public class ButtonCarta extends JButton
 	
 	public void gira()
 	{
-		if (!isScoperta)
+		if (!faceUp)
 		{
 			setIcon(null);
-			isScoperta = true;
+			faceUp = true;
 			repaint();
 		}
 	}
 	
-	public void cambiaCarta(Carte carta)
+	public Carte changeCard(Carte carta)
 	{
+		Carte oldCard = this.carta;
+		
+		faceUp = true;
 		this.carta = carta;
 		repaint();
+		return oldCard;
 	}
 	
 	public void setHintCard()
 	{
-		if (isScoperta)
+		if (faceUp)
 			return;
 		setIconP(fileCartaGiocoVerticalePerSuggerimento);
 	}
@@ -110,11 +115,16 @@ public class ButtonCarta extends JButton
 	 */
 	public void restoreCardImage()
 	{
-		if (isScoperta)
+		if (faceUp)
 			return;
 		setIconP(posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX || 
 				  posizioneDelMazzo == PosizioneDelMazzo.SULLA_DX ?
 				  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale);
+	}
+	
+	public boolean isFaceUpCard()
+	{
+		return faceUp;
 	}
 	
 	private void setIconP(String s)
@@ -139,6 +149,11 @@ public class ButtonCarta extends JButton
 		return carta;
 	}
 	
+	public int getPositionInTheField()
+	{
+		return positionInTheField;
+	}
+	
 	public ButtonCarta(Carte carta)
 	{
 		this(carta, PosizioneDelMazzo.IN_ALTO);
@@ -146,8 +161,14 @@ public class ButtonCarta extends JButton
 	
 	public ButtonCarta(Carte carta, PosizioneDelMazzo posizioneDelMazzo)
 	{
+		this(carta, posizioneDelMazzo, 0);
+	}
+	
+	public ButtonCarta(Carte carta, PosizioneDelMazzo posizioneDelMazzo, int positionInTheField)
+	{
 		this.carta = carta;
 		this.posizioneDelMazzo = posizioneDelMazzo;
+		this.positionInTheField = positionInTheField;
 		setIconP(posizioneDelMazzo == PosizioneDelMazzo.SULLA_SX || 
 												  posizioneDelMazzo == PosizioneDelMazzo.SULLA_DX ?
 												  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale);

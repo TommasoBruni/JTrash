@@ -12,7 +12,8 @@ import java.awt.event.ActionListener;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import eu.uniroma1.controller.ControllerCampoDiGioco;
+import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.model.carte.Carte;
 import eu.uniroma1.model.eccezioni.MazzoFinitoException;
 import eu.uniroma1.model.eccezioni.PartitaNonInCorsoException;
 import eu.uniroma1.view.button.ButtonCarta;
@@ -38,9 +39,9 @@ public class PannelloMazzoDiCarte extends JPanel
 		firstCard = true;
 		try 
 		{
-			carteDaPescare = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
+			carteDaPescare = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta(), PosizioneDelMazzo.IN_ALTO);
 			trashSpace = new PannelloTrash();
-			cartaPescata = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta());
+			cartaPescata = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);
 		} 
@@ -55,7 +56,7 @@ public class PannelloMazzoDiCarte extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				ControllerCampoDiGioco.getInstance().ultimaCartaSelezionata(cartaPescata.getCarta());
+				PlayingFieldController.getInstance().lastSelectedCard(cartaPescata.getCarta());
 			}
 		});
 		
@@ -64,11 +65,13 @@ public class PannelloMazzoDiCarte extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
+				Carte carta;
+				
 				if (!firstCard)
 				{
 					try 
 					{
-						cartaPescata.cambiaCarta(ControllerCampoDiGioco.getInstance().prossimaCarta());
+						cartaPescata.changeCard(PlayingFieldController.getInstance().prossimaCarta());
 					} 
 					catch (PartitaNonInCorsoException | MazzoFinitoException e1) 
 					{
@@ -81,6 +84,8 @@ public class PannelloMazzoDiCarte extends JPanel
 				/* Se è la prima carta basta solo impostare il button visibile
 				 * altrimenti bisogna cambiare la carta */
 				cartaPescata.setVisible(true);
+				carta = cartaPescata.getCarta();
+				PlayingFieldController.getInstance().lastSelectedCard(carta);
 				
 				firstCard = false;
 			}

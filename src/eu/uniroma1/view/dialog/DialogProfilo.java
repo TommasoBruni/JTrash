@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import eu.uniroma1.controller.ControllerCampoDiGioco;
-import eu.uniroma1.controller.ControllerGiocatore;
+import eu.uniroma1.controller.PlayingFieldController;
+import eu.uniroma1.controller.PlayerController;
 import eu.uniroma1.view.frame.FrameDiGioco;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
@@ -44,16 +44,16 @@ public class DialogProfilo extends JDialog
 		
 		labelNome = new JLabel("Nome utente");
 		fieldNome = new JTextField(15);
-		fieldNome.setText(ControllerGiocatore.getInstance().getNomeGiocatore());
+		fieldNome.setText(PlayerController.getInstance().getNomeGiocatore());
 		labelNickname = new JLabel("Nickname");
 		fieldNickname = new JTextField(15);
-		fieldNickname.setText(ControllerGiocatore.getInstance().getNicknameGiocatore());
+		fieldNickname.setText(PlayerController.getInstance().getNicknameGiocatore());
 		buttonOk = new JButton("Ok");
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Cambia avatar");
 		dialogSelezioneAvatar = new DialogSelezioneAvatar(new JFrame(), 
-				ControllerGiocatore.getInstance().getAvatarGiocatore().getDescription());
+				PlayerController.getInstance().getAvatarGiocatore().getDescription());
 		
 		buttonSelezionaAvatar.addActionListener(new ActionListener() {
 			@Override
@@ -78,9 +78,9 @@ public class DialogProfilo extends JDialog
 					return;
 				}
 				
-				ControllerGiocatore.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, 
+				PlayerController.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, 
 																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
-																	 ControllerGiocatore.getInstance().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
+																	 PlayerController.getInstance().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
 				ownerFrame.enableComponent();
 				dispose();
 			}

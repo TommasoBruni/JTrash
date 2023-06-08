@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.controller.ControllerCampoDiGioco;
+import eu.uniroma1.controller.PlayingFieldController;
 import eu.uniroma1.model.*;
 import eu.uniroma1.model.carte.Carte;
 import eu.uniroma1.model.carte.Colore;
@@ -92,15 +92,20 @@ public class PannelloCarte extends JPanel implements Observer
 	}
 	*/
 	
+	public void restoreAllCardImage()
+	{
+		/* Restore all card images */
+		for (ButtonCarta carta : carte)
+			carta.restoreCardImage();
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) 
 	{
 		Valori valore = ((Carte)arg).getValore();
 		int intValue;
 		
-		/* Si re-impostano le immagini originali */
-		for (ButtonCarta carta : carte)
-			carta.restoreCardImage();
+		restoreAllCardImage();
 		
 		try
 		{
@@ -156,13 +161,20 @@ public class PannelloCarte extends JPanel implements Observer
 		
 		for (i = 0; i < carte.length / 2; i++)
 		{
-			carte[i] = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta(), posizioneDelMazzo);
+			carte[i] = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i);
 			carte[i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
 					ButtonCarta c = (ButtonCarta)e.getSource();
-					c.gira();
+					Carte newCard = PlayingFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					
+					if (newCard == null)
+						return;
+					/* TODO: remember the old card and take it as icon while the next move
+					 * is not chosen */
+					c.changeCard(newCard);
+					restoreAllCardImage();
 				}
 			});
 			
@@ -184,13 +196,19 @@ public class PannelloCarte extends JPanel implements Observer
 		
 		for (j = 0; j + i < carte.length; j++)
 		{
-			carte[j + i] = new ButtonCarta(ControllerCampoDiGioco.getInstance().prossimaCarta(), posizioneDelMazzo);
+			carte[j + i] = new ButtonCarta(PlayingFieldController.getInstance().prossimaCarta(), posizioneDelMazzo, i + j);
 			carte[j + i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
 					ButtonCarta c = (ButtonCarta)e.getSource();
-					c.gira();
+					Carte newCard = PlayingFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+					
+					if (newCard == null)
+						return;
+					/* TODO: remember the old card and take it as icon while the next move
+					 * is not chosen */
+					c.changeCard(newCard);
 				}
 			});
 			if (isHorizontal)
