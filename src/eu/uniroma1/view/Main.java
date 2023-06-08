@@ -5,12 +5,12 @@ import eu.uniroma1.view.frame.GameFrame;
 public class Main 
 {
 	/**
-	 * Inizio applicazione
+	 * Starts the application
 	 * 
 	 * @param args input strings
 	 */
 	public static void main(String[] args) 
 	{
-		GameFrame frameDiGioco = new GameFrame();
+		GameFrame gameFrame = new GameFrame();
 	}
 }
