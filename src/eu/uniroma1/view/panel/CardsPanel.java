@@ -112,38 +112,98 @@ public class CardsPanel extends JPanel implements Observer
 			carta.restoreCardImage();
 	}
 	
-	@Override
-	public void update(Observable o, Object arg) 
+	public void setupAllFutureCard()
 	{
-		Value valore = ((Card)arg).getValore();
+		for (CardButton card : cards)
+			card.setupFutureCard();
+	}
+	
+	/**
+	 * Return true if a good place is found, otherwise false 
+	 */
+	private boolean setupCardsForHint(Value value)
+	{
 		int intValue;
+		boolean result = false;
 		
 		restoreAllCardImage();
 		
 		try
 		{
-			intValue = Integer.parseInt(valore.toString()) - 1;
+			intValue = Integer.parseInt(value.toString()) - 1;
 		}
 		catch(NumberFormatException ex)
 		{
-			if (valore.toString().equals(Value.ASSO.toString()))
+			if (value.equals(Value.ASSO))
 			{
 				intValue = 0;
 			}
-			else if (valore.toString().equals(Value.KING.toString()) || 
-					 valore.toString().equals(Value.JOLLY.toString()))
+			else if (value.equals(Value.KING) || 
+					 value.equals(Value.JOLLY))
 			{
 				for (CardButton carta : cards)
+				{
+					/* Verify that at least one card is face down */
+					if (!carta.isFaceUpCard())
+						result = true;
+					/* No problem, this set the hint just if is face down */
 					carta.setHintCard();
-				return;
+				}
+				return result;
 			}
 			else
 			{
-				return;
+				return false;
 			}
 		}
 		
+		/* If this card is already face up, return false
+		 * to indicate that there is no good place to insert
+		 * the input card */
+		if (cards[intValue].isFaceUpCard())
+			return false;
 		cards[intValue].setHintCard();
+		return true;
+	}
+	
+	public void processForCardExchanging(CardButton c)
+	{
+		Card newCard, oldCard;
+		
+		try 
+		{
+			newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+		}
+		catch (MoveNotAllowedException e1) 
+		{
+			return;
+		}
+		
+		if (newCard == null)
+			return;
+		/* Display the card so the user can see it and choose a good position.
+		 * The card could automatically go to the trash */
+		c.gira();
+		/* This means that a good choice is taken */
+		setupAllFutureCard();
+
+		/* Take the old one card and try to set hint cards that match this one */
+		oldCard = c.configureCardForFuture(newCard);
+
+		if (setupCardsForHint(oldCard.getValore()))
+		{
+			MainPlayerFieldController.getInstance().cardSelectedForExchanging(oldCard);
+			return;
+		}
+		/* There is no good place for the old card, so discard it and update the current */
+		c.setupFutureCard();
+		MainPlayerFieldController.getInstance().newCardToTrash(oldCard);
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) 
+	{
+		setupCardsForHint(((Card)arg).getValore());
 	}
 	
 	public CardsPanel(DeckPosition posizioneDelMazzo) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
@@ -179,23 +239,7 @@ public class CardsPanel extends JPanel implements Observer
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					CardButton c = (CardButton)e.getSource();
-					Card newCard;
-					try 
-					{
-						newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
-					}
-					catch (MoveNotAllowedException e1) 
-					{
-						return;
-					}
-					
-					if (newCard == null)
-						return;
-					/* TODO: remember the old card and take it as icon until the next move
-					 * is chosen */
-					c.changeCard(newCard);
-					restoreAllCardImage();
+					processForCardExchanging((CardButton)e.getSource());
 				}
 			});
 			
@@ -222,23 +266,7 @@ public class CardsPanel extends JPanel implements Observer
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					CardButton c = (CardButton)e.getSource();
-					Card newCard;
-					
-					try 
-					{
-						newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
-					} 
-					catch (MoveNotAllowedException e1) 
-					{
-						return;
-					}
-					
-					if (newCard == null)
-						return;
-					/* TODO: remember the old card and take it as icon while the next move
-					 * is not chosen */
-					c.changeCard(newCard);
+					processForCardExchanging((CardButton)e.getSource());
 				}
 			});
 			if (isHorizontal)

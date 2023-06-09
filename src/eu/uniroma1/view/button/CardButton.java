@@ -20,7 +20,8 @@ import java.awt.Graphics2D;
 public class CardButton extends JButton
 {
 	private ImageIcon icon;
-	private Card carta;
+	private Card currentCard;
+	private Card futureCard;
 	private static final String fileCartaGiocoVerticale = "carta_da_gioco_verticale.jpg";
 	private static final String fileCartaGiocoOrizzontale = "carta_da_gioco_orizzontale.jpg";
 	private static final String fileCartaGiocoVerticalePerSuggerimento = "carta_da_gioco_verticale_per_suggerimento.jpg";
@@ -44,10 +45,10 @@ public class CardButton extends JButton
 	        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 	        
 	        /* Se fosse una carta rossa imposta il rosso come colore */
-	        if (carta.getColore() == CardColor.ROSSO)
+	        if (currentCard.getColore() == CardColor.ROSSO)
 	        	g.setColor(Color.RED);
 	        Font font;
-	        if (carta == Card.JOLLY_NERO || carta == Card.JOLLY_ROSSO)
+	        if (currentCard == Card.JOLLY_NERO || currentCard == Card.JOLLY_ROSSO)
 	        	font = new Font("Arial", Font.BOLD, 12);
 	        else
 	        	font = new Font("Arial", Font.BOLD, 18);
@@ -61,23 +62,23 @@ public class CardButton extends JButton
 				affineTransform.rotate(-(Math.PI / 2));
 				rotatedFont = font.deriveFont(affineTransform);
 				g.setFont(rotatedFont);
-				g.drawString(carta.toString(), 26, 34);
+				g.drawString(currentCard.toString(), 26, 34);
 	        	break;
 	        case SULLA_DX:
 	        	affineTransform.rotate(Math.PI / 2);
 	        	rotatedFont = font.deriveFont(affineTransform);
 	        	g.setFont(rotatedFont);
-	        	g.drawString(carta.toString(), 30, 6);
+	        	g.drawString(currentCard.toString(), 30, 6);
 	        	break;
 	        case IN_BASSO:
 	        	affineTransform.rotate(Math.PI);
 	        	rotatedFont = font.deriveFont(affineTransform);
 	        	g.setFont(rotatedFont);
-	        	g.drawString(carta.toString(), 33, 28);
+	        	g.drawString(currentCard.toString(), 33, 28);
 	        	break;
 			default:
 		        g.setFont(font);
-		        g.drawString(carta.toString(), 5, 25);
+		        g.drawString(currentCard.toString(), 5, 25);
 				break;
 	        }
 		}
@@ -93,14 +94,25 @@ public class CardButton extends JButton
 		}
 	}
 	
-	public Card changeCard(Card carta)
+	public void changeCard(Card card)
 	{
-		Card oldCard = this.carta;
-		
 		faceUp = true;
-		this.carta = carta;
+		this.currentCard = card;
 		repaint();
-		return oldCard;
+	}
+	
+	public Card configureCardForFuture(Card futureCard)
+	{
+		this.futureCard = futureCard;
+		return currentCard;
+	}
+	
+	public void setupFutureCard()
+	{
+		if (futureCard == null)
+			return;
+		changeCard(futureCard);
+		futureCard = null;
 	}
 	
 	public void setHintCard()
@@ -146,7 +158,7 @@ public class CardButton extends JButton
 	
 	public Card getCarta()
 	{
-		return carta;
+		return currentCard;
 	}
 	
 	public int getPositionInTheField()
@@ -166,7 +178,7 @@ public class CardButton extends JButton
 	
 	public CardButton(Card carta, DeckPosition posizioneDelMazzo, int positionInTheField)
 	{
-		this.carta = carta;
+		this.currentCard = carta;
 		this.posizioneDelMazzo = posizioneDelMazzo;
 		this.positionInTheField = positionInTheField;
 		setIconP(posizioneDelMazzo == DeckPosition.SULLA_SX || 

@@ -19,6 +19,7 @@ public class MainPlayerFieldController
 		TURN_STARTED,
 		PICK_FROM_DISCARDED,
 		PICK_NEW_CARD_FROM_DECK,
+		EXCHANGING,
 		TURN_IS_OVER
 	}
 	
@@ -27,6 +28,7 @@ public class MainPlayerFieldController
 	private Card lastSelectedCard;
 	private CardsHandleObservable observableForHint;
 	private CardsHandleObservable observableForReplacingCards;
+	private CardsHandleObservable observableForTrashUpdating;
 	private MainPlayerState playerState;
 	
 	public void startGame()
@@ -87,6 +89,19 @@ public class MainPlayerFieldController
 		playerState = MainPlayerState.PICK_FROM_DISCARDED;
 	}
 	
+	public void cardSelectedForExchanging(Card card)
+	{
+		/* Ignore if the turn is over */
+		lastSelectedCard = card;
+		playerState = MainPlayerState.EXCHANGING;
+	}
+	
+	public void newCardToTrash(Card card)
+	{
+		observableForTrashUpdating.setStatusChanged();
+		observableForTrashUpdating.notifyObservers(card);
+	}
+	
 	public Observable getObservableForHintCard()
 	{
 		return observableForHint;
@@ -95,6 +110,11 @@ public class MainPlayerFieldController
 	public Observable getObservableForReplacingCards()
 	{
 		return observableForReplacingCards;
+	}
+	
+	public Observable getObservableForTrashUpdating()
+	{
+		return observableForTrashUpdating;
 	}
 	
 	private boolean goodCard(int position)
@@ -117,7 +137,8 @@ public class MainPlayerFieldController
 	public Card getCardForReplacing(int position) throws MoveNotAllowedException
 	{
 		if (playerState != MainPlayerState.PICK_FROM_DISCARDED && 
-			playerState != MainPlayerState.PICK_NEW_CARD_FROM_DECK)
+			playerState != MainPlayerState.PICK_NEW_CARD_FROM_DECK &&
+			playerState != MainPlayerState.EXCHANGING)
 			throw new MoveNotAllowedException();
 		if (lastSelectedCard == null || !goodCard(position + 1))
 			return null;
@@ -142,6 +163,7 @@ public class MainPlayerFieldController
 	{
 		observableForHint = new CardsHandleObservable();
 		observableForReplacingCards = new CardsHandleObservable();
+		observableForTrashUpdating = new CardsHandleObservable();
 		playerState = MainPlayerState.TURN_STARTED;
 	}
 }

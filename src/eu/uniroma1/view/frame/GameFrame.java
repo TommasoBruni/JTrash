@@ -149,7 +149,7 @@ public class GameFrame extends JFrame implements Closeable
 		{
 			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO),
 																	 new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
-																			 					 PlayersController.getInstance().getAvatarGiocatore()),
+																			 			  PlayersController.getInstance().getAvatarGiocatore()),
 																	  DeckPosition.IN_BASSO);
 			gbc.gridx = 0;
 			gbc.gridy = 0;

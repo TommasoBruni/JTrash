@@ -38,10 +38,13 @@ public class DeckPanel extends JPanel implements Observer
 	{
 		Card selectedCard = (Card)arg;
 		Card discardedCard = trashSpace.getLastCard();
+		Card pickedCard = cartaPescata.getCarta();
 		
 		if (selectedCard.equals(discardedCard))
+			/* The user selects the card from the trash */
 			trashSpace.removeCardFromTop();
-		else
+		else if(selectedCard.equals(pickedCard))
+			/* The user selects the card from the deck */
 			cartaPescata.setVisible(false);
 	}
 	
@@ -53,7 +56,7 @@ public class DeckPanel extends JPanel implements Observer
 		try 
 		{
 			carteDaPescare = new CardButton(MainPlayerFieldController.getInstance().nextCard(), DeckPosition.IN_ALTO);
-			trashSpace = new TrashPanel();
+			trashSpace = new TrashPanel(MainPlayerFieldController.getInstance().getObservableForTrashUpdating());
 			cartaPescata = new CardButton(MainPlayerFieldController.getInstance().nextCard());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);
