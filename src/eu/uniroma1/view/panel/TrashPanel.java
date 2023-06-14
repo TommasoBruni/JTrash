@@ -14,7 +14,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.controller.MainPlayerFieldController;
+import eu.uniroma1.controller.FieldController;
+import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
@@ -77,7 +78,7 @@ public class TrashPanel extends JPanel implements Closeable, Observer
 		discardedCards = new ArrayList<>();
 		try 
 		{
-			Card firstCard = MainPlayerFieldController.getInstance().nextCard();
+			Card firstCard = FieldController.getInstance().nextCard();
 			
 			discardedCards.add(firstCard);
 			carteScartate = new CardButton(firstCard);
@@ -87,7 +88,7 @@ public class TrashPanel extends JPanel implements Closeable, Observer
 				{
 					try 
 					{
-						MainPlayerFieldController.getInstance().cardSelectedFromTrash(carteScartate.getCarta());
+						FieldController.getInstance().cardSelected(carteScartate.getCarta());
 					}
 					catch (MoveNotAllowedException e1)
 					{

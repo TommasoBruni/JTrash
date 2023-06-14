@@ -2,6 +2,7 @@ package eu.uniroma1.controller;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 
@@ -12,94 +13,32 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
-public class MainPlayerFieldController
-{
-	private enum MainPlayerState
-	{
-		TURN_STARTED,
-		PICK_FROM_DISCARDED,
-		PICK_NEW_CARD_FROM_DECK,
-		EXCHANGING,
-		TURN_IS_OVER
-	}
-	
-	private static MainPlayerFieldController controller;
-	private Deck deck;
-	private Card lastSelectedCard;
+public class MainPlayerController extends PlayerController
+{	
+	private static MainPlayerController controller;
 	private CardsHandleObservable observableForHint;
 	private CardsHandleObservable observableForReplacingCards;
 	private CardsHandleObservable observableForTrashUpdating;
-	private MainPlayerState playerState;
 	
-	public void startGame()
+	@Override
+	public void operationWithSelectedCard(Card card) 
 	{
-		deck = switch(PlayersController.getInstance().getNumeroGiocatoriInPartita())
-					   {
-					        case 2 -> new MazzoDiCarteBuilder()
-							.shuffle()
-							.build();
-					        default-> new MazzoDiCarteBuilder()
-					        .join(new MazzoDiCarteBuilder().build())
-							.shuffle()
-							.build(); 
-					   };
-	}
-	
-	/**
-	 * Ritorna la carta successiva nel mazzo se presente
-	 * @return carta successiva nel mazzo
-	 * @throws GameNotInProgressException se la partita non è iniziata oppure è appena finita
-	 * @throws DeckFinishedException se non ci sono più carte nel mazzo 
-	 * @throws MoveNotAllowedException this move is not allowed for the current state
-	 */
-	public Card nextCard() throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
-	{
-		Card carta;
-		
-		if (playerState != MainPlayerState.TURN_STARTED)
-			throw new MoveNotAllowedException();
-		if (deck == null)
-			throw new GameNotInProgressException();
-		try
-		{
-			carta = deck.nextCard();
-		}
-		catch(DeckFinishedException ex)
-		{
-			/* Partita finita. */
-			deck = null;
-			throw ex;
-		}
-		return carta;
-	}
-	
-	public void cardSelectedFromDeck(Card carta) throws MoveNotAllowedException
-	{
-		if (playerState != MainPlayerState.TURN_STARTED)
-			throw new MoveNotAllowedException();
-		lastSelectedCard = carta;
 		observableForHint.setStatusChanged();
-		observableForHint.notifyObservers(lastSelectedCard);
-		playerState = MainPlayerState.PICK_NEW_CARD_FROM_DECK;
-	}
-	
-	public void cardSelectedFromTrash(Card card) throws MoveNotAllowedException
-	{
-		cardSelectedFromDeck(card);
-		playerState = MainPlayerState.PICK_FROM_DISCARDED;
+		observableForHint.notifyObservers(card);
 	}
 	
 	public void cardSelectedForExchanging(Card card)
 	{
 		/* Ignore if the turn is over */
 		lastSelectedCard = card;
-		playerState = MainPlayerState.EXCHANGING;
+		playerState = PlayerState.EXCHANGING;
 	}
 	
 	public void newCardToTrash(Card card)
 	{
 		observableForTrashUpdating.setStatusChanged();
 		observableForTrashUpdating.notifyObservers(card);
+		finishTurn();
 	}
 	
 	public Observable getObservableForHintCard()
@@ -136,9 +75,8 @@ public class MainPlayerFieldController
 	 */
 	public Card getCardForReplacing(int position) throws MoveNotAllowedException
 	{
-		if (playerState != MainPlayerState.PICK_FROM_DISCARDED && 
-			playerState != MainPlayerState.PICK_NEW_CARD_FROM_DECK &&
-			playerState != MainPlayerState.EXCHANGING)
+		if (playerState != PlayerState.PICKED_CARD &&
+			playerState != PlayerState.EXCHANGING)
 			throw new MoveNotAllowedException();
 		if (lastSelectedCard == null || !goodCard(position + 1))
 			return null;
@@ -148,22 +86,22 @@ public class MainPlayerFieldController
 		observableForReplacingCards.notifyObservers(result);
 		
 		lastSelectedCard = null;
-		playerState = MainPlayerState.TURN_IS_OVER;
+		playerState = PlayerState.TURN_IS_OVER;
 		return result;
 	}
 	
-	public static MainPlayerFieldController getInstance()
+	public static MainPlayerController getInstance()
 	{
 		if (controller == null)
-			controller = new MainPlayerFieldController();
+			controller = new MainPlayerController();
 		return controller;
 	}
 	
-	private MainPlayerFieldController()
+	private MainPlayerController()
 	{
 		observableForHint = new CardsHandleObservable();
 		observableForReplacingCards = new CardsHandleObservable();
 		observableForTrashUpdating = new CardsHandleObservable();
-		playerState = MainPlayerState.TURN_STARTED;
+		playerState = PlayerState.TURN_IS_OVER;
 	}
 }

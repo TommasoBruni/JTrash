@@ -16,11 +16,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.*;
 
-import eu.uniroma1.controller.MainPlayerFieldController;
+import eu.uniroma1.controller.FieldController;
+import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
-import eu.uniroma1.controller.PlayersController;
+import eu.uniroma1.controller.PlayerDataController;
 import eu.uniroma1.view.dialog.ProfileDialog;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 import eu.uniroma1.view.panel.AnimationPanel;
@@ -69,9 +70,9 @@ public class GameFrame extends JFrame implements Closeable
         
         if (numeroGiocatori < 0)
         	System.exit(0);
+        PlayerDataController.getInstance().aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
         /* Sono consecutivi */
         setupPerInserimentoDati();
-        PlayersController.getInstance().aggiornaNumeroGiocatori(possibileNumeroGiocatori[numeroGiocatori]);
 	}
 	
 	public void setGridBagLayout()
@@ -94,10 +95,10 @@ public class GameFrame extends JFrame implements Closeable
 	public void impostaCampoDiGioco()
 	{
 		/* Dice al controller di iniziare la partita */
-		MainPlayerFieldController.getInstance().startGame();
+		FieldController.getInstance().startGame();
 		AnimationPanel pannelloAnimazione;
 		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-		deckPanel = new DeckPanel(MainPlayerFieldController.getInstance().getObservableForReplacingCards());
+		deckPanel = new DeckPanel(MainPlayerController.getInstance().getObservableForReplacingCards());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setGridBagLayout();
@@ -121,13 +122,13 @@ public class GameFrame extends JFrame implements Closeable
 		
 		try 
 		{
-			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerFieldController.getInstance().getObservableForHintCard()),
-																  new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
-																		  					  PlayersController.getInstance().getAvatarGiocatore(),
-																		  					  PlayersController.getInstance().getPartiteGiocateGiocatore(),
-																		  					  PlayersController.getInstance().getPartiteVinteGiocatore(),
-																		  					  PlayersController.getInstance().getPartitePerseGiocatore(),
-																		  					  PlayersController.getInstance()),
+			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerController.getInstance().getObservableForHintCard()),
+																  new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
+																		  					  PlayerDataController.getInstance().getAvatarGiocatore(),
+																		  					  PlayerDataController.getInstance().getPartiteGiocateGiocatore(),
+																		  					  PlayerDataController.getInstance().getPartiteVinteGiocatore(),
+																		  					  PlayerDataController.getInstance().getPartitePerseGiocatore(),
+																		  					  PlayerDataController.getInstance()),
 																  DeckPosition.IN_ALTO);
 			
 			gbc.gridx = 0;
@@ -147,9 +148,9 @@ public class GameFrame extends JFrame implements Closeable
 		//pannelloGiocatorePrincipale.startAnimazione();
 		try 
 		{
-			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO),
-																	 new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
-																			 			  PlayersController.getInstance().getAvatarGiocatore()),
+			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, FieldController.getInstance().getNextEnemy()),
+																	 new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
+																			 			  PlayerDataController.getInstance().getAvatarGiocatore()),
 																	  DeckPosition.IN_BASSO);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
@@ -165,13 +166,13 @@ public class GameFrame extends JFrame implements Closeable
 			e.printStackTrace();
 		}
 		
-		if (PlayersController.getInstance().getNumeroGiocatoriInPartita() > 2)
+		if (PlayerDataController.getInstance().getNumeroGiocatoriInPartita() > 2)
 		{
 			try
 			{
-				robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX),
-																   new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
-																		   				       PlayersController.getInstance().getAvatarGiocatore()),
+				robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, FieldController.getInstance().getNextEnemy()),
+																   new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
+																		   				       PlayerDataController.getInstance().getAvatarGiocatore()),
 																   DeckPosition.SULLA_SX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
@@ -188,13 +189,13 @@ public class GameFrame extends JFrame implements Closeable
 			}
 		}
 		
-		if (PlayersController.getInstance().getNumeroGiocatoriInPartita() > 3)
+		if (PlayerDataController.getInstance().getNumeroGiocatoriInPartita() > 3)
 		{
 			try 
 			{
-				robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX),
-																   new AvatarScorePanel(PlayersController.getInstance().getNomeGiocatore(),
-																		   					   PlayersController.getInstance().getAvatarGiocatore()),
+				robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, FieldController.getInstance().getNextEnemy()),
+																   new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
+																		   					   PlayerDataController.getInstance().getAvatarGiocatore()),
 																   DeckPosition.SULLA_DX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;

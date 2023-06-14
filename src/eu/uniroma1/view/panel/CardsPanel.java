@@ -30,7 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import eu.uniroma1.controller.MainPlayerFieldController;
+import eu.uniroma1.controller.FieldController;
+import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.model.*;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.CardColor;
@@ -172,7 +173,7 @@ public class CardsPanel extends JPanel implements Observer
 		
 		try 
 		{
-			newCard = MainPlayerFieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+			newCard = MainPlayerController.getInstance().getCardForReplacing(c.getPositionInTheField());
 		}
 		catch (MoveNotAllowedException e1) 
 		{
@@ -192,12 +193,12 @@ public class CardsPanel extends JPanel implements Observer
 
 		if (setupCardsForHint(oldCard.getValore()))
 		{
-			MainPlayerFieldController.getInstance().cardSelectedForExchanging(oldCard);
+			MainPlayerController.getInstance().cardSelectedForExchanging(oldCard);
 			return;
 		}
 		/* There is no good place for the old card, so discard it and update the current */
 		c.setupFutureCard();
-		MainPlayerFieldController.getInstance().newCardToTrash(oldCard);
+		MainPlayerController.getInstance().newCardToTrash(oldCard);
 	}
 	
 	@Override
@@ -234,7 +235,7 @@ public class CardsPanel extends JPanel implements Observer
 		
 		for (i = 0; i < cards.length / 2; i++)
 		{
-			cards[i] = new CardButton(MainPlayerFieldController.getInstance().nextCard(), posizioneDelMazzo, i);
+			cards[i] = new CardButton(FieldController.getInstance().nextCard(), posizioneDelMazzo, i);
 			cards[i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
@@ -261,7 +262,7 @@ public class CardsPanel extends JPanel implements Observer
 		
 		for (j = 0; j + i < cards.length; j++)
 		{
-			cards[j + i] = new CardButton(MainPlayerFieldController.getInstance().nextCard(), posizioneDelMazzo, i + j);
+			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), posizioneDelMazzo, i + j);
 			cards[j + i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 

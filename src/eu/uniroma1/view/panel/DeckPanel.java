@@ -14,7 +14,8 @@ import java.util.Observer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import eu.uniroma1.controller.MainPlayerFieldController;
+import eu.uniroma1.controller.FieldController;
+import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
@@ -55,9 +56,9 @@ public class DeckPanel extends JPanel implements Observer
 		firstCard = true;
 		try 
 		{
-			carteDaPescare = new CardButton(MainPlayerFieldController.getInstance().nextCard(), DeckPosition.IN_ALTO);
-			trashSpace = new TrashPanel(MainPlayerFieldController.getInstance().getObservableForTrashUpdating());
-			cartaPescata = new CardButton(MainPlayerFieldController.getInstance().nextCard());
+			carteDaPescare = new CardButton(FieldController.getInstance().nextCard(), DeckPosition.IN_ALTO);
+			trashSpace = new TrashPanel(MainPlayerController.getInstance().getObservableForTrashUpdating());
+			cartaPescata = new CardButton(FieldController.getInstance().nextCard());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);
 		} 
@@ -78,7 +79,7 @@ public class DeckPanel extends JPanel implements Observer
 				{
 					try 
 					{
-						cartaPescata.changeCard(MainPlayerFieldController.getInstance().nextCard());
+						cartaPescata.changeCard(FieldController.getInstance().nextCard());
 					}
 					catch(MoveNotAllowedException e1)
 					{
@@ -96,7 +97,7 @@ public class DeckPanel extends JPanel implements Observer
 				
 				try 
 				{
-					MainPlayerFieldController.getInstance().cardSelectedFromDeck(carta);
+					FieldController.getInstance().cardSelected(carta);
 				} 
 				catch (MoveNotAllowedException e1) 
 				{

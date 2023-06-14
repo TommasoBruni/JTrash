@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import eu.uniroma1.controller.MainPlayerFieldController;
-import eu.uniroma1.controller.PlayersController;
+import eu.uniroma1.controller.MainPlayerController;
+import eu.uniroma1.controller.PlayerDataController;
 import eu.uniroma1.view.frame.GameFrame;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
@@ -44,16 +44,16 @@ public class ProfileDialog extends JDialog
 		
 		labelNome = new JLabel("Nome utente");
 		fieldNome = new JTextField(15);
-		fieldNome.setText(PlayersController.getInstance().getNomeGiocatore());
+		fieldNome.setText(PlayerDataController.getInstance().getNomeGiocatore());
 		labelNickname = new JLabel("Nickname");
 		fieldNickname = new JTextField(15);
-		fieldNickname.setText(PlayersController.getInstance().getNicknameGiocatore());
+		fieldNickname.setText(PlayerDataController.getInstance().getNicknameGiocatore());
 		buttonOk = new JButton("Ok");
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Cambia avatar");
 		dialogSelezioneAvatar = new AvatarSelectionDialog(new JFrame(), 
-				PlayersController.getInstance().getAvatarGiocatore().getDescription());
+				PlayerDataController.getInstance().getAvatarGiocatore().getDescription());
 		
 		buttonSelezionaAvatar.addActionListener(new ActionListener() {
 			@Override
@@ -78,9 +78,9 @@ public class ProfileDialog extends JDialog
 					return;
 				}
 				
-				PlayersController.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, 
+				PlayerDataController.getInstance().aggiornaDatiGiocatore(nomeUtente, nickname, 
 																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
-																	 PlayersController.getInstance().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
+																	 PlayerDataController.getInstance().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
 				ownerFrame.enableComponent();
 				dispose();
 			}
