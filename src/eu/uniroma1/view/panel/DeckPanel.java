@@ -57,7 +57,7 @@ public class DeckPanel extends JPanel implements Observer
 		try 
 		{
 			carteDaPescare = new CardButton(FieldController.getInstance().nextCard(), DeckPosition.IN_ALTO);
-			trashSpace = new TrashPanel(MainPlayerController.getInstance().getObservableForTrashUpdating());
+			trashSpace = new TrashPanel(FieldController.getInstance().getObservableForTrashUpdating());
 			cartaPescata = new CardButton(FieldController.getInstance().nextCard());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);

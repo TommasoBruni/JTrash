@@ -198,7 +198,7 @@ public class CardsPanel extends JPanel implements Observer
 		}
 		/* There is no good place for the old card, so discard it and update the current */
 		c.setupFutureCard();
-		MainPlayerController.getInstance().newCardToTrash(oldCard);
+		FieldController.getInstance().newCardToTrash(oldCard);
 	}
 	
 	@Override

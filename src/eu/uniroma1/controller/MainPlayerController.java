@@ -18,7 +18,6 @@ public class MainPlayerController extends PlayerController
 	private static MainPlayerController controller;
 	private CardsHandleObservable observableForHint;
 	private CardsHandleObservable observableForReplacingCards;
-	private CardsHandleObservable observableForTrashUpdating;
 	
 	@Override
 	public void operationWithSelectedCard(Card card) 
@@ -34,13 +33,6 @@ public class MainPlayerController extends PlayerController
 		playerState = PlayerState.EXCHANGING;
 	}
 	
-	public void newCardToTrash(Card card)
-	{
-		observableForTrashUpdating.setStatusChanged();
-		observableForTrashUpdating.notifyObservers(card);
-		finishTurn();
-	}
-	
 	public Observable getObservableForHintCard()
 	{
 		return observableForHint;
@@ -49,11 +41,6 @@ public class MainPlayerController extends PlayerController
 	public Observable getObservableForReplacingCards()
 	{
 		return observableForReplacingCards;
-	}
-	
-	public Observable getObservableForTrashUpdating()
-	{
-		return observableForTrashUpdating;
 	}
 	
 	private boolean goodCard(int position)
@@ -101,7 +88,6 @@ public class MainPlayerController extends PlayerController
 	{
 		observableForHint = new CardsHandleObservable();
 		observableForReplacingCards = new CardsHandleObservable();
-		observableForTrashUpdating = new CardsHandleObservable();
 		playerState = PlayerState.TURN_IS_OVER;
 	}
 }

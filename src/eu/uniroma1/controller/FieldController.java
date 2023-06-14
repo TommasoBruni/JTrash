@@ -13,7 +13,7 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
-public class FieldController extends Observable implements Observer
+public class FieldController extends Observable
 {
 	private static FieldController controller;
 	/**
@@ -22,12 +22,12 @@ public class FieldController extends Observable implements Observer
 	 */
 	private List<PlayerController> playerControllers;
 	private PlayerController currentPlayerController;
+	private CardsHandleObservable observableForTrashUpdating;
 	private Deck deck;
 	private int playerIndex;
 	private int enemyIndex;
 	
-	@Override
-	public void update(Observable o, Object arg) 
+	public void nextTurn() 
 	{
 		/* E' il turno del prossimo giocatore */
 		if (playerIndex > playerControllers.size() - 1)
@@ -108,6 +108,19 @@ public class FieldController extends Observable implements Observer
 		currentPlayerController.newCardSelected(card);
 	}
 	
+	public void newCardToTrash(Card card)
+	{
+		observableForTrashUpdating.setStatusChanged();
+		observableForTrashUpdating.notifyObservers(card);
+		currentPlayerController.finishTurn();
+		nextTurn();
+	}
+	
+	public Observable getObservableForTrashUpdating()
+	{
+		return observableForTrashUpdating;
+	}
+	
 	public static FieldController getInstance()
 	{
 		if (controller == null)
@@ -119,6 +132,6 @@ public class FieldController extends Observable implements Observer
 	{
 		enemyIndex = 1;
 		playerControllers = new ArrayList<>();
-		MainPlayerController.getInstance().addObserver(this);
+		observableForTrashUpdating = new CardsHandleObservable();
 	}
 }

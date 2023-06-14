@@ -20,11 +20,7 @@ public abstract class PlayerController extends Observable
 	
 	public void finishTurn() 
 	{
-		/* Serve a notificare al fieldController che il turno di questo giocatore è finito.
-		 * Questo viene chiamato dalla view quando ha finito di fare tutti gli spostamenti
-		 * delle carte. */
-		setChanged();
-		notifyObservers();
+		playerState = PlayerState.TURN_IS_OVER;
 	}
 	
 	public void newCardSelected(Card carta) throws MoveNotAllowedException
