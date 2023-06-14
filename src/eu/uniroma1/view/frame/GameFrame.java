@@ -98,7 +98,7 @@ public class GameFrame extends JFrame implements Closeable
 		FieldController.getInstance().startGame();
 		AnimationPanel pannelloAnimazione;
 		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-		deckPanel = new DeckPanel(MainPlayerController.getInstance().getObservableForReplacingCards());
+		deckPanel = new DeckPanel(FieldController.getInstance().getObservableForReplacingCards());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setGridBagLayout();

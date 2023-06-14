@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.function.Consumer;
 
 import eu.uniroma1.model.carte.Card;
+import eu.uniroma1.model.carte.Value;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
 public abstract class PlayerController extends Observable
@@ -11,7 +12,7 @@ public abstract class PlayerController extends Observable
 	protected PlayerState playerState;
 	protected Card lastSelectedCard;
 	
-	public abstract void operationWithSelectedCard(Card card);
+	public abstract void operationWithSelectedCard(Card card) throws MoveNotAllowedException;
 	
 	public void startTurn() 
 	{
@@ -21,6 +22,46 @@ public abstract class PlayerController extends Observable
 	public void finishTurn() 
 	{
 		playerState = PlayerState.TURN_IS_OVER;
+	}
+	
+	public void newCardSelectedForExchanging(Card card)
+	{
+		/* Ignore if the turn is over */
+		lastSelectedCard = card;
+		playerState = PlayerState.EXCHANGING;
+	}
+	
+	private boolean goodCard(int position)
+	{
+		return lastSelectedCard.getValore().toString().equals("" + (position)) || 
+			   lastSelectedCard.getValore().equals(Value.KING) ||
+			   lastSelectedCard.getValore().equals(Value.JOLLY) ||
+			   (lastSelectedCard.getValore().equals(Value.ASSO) && position == 1);
+	}
+	
+	/**
+	 * With the given position checks if the last card selected is
+	 * good one for replacing.
+	 * If yes return the last card selected otherwise null.
+	 * @param position of the current client
+	 * @return {@link Card} or null if the position doesn't match the value
+	 * of the last card
+	 * @throws MoveNotAllowedException if the current state does not allow this move
+	 */
+	public Card getCardFromDeckTrash(int position) throws MoveNotAllowedException
+	{
+		if (playerState != PlayerState.PICKED_CARD &&
+			playerState != PlayerState.EXCHANGING)
+			throw new MoveNotAllowedException();
+		if (lastSelectedCard == null || !goodCard(position + 1))
+			return null;
+		Card result = lastSelectedCard;
+		
+		FieldController.getInstance().notifyForReplacing(result);
+		
+		lastSelectedCard = null;
+		playerState = PlayerState.TURN_IS_OVER;
+		return result;
 	}
 	
 	public void newCardSelected(Card carta) throws MoveNotAllowedException

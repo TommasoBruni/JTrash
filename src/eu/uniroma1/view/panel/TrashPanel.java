@@ -98,7 +98,7 @@ public class TrashPanel extends JPanel implements Closeable, Observer
 			});
 			carteScartate.gira();
 		} 
-		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e)
+		catch (GameNotInProgressException | DeckFinishedException e)
 		{
 			/* Non accadrà mai stiamo creando adesso il campo di gioco */
 			e.printStackTrace();

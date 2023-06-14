@@ -62,7 +62,7 @@ public class DeckPanel extends JPanel implements Observer
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);
 		} 
-		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e)
+		catch (GameNotInProgressException | DeckFinishedException e)
 		{
 			/* Non accadrà mai stiamo creando adesso il campo di gioco */
 			e.printStackTrace();
@@ -73,17 +73,14 @@ public class DeckPanel extends JPanel implements Observer
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Card carta;
+				Card carta, oldCard;
 				
+				oldCard = cartaPescata.getCarta();
 				if (!firstCard)
 				{
 					try 
 					{
 						cartaPescata.changeCard(FieldController.getInstance().nextCard());
-					}
-					catch(MoveNotAllowedException e1)
-					{
-						return;
 					}
 					catch (GameNotInProgressException | DeckFinishedException e1) 
 					{
@@ -99,8 +96,11 @@ public class DeckPanel extends JPanel implements Observer
 				{
 					FieldController.getInstance().cardSelected(carta);
 				} 
-				catch (MoveNotAllowedException e1) 
+				catch (MoveNotAllowedException e1)
 				{
+					/* Fai il restore delle informazioni */
+					FieldController.getInstance().backupCard();
+					cartaPescata.changeCard(oldCard);
 					return;
 				}
 				

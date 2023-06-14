@@ -31,6 +31,12 @@ public class Deck implements Iterable<Card>
 		return cards[currentIndex++];
 	}
 	
+	public void backupCard()
+	{
+		if (currentIndex > 0)
+			currentIndex -= 1;
+	}
+	
 	@Override
 	public Iterator<Card> iterator() 
 	{

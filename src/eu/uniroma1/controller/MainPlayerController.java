@@ -17,64 +17,17 @@ public class MainPlayerController extends PlayerController
 {	
 	private static MainPlayerController controller;
 	private CardsHandleObservable observableForHint;
-	private CardsHandleObservable observableForReplacingCards;
 	
 	@Override
-	public void operationWithSelectedCard(Card card) 
+	public void operationWithSelectedCard(Card card)
 	{
 		observableForHint.setStatusChanged();
 		observableForHint.notifyObservers(card);
 	}
 	
-	public void cardSelectedForExchanging(Card card)
-	{
-		/* Ignore if the turn is over */
-		lastSelectedCard = card;
-		playerState = PlayerState.EXCHANGING;
-	}
-	
 	public Observable getObservableForHintCard()
 	{
 		return observableForHint;
-	}
-	
-	public Observable getObservableForReplacingCards()
-	{
-		return observableForReplacingCards;
-	}
-	
-	private boolean goodCard(int position)
-	{
-		return lastSelectedCard.getValore().toString().equals("" + (position)) || 
-			   lastSelectedCard.getValore().equals(Value.KING) ||
-			   lastSelectedCard.getValore().equals(Value.JOLLY) ||
-			   (lastSelectedCard.getValore().equals(Value.ASSO) && position == 1);
-	}
-	
-	/**
-	 * With the given position checks if the last card selected is
-	 * good one for replacing.
-	 * If yes return the last card selected otherwise null.
-	 * @param position of the current client
-	 * @return {@link Card} or null if the position doesn't match the value
-	 * of the last card
-	 * @throws MoveNotAllowedException if the current state does not allow this move
-	 */
-	public Card getCardForReplacing(int position) throws MoveNotAllowedException
-	{
-		if (playerState != PlayerState.PICKED_CARD &&
-			playerState != PlayerState.EXCHANGING)
-			throw new MoveNotAllowedException();
-		if (lastSelectedCard == null || !goodCard(position + 1))
-			return null;
-		Card result = lastSelectedCard;
-		
-		observableForReplacingCards.setStatusChanged();
-		observableForReplacingCards.notifyObservers(result);
-		
-		lastSelectedCard = null;
-		playerState = PlayerState.TURN_IS_OVER;
-		return result;
 	}
 	
 	public static MainPlayerController getInstance()
@@ -87,7 +40,6 @@ public class MainPlayerController extends PlayerController
 	private MainPlayerController()
 	{
 		observableForHint = new CardsHandleObservable();
-		observableForReplacingCards = new CardsHandleObservable();
 		playerState = PlayerState.TURN_IS_OVER;
 	}
 }

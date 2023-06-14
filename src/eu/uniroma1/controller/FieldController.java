@@ -23,6 +23,7 @@ public class FieldController extends Observable
 	private List<PlayerController> playerControllers;
 	private PlayerController currentPlayerController;
 	private CardsHandleObservable observableForTrashUpdating;
+	private CardsHandleObservable observableForReplacingCards;
 	private Deck deck;
 	private int playerIndex;
 	private int enemyIndex;
@@ -73,8 +74,7 @@ public class FieldController extends Observable
 				playerControllers.add(new EnemyController());
 				break;
 		}
-		currentPlayerController = playerControllers.get(0);
-		currentPlayerController.startTurn();
+		nextTurn();
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class FieldController extends Observable
 	 * @throws DeckFinishedException se non ci sono più carte nel mazzo 
 	 * @throws MoveNotAllowedException this move is not allowed for the current state
 	 */
-	public Card nextCard() throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
+	public Card nextCard() throws GameNotInProgressException, DeckFinishedException
 	{
 		Card carta;
 		
@@ -103,6 +103,11 @@ public class FieldController extends Observable
 		return carta;
 	}
 	
+	public void backupCard()
+	{
+		deck.backupCard();
+	}
+	
 	public void cardSelected(Card card) throws MoveNotAllowedException
 	{
 		currentPlayerController.newCardSelected(card);
@@ -114,6 +119,27 @@ public class FieldController extends Observable
 		observableForTrashUpdating.notifyObservers(card);
 		currentPlayerController.finishTurn();
 		nextTurn();
+	}
+	
+	public void notifyForReplacing(Card card)
+	{
+		observableForReplacingCards.setStatusChanged();
+		observableForReplacingCards.notifyObservers(card);
+	}
+	
+	public Card getCardForReplacing(int position) throws MoveNotAllowedException
+	{
+		return currentPlayerController.getCardFromDeckTrash(position);
+	}
+	
+	public void cardSelectedForExchanging(Card card)
+	{
+		currentPlayerController.newCardSelectedForExchanging(card);
+	}
+	
+	public Observable getObservableForReplacingCards()
+	{
+		return observableForReplacingCards;
 	}
 	
 	public Observable getObservableForTrashUpdating()
@@ -133,5 +159,6 @@ public class FieldController extends Observable
 		enemyIndex = 1;
 		playerControllers = new ArrayList<>();
 		observableForTrashUpdating = new CardsHandleObservable();
+		observableForReplacingCards = new CardsHandleObservable();
 	}
 }

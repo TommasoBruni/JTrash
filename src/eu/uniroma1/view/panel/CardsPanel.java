@@ -173,7 +173,7 @@ public class CardsPanel extends JPanel implements Observer
 		
 		try 
 		{
-			newCard = MainPlayerController.getInstance().getCardForReplacing(c.getPositionInTheField());
+			newCard = FieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
 		}
 		catch (MoveNotAllowedException e1) 
 		{
@@ -193,7 +193,7 @@ public class CardsPanel extends JPanel implements Observer
 
 		if (setupCardsForHint(oldCard.getValore()))
 		{
-			MainPlayerController.getInstance().cardSelectedForExchanging(oldCard);
+			FieldController.getInstance().cardSelectedForExchanging(oldCard);
 			return;
 		}
 		/* There is no good place for the old card, so discard it and update the current */
