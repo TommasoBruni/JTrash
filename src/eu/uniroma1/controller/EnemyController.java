@@ -10,6 +10,7 @@ public class EnemyController extends PlayerController
 	@Override
 	public void operationWithSelectedCard(Card card) throws MoveNotAllowedException 
 	{
+		/* TODO: implementare logica */
 		throw new MoveNotAllowedException();
 	}
 }
