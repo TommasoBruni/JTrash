@@ -4,9 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -34,7 +37,7 @@ import eu.uniroma1.view.utils.DeckPosition;
 /**
  * Classe per creare il frame di gioco
  */
-public class GameFrame extends JFrame implements Closeable
+public class GameFrame extends JFrame implements Closeable, Observer
 {
 	private ContainerPanel mainPlayerPanel;
 	private ContainerPanel robotDxPlayerPanel;
@@ -122,7 +125,7 @@ public class GameFrame extends JFrame implements Closeable
 		
 		try 
 		{
-			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerController.getInstance().getObservableForHintCard()),
+			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, false, MainPlayerController.getInstance().getObservableForHintCard()),
 																  new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
 																		  					  PlayerDataController.getInstance().getAvatarGiocatore(),
 																		  					  PlayerDataController.getInstance().getPartiteGiocateGiocatore(),
@@ -148,7 +151,7 @@ public class GameFrame extends JFrame implements Closeable
 		//pannelloGiocatorePrincipale.startAnimazione();
 		try 
 		{
-			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, FieldController.getInstance().getNextEnemy()),
+			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, true, FieldController.getInstance().getNextEnemy()),
 																	 new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
 																			 			  PlayerDataController.getInstance().getAvatarGiocatore()),
 																	  DeckPosition.IN_BASSO);
@@ -170,7 +173,7 @@ public class GameFrame extends JFrame implements Closeable
 		{
 			try
 			{
-				robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, FieldController.getInstance().getNextEnemy()),
+				robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, true, FieldController.getInstance().getNextEnemy()),
 																   new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
 																		   				       PlayerDataController.getInstance().getAvatarGiocatore()),
 																   DeckPosition.SULLA_SX);
@@ -193,7 +196,7 @@ public class GameFrame extends JFrame implements Closeable
 		{
 			try 
 			{
-				robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, FieldController.getInstance().getNextEnemy()),
+				robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, true, FieldController.getInstance().getNextEnemy()),
 																   new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
 																		   					   PlayerDataController.getInstance().getAvatarGiocatore()),
 																   DeckPosition.SULLA_DX);
@@ -255,6 +258,12 @@ public class GameFrame extends JFrame implements Closeable
 		return barraMenu;
 	}
 	
+	@Override
+	public void update(Observable o, Object arg) 
+	{
+		JOptionPane.showMessageDialog(new JFrame(), "Non ci sono più carte!", "Partita finita!", JOptionPane.OK_OPTION);
+	}
+	
 	/**
 	 * Costruttore frame di gioco
 	 */
@@ -277,7 +286,7 @@ public class GameFrame extends JFrame implements Closeable
 		/* Imposta il frame visibile */
 		setVisible(true);
 		//AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
-		
+		FieldController.getInstance().addObserver(this);
 		mostraInserimentoNumeroGiocatori();
 	}
 }

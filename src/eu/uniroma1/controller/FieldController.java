@@ -1,10 +1,15 @@
 package eu.uniroma1.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.TimerTask;
 import java.util.function.Consumer;
+
+import javax.swing.Timer;
 
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.Deck;
@@ -16,17 +21,19 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 public class FieldController extends Observable
 {
 	private static FieldController controller;
-	/**
-	 * Needs to be notified by one of controller that the turn of
-	 * that player is finished 
-	 */
 	private List<PlayerController> playerControllers;
 	private PlayerController currentPlayerController;
 	private CardsHandleObservable observableForTrashUpdating;
+	/**
+	 * Needs to update trash or deck 
+	 */
 	private CardsHandleObservable observableForReplacingCards;
 	private Deck deck;
+	private Card lastTrashCard;
+	private Card lastCardOfDeck;
 	private int playerIndex;
 	private int enemyIndex;
+	private static final int nextPlayerSpeed = 1000;
 	
 	public void nextTurn() 
 	{
@@ -34,7 +41,15 @@ public class FieldController extends Observable
 		if (playerIndex > playerControllers.size() - 1)
 			playerIndex = 0;
 		currentPlayerController = playerControllers.get(playerIndex++);
-		currentPlayerController.startTurn();
+		try 
+		{
+			currentPlayerController.startTurn();
+		}
+		catch (GameNotInProgressException | DeckFinishedException e) 
+		{
+			setChanged();
+			notifyObservers();
+		}
 	}
 	
 	public EnemyController getNextEnemy()
@@ -42,6 +57,26 @@ public class FieldController extends Observable
 		if (enemyIndex > playerControllers.size() - 1)
 			playerIndex = 1;
 		return (EnemyController)playerControllers.get(enemyIndex);
+	}
+	
+	public Card getLastTrashCard()
+	{
+		return lastTrashCard;
+	}
+	
+	public void setLastTrashCard(Card lastTrashCard)
+	{
+		this.lastTrashCard = lastTrashCard;
+	}
+	
+	public Card getLastCardOfDeck()
+	{
+		return lastCardOfDeck;
+	}
+	
+	public void setLastCardOfDeck(Card lastCardOfDeck)
+	{
+		this.lastCardOfDeck = lastCardOfDeck;
 	}
 	
 	/**
@@ -118,7 +153,14 @@ public class FieldController extends Observable
 		observableForTrashUpdating.setStatusChanged();
 		observableForTrashUpdating.notifyObservers(card);
 		currentPlayerController.finishTurn();
-		nextTurn();
+		java.util.Timer nextTurnTimer = new java.util.Timer();
+		nextTurnTimer.schedule(new TimerTask() {
+			@Override
+			public void run() 
+			{
+				nextTurn();
+			}
+		}, nextPlayerSpeed);
 	}
 	
 	public void notifyForReplacing(Card card)
@@ -130,6 +172,11 @@ public class FieldController extends Observable
 	public Card getCardForReplacing(int position) throws MoveNotAllowedException
 	{
 		return currentPlayerController.getCardFromDeckTrash(position);
+	}
+	
+	public void trashLastSelectedCard()
+	{
+		currentPlayerController.trashLastSelectedCard();
 	}
 	
 	public void cardSelectedForExchanging(Card card)

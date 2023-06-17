@@ -20,7 +20,7 @@ import java.util.Observer;
 import java.util.stream.Collectors;
 
 import javax.swing.Timer;
-
+import javax.print.attribute.SupportedValuesAttribute;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,7 +42,7 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
 import eu.uniroma1.view.utils.DeckPosition;
 
-public class CardsPanel extends JPanel implements Observer
+public class CardsPanel extends JPanel
 {
 	private CardButton[] cards;
 	private Timer animationTimer;
@@ -181,7 +181,10 @@ public class CardsPanel extends JPanel implements Observer
 		}
 		
 		if (newCard == null)
+		{
+			FieldController.getInstance().trashLastSelectedCard();
 			return;
+		}
 		/* Display the card so the user can see it and choose a good position.
 		 * The card could automatically go to the trash */
 		c.gira();
@@ -201,18 +204,50 @@ public class CardsPanel extends JPanel implements Observer
 		FieldController.getInstance().newCardToTrash(oldCard);
 	}
 	
-	@Override
-	public void update(Observable o, Object arg) 
+	public void enemyOperation(Card card)
 	{
-		setupCardsForHint(((Card)arg).getValore());
+		Card oldCard;
+		
+		setupAllFutureCard();
+		if (card.getValore().equals(Value.KING) ||
+			card.getValore().equals(Value.JOLLY))
+		{
+			for (CardButton cardButton : cards)
+			{
+				if (!cardButton.isFaceUpCard())
+				{
+					cardButton.gira();
+					
+					oldCard = cardButton.configureCardForFuture(card);
+					
+					FieldController.getInstance().cardSelectedForExchanging(oldCard);
+					return;
+				}
+			}
+			FieldController.getInstance().newCardToTrash(card);
+			//TODO: notifica vittoria non ci sono più carte a faccia in giù
+		}
+		else if (card.getValore().equals(Value.JACK) || 
+				 card.getValore().equals(Value.QUEEN))
+		{
+			FieldController.getInstance().newCardToTrash(card);
+		}
+		else
+		{
+			int intValue = card.getValore().equals(Value.ASSO) ? 0 : Integer.parseInt(card.getValore().toString()) - 1;
+			
+			if (cards[intValue].isFaceUpCard())
+			{
+				FieldController.getInstance().newCardToTrash(card);
+				return;
+			}
+			oldCard = cards[intValue].configureCardForFuture(card);
+			FieldController.getInstance().cardSelectedForExchanging(oldCard);
+		}
+		
 	}
 	
-	public CardsPanel(DeckPosition posizioneDelMazzo) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
-	{
-		this(posizioneDelMazzo, null);
-	}
-	
-	public CardsPanel(DeckPosition posizioneDelMazzo, Observable observable) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
+	public CardsPanel(DeckPosition posizioneDelMazzo, boolean isEnemy, Observable observable) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		//animationTimer = new Timer();
 		int i, j;
@@ -222,8 +257,30 @@ public class CardsPanel extends JPanel implements Observer
 		GridBagConstraints gbcTraPanelInfESup = new GridBagConstraints();
 		GridBagConstraints gbcPerCarte = new GridBagConstraints();
 		
+		
 		if (observable != null)
-			observable.addObserver(this);
+		{
+			if (!isEnemy)
+			{
+				observable.addObserver(new Observer() {
+					
+					@Override
+					public void update(Observable o, Object arg) {
+						setupCardsForHint(((Card)arg).getValore());
+					}
+				});
+			}
+			else
+			{
+				observable.addObserver(new Observer() {
+					
+					@Override
+					public void update(Observable o, Object arg) {
+						enemyOperation((Card)arg);
+					}
+				});
+			}
+		}
 		
 		firstTime = true;
 		

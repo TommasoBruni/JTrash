@@ -33,6 +33,8 @@ public class DeckPanel extends JPanel implements Observer
 	private JPanel contenitoreCarte;
 	private JPanel pickedCardSpace;
 	private boolean firstCard;
+	
+	//TODO: metodo per girare carta da pescare 
 
 	@Override
 	public void update(Observable o, Object arg) 
@@ -42,11 +44,18 @@ public class DeckPanel extends JPanel implements Observer
 		Card pickedCard = cartaPescata.getCarta();
 		
 		if (selectedCard.equals(discardedCard))
+		{
 			/* The user selects the card from the trash */
 			trashSpace.removeCardFromTop();
+		}
 		else if(selectedCard.equals(pickedCard))
-			/* The user selects the card from the deck */
-			cartaPescata.setVisible(false);
+		{
+			if (cartaPescata.isVisible())
+				/* The user selects the card from the deck */
+				cartaPescata.setVisible(false);
+			else
+				cartaPescata.setVisible(true);
+		}
 	}
 	
 	public DeckPanel(Observable observable)
@@ -104,6 +113,7 @@ public class DeckPanel extends JPanel implements Observer
 					return;
 				}
 				
+				FieldController.getInstance().setLastCardOfDeck(carta);
 				/* Se è la prima carta basta solo impostare il button visibile
 				 * altrimenti bisogna cambiare la carta */
 				cartaPescata.setVisible(true);

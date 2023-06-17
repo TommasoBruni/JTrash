@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.Value;
+import eu.uniroma1.model.exceptions.DeckFinishedException;
+import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
 public abstract class PlayerController extends Observable
@@ -14,7 +16,7 @@ public abstract class PlayerController extends Observable
 	
 	public abstract void operationWithSelectedCard(Card card) throws MoveNotAllowedException;
 	
-	public void startTurn() 
+	public void startTurn() throws GameNotInProgressException, DeckFinishedException 
 	{
 		playerState = PlayerState.TURN_STARTED;
 	}
@@ -29,6 +31,12 @@ public abstract class PlayerController extends Observable
 		/* Ignore if the turn is over */
 		lastSelectedCard = card;
 		playerState = PlayerState.EXCHANGING;
+	}
+	
+	public void trashLastSelectedCard()
+	{
+		FieldController.getInstance().newCardToTrash(lastSelectedCard);
+		lastSelectedCard = null;
 	}
 	
 	private boolean goodCard(int position)

@@ -39,15 +39,25 @@ public class TrashPanel extends JPanel implements Closeable, Observer
 	
 	public void removeCardFromTop()
 	{
+		Card newCard;
+		
 		discardedCards.remove(discardedCards.size() - 1);
 		if (discardedCards.size() > 0)
-			carteScartate.changeCard(discardedCards.get(discardedCards.size() - 1));
+		{
+			newCard = discardedCards.get(discardedCards.size() - 1);
+			carteScartate.changeCard(newCard);	
+		}
 		else
+		{
 			carteScartate.setVisible(false);
+			newCard = null;
+		}
+		FieldController.getInstance().setLastTrashCard(newCard);
 	}
 	
 	public void addCardToTop(Card card)
 	{
+		FieldController.getInstance().setLastTrashCard(card);
 		discardedCards.add(card);
 		carteScartate.changeCard(card);
 		carteScartate.setVisible(true);
@@ -80,6 +90,7 @@ public class TrashPanel extends JPanel implements Closeable, Observer
 		{
 			Card firstCard = FieldController.getInstance().nextCard();
 			
+			FieldController.getInstance().setLastTrashCard(firstCard);
 			discardedCards.add(firstCard);
 			carteScartate = new CardButton(firstCard);
 			carteScartate.addActionListener(new ActionListener() {
