@@ -44,18 +44,11 @@ public class DeckPanel extends JPanel implements Observer
 		Card pickedCard = cartaPescata.getCarta();
 		
 		if (selectedCard.equals(discardedCard))
-		{
 			/* The user selects the card from the trash */
 			trashSpace.removeCardFromTop();
-		}
 		else if(selectedCard.equals(pickedCard))
-		{
-			if (cartaPescata.isVisible())
-				/* The user selects the card from the deck */
-				cartaPescata.setVisible(false);
-			else
-				cartaPescata.setVisible(true);
-		}
+			/* The user selects the card from the deck */
+			cartaPescata.setVisible(false);
 	}
 	
 	public DeckPanel(Observable observable)
@@ -66,7 +59,14 @@ public class DeckPanel extends JPanel implements Observer
 		try 
 		{
 			carteDaPescare = new CardButton(FieldController.getInstance().nextCard(), DeckPosition.IN_ALTO);
-			trashSpace = new TrashPanel(FieldController.getInstance().getObservableForTrashUpdating());
+			FieldController.getInstance().getObservableForTrashUpdating().addObserver(new Observer() {
+				@Override
+				public void update(Observable o, Object arg) {
+					trashSpace.addCardToTop((Card)arg);
+					cartaPescata.setVisible(false);
+				}
+			});
+			trashSpace = new TrashPanel();
 			cartaPescata = new CardButton(FieldController.getInstance().nextCard());
 			cartaPescata.gira();
 			cartaPescata.setVisible(false);

@@ -49,6 +49,7 @@ public class CardsPanel extends JPanel
 	private boolean firstTime;
 	private int xMovement;
 	private int yMovement;
+	private DeckPosition relativeDeckPosition;
 	
 	/*
 	@Override
@@ -204,6 +205,14 @@ public class CardsPanel extends JPanel
 		FieldController.getInstance().newCardToTrash(oldCard);
 	}
 	
+	private int getRightPosBasedOnDeck(Value val)
+	{
+		int intValue = val.equals(Value.ASSO) ? 0 : Integer.parseInt(val.toString()) - 1;
+		if (relativeDeckPosition == DeckPosition.IN_BASSO)
+			intValue = (intValue + 9) - (intValue * 2);
+		return intValue;
+	}
+	
 	public void enemyOperation(Card card)
 	{
 		Card oldCard;
@@ -234,7 +243,7 @@ public class CardsPanel extends JPanel
 		}
 		else
 		{
-			int intValue = card.getValore().equals(Value.ASSO) ? 0 : Integer.parseInt(card.getValore().toString()) - 1;
+			int intValue = getRightPosBasedOnDeck(card.getValore());
 			
 			if (cards[intValue].isFaceUpCard())
 			{
@@ -247,15 +256,16 @@ public class CardsPanel extends JPanel
 		
 	}
 	
-	public CardsPanel(DeckPosition posizioneDelMazzo, boolean isEnemy, Observable observable) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
+	public CardsPanel(DeckPosition deckPosition, boolean isEnemy, Observable observable) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		//animationTimer = new Timer();
 		int i, j;
-		boolean isHorizontal = (posizioneDelMazzo == DeckPosition.SULLA_DX || posizioneDelMazzo == DeckPosition.SULLA_SX);
+		boolean isHorizontal = (deckPosition == DeckPosition.SULLA_DX || deckPosition == DeckPosition.SULLA_SX);
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();
 		GridBagConstraints gbcTraPanelInfESup = new GridBagConstraints();
 		GridBagConstraints gbcPerCarte = new GridBagConstraints();
+		this.relativeDeckPosition = deckPosition;
 		
 		
 		if (observable != null)
@@ -266,7 +276,8 @@ public class CardsPanel extends JPanel
 					
 					@Override
 					public void update(Observable o, Object arg) {
-						setupCardsForHint(((Card)arg).getValore());
+						if (!setupCardsForHint(((Card)arg).getValore()))
+							FieldController.getInstance().trashLastSelectedCard();
 					}
 				});
 			}
@@ -292,7 +303,7 @@ public class CardsPanel extends JPanel
 		
 		for (i = 0; i < cards.length / 2; i++)
 		{
-			cards[i] = new CardButton(FieldController.getInstance().nextCard(), posizioneDelMazzo, i);
+			cards[i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i);
 			cards[i].addActionListener(new ActionListener() {	
 				@Override
 				public void actionPerformed(ActionEvent e) 
@@ -319,7 +330,7 @@ public class CardsPanel extends JPanel
 		
 		for (j = 0; j + i < cards.length; j++)
 		{
-			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), posizioneDelMazzo, i + j);
+			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i + j);
 			cards[j + i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) 

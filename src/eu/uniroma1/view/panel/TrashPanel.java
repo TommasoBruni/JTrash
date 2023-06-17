@@ -23,7 +23,7 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 
-public class TrashPanel extends JPanel implements Closeable, Observer
+public class TrashPanel extends JPanel implements Closeable
 {
 	private CardButton carteScartate;
 	private List<Card> discardedCards;
@@ -64,13 +64,6 @@ public class TrashPanel extends JPanel implements Closeable, Observer
 	}
 	
 	@Override
-	public void update(Observable o, Object arg) 
-	{
-		/* There is a new card to add to the trash */
-		addCardToTop((Card)arg);
-	}
-	
-	@Override
 	public void enableComponent() 
 	{
 		setEnabled(true);
@@ -82,9 +75,8 @@ public class TrashPanel extends JPanel implements Closeable, Observer
 		setEnabled(false);
 	}
 	
-	public TrashPanel(Observable observable)
+	public TrashPanel()
 	{
-		observable.addObserver(this);
 		discardedCards = new ArrayList<>();
 		try 
 		{

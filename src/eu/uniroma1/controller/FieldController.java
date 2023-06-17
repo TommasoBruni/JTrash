@@ -33,7 +33,7 @@ public class FieldController extends Observable
 	private Card lastCardOfDeck;
 	private int playerIndex;
 	private int enemyIndex;
-	private static final int nextPlayerSpeed = 1000;
+	private static final int nextPlayerSpeed = 2000;
 	
 	public void nextTurn() 
 	{
