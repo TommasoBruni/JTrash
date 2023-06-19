@@ -42,6 +42,7 @@ public class EnemyController extends PlayerController
 		else
 		{
 			removeFromDeckOrTrash = lastTrashCard;
+			/* Notifica il trash di rimuovere la carta da lì */
 			FieldController.getInstance().notifyForReplacing(lastTrashCard);
 			notifyObservers(lastTrashCard);
 		}

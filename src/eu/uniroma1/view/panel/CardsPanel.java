@@ -311,13 +311,14 @@ public class CardsPanel extends JPanel
 		for (i = 0; i < cards.length / 2; i++)
 		{
 			cards[i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i);
-			cards[i].addActionListener(new ActionListener() {	
-				@Override
-				public void actionPerformed(ActionEvent e) 
-				{
-					processForCardExchanging((CardButton)e.getSource());
-				}
-			});
+			if (!isEnemy)
+				cards[i].addActionListener(new ActionListener() {	
+					@Override
+					public void actionPerformed(ActionEvent e) 
+					{
+						processForCardExchanging((CardButton)e.getSource());
+					}
+				});
 			
 			if (isHorizontal)
 			{
@@ -338,13 +339,14 @@ public class CardsPanel extends JPanel
 		for (j = 0; j + i < cards.length; j++)
 		{
 			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i + j);
-			cards[j + i].addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) 
-				{
-					processForCardExchanging((CardButton)e.getSource());
-				}
-			});
+			if (!isEnemy)
+				cards[j + i].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) 
+					{
+						processForCardExchanging((CardButton)e.getSource());
+					}
+				});
 			if (isHorizontal)
 			{
 				gbcPerCarte.gridx = 0;
