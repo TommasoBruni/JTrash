@@ -56,7 +56,7 @@ public class FieldController extends Observable
 	{
 		if (enemyIndex > playerControllers.size() - 1)
 			playerIndex = 1;
-		return (EnemyController)playerControllers.get(enemyIndex);
+		return (EnemyController)playerControllers.get(enemyIndex++);
 	}
 	
 	public Card getLastTrashCard()
