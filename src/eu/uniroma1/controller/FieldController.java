@@ -33,7 +33,7 @@ public class FieldController extends Observable
 	private Card lastCardOfDeck;
 	private int playerIndex;
 	private int enemyIndex;
-	private static final int nextPlayerSpeed = 2000;
+	private static final int nextPlayerSpeed = 1000;
 	
 	public void nextTurn() 
 	{
@@ -167,11 +167,6 @@ public class FieldController extends Observable
 	{
 		observableForReplacingCards.setStatusChanged();
 		observableForReplacingCards.notifyObservers(card);
-	}
-	
-	public Card getCardForReplacing(int position) throws MoveNotAllowedException
-	{
-		return currentPlayerController.getCardFromDeckTrash(position);
 	}
 	
 	public void trashLastSelectedCard()

@@ -25,6 +25,12 @@ public class MainPlayerController extends PlayerController
 		observableForHint.notifyObservers(card);
 	}
 	
+	@Override
+	public synchronized void addObserver(Observer o) 
+	{
+		observableForHint.addObserver(o);
+	}
+	
 	public Observable getObservableForHintCard()
 	{
 		return observableForHint;

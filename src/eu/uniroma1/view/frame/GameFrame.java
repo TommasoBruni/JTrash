@@ -125,7 +125,7 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		
 		try 
 		{
-			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, false, MainPlayerController.getInstance().getObservableForHintCard()),
+			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, false, MainPlayerController.getInstance()),
 																  new AvatarScorePanel(PlayerDataController.getInstance().getNomeGiocatore(),
 																		  					  PlayerDataController.getInstance().getAvatarGiocatore(),
 																		  					  PlayerDataController.getInstance().getPartiteGiocateGiocatore(),

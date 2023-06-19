@@ -32,6 +32,7 @@ import javax.swing.border.Border;
 
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
+import eu.uniroma1.controller.PlayerController;
 import eu.uniroma1.model.*;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.CardColor;
@@ -50,6 +51,7 @@ public class CardsPanel extends JPanel
 	private int xMovement;
 	private int yMovement;
 	private DeckPosition relativeDeckPosition;
+	private PlayerController playerController;
 	
 	/*
 	@Override
@@ -174,7 +176,7 @@ public class CardsPanel extends JPanel
 		
 		try 
 		{
-			newCard = FieldController.getInstance().getCardForReplacing(c.getPositionInTheField());
+			newCard = playerController.getCardFromDeckTrash(c.getPositionInTheField());
 		}
 		catch (MoveNotAllowedException e1) 
 		{
@@ -208,8 +210,13 @@ public class CardsPanel extends JPanel
 	private int getRightPosBasedOnDeck(Value val)
 	{
 		int intValue = val.equals(Value.ASSO) ? 0 : Integer.parseInt(val.toString()) - 1;
+		
 		if (relativeDeckPosition == DeckPosition.IN_BASSO)
 			intValue = (intValue + 9) - (intValue * 2);
+		else if (relativeDeckPosition == DeckPosition.SULLA_SX)
+			intValue = ((intValue + 4) - (intValue * 2)) < 0 ?  ((intValue + 4) - (intValue * 2)) + 10 : ((intValue + 4) - (intValue * 2));
+		else if (relativeDeckPosition == DeckPosition.SULLA_DX)
+			intValue = (intValue + 5) % 10;
 		return intValue;
 	}
 	
@@ -256,7 +263,7 @@ public class CardsPanel extends JPanel
 		
 	}
 	
-	public CardsPanel(DeckPosition deckPosition, boolean isEnemy, Observable observable) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
+	public CardsPanel(DeckPosition deckPosition, boolean isEnemy, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		//animationTimer = new Timer();
 		int i, j;
@@ -267,12 +274,11 @@ public class CardsPanel extends JPanel
 		GridBagConstraints gbcPerCarte = new GridBagConstraints();
 		this.relativeDeckPosition = deckPosition;
 		
-		
-		if (observable != null)
+		if (playerController != null)
 		{
 			if (!isEnemy)
 			{
-				observable.addObserver(new Observer() {
+				playerController.addObserver(new Observer() {
 					
 					@Override
 					public void update(Observable o, Object arg) {
@@ -283,7 +289,7 @@ public class CardsPanel extends JPanel
 			}
 			else
 			{
-				observable.addObserver(new Observer() {
+				playerController.addObserver(new Observer() {
 					
 					@Override
 					public void update(Observable o, Object arg) {
@@ -292,6 +298,7 @@ public class CardsPanel extends JPanel
 				});
 			}
 		}
+		this.playerController = playerController;
 		
 		firstTime = true;
 		
