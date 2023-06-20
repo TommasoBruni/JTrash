@@ -174,11 +174,6 @@ public class FieldController extends Observable
 		currentPlayerController.trashLastSelectedCard();
 	}
 	
-	public void cardSelectedForExchanging(Card card)
-	{
-		currentPlayerController.newCardSelectedForExchanging(card);
-	}
-	
 	public Observable getObservableForReplacingCards()
 	{
 		return observableForReplacingCards;

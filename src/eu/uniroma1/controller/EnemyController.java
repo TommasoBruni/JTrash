@@ -9,7 +9,7 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
 public class EnemyController extends PlayerController
 {
-	private static final long gameSpeed = 1000;
+	private static final long gameSpeed = 2000;
 	private Card removeFromDeckOrTrash;
 	
 	private void delayGame()
@@ -48,6 +48,11 @@ public class EnemyController extends PlayerController
 		}
 	}
 	
+	/**
+	 * Viene chiamata quando la prima carta (da trash o dal deck) è già stata pescata,
+	 * quindi viene chiamato questo metodo per le vecchie carte che erano nella posizione
+	 * della nuova carta pescata. 
+	 */
 	@Override
 	public void newCardSelectedForExchanging(Card card) 
 	{

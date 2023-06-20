@@ -199,7 +199,7 @@ public class CardsPanel extends JPanel
 
 		if (setupCardsForHint(oldCard.getValore()))
 		{
-			FieldController.getInstance().cardSelectedForExchanging(oldCard);
+			playerController.newCardSelectedForExchanging(oldCard);
 			return;
 		}
 		/* There is no good place for the old card, so discard it and update the current */
@@ -236,7 +236,7 @@ public class CardsPanel extends JPanel
 					
 					oldCard = cardButton.configureCardForFuture(card);
 					
-					FieldController.getInstance().cardSelectedForExchanging(oldCard);
+					playerController.newCardSelectedForExchanging(oldCard);
 					return;
 				}
 			}
@@ -257,10 +257,11 @@ public class CardsPanel extends JPanel
 				FieldController.getInstance().newCardToTrash(card);
 				return;
 			}
+			
+			cards[intValue].gira();
 			oldCard = cards[intValue].configureCardForFuture(card);
-			FieldController.getInstance().cardSelectedForExchanging(oldCard);
+			playerController.newCardSelectedForExchanging(oldCard);
 		}
-		
 	}
 	
 	public CardsPanel(DeckPosition deckPosition, boolean isEnemy, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
