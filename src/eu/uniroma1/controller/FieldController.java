@@ -24,6 +24,7 @@ public class FieldController extends Observable
 	private List<PlayerController> playerControllers;
 	private PlayerController currentPlayerController;
 	private CardsHandleObservable observableForTrashUpdating;
+	private CardsHandleObservable observableForAutoSelectedCards;
 	/**
 	 * Needs to update trash or deck 
 	 */
@@ -67,11 +68,6 @@ public class FieldController extends Observable
 	public void setLastTrashCard(Card lastTrashCard)
 	{
 		this.lastTrashCard = lastTrashCard;
-	}
-	
-	public Card getLastCardOfDeck()
-	{
-		return lastCardOfDeck;
 	}
 	
 	public void setLastCardOfDeck(Card lastCardOfDeck)
@@ -148,6 +144,11 @@ public class FieldController extends Observable
 		currentPlayerController.newCardSelected(card);
 	}
 	
+	public boolean canPeekCard(Card card)
+	{
+		return currentPlayerController.canPeekCard();
+	}
+	
 	public void newCardToTrash(Card card)
 	{
 		observableForTrashUpdating.setStatusChanged();
@@ -169,6 +170,12 @@ public class FieldController extends Observable
 		observableForReplacingCards.notifyObservers(card);
 	}
 	
+	public void notifyForAutoSelecting()
+	{
+		observableForAutoSelectedCards.setStatusChanged();
+		observableForAutoSelectedCards.notifyObservers();
+	}
+	
 	public void trashLastSelectedCard()
 	{
 		currentPlayerController.trashLastSelectedCard();
@@ -184,6 +191,11 @@ public class FieldController extends Observable
 		return observableForTrashUpdating;
 	}
 	
+	public CardsHandleObservable getObservableForAutoSelectedCards() 
+	{
+		return observableForAutoSelectedCards;
+	}
+	
 	public static FieldController getInstance()
 	{
 		if (controller == null)
@@ -197,5 +209,6 @@ public class FieldController extends Observable
 		playerControllers = new ArrayList<>();
 		observableForTrashUpdating = new CardsHandleObservable();
 		observableForReplacingCards = new CardsHandleObservable();
+		observableForAutoSelectedCards = new CardsHandleObservable();
 	}
 }

@@ -83,6 +83,11 @@ public abstract class PlayerController extends Observable
 		playerState = PlayerState.PICKED_CARD;
 	}
 	
+	public boolean canPeekCard()
+	{
+		return playerState == playerState.TURN_STARTED;
+	}
+	
 	public PlayerController()
 	{
 		playerState = PlayerState.TURN_IS_OVER;

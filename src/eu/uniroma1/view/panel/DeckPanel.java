@@ -30,7 +30,7 @@ public class DeckPanel extends JPanel implements Observer
 	private CardButton carteDaPescare;
 	private TrashPanel trashSpace;
 	private CardButton cartaPescata;
-	private JPanel contenitoreCarte;
+	private JPanel cardsContainer;
 	private JPanel pickedCardSpace;
 	private boolean firstCard;
 	
@@ -64,6 +64,13 @@ public class DeckPanel extends JPanel implements Observer
 				public void update(Observable o, Object arg) {
 					trashSpace.addCardToTop((Card)arg);
 					cartaPescata.setVisible(false);
+				}
+			});
+			
+			FieldController.getInstance().getObservableForAutoSelectedCards().addObserver(new Observer() {
+				@Override
+				public void update(Observable o, Object arg) {
+					carteDaPescare.doClick();
 				}
 			});
 			trashSpace = new TrashPanel();
@@ -100,12 +107,8 @@ public class DeckPanel extends JPanel implements Observer
 				}
 				
 				carta = cartaPescata.getCarta();
-				
-				try 
-				{
-					FieldController.getInstance().cardSelected(carta);
-				} 
-				catch (MoveNotAllowedException e1)
+
+				if (!FieldController.getInstance().canPeekCard(carta))
 				{
 					/* Fai il restore delle informazioni */
 					FieldController.getInstance().backupCard();
@@ -113,12 +116,23 @@ public class DeckPanel extends JPanel implements Observer
 					return;
 				}
 				
-				FieldController.getInstance().setLastCardOfDeck(carta);
 				/* Se è la prima carta basta solo impostare il button visibile
 				 * altrimenti bisogna cambiare la carta */
 				cartaPescata.setVisible(true);
 				
+				FieldController.getInstance().setLastCardOfDeck(carta);
+				
 				firstCard = false;
+				
+				try
+				{
+					/* Fa partire il processo del giocatore che ha pescato la carta */
+					FieldController.getInstance().cardSelected(carta);
+				} 
+				catch (MoveNotAllowedException e1)
+				{
+					/* Non può succedere dato che la canPeekCard verifica questa situazione */
+				}
 			}
 		});
 		
@@ -133,8 +147,8 @@ public class DeckPanel extends JPanel implements Observer
 		gbc.weighty = 0.01;
 		gbc.anchor = GridBagConstraints.LINE_END;
         
-		contenitoreCarte = new JPanel(new GridBagLayout());
-		contenitoreCarte.add(carteDaPescare, gbc);
+		cardsContainer = new JPanel(new GridBagLayout());
+		cardsContainer.add(carteDaPescare, gbc);
         
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -147,7 +161,7 @@ public class DeckPanel extends JPanel implements Observer
 		
 		pickedCardSpace.setPreferredSize(new Dimension(60, 63));
 		pickedCardSpace.add(cartaPescata);
-		contenitoreCarte.add(pickedCardSpace, gbc);
+		cardsContainer.add(pickedCardSpace, gbc);
         
 		gbc.gridx = 2;
 		gbc.gridy = 0;
@@ -159,9 +173,9 @@ public class DeckPanel extends JPanel implements Observer
 		
 		/* Per inserire un po' di spazio tra le carte da pescare, la pescata e quelle scartate */
 		gbc.insets = new Insets(0, 30, 0, 0);
-		contenitoreCarte.add(trashSpace, gbc);
+		cardsContainer.add(trashSpace, gbc);
         
 		setPreferredSize(new Dimension(500, 95));
-        add(contenitoreCarte);
+        add(cardsContainer);
 	}
 }
