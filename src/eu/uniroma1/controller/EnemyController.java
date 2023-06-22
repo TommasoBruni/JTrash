@@ -11,7 +11,7 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
 public class EnemyController extends PlayerController
 {
-	private static final long gameSpeed = 1000;
+	private static final long gameSpeed = 3000;
 	private Card removeFromDeckOrTrash;
 	private boolean requestCardFromDeck;
 	
@@ -36,23 +36,26 @@ public class EnemyController extends PlayerController
 		collectedCardsObservable.setStatusChanged();
 		collectedCardsObservable.notifyObservers();
 		Card lastTrashCard = FieldController.getInstance().getLastTrashCard();
-		
-		if (lastTrashCard == null || lastTrashCard.getValore().equals(Value.QUEEN) ||
-			lastTrashCard.getValore().equals(Value.JACK) ||
-			alreadyCollectedCards.stream()
-							     .filter((card) -> card.getValore().equals(lastTrashCard.getValore()))
-							     .count() > 0)
+		boolean trashCardAlreadyPresent = alreadyCollectedCards.stream()
+															   .filter((card) -> card.getValore().equals(lastTrashCard.getValore()))
+															   .count() > 0;
+		if (lastTrashCard != null && !(lastTrashCard.getValore().equals(Value.QUEEN) ||
+									   lastTrashCard.getValore().equals(Value.JACK)) 
+				                  && (lastTrashCard.getValore().equals(Value.KING) || 
+									  lastTrashCard.getValore().equals(Value.JOLLY) ||
+									  !trashCardAlreadyPresent))
 		{
-			requestCardFromDeck = true;
-			FieldController.getInstance().notifyForAutoSelecting();
-		}
-		else
-		{
+			/* Pesca la carta dal trash */
 			removeFromDeckOrTrash = lastTrashCard;
 			/* Notifica il trash di rimuovere la carta da lì */
 			FieldController.getInstance().notifyForReplacing(lastTrashCard);
 			setChanged();
 			notifyObservers(lastTrashCard);
+		}
+		else
+		{
+			requestCardFromDeck = true;
+			FieldController.getInstance().notifyForAutoSelecting();
 		}
 	}
 	
