@@ -1,5 +1,6 @@
 package eu.uniroma1.controller;
 
+import java.util.List;
 import java.util.Observable;
 
 import eu.uniroma1.model.carte.Card;
@@ -30,10 +31,17 @@ public class EnemyController extends PlayerController
 	public void startTurn() throws GameNotInProgressException, DeckFinishedException
 	{
 		super.startTurn();
+		/* Chiediamo le carte che sono già state scoperte così
+		 * da fare la scelta più corretta */
+		collectedCardsObservable.setStatusChanged();
+		collectedCardsObservable.notifyObservers();
 		Card lastTrashCard = FieldController.getInstance().getLastTrashCard();
 		
 		if (lastTrashCard == null || lastTrashCard.getValore().equals(Value.QUEEN) ||
-			lastTrashCard.getValore().equals(Value.JACK))
+			lastTrashCard.getValore().equals(Value.JACK) ||
+			alreadyCollectedCards.stream()
+							     .filter((card) -> card.getValore().equals(lastTrashCard.getValore()))
+							     .count() > 0)
 		{
 			requestCardFromDeck = true;
 			FieldController.getInstance().notifyForAutoSelecting();

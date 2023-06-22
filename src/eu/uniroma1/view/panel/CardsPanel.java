@@ -297,6 +297,18 @@ public class CardsPanel extends JPanel
 						enemyOperation((Card)arg);
 					}
 				});
+				playerController.getCollectedCardsObservable().addObserver(new Observer()
+				{
+					
+					@Override
+					public void update(Observable o, Object arg)
+					{
+						playerController.alreadyCollectedCard(Arrays.stream(cards)
+								  .filter((card) -> card.isFaceUpCard())
+								  .map((cardButton) -> cardButton.getCarta())
+								  .collect(Collectors.toList()));
+					}
+				});
 			}
 		}
 		this.playerController = playerController;

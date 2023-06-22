@@ -1,5 +1,6 @@
 package eu.uniroma1.controller;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
 
@@ -13,6 +14,8 @@ public abstract class PlayerController extends Observable
 {
 	protected PlayerState playerState;
 	protected Card lastSelectedCard;
+	protected CardsHandleObservable collectedCardsObservable;
+	protected List<Card> alreadyCollectedCards;
 	
 	public abstract void operationWithSelectedCard(Card card) throws MoveNotAllowedException;
 	
@@ -31,6 +34,11 @@ public abstract class PlayerController extends Observable
 		/* Ignore if the turn is over */
 		lastSelectedCard = card;
 		playerState = PlayerState.EXCHANGING;
+	}
+	
+	public void alreadyCollectedCard(List<Card> collectedCards)
+	{
+		alreadyCollectedCards = collectedCards;
 	}
 	
 	public void trashLastSelectedCard()
@@ -72,6 +80,11 @@ public abstract class PlayerController extends Observable
 		return result;
 	}
 	
+	public CardsHandleObservable getCollectedCardsObservable()
+	{
+		return collectedCardsObservable;
+	}
+	
 	public void newCardSelected(Card carta) throws MoveNotAllowedException
 	{
 		if (playerState != PlayerState.TURN_STARTED)
@@ -91,5 +104,6 @@ public abstract class PlayerController extends Observable
 	public PlayerController()
 	{
 		playerState = PlayerState.TURN_IS_OVER;
+		collectedCardsObservable = new CardsHandleObservable();
 	}
 }
