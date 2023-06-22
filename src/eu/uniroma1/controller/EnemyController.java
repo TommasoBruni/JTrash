@@ -11,7 +11,7 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
 public class EnemyController extends PlayerController
 {
-	private static final long gameSpeed = 3000;
+	private static final long gameSpeed = 1000;
 	private Card removeFromDeckOrTrash;
 	private boolean requestCardFromDeck;
 	
