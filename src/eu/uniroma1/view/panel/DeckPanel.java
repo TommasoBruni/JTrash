@@ -51,6 +51,54 @@ public class DeckPanel extends JPanel implements Observer
 			cartaPescata.setVisible(false);
 	}
 	
+	public void cardToPickEvent()
+	{
+		Card carta, oldCard;
+		
+		oldCard = cartaPescata.getCarta();
+		if (!firstCard)
+		{
+			try 
+			{
+				cartaPescata.changeCard(FieldController.getInstance().nextCard());
+			}
+			catch (GameNotInProgressException | DeckFinishedException e1) 
+			{
+				carteDaPescare.setVisible(false);
+				JOptionPane.showMessageDialog(new JFrame(), "Non ci sono più carte!", "Partita finita!", JOptionPane.OK_OPTION);
+				return;
+			}
+		}
+		
+		carta = cartaPescata.getCarta();
+
+		if (!FieldController.getInstance().canPeekCard(carta))
+		{
+			/* Fai il restore delle informazioni */
+			FieldController.getInstance().backupCard();
+			cartaPescata.changeCard(oldCard);
+			return;
+		}
+		
+		/* Se è la prima carta basta solo impostare il button visibile
+		 * altrimenti bisogna cambiare la carta */
+		cartaPescata.setVisible(true);
+		
+		FieldController.getInstance().setLastCardOfDeck(carta);
+		
+		firstCard = false;
+		
+		try
+		{
+			/* Fa partire il processo del giocatore che ha pescato la carta */
+			FieldController.getInstance().cardSelected(carta);
+		} 
+		catch (MoveNotAllowedException e1)
+		{
+			/* Non può succedere dato che la canPeekCard verifica questa situazione */
+		}
+	}
+	
 	public DeckPanel(Observable observable)
 	{
 		pickedCardSpace = new JPanel();
@@ -70,7 +118,7 @@ public class DeckPanel extends JPanel implements Observer
 			FieldController.getInstance().getObservableForAutoSelectedCards().addObserver(new Observer() {
 				@Override
 				public void update(Observable o, Object arg) {
-					carteDaPescare.doClick();
+					cardToPickEvent();
 				}
 			});
 			trashSpace = new TrashPanel();
@@ -89,50 +137,7 @@ public class DeckPanel extends JPanel implements Observer
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Card carta, oldCard;
-				
-				oldCard = cartaPescata.getCarta();
-				if (!firstCard)
-				{
-					try 
-					{
-						cartaPescata.changeCard(FieldController.getInstance().nextCard());
-					}
-					catch (GameNotInProgressException | DeckFinishedException e1) 
-					{
-						carteDaPescare.setVisible(false);
-						JOptionPane.showMessageDialog(new JFrame(), "Non ci sono più carte!", "Partita finita!", JOptionPane.OK_OPTION);
-						return;
-					}
-				}
-				
-				carta = cartaPescata.getCarta();
-
-				if (!FieldController.getInstance().canPeekCard(carta))
-				{
-					/* Fai il restore delle informazioni */
-					FieldController.getInstance().backupCard();
-					cartaPescata.changeCard(oldCard);
-					return;
-				}
-				
-				/* Se è la prima carta basta solo impostare il button visibile
-				 * altrimenti bisogna cambiare la carta */
-				cartaPescata.setVisible(true);
-				
-				FieldController.getInstance().setLastCardOfDeck(carta);
-				
-				firstCard = false;
-				
-				try
-				{
-					/* Fa partire il processo del giocatore che ha pescato la carta */
-					FieldController.getInstance().cardSelected(carta);
-				} 
-				catch (MoveNotAllowedException e1)
-				{
-					/* Non può succedere dato che la canPeekCard verifica questa situazione */
-				}
+				cardToPickEvent();
 			}
 		});
 		

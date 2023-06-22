@@ -14,7 +14,10 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.stream.Collectors;
@@ -264,6 +267,66 @@ public class CardsPanel extends JPanel
 		}
 	}
 	
+	
+	private List<Card> cardAlreadyCollected()
+	{
+		List<Card> outputList = new ArrayList<>();
+		int i;
+		
+		if (relativeDeckPosition == DeckPosition.IN_BASSO)
+		{
+			for (i = cards.length - 1; i >= 0; i--)
+			{
+				if (cards[i].isFaceUpCard())
+					outputList.add(cards[i].getCarta());
+				else
+					outputList.add(null);
+			}
+		}
+		else if (relativeDeckPosition == DeckPosition.SULLA_SX)
+		{
+			for (i = cards.length / 2 - 1; i >= 0; i--)
+			{
+				if (cards[i].isFaceUpCard())
+					outputList.add(cards[i].getCarta());
+				else
+					outputList.add(null);
+			}
+			for (i = cards.length - 1; i >= cards.length / 2; i--)
+			{
+				if (cards[i].isFaceUpCard())
+					outputList.add(cards[i].getCarta());
+				else
+					outputList.add(null);
+			}
+		}
+		else if (relativeDeckPosition == DeckPosition.SULLA_DX)
+		{
+			for (i = cards.length / 2; i < cards.length; i++)
+			{
+				if (cards[i].isFaceUpCard())
+					outputList.add(cards[i].getCarta());
+				else
+					outputList.add(null);
+			}
+			
+			for (i = 0; i < cards.length / 2; i++)
+			{
+				if (cards[i].isFaceUpCard())
+					outputList.add(cards[i].getCarta());
+				else
+					outputList.add(null);
+			}
+		}
+		else
+		{
+			outputList = Arrays.stream(cards)
+							   .map((cardButton) -> cardButton.isFaceUpCard() ? cardButton.getCarta() : null)
+							   .collect(Collectors.toList());
+		}
+		return outputList;
+	}
+	
 	public CardsPanel(DeckPosition deckPosition, boolean isEnemy, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		//animationTimer = new Timer();
@@ -303,10 +366,7 @@ public class CardsPanel extends JPanel
 					@Override
 					public void update(Observable o, Object arg)
 					{
-						playerController.alreadyCollectedCard(Arrays.stream(cards)
-								  .filter((card) -> card.isFaceUpCard())
-								  .map((cardButton) -> cardButton.getCarta())
-								  .collect(Collectors.toList()));
+						playerController.alreadyCollectedCard(cardAlreadyCollected());
 					}
 				});
 			}
