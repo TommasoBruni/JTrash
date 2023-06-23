@@ -337,6 +337,7 @@ public class CardsPanel extends JPanel
 		GridBagConstraints gbcTraPanelInfESup = new GridBagConstraints();
 		GridBagConstraints gbcPerCarte = new GridBagConstraints();
 		this.relativeDeckPosition = deckPosition;
+		setBackground(new Color(255, 255, 204));
 		
 		if (playerController != null)
 		{
@@ -377,6 +378,8 @@ public class CardsPanel extends JPanel
 		
 		pannelloCarteSuperiori.setLayout(new GridBagLayout());
 		pannelloCarteInferiori.setLayout(new GridBagLayout());
+		pannelloCarteInferiori.setBackground(new Color(255, 255, 204));
+		pannelloCarteSuperiori.setBackground(new Color(255, 255, 204));
 		setLayout(new GridBagLayout());
 		
 		cards = new CardButton[10];

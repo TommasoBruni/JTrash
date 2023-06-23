@@ -1,5 +1,6 @@
 package eu.uniroma1.view.panel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -80,5 +81,7 @@ public class ContainerPanel extends JPanel
 			gbc.insets = new Insets(0, 0, 0, 0);
 			add(this.pannelloAvatarPunteggio, gbc);
 		}
+		
+		setBackground(new Color(255, 255, 204));
 	}
 }

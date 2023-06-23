@@ -1,6 +1,7 @@
 package eu.uniroma1.view.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -166,6 +167,7 @@ public class DeckPanel extends JPanel implements Observer
 		
 		pickedCardSpace.setPreferredSize(new Dimension(60, 63));
 		pickedCardSpace.add(cartaPescata);
+		pickedCardSpace.setBackground(new Color(255, 255, 204));
 		cardsContainer.add(pickedCardSpace, gbc);
         
 		gbc.gridx = 2;
@@ -179,8 +181,10 @@ public class DeckPanel extends JPanel implements Observer
 		/* Per inserire un po' di spazio tra le carte da pescare, la pescata e quelle scartate */
 		gbc.insets = new Insets(0, 30, 0, 0);
 		cardsContainer.add(trashSpace, gbc);
+		cardsContainer.setBackground(new Color(255, 255, 204));
         
 		setPreferredSize(new Dimension(500, 95));
         add(cardsContainer);
+        setBackground(new Color(255, 255, 204));
 	}
 }

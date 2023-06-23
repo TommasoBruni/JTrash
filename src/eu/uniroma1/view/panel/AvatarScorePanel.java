@@ -1,5 +1,6 @@
 package eu.uniroma1.view.panel;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -43,6 +44,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 	{
 		labelNomeGiocatore = new JLabel(nomeGiocatore);
 		labelIcon = new JLabel(avatarIcon);
+		setBackground(new Color(255, 255, 204));
 		
 		if (observable != null)
 		{
@@ -90,6 +92,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 10, 0, 0);
 			add(pannelloPerPunteggi, gbc);
+			pannelloPerPunteggi.setBackground(new Color(255, 255, 204));
 		}
 	}
 }

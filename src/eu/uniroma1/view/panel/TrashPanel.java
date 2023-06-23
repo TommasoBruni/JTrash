@@ -1,5 +1,6 @@
 package eu.uniroma1.view.panel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -120,10 +121,12 @@ public class TrashPanel extends JPanel implements Closeable
 		gbc.weightx = 0.01;
 		gbc.weighty = 0.01;
 		internalPanel.add(carteScartate, gbc);
+		internalPanel.setBackground(new Color(255, 255, 204));
 		
 		setBorder(compoundBorder);
 		setPreferredSize(new Dimension(70, 90));
 		add(internalPanel);
+		setBackground(new Color(255, 255, 204));
 		/*
 		setBorder(compoundBorder);
 		setPreferredSize(new Dimension(70, 85));
