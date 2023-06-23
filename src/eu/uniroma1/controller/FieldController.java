@@ -23,17 +23,20 @@ public class FieldController extends Observable
 	private static FieldController controller;
 	private List<PlayerController> playerControllers;
 	private PlayerController currentPlayerController;
-	private CardsHandleObservable observableForTrashUpdating;
-	private CardsHandleObservable observableForAutoSelectedCards;
+	private GenericObservable observableForTrashUpdating;
+	private GenericObservable observableForAutoSelectedCards;
+	
 	/**
 	 * Needs to update trash or deck 
 	 */
-	private CardsHandleObservable observableForReplacingCards;
+	private GenericObservable observableForReplacingCards;
+	private GenericObservable observableForGameFinish;
 	private Deck deck;
 	private Card lastTrashCard;
 	private Card lastCardOfDeck;
 	private int playerIndex;
 	private int enemyIndex;
+	private int numeroGiocatoriInPartita;
 	private static final int nextPlayerSpeed = 1000;
 	
 	public void nextTurn() 
@@ -81,7 +84,7 @@ public class FieldController extends Observable
 	public void startGame()
 	{
 		playerControllers.removeAll(playerControllers);
-		deck = switch(PlayerDataController.getInstance().getNumeroGiocatoriInPartita())
+		deck = switch(numeroGiocatoriInPartita)
 					   {
 					        case 2 -> new MazzoDiCarteBuilder()
 							.shuffle()
@@ -94,7 +97,7 @@ public class FieldController extends Observable
 					   
 		playerControllers.add(MainPlayerController.getInstance());
 		/* Crea i nemici */
-		switch(PlayerDataController.getInstance().getNumeroGiocatoriInPartita())
+		switch(numeroGiocatoriInPartita)
 		{
 			case 4:
 				playerControllers.add(new EnemyController());
@@ -191,9 +194,38 @@ public class FieldController extends Observable
 		return observableForTrashUpdating;
 	}
 	
-	public CardsHandleObservable getObservableForAutoSelectedCards() 
+	public GenericObservable getObservableForGameFinish()
+	{
+		return observableForGameFinish;
+	}
+	
+	public GenericObservable getObservableForAutoSelectedCards() 
 	{
 		return observableForAutoSelectedCards;
+	}
+	
+	public void gameFinished(PlayerController victoryPlayer)
+	{
+		observableForGameFinish.setStatusChanged();
+		observableForGameFinish.notifyObservers(victoryPlayer);
+	}
+	
+	/**
+	 * Aggiorna i giocatori che attualmente stanno giocando (2, 3 o 4) 
+	 * @param nGiocatori numero di giocatori attualmente in gioco
+	 */
+	public void updateNumberOfPlayers(int nGiocatori)
+	{
+		numeroGiocatoriInPartita = nGiocatori;
+	}
+	
+	/**
+	 * Restituisce il numero di giocatori in partita
+	 * @return numero giocatori attualmente in partita 
+	 */
+	public int getNumberOfPlayingPlayers()
+	{
+		return numeroGiocatoriInPartita;
 	}
 	
 	public static FieldController getInstance()
@@ -207,8 +239,9 @@ public class FieldController extends Observable
 	{
 		enemyIndex = 1;
 		playerControllers = new ArrayList<>();
-		observableForTrashUpdating = new CardsHandleObservable();
-		observableForReplacingCards = new CardsHandleObservable();
-		observableForAutoSelectedCards = new CardsHandleObservable();
+		observableForTrashUpdating = new GenericObservable();
+		observableForReplacingCards = new GenericObservable();
+		observableForAutoSelectedCards = new GenericObservable();
+		observableForGameFinish = new GenericObservable();
 	}
 }

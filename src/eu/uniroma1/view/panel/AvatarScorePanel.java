@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.model.Player;
 
 public class AvatarScorePanel extends JPanel implements Observer
@@ -34,27 +35,21 @@ public class AvatarScorePanel extends JPanel implements Observer
 		labelIcon.setIcon(giocatore.getAvatar());
 	}
 	
-	public AvatarScorePanel(String nomeGiocatore, ImageIcon avatarIcon)
+	public AvatarScorePanel(PlayerData playerData, boolean isMain)
 	{
-		this(nomeGiocatore, avatarIcon, 0, 0, 0, null);
-	}
-	
-	public AvatarScorePanel(String nomeGiocatore, ImageIcon avatarIcon, long partiteGiocate, 
-								   long partiteVinte, long partitePerse, Observable observable)
-	{
-		labelNomeGiocatore = new JLabel(nomeGiocatore);
-		labelIcon = new JLabel(avatarIcon);
+		labelNomeGiocatore = new JLabel(playerData.getNomeGiocatore());
+		labelIcon = new JLabel(playerData.getAvatarGiocatore());
 		setBackground(new Color(255, 255, 204));
 		
-		if (observable != null)
+		if (isMain)
 		{
 			pannelloPerPunteggi = new JPanel();
 			pannelloPerPunteggi.setLayout(new GridBagLayout());
 			/* Significa che è il giocatore reale e non un robot */
-			labelPartiteGiocate = new JLabel("Giocate: " + partiteGiocate + " ");
-			labelPartiteVinte = new JLabel("Vinte: " + partiteVinte + " ");
-			labelPartitePerse = new JLabel("Perse: " + partitePerse + " ");
-			observable.addObserver(this);
+			labelPartiteGiocate = new JLabel("Giocate: " + playerData.getPartiteGiocateGiocatore() + " ");
+			labelPartiteVinte = new JLabel("Vinte: " + playerData.getPartiteVinteGiocatore() + " ");
+			labelPartitePerse = new JLabel("Perse: " + playerData.getPartitePerseGiocatore() + " ");
+			playerData.addObserver(this);
 		}
 
 		setLayout(new GridBagLayout());
@@ -71,7 +66,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 		gbc.insets = new Insets(0, 0, 0, 0);
 		add(labelNomeGiocatore, gbc);
 		
-		if (observable != null)
+		if (isMain)
 		{
 			GridBagConstraints gbcPerPunteggi = new GridBagConstraints();
 			

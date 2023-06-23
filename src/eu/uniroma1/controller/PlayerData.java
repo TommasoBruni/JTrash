@@ -7,29 +7,9 @@ import javax.swing.ImageIcon;
 
 import eu.uniroma1.model.Player;
 
-public class PlayerDataController extends Observable
+public class PlayerData extends Observable
 {
 	private Player giocatore;
-	private int numeroGiocatoriInPartita;
-	private static PlayerDataController controller;
-	
-	/**
-	 * Aggiorna i giocatori che attualmente stanno giocando (2, 3 o 4) 
-	 * @param nGiocatori numero di giocatori attualmente in gioco
-	 */
-	public void aggiornaNumeroGiocatori(int nGiocatori)
-	{
-		numeroGiocatoriInPartita = nGiocatori;
-	}
-	
-	/**
-	 * Restituisce il numero di giocatori in partita
-	 * @return numero giocatori attualmente in partita 
-	 */
-	public int getNumeroGiocatoriInPartita()
-	{
-		return numeroGiocatoriInPartita;
-	}
 	
 	/**
 	 * Ritorna il nome dell'ultimo giocatore, ovvero quello che sta giocando
@@ -81,16 +61,5 @@ public class PlayerDataController extends Observable
 		
 		setChanged();
 		notifyObservers(giocatore);
-	}
-	
-	public static PlayerDataController getInstance()
-	{
-		if (controller == null)
-			controller = new PlayerDataController();
-		return controller;
-	}
-	
-	private PlayerDataController()
-	{
 	}
 }

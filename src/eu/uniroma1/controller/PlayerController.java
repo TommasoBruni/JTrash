@@ -14,8 +14,9 @@ public abstract class PlayerController extends Observable
 {
 	protected PlayerState playerState;
 	protected Card lastSelectedCard;
-	protected CardsHandleObservable collectedCardsObservable;
+	protected GenericObservable collectedCardsObservable;
 	protected List<Card> alreadyCollectedCards;
+	protected PlayerData playerData;
 	
 	public abstract void operationWithSelectedCard(Card card) throws MoveNotAllowedException;
 	
@@ -45,6 +46,11 @@ public abstract class PlayerController extends Observable
 	{
 		FieldController.getInstance().newCardToTrash(lastSelectedCard);
 		lastSelectedCard = null;
+	}
+	
+	public PlayerData getPlayerData()
+	{
+		return playerData;
 	}
 	
 	private boolean goodCard(int position)
@@ -80,7 +86,7 @@ public abstract class PlayerController extends Observable
 		return result;
 	}
 	
-	public CardsHandleObservable getCollectedCardsObservable()
+	public GenericObservable getCollectedCardsObservable()
 	{
 		return collectedCardsObservable;
 	}
@@ -104,6 +110,7 @@ public abstract class PlayerController extends Observable
 	public PlayerController()
 	{
 		playerState = PlayerState.TURN_IS_OVER;
-		collectedCardsObservable = new CardsHandleObservable();
+		collectedCardsObservable = new GenericObservable();
+		playerData = new PlayerData();
 	}
 }

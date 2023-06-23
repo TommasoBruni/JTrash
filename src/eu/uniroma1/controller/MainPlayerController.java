@@ -16,7 +16,7 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 public class MainPlayerController extends PlayerController
 {	
 	private static MainPlayerController controller;
-	private CardsHandleObservable observableForHint;
+	private GenericObservable observableForHint;
 	
 	@Override
 	public void operationWithSelectedCard(Card card)
@@ -45,7 +45,7 @@ public class MainPlayerController extends PlayerController
 	
 	private MainPlayerController()
 	{
-		observableForHint = new CardsHandleObservable();
+		observableForHint = new GenericObservable();
 		playerState = PlayerState.TURN_IS_OVER;
 	}
 }

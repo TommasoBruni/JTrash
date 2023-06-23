@@ -100,6 +100,18 @@ public class CardsPanel extends JPanel
 	}
 	*/
 	
+	private void delayEnemyOperation()
+	{
+		try 
+		{
+			Thread.sleep(1000);
+		}
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	public void disableAllCards()
 	{
 		for (CardButton card : cards)
@@ -207,7 +219,10 @@ public class CardsPanel extends JPanel
 		}
 		/* There is no good place for the old card, so discard it and update the current */
 		c.setupFutureCard();
-		FieldController.getInstance().newCardToTrash(oldCard);
+		if (isVictory())
+			FieldController.getInstance().gameFinished(playerController);
+		else
+			FieldController.getInstance().newCardToTrash(oldCard);
 	}
 	
 	private int getRightPosBasedOnDeck(Value val)
@@ -221,6 +236,17 @@ public class CardsPanel extends JPanel
 		else if (relativeDeckPosition == DeckPosition.SULLA_DX)
 			intValue = (intValue + 5) % 10;
 		return intValue;
+	}
+	
+	private boolean isVictory()
+	{
+		for (CardButton card : cards)
+		{
+			if (!card.isFaceUpCard())
+				return false;
+		}
+		FieldController.getInstance().gameFinished(playerController);
+		return true;
 	}
 	
 	public void enemyOperation(Card card)
@@ -237,18 +263,23 @@ public class CardsPanel extends JPanel
 				{
 					cardButton.gira();
 					
-					oldCard = cardButton.configureCardForFuture(card);
-					
-					playerController.newCardSelectedForExchanging(oldCard);
+					if (!isVictory())
+					{
+						oldCard = cardButton.configureCardForFuture(card);
+						
+						playerController.newCardSelectedForExchanging(oldCard);
+					}
 					return;
 				}
 			}
+			delayEnemyOperation();
 			FieldController.getInstance().newCardToTrash(card);
-			//TODO: notifica vittoria non ci sono più carte a faccia in giù
+			FieldController.getInstance().gameFinished(playerController);
 		}
 		else if (card.getValore().equals(Value.JACK) || 
 				 card.getValore().equals(Value.QUEEN))
 		{
+			delayEnemyOperation();
 			FieldController.getInstance().newCardToTrash(card);
 		}
 		else
@@ -257,13 +288,17 @@ public class CardsPanel extends JPanel
 			
 			if (cards[intValue].isFaceUpCard())
 			{
+				delayEnemyOperation();
 				FieldController.getInstance().newCardToTrash(card);
 				return;
 			}
 			
 			cards[intValue].gira();
-			oldCard = cards[intValue].configureCardForFuture(card);
-			playerController.newCardSelectedForExchanging(oldCard);
+			if (!isVictory())
+			{
+				oldCard = cards[intValue].configureCardForFuture(card);
+				playerController.newCardSelectedForExchanging(oldCard);
+			}
 		}
 	}
 	
