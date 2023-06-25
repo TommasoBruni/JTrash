@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -14,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
+import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -52,11 +54,13 @@ public class GameFrame extends JFrame implements Closeable, Observer
 	private ContainerPanel robotFrontPlayerPanel;
 	private DeckPanel deckPanel;
 	private InsertionDataFrame dataInsertionFrame;
+	private EnemiesSelectionFrame enemiesSelectionFrame;
 	private ObserverForVictory observerVictory;
+	private JPanel pannelloPerInternalFrame;
 	
-	private void setupPerInserimentoDati()
+	public void setupPerInserimentoDati()
 	{
-		JPanel pannelloPerInternalFrame = new JPanel(new GridBagLayout());
+		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridx = 0;
@@ -64,7 +68,7 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
-		dataInsertionFrame = new InsertionDataFrame(pannelloPerInternalFrame, this);
+		dataInsertionFrame = new InsertionDataFrame(this);
 		dataInsertionFrame.setVisible(true);
         
         pannelloPerInternalFrame.add(dataInsertionFrame, gbc);
@@ -84,6 +88,23 @@ public class GameFrame extends JFrame implements Closeable, Observer
         FieldController.getInstance().updateNumberOfPlayers(possibileNumeroGiocatori[numeroGiocatori]);
         /* Sono consecutivi */
         setupPerInserimentoDati();
+	}
+	
+	public void mostraDialogInserimentoNemici()
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		
+		enemiesSelectionFrame = new EnemiesSelectionFrame(this);
+		enemiesSelectionFrame.setVisible(true);
+		pannelloPerInternalFrame.add(enemiesSelectionFrame, gbc);
+
+		add(pannelloPerInternalFrame);
 	}
 	
 	public void setGridBagLayout()
@@ -287,6 +308,8 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		
 		observerVictory = new ObserverForVictory();
 		FieldController.getInstance().getObservableForGameFinish().addObserver(observerVictory);
+		
+		pannelloPerInternalFrame = new JPanel(new GridBagLayout());
 		
 		/* Imposta una grandezza iniziale */
 		setExtendedState(JFrame.MAXIMIZED_BOTH);

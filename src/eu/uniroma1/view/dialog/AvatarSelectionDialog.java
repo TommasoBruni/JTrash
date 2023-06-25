@@ -34,17 +34,11 @@ public class AvatarSelectionDialog extends JDialog
         super(parent, "Selezione Avatar", true);
         avatarArray = new ImageIcon[] { new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_3.gif"), "Naruto gif"),
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_2.gif"), "Sasuke gif"),
-					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_1.gif"), "Itachi gif"),
-					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_4.gif"), "Tanjiro gif"),
-					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_5.gif"), "Ragno gif"),
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_6.gif"), "Ragazzina fiore gif"),
-					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_7.gif"), "Obito gif"),
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_8.gif"), "hanako kun gif"),
-					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_9.gif"), "Akaza gif"),
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_10.gif"), "Rengoku gif"),
-					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_11.gif"), "Deidara gif"),
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_12.gif"), "Anya gif"),
-					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_13.gif"), "Pikachu gif")};
+					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_1.gif"), "Megumi gif")};
         if (defaultAvatarDescr != null)
         {
         	while (indiceIcone < avatarArray.length &&
@@ -98,16 +92,19 @@ public class AvatarSelectionDialog extends JDialog
 			@Override
 			public void mouseExited(MouseEvent e)
 			{
+				/* Non interessante */
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) 
 			{
+				/* Non interessante */
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
+				/* Non interessante */
 			}
 		});
         

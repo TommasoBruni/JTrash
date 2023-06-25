@@ -37,7 +37,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 	
 	public AvatarScorePanel(PlayerData playerData, boolean isMain)
 	{
-		labelNomeGiocatore = new JLabel(playerData.getNomeGiocatore());
+		labelNomeGiocatore = new JLabel(playerData.getNomeGiocatore() + " ");
 		labelIcon = new JLabel(playerData.getAvatarGiocatore());
 		setBackground(new Color(255, 255, 204));
 		

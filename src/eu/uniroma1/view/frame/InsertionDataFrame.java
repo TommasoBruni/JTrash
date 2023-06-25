@@ -46,13 +46,10 @@ public class InsertionDataFrame extends JInternalFrame
 		return dialogSelezioneAvatar.getSelectedAvatar();
 	}
 	
-	public InsertionDataFrame(Container parentComponent, GameFrame frameParent)
+	public InsertionDataFrame(GameFrame frameParent)
 	{
-		super("Inserimento dati",
-		          false, //resizable
-		          false, //closable
-		          false, //maximizable
-		          false);
+		super("Inserimento dati");
+		
 		labelNomeUtente = new JLabel("Nome utente:");
 		textFieldNomeUtente = new JTextField(15);
 		labelNickname = new JLabel("Nickname:");
@@ -86,7 +83,7 @@ public class InsertionDataFrame extends JInternalFrame
 				MainPlayerController.getInstance().getPlayerData().aggiornaDatiGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
 				/* Dispose utile per chiudere la finestra corrente */
 				dispose();
-				frameParent.impostaCampoDiGioco();
+				frameParent.mostraDialogInserimentoNemici();
 			}
 		});
 		
