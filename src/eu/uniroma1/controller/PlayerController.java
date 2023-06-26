@@ -107,6 +107,11 @@ public abstract class PlayerController extends Observable
 		return playerState == playerState.TURN_STARTED;
 	}
 	
+	public boolean isMain()
+	{
+		return false;
+	}
+	
 	public PlayerController()
 	{
 		playerState = PlayerState.TURN_IS_OVER;

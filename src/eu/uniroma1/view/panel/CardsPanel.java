@@ -362,7 +362,7 @@ public class CardsPanel extends JPanel
 		return outputList;
 	}
 	
-	public CardsPanel(DeckPosition deckPosition, boolean isEnemy, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
+	public CardsPanel(DeckPosition deckPosition, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		//animationTimer = new Timer();
 		int i, j;
@@ -376,7 +376,7 @@ public class CardsPanel extends JPanel
 		
 		if (playerController != null)
 		{
-			if (!isEnemy)
+			if (playerController.isMain())
 			{
 				playerController.addObserver(new Observer() {
 					
@@ -422,7 +422,7 @@ public class CardsPanel extends JPanel
 		for (i = 0; i < cards.length / 2; i++)
 		{
 			cards[i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i);
-			if (!isEnemy)
+			if (playerController.isMain())
 				cards[i].addActionListener(new ActionListener() {	
 					@Override
 					public void actionPerformed(ActionEvent e) 
@@ -450,7 +450,7 @@ public class CardsPanel extends JPanel
 		for (j = 0; j + i < cards.length; j++)
 		{
 			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i + j);
-			if (!isEnemy)
+			if (playerController.isMain())
 				cards[j + i].addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) 

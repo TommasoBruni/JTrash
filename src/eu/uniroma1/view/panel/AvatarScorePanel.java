@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import eu.uniroma1.controller.PlayerController;
 import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.model.Player;
 
@@ -35,40 +36,27 @@ public class AvatarScorePanel extends JPanel implements Observer
 		labelIcon.setIcon(giocatore.getAvatar());
 	}
 	
-	public AvatarScorePanel(PlayerData playerData, boolean isMain)
+	public AvatarScorePanel(PlayerController playerController)
 	{
+		PlayerData playerData = playerController.getPlayerData();
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		setLayout(new GridBagLayout());
 		labelNomeGiocatore = new JLabel(playerData.getNomeGiocatore() + " ");
 		labelIcon = new JLabel(playerData.getAvatarGiocatore());
 		setBackground(new Color(255, 255, 204));
 		
-		if (isMain)
+		if (playerController.isMain())
 		{
+			GridBagConstraints gbcPerPunteggi = new GridBagConstraints();
+			
 			pannelloPerPunteggi = new JPanel();
 			pannelloPerPunteggi.setLayout(new GridBagLayout());
 			/* Significa che è il giocatore reale e non un robot */
 			labelPartiteGiocate = new JLabel("Giocate: " + playerData.getPartiteGiocateGiocatore() + " ");
 			labelPartiteVinte = new JLabel("Vinte: " + playerData.getPartiteVinteGiocatore() + " ");
 			labelPartitePerse = new JLabel("Perse: " + playerData.getPartitePerseGiocatore() + " ");
-			playerData.addObserver(this);
-		}
-
-		setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(0, 0, 5, 0);
-		
-		add(labelIcon, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.insets = new Insets(0, 0, 0, 0);
-		add(labelNomeGiocatore, gbc);
-		
-		if (isMain)
-		{
-			GridBagConstraints gbcPerPunteggi = new GridBagConstraints();
+			playerController.getPlayerData().addObserver(this);
 			
 			gbcPerPunteggi.gridx = 0;
 			gbcPerPunteggi.gridy = 0;
@@ -88,6 +76,16 @@ public class AvatarScorePanel extends JPanel implements Observer
 			gbc.insets = new Insets(0, 10, 0, 0);
 			add(pannelloPerPunteggi, gbc);
 			pannelloPerPunteggi.setBackground(new Color(255, 255, 204));
-		}
+		}		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0, 0, 5, 0);
+		
+		add(labelIcon, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		add(labelNomeGiocatore, gbc);
 	}
 }

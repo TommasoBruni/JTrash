@@ -3,6 +3,8 @@ package eu.uniroma1.controller;
 import java.util.List;
 import java.util.Observable;
 
+import javax.swing.ImageIcon;
+
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.Value;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
@@ -118,5 +120,10 @@ public class EnemyController extends PlayerController
 	public boolean canPeekCard() 
 	{
 		return super.canPeekCard() && requestCardFromDeck;
+	}
+	
+	public EnemyController(ImageIcon imageIcon)
+	{
+		playerData.aggiornaDatiGiocatore(imageIcon.getDescription(), imageIcon.getDescription(), imageIcon);
 	}
 }

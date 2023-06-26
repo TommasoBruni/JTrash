@@ -9,6 +9,7 @@ import java.util.Observer;
 import java.util.TimerTask;
 import java.util.function.Consumer;
 
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 import eu.uniroma1.model.carte.Card;
@@ -37,6 +38,7 @@ public class FieldController extends Observable
 	private int playerIndex;
 	private int enemyIndex;
 	private int numeroGiocatoriInPartita;
+	private List<ImageIcon> enemiesIcon;
 	private static final int nextPlayerSpeed = 1000;
 	
 	public void nextTurn() 
@@ -83,6 +85,8 @@ public class FieldController extends Observable
 	 */
 	public void startGame()
 	{
+		int i = 0;
+		
 		playerControllers.removeAll(playerControllers);
 		deck = switch(numeroGiocatoriInPartita)
 					   {
@@ -100,12 +104,12 @@ public class FieldController extends Observable
 		switch(numeroGiocatoriInPartita)
 		{
 			case 4:
-				playerControllers.add(new EnemyController());
+				playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
 			case 3:
-				playerControllers.add(new EnemyController());
+				playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
 			default:
 				/* Solo due giocatori */
-				playerControllers.add(new EnemyController());
+				playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
 				break;
 		}
 		nextTurn();
@@ -208,6 +212,16 @@ public class FieldController extends Observable
 	{
 		observableForGameFinish.setStatusChanged();
 		observableForGameFinish.notifyObservers(victoryPlayer);
+	}
+	
+	public List<ImageIcon> getEnemiesIcon() 
+	{
+		return enemiesIcon;
+	}
+
+	public void setEnemiesIcon(List<ImageIcon> enemiesIcon)
+	{
+		this.enemiesIcon = enemiesIcon;
 	}
 	
 	/**

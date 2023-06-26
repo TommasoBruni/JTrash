@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.*;
 
+import eu.uniroma1.controller.EnemyController;
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.PlayerController;
@@ -126,6 +127,7 @@ public class GameFrame extends JFrame implements Closeable, Observer
 	
 	public void impostaCampoDiGioco()
 	{
+		EnemyController currentEnemyController;
 		/* Dice al controller di iniziare la partita */
 		FieldController.getInstance().startGame();
 		AnimationPanel pannelloAnimazione;
@@ -154,8 +156,8 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		
 		try 
 		{
-			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, false, MainPlayerController.getInstance()),
-																  new AvatarScorePanel(MainPlayerController.getInstance().getPlayerData(), true),
+			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerController.getInstance()),
+																  new AvatarScorePanel(MainPlayerController.getInstance()),
 																  DeckPosition.IN_ALTO);
 			
 			gbc.gridx = 0;
@@ -175,9 +177,9 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		//pannelloGiocatorePrincipale.startAnimazione();
 		try 
 		{
-			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, true, FieldController.getInstance().getNextEnemy()),
-													   new AvatarScorePanel(MainPlayerController.getInstance().getPlayerData(), false),
-																	  DeckPosition.IN_BASSO);
+			currentEnemyController = FieldController.getInstance().getNextEnemy();
+			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, currentEnemyController),
+													   new AvatarScorePanel(currentEnemyController), DeckPosition.IN_BASSO);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.weightx = 0.1;
@@ -196,9 +198,9 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		{
 			try
 			{
-				robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, true, FieldController.getInstance().getNextEnemy()),
-						new AvatarScorePanel(MainPlayerController.getInstance().getPlayerData(), false),
-																   DeckPosition.SULLA_SX);
+				currentEnemyController = FieldController.getInstance().getNextEnemy();
+				robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, currentEnemyController),
+														new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_SX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -218,9 +220,9 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		{
 			try 
 			{
-				robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, true, FieldController.getInstance().getNextEnemy()),
-						new AvatarScorePanel(MainPlayerController.getInstance().getPlayerData(), false),
-																   DeckPosition.SULLA_DX);
+				currentEnemyController = FieldController.getInstance().getNextEnemy();
+				robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, currentEnemyController),
+														new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_DX);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;

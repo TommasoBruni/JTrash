@@ -36,6 +36,12 @@ public class MainPlayerController extends PlayerController
 		return observableForHint;
 	}
 	
+	@Override
+	public boolean isMain() 
+	{
+		return true;
+	}
+	
 	public static MainPlayerController getInstance()
 	{
 		if (controller == null)
@@ -46,6 +52,5 @@ public class MainPlayerController extends PlayerController
 	private MainPlayerController()
 	{
 		observableForHint = new GenericObservable();
-		playerState = PlayerState.TURN_IS_OVER;
 	}
 }
