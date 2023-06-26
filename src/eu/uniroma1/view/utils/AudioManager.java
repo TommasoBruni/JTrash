@@ -35,6 +35,25 @@ public class AudioManager {
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(in);
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioIn);
+			clip.start();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (UnsupportedAudioFileException e1) {
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public void loopPlay(String filename) {
+
+		try {
+			InputStream in = new BufferedInputStream(new FileInputStream(filename));
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(in);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioIn);
 			clip.loop(javax.sound.sampled.Clip.LOOP_CONTINUOUSLY);
 			//clip.start();
 		} catch (FileNotFoundException e1) {

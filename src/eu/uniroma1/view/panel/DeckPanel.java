@@ -22,6 +22,7 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
+import eu.uniroma1.view.utils.AudioManager;
 import eu.uniroma1.view.utils.DeckPosition;
 
 import javax.swing.*;
@@ -56,6 +57,7 @@ public class DeckPanel extends JPanel implements Observer
 	{
 		Card carta, oldCard;
 		
+		AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\sliding_card.wav"));
 		oldCard = cartaPescata.getCarta();
 		if (!firstCard)
 		{
