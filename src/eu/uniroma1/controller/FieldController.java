@@ -19,14 +19,13 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
-public class FieldController extends Observable
+public class FieldController extends Observable implements Resettable
 {
 	private static FieldController controller;
 	private List<PlayerController> playerControllers;
 	private PlayerController currentPlayerController;
 	private GenericObservable observableForTrashUpdating;
 	private GenericObservable observableForAutoSelectedCards;
-	
 	/**
 	 * Needs to update trash or deck 
 	 */
@@ -39,6 +38,8 @@ public class FieldController extends Observable
 	private int enemyIndex;
 	private int numeroGiocatoriInPartita;
 	private List<ImageIcon> enemiesIcon;
+	private java.util.Timer nextTurnTimer;
+	private Restartable itemToRestart;
 	private static final int nextPlayerSpeed = 1000;
 	
 	public void nextTurn() 
@@ -61,7 +62,7 @@ public class FieldController extends Observable
 	public EnemyController getNextEnemy()
 	{
 		if (enemyIndex > playerControllers.size() - 1)
-			playerIndex = 1;
+			enemyIndex = 1;
 		return (EnemyController)playerControllers.get(enemyIndex++);
 	}
 	
@@ -80,6 +81,20 @@ public class FieldController extends Observable
 		this.lastCardOfDeck = lastCardOfDeck;
 	}
 	
+	public void initializeDeck()
+	{
+		deck = switch(numeroGiocatoriInPartita)
+				   {
+				        case 2 -> new MazzoDiCarteBuilder()
+						.shuffle()
+						.build();
+				        default-> new MazzoDiCarteBuilder()
+				        .join(new MazzoDiCarteBuilder().build())
+						.shuffle()
+						.build(); 
+				   };
+	}
+	
 	/**
 	 * Call this method only when all data are configured 
 	 */
@@ -88,16 +103,7 @@ public class FieldController extends Observable
 		int i = 0;
 		
 		playerControllers.removeAll(playerControllers);
-		deck = switch(numeroGiocatoriInPartita)
-					   {
-					        case 2 -> new MazzoDiCarteBuilder()
-							.shuffle()
-							.build();
-					        default-> new MazzoDiCarteBuilder()
-					        .join(new MazzoDiCarteBuilder().build())
-							.shuffle()
-							.build(); 
-					   };
+		initializeDeck();
 					   
 		playerControllers.add(MainPlayerController.getInstance());
 		/* Crea i nemici */
@@ -113,6 +119,14 @@ public class FieldController extends Observable
 				break;
 		}
 		nextTurn();
+	}
+	
+	@Override
+	public void reset() 
+	{
+		initializeDeck();
+		enemyIndex = 1;
+		playerIndex = 0;
 	}
 	
 	/**
@@ -161,7 +175,7 @@ public class FieldController extends Observable
 		observableForTrashUpdating.setStatusChanged();
 		observableForTrashUpdating.notifyObservers(card);
 		currentPlayerController.finishTurn();
-		java.util.Timer nextTurnTimer = new java.util.Timer();
+		
 		nextTurnTimer.schedule(new TimerTask() {
 			@Override
 			public void run() 
@@ -210,8 +224,14 @@ public class FieldController extends Observable
 	
 	public void gameFinished(PlayerController victoryPlayer)
 	{
+		nextTurnTimer.cancel();
 		observableForGameFinish.setStatusChanged();
 		observableForGameFinish.notifyObservers(victoryPlayer);
+		
+		victoryPlayer.setCardsInHand(victoryPlayer.getCardsInHand() - 1);
+		reset();
+		
+		itemToRestart.restart();
 	}
 	
 	public List<ImageIcon> getEnemiesIcon() 
@@ -231,6 +251,16 @@ public class FieldController extends Observable
 	public void updateNumberOfPlayers(int nGiocatori)
 	{
 		numeroGiocatoriInPartita = nGiocatori;
+	}
+	
+	public Restartable getItemToRestart()
+	{
+		return itemToRestart;
+	}
+
+	public void setItemToRestart(Restartable itemToRestart) 
+	{
+		this.itemToRestart = itemToRestart;
 	}
 	
 	/**
@@ -257,5 +287,6 @@ public class FieldController extends Observable
 		observableForReplacingCards = new GenericObservable();
 		observableForAutoSelectedCards = new GenericObservable();
 		observableForGameFinish = new GenericObservable();
+		nextTurnTimer = new java.util.Timer();
 	}
 }

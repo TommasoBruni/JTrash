@@ -8,6 +8,7 @@ import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.security.Provider;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -35,6 +36,8 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.controller.PlayerData;
+import eu.uniroma1.controller.Resettable;
+import eu.uniroma1.controller.Restartable;
 import eu.uniroma1.view.dialog.ProfileDialog;
 import eu.uniroma1.view.utils.interfaces.Closeable;
 import eu.uniroma1.view.panel.AnimationPanel;
@@ -47,7 +50,7 @@ import eu.uniroma1.view.utils.DeckPosition;
 /**
  * Classe per creare il frame di gioco
  */
-public class GameFrame extends JFrame implements Closeable, Observer
+public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 {
 	private ContainerPanel mainPlayerPanel;
 	private ContainerPanel robotDxPlayerPanel;
@@ -284,18 +287,36 @@ public class GameFrame extends JFrame implements Closeable, Observer
 	}
 	
 	@Override
+	public void reset()
+	{
+		mainPlayerPanel.setVisible(false);
+		robotDxPlayerPanel.setVisible(false);
+		robotSxPlayerPanel.setVisible(false);
+		robotFrontPlayerPanel.setVisible(false);
+		deckPanel.setVisible(false);
+	}
+	
+	@Override
 	public void update(Observable o, Object arg) 
 	{
 		JOptionPane.showMessageDialog(new JFrame(), "Non ci sono più carte!", "Partita finita!", JOptionPane.OK_OPTION);
 	}
 	
-	private class ObserverForVictory implements Observer
+	private class ObserverForVictory implements Observer, Restartable
 	{
+		@Override
+		public void restart() 
+		{
+			impostaCampoDiGioco();
+		}
+		
 		@Override
 		public void update(Observable o, Object arg) 
 		{
 			PlayerController playerController = (PlayerController)arg;
 			
+			reset();
+			FieldController.getInstance().setItemToRestart(this);
 			JOptionPane.showMessageDialog(new JFrame(), "Vincitore!", "Il vincitore e': " + playerController.getPlayerData().getNomeGiocatore(), JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
@@ -309,7 +330,6 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		super("JTrash");
 		
 		observerVictory = new ObserverForVictory();
-		FieldController.getInstance().getObservableForGameFinish().addObserver(observerVictory);
 		
 		pannelloPerInternalFrame = new JPanel(new GridBagLayout());
 		
@@ -328,6 +348,7 @@ public class GameFrame extends JFrame implements Closeable, Observer
 		setVisible(true);
 		//AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
 		FieldController.getInstance().addObserver(this);
+		FieldController.getInstance().getObservableForGameFinish().addObserver(observerVictory);
 		mostraInserimentoNumeroGiocatori();
 	}
 }

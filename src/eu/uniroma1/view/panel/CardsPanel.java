@@ -365,7 +365,7 @@ public class CardsPanel extends JPanel
 	public CardsPanel(DeckPosition deckPosition, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		//animationTimer = new Timer();
-		int i, j;
+		int i, j, minCard;
 		boolean isHorizontal = (deckPosition == DeckPosition.SULLA_DX || deckPosition == DeckPosition.SULLA_SX);
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();
@@ -417,9 +417,10 @@ public class CardsPanel extends JPanel
 		pannelloCarteSuperiori.setBackground(new Color(255, 255, 204));
 		setLayout(new GridBagLayout());
 		
-		cards = new CardButton[10];
+		cards = new CardButton[playerController.getCardsInHand()];
+		minCard = cards.length < 5 ? cards.length : 5;
 		
-		for (i = 0; i < cards.length / 2; i++)
+		for (i = 0; i < minCard; i++)
 		{
 			cards[i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i);
 			if (playerController.isMain())
@@ -447,7 +448,7 @@ public class CardsPanel extends JPanel
 			pannelloCarteSuperiori.add(cards[i], gbcPerCarte);
 		}
 		
-		for (j = 0; j + i < cards.length; j++)
+		for (j = 0; j + i < (cards.length - minCard) + 5; j++)
 		{
 			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i + j);
 			if (playerController.isMain())

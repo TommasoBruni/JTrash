@@ -1,5 +1,6 @@
 package eu.uniroma1.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
@@ -10,13 +11,14 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
-public abstract class PlayerController extends Observable
+public abstract class PlayerController extends Observable implements Resettable
 {
 	protected PlayerState playerState;
 	protected Card lastSelectedCard;
 	protected GenericObservable collectedCardsObservable;
 	protected List<Card> alreadyCollectedCards;
 	protected PlayerData playerData;
+	private int cardsInHand;
 	
 	public abstract void operationWithSelectedCard(Card card) throws MoveNotAllowedException;
 	
@@ -28,6 +30,13 @@ public abstract class PlayerController extends Observable
 	public void finishTurn() 
 	{
 		playerState = PlayerState.TURN_IS_OVER;
+	}
+	
+	@Override
+	public void reset() 
+	{
+		finishTurn();
+		alreadyCollectedCards = null;
 	}
 	
 	public void newCardSelectedForExchanging(Card card)
@@ -112,10 +121,21 @@ public abstract class PlayerController extends Observable
 		return false;
 	}
 	
+	public int getCardsInHand() 
+	{
+		return cardsInHand;
+	}
+
+	public void setCardsInHand(int nCardsInHand)
+	{
+		this.cardsInHand = nCardsInHand;
+	}
+	
 	public PlayerController()
 	{
 		playerState = PlayerState.TURN_IS_OVER;
 		collectedCardsObservable = new GenericObservable();
 		playerData = new PlayerData();
+		cardsInHand = 10;
 	}
 }
