@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.CardColor;
 import eu.uniroma1.model.carte.Value;
@@ -17,7 +18,7 @@ import eu.uniroma1.view.utils.DeckPosition;
 import java.awt.geom.AffineTransform;
 import java.awt.Graphics2D;
 
-public class CardButton extends JButton
+public class CardButton extends JButton implements Resettable
 {
 	private ImageIcon icon;
 	private Card currentCard;
@@ -174,6 +175,18 @@ public class CardButton extends JButton
 	public CardButton(Card carta, DeckPosition posizioneDelMazzo)
 	{
 		this(carta, posizioneDelMazzo, 0);
+	}
+	
+	@Override
+	public void reset() 
+	{
+		faceUp = false;
+		restoreCardImage();
+	}
+	
+	public void setBaseCard(Card card)
+	{
+		this.currentCard = card;
 	}
 	
 	public CardButton(Card carta, DeckPosition posizioneDelMazzo, int positionInTheField)

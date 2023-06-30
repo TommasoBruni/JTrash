@@ -224,7 +224,6 @@ public class FieldController extends Observable implements Resettable
 	
 	public void gameFinished(PlayerController victoryPlayer)
 	{
-		nextTurnTimer.cancel();
 		observableForGameFinish.setStatusChanged();
 		observableForGameFinish.notifyObservers(victoryPlayer);
 		

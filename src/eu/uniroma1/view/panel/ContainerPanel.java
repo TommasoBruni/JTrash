@@ -13,12 +13,25 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import eu.uniroma1.controller.PlayerController;
+import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.view.utils.DeckPosition;
 
-public class ContainerPanel extends JPanel
+public class ContainerPanel extends JPanel implements Resettable
 {
 	private CardsPanel pannelloCarte;
 	private AvatarScorePanel pannelloAvatarPunteggio;
+	
+	@Override
+	public void reset() 
+	{
+		pannelloCarte.reset();
+	}
+	
+	public void updatePlayerController(PlayerController playerController)
+	{
+		pannelloCarte.updatePlayerController(playerController);
+	}
 	
 	public ContainerPanel(CardsPanel pannelloCarte, AvatarScorePanel pannelloAvatarPunteggio,
 						  DeckPosition posizioneDelMazzo)

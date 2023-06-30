@@ -36,7 +36,7 @@ public abstract class PlayerController extends Observable implements Resettable
 	public void reset() 
 	{
 		finishTurn();
-		alreadyCollectedCards = null;
+		alreadyCollectedCards = new ArrayList<>();
 	}
 	
 	public void newCardSelectedForExchanging(Card card)

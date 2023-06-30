@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
+import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
@@ -27,7 +28,7 @@ import eu.uniroma1.view.utils.DeckPosition;
 
 import javax.swing.*;
 
-public class DeckPanel extends JPanel implements Observer
+public class DeckPanel extends JPanel implements Observer, Resettable
 {
 	private CardButton carteDaPescare;
 	private TrashPanel trashSpace;
@@ -99,6 +100,31 @@ public class DeckPanel extends JPanel implements Observer
 		catch (MoveNotAllowedException e1)
 		{
 			/* Non può succedere dato che la canPeekCard verifica questa situazione */
+		}
+	}
+	
+	@Override
+	public void reset() 
+	{
+		firstCard = true;
+		try 
+		{
+			/* Questa non è mai girata */
+			carteDaPescare.setBaseCard(FieldController.getInstance().nextCard());
+		} 
+		catch (GameNotInProgressException | DeckFinishedException e) 
+		{
+			/* Non può succedere stiamo riavviando la partita */
+		}
+		try 
+		{
+			cartaPescata.setBaseCard(FieldController.getInstance().nextCard());
+			cartaPescata.gira();
+			cartaPescata.setVisible(false);
+		} 
+		catch (GameNotInProgressException | DeckFinishedException e) 
+		{
+			/* Non può succedere stiamo riavviando la partita */
 		}
 	}
 	

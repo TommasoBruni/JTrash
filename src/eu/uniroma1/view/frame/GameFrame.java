@@ -134,8 +134,13 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		/* Dice al controller di iniziare la partita */
 		FieldController.getInstance().startGame();
 		AnimationPanel pannelloAnimazione;
-		/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-		deckPanel = new DeckPanel(FieldController.getInstance().getObservableForReplacingCards());
+		
+		if (deckPanel == null)
+			/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
+			deckPanel = new DeckPanel(FieldController.getInstance().getObservableForReplacingCards());
+		else
+			deckPanel.reset();
+		deckPanel.setVisible(true);
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setGridBagLayout();
@@ -159,9 +164,13 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		
 		try 
 		{
-			mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerController.getInstance()),
-																  new AvatarScorePanel(MainPlayerController.getInstance()),
-																  DeckPosition.IN_ALTO);
+			if (mainPlayerPanel == null)
+				mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerController.getInstance()),
+																	  new AvatarScorePanel(MainPlayerController.getInstance()),
+																	  DeckPosition.IN_ALTO);
+			else
+				mainPlayerPanel.reset();
+			mainPlayerPanel.setVisible(true);
 			
 			gbc.gridx = 0;
 			gbc.gridy = 2;
@@ -181,8 +190,17 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		try 
 		{
 			currentEnemyController = FieldController.getInstance().getNextEnemy();
-			robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, currentEnemyController),
-													   new AvatarScorePanel(currentEnemyController), DeckPosition.IN_BASSO);
+			if (robotFrontPlayerPanel == null)
+			{
+				robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, currentEnemyController),
+														   new AvatarScorePanel(currentEnemyController), DeckPosition.IN_BASSO);
+			}
+			else
+			{
+				robotFrontPlayerPanel.updatePlayerController(currentEnemyController);
+				robotFrontPlayerPanel.reset();
+			}
+			robotFrontPlayerPanel.setVisible(true);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.weightx = 0.1;
@@ -202,8 +220,17 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			try
 			{
 				currentEnemyController = FieldController.getInstance().getNextEnemy();
-				robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, currentEnemyController),
-														new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_SX);
+				if (robotDxPlayerPanel == null)
+				{
+					robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, currentEnemyController),
+															new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_SX);
+				}
+				else
+				{
+					robotDxPlayerPanel.updatePlayerController(currentEnemyController);
+					robotDxPlayerPanel.reset();
+				}
+				robotDxPlayerPanel.setVisible(true);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -224,8 +251,17 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			try 
 			{
 				currentEnemyController = FieldController.getInstance().getNextEnemy();
-				robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, currentEnemyController),
-														new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_DX);
+				if (robotSxPlayerPanel == null)
+				{
+					robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, currentEnemyController),
+															new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_DX);
+				}
+				else
+				{
+					robotSxPlayerPanel.updatePlayerController(currentEnemyController);
+					robotSxPlayerPanel.reset();
+				}
+				robotSxPlayerPanel.setVisible(true);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;

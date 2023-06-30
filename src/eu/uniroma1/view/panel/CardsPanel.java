@@ -36,6 +36,8 @@ import javax.swing.border.Border;
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.PlayerController;
+import eu.uniroma1.controller.Resettable;
+import eu.uniroma1.controller.Restartable;
 import eu.uniroma1.model.*;
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.CardColor;
@@ -46,7 +48,7 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
 import eu.uniroma1.view.utils.DeckPosition;
 
-public class CardsPanel extends JPanel
+public class CardsPanel extends JPanel implements Resettable
 {
 	private CardButton[] cards;
 	private Timer animationTimer;
@@ -362,54 +364,20 @@ public class CardsPanel extends JPanel
 		return outputList;
 	}
 	
-	public CardsPanel(DeckPosition deckPosition, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
+	public void updatePlayerController(PlayerController playerController)
 	{
-		//animationTimer = new Timer();
+		this.playerController = playerController;
+		initializeControllerEvents();
+	}
+	
+	private void setupCards() throws GameNotInProgressException, DeckFinishedException
+	{
+		boolean isHorizontal = (this.relativeDeckPosition == DeckPosition.SULLA_DX || this.relativeDeckPosition == DeckPosition.SULLA_SX);
 		int i, j, minCard;
-		boolean isHorizontal = (deckPosition == DeckPosition.SULLA_DX || deckPosition == DeckPosition.SULLA_SX);
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();
 		GridBagConstraints gbcTraPanelInfESup = new GridBagConstraints();
 		GridBagConstraints gbcPerCarte = new GridBagConstraints();
-		this.relativeDeckPosition = deckPosition;
-		setBackground(new Color(255, 255, 204));
-		
-		if (playerController != null)
-		{
-			if (playerController.isMain())
-			{
-				playerController.addObserver(new Observer() {
-					
-					@Override
-					public void update(Observable o, Object arg) {
-						if (!setupCardsForHint(((Card)arg).getValore()))
-							FieldController.getInstance().trashLastSelectedCard();
-					}
-				});
-			}
-			else
-			{
-				playerController.addObserver(new Observer() {
-					
-					@Override
-					public void update(Observable o, Object arg) {
-						enemyOperation((Card)arg);
-					}
-				});
-				playerController.getCollectedCardsObservable().addObserver(new Observer()
-				{
-					
-					@Override
-					public void update(Observable o, Object arg)
-					{
-						playerController.alreadyCollectedCard(cardAlreadyCollected());
-					}
-				});
-			}
-		}
-		this.playerController = playerController;
-		
-		firstTime = true;
 		
 		pannelloCarteSuperiori.setLayout(new GridBagLayout());
 		pannelloCarteInferiori.setLayout(new GridBagLayout());
@@ -422,7 +390,7 @@ public class CardsPanel extends JPanel
 		
 		for (i = 0; i < minCard; i++)
 		{
-			cards[i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i);
+			cards[i] = new CardButton(FieldController.getInstance().nextCard(), this.relativeDeckPosition, i);
 			if (playerController.isMain())
 				cards[i].addActionListener(new ActionListener() {	
 					@Override
@@ -450,7 +418,7 @@ public class CardsPanel extends JPanel
 		
 		for (j = 0; j + i < (cards.length - minCard) + 5; j++)
 		{
-			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), deckPosition, i + j);
+			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), this.relativeDeckPosition, i + j);
 			if (playerController.isMain())
 				cards[j + i].addActionListener(new ActionListener() {
 					@Override
@@ -508,5 +476,71 @@ public class CardsPanel extends JPanel
 		    gbcTraPanelInfESup.gridy = 1;
 		}
 		add(pannelloCarteInferiori, gbcTraPanelInfESup);
+	}
+	
+	@Override
+	public void reset() 
+	{
+		for (CardButton cardButton : cards)
+		{
+			cardButton.reset();
+			try 
+			{
+				cardButton.setBaseCard(FieldController.getInstance().nextCard());
+			} 
+			catch (GameNotInProgressException | DeckFinishedException e)
+			{
+				/* Non può accadere, stiamo riavviando la partita */
+			}
+		}
+	}
+	
+	public void initializeControllerEvents()
+	{
+		if (playerController != null)
+		{
+			if (playerController.isMain())
+			{
+				playerController.addObserver(new Observer() {
+					
+					@Override
+					public void update(Observable o, Object arg) {
+						if (!setupCardsForHint(((Card)arg).getValore()))
+							FieldController.getInstance().trashLastSelectedCard();
+					}
+				});
+			}
+			else
+			{
+				playerController.addObserver(new Observer() {
+					
+					@Override
+					public void update(Observable o, Object arg) {
+						enemyOperation((Card)arg);
+					}
+				});
+				playerController.getCollectedCardsObservable().addObserver(new Observer()
+				{
+					
+					@Override
+					public void update(Observable o, Object arg)
+					{
+						playerController.alreadyCollectedCard(cardAlreadyCollected());
+					}
+				});
+			}
+		}
+	}
+	
+	public CardsPanel(DeckPosition deckPosition, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
+	{
+		//animationTimer = new Timer();
+		this.relativeDeckPosition = deckPosition;
+		setBackground(new Color(255, 255, 204));
+		this.playerController = playerController;
+		initializeControllerEvents();
+		
+		firstTime = true;
+		setupCards();
 	}
 }
