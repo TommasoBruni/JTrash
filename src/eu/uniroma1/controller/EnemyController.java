@@ -122,6 +122,14 @@ public class EnemyController extends PlayerController
 		return super.canPeekCard() && requestCardFromDeck;
 	}
 	
+	@Override
+	public void reset()
+	{
+		super.reset();
+		removeFromDeckOrTrash = null;
+		requestCardFromDeck = false;
+	}
+	
 	public EnemyController(ImageIcon imageIcon)
 	{
 		playerData.aggiornaDatiGiocatore(imageIcon.getDescription(), imageIcon.getDescription(), imageIcon);

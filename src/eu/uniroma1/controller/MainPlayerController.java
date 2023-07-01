@@ -36,12 +36,6 @@ public class MainPlayerController extends PlayerController
 		return observableForHint;
 	}
 	
-	@Override
-	public boolean isMain() 
-	{
-		return true;
-	}
-	
 	public static MainPlayerController getInstance()
 	{
 		if (controller == null)

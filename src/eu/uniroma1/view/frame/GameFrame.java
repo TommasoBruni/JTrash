@@ -131,8 +131,7 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 	public void impostaCampoDiGioco()
 	{
 		EnemyController currentEnemyController;
-		/* Dice al controller di iniziare la partita */
-		FieldController.getInstance().startGame();
+		FieldController.getInstance().initializeComponents();
 		AnimationPanel pannelloAnimazione;
 		
 		if (deckPanel == null)
@@ -191,15 +190,10 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		{
 			currentEnemyController = FieldController.getInstance().getNextEnemy();
 			if (robotFrontPlayerPanel == null)
-			{
 				robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, currentEnemyController),
 														   new AvatarScorePanel(currentEnemyController), DeckPosition.IN_BASSO);
-			}
 			else
-			{
-				robotFrontPlayerPanel.updatePlayerController(currentEnemyController);
 				robotFrontPlayerPanel.reset();
-			}
 			robotFrontPlayerPanel.setVisible(true);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
@@ -221,15 +215,10 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			{
 				currentEnemyController = FieldController.getInstance().getNextEnemy();
 				if (robotDxPlayerPanel == null)
-				{
 					robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, currentEnemyController),
 															new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_SX);
-				}
 				else
-				{
-					robotDxPlayerPanel.updatePlayerController(currentEnemyController);
 					robotDxPlayerPanel.reset();
-				}
 				robotDxPlayerPanel.setVisible(true);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
@@ -252,15 +241,10 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			{
 				currentEnemyController = FieldController.getInstance().getNextEnemy();
 				if (robotSxPlayerPanel == null)
-				{
 					robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, currentEnemyController),
 															new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_DX);
-				}
 				else
-				{
-					robotSxPlayerPanel.updatePlayerController(currentEnemyController);
 					robotSxPlayerPanel.reset();
-				}
 				robotSxPlayerPanel.setVisible(true);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
@@ -279,6 +263,8 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		
 		setJMenuBar(creaBarraMenu());
 		getContentPane().setBackground(new Color(255, 255, 204));
+		/* Dice al controller di iniziare la partita */
+		FieldController.getInstance().startGame();
 	}
 	
 	private JMenuBar creaBarraMenu()

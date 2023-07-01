@@ -100,31 +100,37 @@ public class FieldController extends Observable implements Resettable
 	 */
 	public void startGame()
 	{
+		nextTurn();
+	}
+	
+	public void initializeComponents()
+	{
 		int i = 0;
 		
-		playerControllers.removeAll(playerControllers);
 		initializeDeck();
-					   
-		playerControllers.add(MainPlayerController.getInstance());
-		/* Crea i nemici */
-		switch(numeroGiocatoriInPartita)
+		
+		if (playerControllers.size() == 0)
 		{
-			case 4:
-				playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
-			case 3:
-				playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
-			default:
-				/* Solo due giocatori */
-				playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
-				break;
+			/* Significa che il primo match effettivo */
+			playerControllers.add(MainPlayerController.getInstance());
+			/* Crea i nemici */
+			switch(numeroGiocatoriInPartita)
+			{
+				case 4:
+					playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
+				case 3:
+					playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
+				default:
+					/* Solo due giocatori */
+					playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
+					break;
+			}
 		}
-		nextTurn();
 	}
 	
 	@Override
 	public void reset() 
 	{
-		initializeDeck();
 		enemyIndex = 1;
 		playerIndex = 0;
 	}
@@ -227,7 +233,12 @@ public class FieldController extends Observable implements Resettable
 		observableForGameFinish.setStatusChanged();
 		observableForGameFinish.notifyObservers(victoryPlayer);
 		
-		victoryPlayer.setCardsInHand(victoryPlayer.getCardsInHand() - 1);
+		playerControllers.forEach((playerController) -> playerController.reset());
+		playerControllers.forEach((playerController) ->
+								  { 
+										if (playerController.equals(victoryPlayer))
+											playerController.setCardsInHand(victoryPlayer.getCardsInHand() - 1);
+								  });
 		reset();
 		
 		itemToRestart.restart();

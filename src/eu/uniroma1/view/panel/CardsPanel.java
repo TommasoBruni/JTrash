@@ -231,6 +231,11 @@ public class CardsPanel extends JPanel implements Resettable
 	{
 		int intValue = val.equals(Value.ASSO) ? 0 : Integer.parseInt(val.toString()) - 1;
 		
+		return getRightPosBasedOnDeck(intValue);
+	}
+	
+	private int getRightPosBasedOnDeck(int intValue)
+	{
 		if (relativeDeckPosition == DeckPosition.IN_BASSO)
 			intValue = (intValue + 9) - (intValue * 2);
 		else if (relativeDeckPosition == DeckPosition.SULLA_SX)
@@ -364,12 +369,6 @@ public class CardsPanel extends JPanel implements Resettable
 		return outputList;
 	}
 	
-	public void updatePlayerController(PlayerController playerController)
-	{
-		this.playerController = playerController;
-		initializeControllerEvents();
-	}
-	
 	private void setupCards() throws GameNotInProgressException, DeckFinishedException
 	{
 		boolean isHorizontal = (this.relativeDeckPosition == DeckPosition.SULLA_DX || this.relativeDeckPosition == DeckPosition.SULLA_SX);
@@ -391,7 +390,7 @@ public class CardsPanel extends JPanel implements Resettable
 		for (i = 0; i < minCard; i++)
 		{
 			cards[i] = new CardButton(FieldController.getInstance().nextCard(), this.relativeDeckPosition, i);
-			if (playerController.isMain())
+			if (playerController instanceof MainPlayerController)
 				cards[i].addActionListener(new ActionListener() {	
 					@Override
 					public void actionPerformed(ActionEvent e) 
@@ -419,7 +418,7 @@ public class CardsPanel extends JPanel implements Resettable
 		for (j = 0; j + i < (cards.length - minCard) + 5; j++)
 		{
 			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), this.relativeDeckPosition, i + j);
-			if (playerController.isMain())
+			if (playerController instanceof MainPlayerController)
 				cards[j + i].addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) 
@@ -481,8 +480,17 @@ public class CardsPanel extends JPanel implements Resettable
 	@Override
 	public void reset() 
 	{
-		for (CardButton cardButton : cards)
+		CardButton cardButton;
+		
+		for (int i = 0; i < cards.length; i++)
 		{
+			cardButton = cards[i];
+			
+			if (getRightPosBasedOnDeck(i) > playerController.getCardsInHand() - 1)
+			{
+				cardButton.setVisible(false);
+				continue;
+			}
 			cardButton.reset();
 			try 
 			{
@@ -499,7 +507,7 @@ public class CardsPanel extends JPanel implements Resettable
 	{
 		if (playerController != null)
 		{
-			if (playerController.isMain())
+			if (playerController instanceof MainPlayerController)
 			{
 				playerController.addObserver(new Observer() {
 					

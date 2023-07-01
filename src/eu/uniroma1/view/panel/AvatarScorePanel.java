@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.PlayerController;
 import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.model.Player;
@@ -46,7 +47,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 		labelIcon = new JLabel(playerData.getAvatarGiocatore());
 		setBackground(new Color(255, 255, 204));
 		
-		if (playerController.isMain())
+		if (playerController instanceof MainPlayerController)
 		{
 			GridBagConstraints gbcPerPunteggi = new GridBagConstraints();
 			

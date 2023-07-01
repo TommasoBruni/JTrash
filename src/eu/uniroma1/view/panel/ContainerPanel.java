@@ -28,11 +28,6 @@ public class ContainerPanel extends JPanel implements Resettable
 		pannelloCarte.reset();
 	}
 	
-	public void updatePlayerController(PlayerController playerController)
-	{
-		pannelloCarte.updatePlayerController(playerController);
-	}
-	
 	public ContainerPanel(CardsPanel pannelloCarte, AvatarScorePanel pannelloAvatarPunteggio,
 						  DeckPosition posizioneDelMazzo)
 	{

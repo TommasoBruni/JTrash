@@ -18,6 +18,8 @@ public abstract class PlayerController extends Observable implements Resettable
 	protected GenericObservable collectedCardsObservable;
 	protected List<Card> alreadyCollectedCards;
 	protected PlayerData playerData;
+	private int id;
+	private static int counter;
 	private int cardsInHand;
 	
 	public abstract void operationWithSelectedCard(Card card) throws MoveNotAllowedException;
@@ -36,7 +38,7 @@ public abstract class PlayerController extends Observable implements Resettable
 	public void reset() 
 	{
 		finishTurn();
-		alreadyCollectedCards = new ArrayList<>();
+		alreadyCollectedCards = null;
 	}
 	
 	public void newCardSelectedForExchanging(Card card)
@@ -116,11 +118,6 @@ public abstract class PlayerController extends Observable implements Resettable
 		return playerState == playerState.TURN_STARTED;
 	}
 	
-	public boolean isMain()
-	{
-		return false;
-	}
-	
 	public int getCardsInHand() 
 	{
 		return cardsInHand;
@@ -131,8 +128,18 @@ public abstract class PlayerController extends Observable implements Resettable
 		this.cardsInHand = nCardsInHand;
 	}
 	
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if (!(obj instanceof PlayerController))
+			return false;
+		PlayerController controller = (PlayerController)obj;
+		return controller.id == id;
+	}
+	
 	public PlayerController()
 	{
+		id = counter++;
 		playerState = PlayerState.TURN_IS_OVER;
 		collectedCardsObservable = new GenericObservable();
 		playerData = new PlayerData();
