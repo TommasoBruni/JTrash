@@ -31,11 +31,6 @@ public class MainPlayerController extends PlayerController
 		observableForHint.addObserver(o);
 	}
 	
-	public Observable getObservableForHintCard()
-	{
-		return observableForHint;
-	}
-	
 	public static MainPlayerController getInstance()
 	{
 		if (controller == null)

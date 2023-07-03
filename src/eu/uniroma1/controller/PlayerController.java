@@ -115,7 +115,7 @@ public abstract class PlayerController extends Observable implements Resettable
 	
 	public boolean canPeekCard()
 	{
-		return playerState == playerState.TURN_STARTED;
+		return playerState == PlayerState.TURN_STARTED;
 	}
 	
 	public int getCardsInHand() 
