@@ -107,6 +107,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 	public void reset() 
 	{
 		firstCard = true;
+		trashSpace.reset();
 		try 
 		{
 			/* Questa non è mai girata */

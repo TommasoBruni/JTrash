@@ -165,7 +165,7 @@ public class CardsPanel extends JPanel implements Resettable
 				for (CardButton carta : cards)
 				{
 					/* Verify that at least one card is face down */
-					if (!carta.isFaceUpCard())
+					if (!carta.isFaceUpCard() && carta.isVisible())
 						result = true;
 					/* No problem, this set the hint just if is face down */
 					carta.setHintCard();
@@ -178,10 +178,10 @@ public class CardsPanel extends JPanel implements Resettable
 			}
 		}
 		
-		/* If this card is already face up, return false
+		/* If this card is already face up or is not visible, return false
 		 * to indicate that there is no good place to insert
 		 * the input card */
-		if (cards[intValue].isFaceUpCard())
+		if (cards[intValue].isFaceUpCard() || !cards[intValue].isVisible())
 			return false;
 		cards[intValue].setHintCard();
 		return true;
@@ -249,7 +249,7 @@ public class CardsPanel extends JPanel implements Resettable
 	{
 		for (CardButton card : cards)
 		{
-			if (!card.isFaceUpCard())
+			if (!card.isFaceUpCard() && card.isVisible())
 				return false;
 		}
 		FieldController.getInstance().gameFinished(playerController);
@@ -266,7 +266,7 @@ public class CardsPanel extends JPanel implements Resettable
 		{
 			for (CardButton cardButton : cards)
 			{
-				if (!cardButton.isFaceUpCard())
+				if (!cardButton.isFaceUpCard() && cardButton.isVisible())
 				{
 					cardButton.gira();
 					
@@ -293,7 +293,7 @@ public class CardsPanel extends JPanel implements Resettable
 		{
 			int intValue = getRightPosBasedOnDeck(card.getValore());
 			
-			if (cards[intValue].isFaceUpCard())
+			if (cards[intValue].isFaceUpCard() || !cards[intValue].isVisible())
 			{
 				delayEnemyOperation();
 				FieldController.getInstance().newCardToTrash(card);
@@ -315,56 +315,65 @@ public class CardsPanel extends JPanel implements Resettable
 		List<Card> outputList = new ArrayList<>();
 		int i;
 		
-		if (relativeDeckPosition == DeckPosition.IN_BASSO)
+		switch(relativeDeckPosition)
 		{
-			for (i = cards.length - 1; i >= 0; i--)
-			{
-				if (cards[i].isFaceUpCard())
-					outputList.add(cards[i].getCarta());
-				else
-					outputList.add(null);
-			}
-		}
-		else if (relativeDeckPosition == DeckPosition.SULLA_SX)
-		{
-			for (i = cards.length / 2 - 1; i >= 0; i--)
-			{
-				if (cards[i].isFaceUpCard())
-					outputList.add(cards[i].getCarta());
-				else
-					outputList.add(null);
-			}
-			for (i = cards.length - 1; i >= cards.length / 2; i--)
-			{
-				if (cards[i].isFaceUpCard())
-					outputList.add(cards[i].getCarta());
-				else
-					outputList.add(null);
-			}
-		}
-		else if (relativeDeckPosition == DeckPosition.SULLA_DX)
-		{
-			for (i = cards.length / 2; i < cards.length; i++)
-			{
-				if (cards[i].isFaceUpCard())
-					outputList.add(cards[i].getCarta());
-				else
-					outputList.add(null);
-			}
-			
-			for (i = 0; i < cards.length / 2; i++)
-			{
-				if (cards[i].isFaceUpCard())
-					outputList.add(cards[i].getCarta());
-				else
-					outputList.add(null);
-			}
-		}
-		else
-		{
-			outputList = Arrays.stream(cards)
-							   .map((cardButton) -> cardButton.isFaceUpCard() ? cardButton.getCarta() : null)
-							   .collect(Collectors.toList());
+		case IN_BASSO:
+				for (i = cards.length - 1; i >= 0; i--)
+				{
+					if (cards[i].isFaceUpCard())
+						outputList.add(cards[i].getCarta());
+					else if (!cards[i].isVisible())
+						outputList.add(Card.JOLLY_NERO);
+					else
+						outputList.add(null);
+				}
+			break;
+		case SULLA_SX:
+				for (i = cards.length / 2 - 1; i >= 0; i--)
+				{
+					if (cards[i].isFaceUpCard())
+						outputList.add(cards[i].getCarta());
+					else if (!cards[i].isVisible())
+						outputList.add(Card.JOLLY_NERO);
+					else
+						outputList.add(null);
+				}
+				for (i = cards.length - 1; i >= cards.length / 2; i--)
+				{
+					if (cards[i].isFaceUpCard())
+						outputList.add(cards[i].getCarta());
+					else if (!cards[i].isVisible())
+						outputList.add(Card.JOLLY_NERO);
+					else
+						outputList.add(null);
+				}
+			break;
+		case SULLA_DX:
+					for (i = cards.length / 2; i < cards.length; i++)
+					{
+						if (cards[i].isFaceUpCard())
+							outputList.add(cards[i].getCarta());
+						else if (!cards[i].isVisible())
+							outputList.add(Card.JOLLY_NERO);
+						else
+							outputList.add(null);
+					}
+					
+					for (i = 0; i < cards.length / 2; i++)
+					{
+						if (cards[i].isFaceUpCard())
+							outputList.add(cards[i].getCarta());
+						else if (!cards[i].isVisible())
+							outputList.add(Card.JOLLY_NERO);
+						else
+							outputList.add(null);
+					}
+			break;
+		default:
+				outputList = Arrays.stream(cards)
+				   .map((cardButton) -> cardButton.isFaceUpCard() ? cardButton.getCarta() : cardButton.isVisible() ? null : Card.JOLLY_NERO)
+				   .collect(Collectors.toList());
+			break;
 		}
 		return outputList;
 	}
@@ -486,12 +495,14 @@ public class CardsPanel extends JPanel implements Resettable
 		{
 			cardButton = cards[i];
 			
+			cardButton.reset();
+			
 			if (getRightPosBasedOnDeck(i) > playerController.getCardsInHand() - 1)
 			{
 				cardButton.setVisible(false);
 				continue;
 			}
-			cardButton.reset();
+			
 			try 
 			{
 				cardButton.setBaseCard(FieldController.getInstance().nextCard());

@@ -133,16 +133,29 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		EnemyController currentEnemyController;
 		FieldController.getInstance().initializeComponents();
 		AnimationPanel pannelloAnimazione;
-		
-		if (deckPanel == null)
-			/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
-			deckPanel = new DeckPanel(FieldController.getInstance().getObservableForReplacingCards());
-		else
-			deckPanel.reset();
-		deckPanel.setVisible(true);
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		setGridBagLayout();
+		if (deckPanel == null)
+		{
+			/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
+			deckPanel = new DeckPanel(FieldController.getInstance().getObservableForReplacingCards());
+			setGridBagLayout();
+			deckPanel.setVisible(true);
+			// Inserisco il mazzo
+			gbc.gridx = 0;
+			gbc.gridy = 1;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+			gbc.anchor = GridBagConstraints.CENTER;
+			add(deckPanel, gbc);
+		}
+		else
+		{
+			deckPanel.reset();
+			deckPanel.setVisible(true);
+		}
+		
+		
 		/*
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -153,30 +166,28 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		//pannelloAnimazione = new PannelloAnimazione();
 		//add(pannelloAnimazione);
 		
-		// Inserisco il mazzo
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		add(deckPanel, gbc);
 		
 		try 
 		{
 			if (mainPlayerPanel == null)
+			{
 				mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerController.getInstance()),
 																	  new AvatarScorePanel(MainPlayerController.getInstance()),
 																	  DeckPosition.IN_ALTO);
+				mainPlayerPanel.setVisible(true);
+				gbc.gridx = 0;
+				gbc.gridy = 2;
+				gbc.weightx = 0.1;
+				gbc.weighty = 0.1;
+				gbc.anchor = GridBagConstraints.PAGE_END;
+				add(mainPlayerPanel, gbc);
+			}
 			else
+			{
 				mainPlayerPanel.reset();
-			mainPlayerPanel.setVisible(true);
+				mainPlayerPanel.setVisible(true);
+			}
 			
-			gbc.gridx = 0;
-			gbc.gridy = 2;
-			gbc.weightx = 0.1;
-			gbc.weighty = 0.1;
-			gbc.anchor = GridBagConstraints.PAGE_END;
-			add(mainPlayerPanel, gbc);
 		} 
 		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
 		{
@@ -190,17 +201,22 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		{
 			currentEnemyController = FieldController.getInstance().getNextEnemy();
 			if (robotFrontPlayerPanel == null)
+			{
 				robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, currentEnemyController),
 														   new AvatarScorePanel(currentEnemyController), DeckPosition.IN_BASSO);
+				robotFrontPlayerPanel.setVisible(true);
+				gbc.gridx = 0;
+				gbc.gridy = 0;
+				gbc.weightx = 0.1;
+				gbc.weighty = 0.1;
+				gbc.anchor = GridBagConstraints.PAGE_START;
+				add(robotFrontPlayerPanel, gbc);
+			}
 			else
+			{
 				robotFrontPlayerPanel.reset();
-			robotFrontPlayerPanel.setVisible(true);
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			gbc.weightx = 0.1;
-			gbc.weighty = 0.1;
-			gbc.anchor = GridBagConstraints.PAGE_START;
-			add(robotFrontPlayerPanel, gbc);
+				robotFrontPlayerPanel.setVisible(true);
+			}
 		} 
 		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
 		{
@@ -215,17 +231,22 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			{
 				currentEnemyController = FieldController.getInstance().getNextEnemy();
 				if (robotDxPlayerPanel == null)
+				{
 					robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, currentEnemyController),
 															new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_SX);
+					robotDxPlayerPanel.setVisible(true);
+					gbc.gridx = 0;
+					gbc.gridy = 1;
+					gbc.weightx = 0.1;
+					gbc.weighty = 0.1;
+					gbc.anchor = GridBagConstraints.LINE_END;
+					add(robotDxPlayerPanel, gbc);
+				}
 				else
+				{
 					robotDxPlayerPanel.reset();
-				robotDxPlayerPanel.setVisible(true);
-				gbc.gridx = 0;
-				gbc.gridy = 1;
-				gbc.weightx = 0.1;
-				gbc.weighty = 0.1;
-				gbc.anchor = GridBagConstraints.LINE_END;
-				add(robotDxPlayerPanel, gbc);
+					robotDxPlayerPanel.setVisible(true);
+				}
 			} 
 			catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
 			{
@@ -241,17 +262,23 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			{
 				currentEnemyController = FieldController.getInstance().getNextEnemy();
 				if (robotSxPlayerPanel == null)
+				{
 					robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, currentEnemyController),
 															new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_DX);
+					robotSxPlayerPanel.setVisible(true);
+					gbc.gridx = 0;
+					gbc.gridy = 1;
+					gbc.weightx = 0.1;
+					gbc.weighty = 0.1;
+					gbc.anchor = GridBagConstraints.LINE_START;
+					add(robotSxPlayerPanel, gbc);
+				}
 				else
+				{
 					robotSxPlayerPanel.reset();
-				robotSxPlayerPanel.setVisible(true);
-				gbc.gridx = 0;
-				gbc.gridy = 1;
-				gbc.weightx = 0.1;
-				gbc.weighty = 0.1;
-				gbc.anchor = GridBagConstraints.LINE_START;
-				add(robotSxPlayerPanel, gbc);
+					robotSxPlayerPanel.setVisible(true);
+				}
+
 			} 
 			catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e)
 			{
