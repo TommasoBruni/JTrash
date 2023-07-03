@@ -159,7 +159,7 @@ public class EnemiesSelectionFrame extends JInternalFrame
 		gbc.insets = new Insets(0, 10, 10, 10);
 		panel.add(goButton, gbc);
         
-		gbc.gridx = i - 1;
+		gbc.gridx = i == 1 ? i : i - 1;
 		gbc.gridy = 3;
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;

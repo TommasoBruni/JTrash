@@ -221,10 +221,8 @@ public class CardsPanel extends JPanel implements Resettable
 		}
 		/* There is no good place for the old card, so discard it and update the current */
 		c.setupFutureCard();
-		if (isVictory())
-			FieldController.getInstance().gameFinished(playerController);
-		else
-			FieldController.getInstance().newCardToTrash(oldCard);
+		if (!isVictory())
+			FieldController.getInstance().newCardToTrash(oldCard);			
 	}
 	
 	private int getRightPosBasedOnDeck(Value val)

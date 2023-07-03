@@ -339,9 +339,11 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 	public void reset()
 	{
 		mainPlayerPanel.setVisible(false);
-		robotDxPlayerPanel.setVisible(false);
-		robotSxPlayerPanel.setVisible(false);
 		robotFrontPlayerPanel.setVisible(false);
+		if (FieldController.getInstance().getNumberOfPlayingPlayers() > 2)
+			robotDxPlayerPanel.setVisible(false);
+		if (FieldController.getInstance().getNumberOfPlayingPlayers() > 3)
+			robotSxPlayerPanel.setVisible(false);
 		deckPanel.setVisible(false);
 	}
 	

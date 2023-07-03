@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -108,6 +110,51 @@ public class ProfileDialog extends JDialog
 		add(pannelloContenitore);
 		
 		setLocationRelativeTo(ownerFrame);
+		
+		addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) 
+			{
+				/* Non interessante */
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) 
+			{
+				/* Non interessante */
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) 
+			{
+				/* Non interessante */
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) 
+			{
+				/* Non interessante */
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) 
+			{
+				ownerFrame.enableComponent();
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) 
+			{
+				/* Non interessante */
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) 
+			{
+				/* Non interessante */
+			}
+		});
 		pack();
 	}
 }
