@@ -128,11 +128,8 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		this.setEnabled(false);
 	}
 	
-	public void impostaCampoDiGioco()
+	public void initializeDeckView()
 	{
-		EnemyController currentEnemyController;
-		FieldController.getInstance().initializeComponents();
-		AnimationPanel pannelloAnimazione;
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		if (deckPanel == null)
@@ -154,7 +151,106 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			deckPanel.reset();
 			deckPanel.setVisible(true);
 		}
+	}
+	
+	public void initializeMainPlayerView()
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
 		
+		if (mainPlayerPanel == null)
+		{
+			mainPlayerPanel = new ContainerPanel(MainPlayerController.getInstance(), DeckPosition.IN_ALTO);
+			mainPlayerPanel.setVisible(true);
+			gbc.gridx = 0;
+			gbc.gridy = 2;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+			gbc.anchor = GridBagConstraints.PAGE_END;
+			add(mainPlayerPanel, gbc);
+		}
+		else
+		{
+			mainPlayerPanel.reset();
+			mainPlayerPanel.setVisible(true);
+		}
+	}
+	
+	public void initializeRobotFrontPlayerView()
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		if (robotFrontPlayerPanel == null)
+		{
+			robotFrontPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.IN_BASSO);
+			robotFrontPlayerPanel.setVisible(true);
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.weightx = 0.1;
+			gbc.weighty = 0.1;
+			gbc.anchor = GridBagConstraints.PAGE_START;
+			add(robotFrontPlayerPanel, gbc);
+		}
+		else
+		{
+			robotFrontPlayerPanel.reset();
+			robotFrontPlayerPanel.setVisible(true);
+		}
+	}
+	
+	public void initializeRobotDxPlayerView()
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		if (FieldController.getInstance().getNumberOfPlayingPlayers() > 2)
+		{
+			if (robotDxPlayerPanel == null)
+			{
+				robotDxPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.SULLA_SX);
+				robotDxPlayerPanel.setVisible(true);
+				gbc.gridx = 0;
+				gbc.gridy = 1;
+				gbc.weightx = 0.1;
+				gbc.weighty = 0.1;
+				gbc.anchor = GridBagConstraints.LINE_END;
+				add(robotDxPlayerPanel, gbc);
+			}
+			else
+			{
+				robotDxPlayerPanel.reset();
+				robotDxPlayerPanel.setVisible(true);
+			}
+		}
+	}
+	
+	public void initializeRobotSxPlayerView()
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		if (FieldController.getInstance().getNumberOfPlayingPlayers() > 3)
+		{
+			if (robotSxPlayerPanel == null)
+			{
+				robotSxPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.SULLA_DX);
+				robotSxPlayerPanel.setVisible(true);
+				gbc.gridx = 0;
+				gbc.gridy = 1;
+				gbc.weightx = 0.1;
+				gbc.weighty = 0.1;
+				gbc.anchor = GridBagConstraints.LINE_START;
+				add(robotSxPlayerPanel, gbc);
+			}
+			else
+			{
+				robotSxPlayerPanel.reset();
+				robotSxPlayerPanel.setVisible(true);
+			}			
+		}
+	}
+	
+	public void impostaCampoDiGioco()
+	{
+		FieldController.getInstance().initializeComponents();
+		AnimationPanel pannelloAnimazione;	
 		
 		/*
 		gbc.gridx = 0;
@@ -167,126 +263,12 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		//add(pannelloAnimazione);
 		
 		
-		try 
-		{
-			if (mainPlayerPanel == null)
-			{
-				mainPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_ALTO, MainPlayerController.getInstance()),
-																	  new AvatarScorePanel(MainPlayerController.getInstance()),
-																	  DeckPosition.IN_ALTO);
-				mainPlayerPanel.setVisible(true);
-				gbc.gridx = 0;
-				gbc.gridy = 2;
-				gbc.weightx = 0.1;
-				gbc.weighty = 0.1;
-				gbc.anchor = GridBagConstraints.PAGE_END;
-				add(mainPlayerPanel, gbc);
-			}
-			else
-			{
-				mainPlayerPanel.reset();
-				mainPlayerPanel.setVisible(true);
-			}
-			
-		} 
-		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
-		{
-			/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
-			 * momento la partita */
-			e.printStackTrace();
-		}
-		
 		//pannelloGiocatorePrincipale.startAnimazione();
-		try 
-		{
-			currentEnemyController = FieldController.getInstance().getNextEnemy();
-			if (robotFrontPlayerPanel == null)
-			{
-				robotFrontPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.IN_BASSO, currentEnemyController),
-														   new AvatarScorePanel(currentEnemyController), DeckPosition.IN_BASSO);
-				robotFrontPlayerPanel.setVisible(true);
-				gbc.gridx = 0;
-				gbc.gridy = 0;
-				gbc.weightx = 0.1;
-				gbc.weighty = 0.1;
-				gbc.anchor = GridBagConstraints.PAGE_START;
-				add(robotFrontPlayerPanel, gbc);
-			}
-			else
-			{
-				robotFrontPlayerPanel.reset();
-				robotFrontPlayerPanel.setVisible(true);
-			}
-		} 
-		catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
-		{
-			/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
-			 * momento la partita */
-			e.printStackTrace();
-		}
-		
-		if (FieldController.getInstance().getNumberOfPlayingPlayers() > 2)
-		{
-			try
-			{
-				currentEnemyController = FieldController.getInstance().getNextEnemy();
-				if (robotDxPlayerPanel == null)
-				{
-					robotDxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_SX, currentEnemyController),
-															new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_SX);
-					robotDxPlayerPanel.setVisible(true);
-					gbc.gridx = 0;
-					gbc.gridy = 1;
-					gbc.weightx = 0.1;
-					gbc.weighty = 0.1;
-					gbc.anchor = GridBagConstraints.LINE_END;
-					add(robotDxPlayerPanel, gbc);
-				}
-				else
-				{
-					robotDxPlayerPanel.reset();
-					robotDxPlayerPanel.setVisible(true);
-				}
-			} 
-			catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e) 
-			{
-				/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
-				 * momento la partita */
-				e.printStackTrace();
-			}
-		}
-		
-		if (FieldController.getInstance().getNumberOfPlayingPlayers() > 3)
-		{
-			try 
-			{
-				currentEnemyController = FieldController.getInstance().getNextEnemy();
-				if (robotSxPlayerPanel == null)
-				{
-					robotSxPlayerPanel = new ContainerPanel(new CardsPanel(DeckPosition.SULLA_DX, currentEnemyController),
-															new AvatarScorePanel(currentEnemyController), DeckPosition.SULLA_DX);
-					robotSxPlayerPanel.setVisible(true);
-					gbc.gridx = 0;
-					gbc.gridy = 1;
-					gbc.weightx = 0.1;
-					gbc.weighty = 0.1;
-					gbc.anchor = GridBagConstraints.LINE_START;
-					add(robotSxPlayerPanel, gbc);
-				}
-				else
-				{
-					robotSxPlayerPanel.reset();
-					robotSxPlayerPanel.setVisible(true);
-				}
-
-			} 
-			catch (GameNotInProgressException | MoveNotAllowedException | DeckFinishedException e)
-			{
-				/* Nessuna delle due eccezioni accadrà mai perché stiamo impostando in questo
-				 * momento la partita */
-				e.printStackTrace();
-			}				
-		}
+		initializeDeckView();
+		initializeMainPlayerView();
+		initializeRobotFrontPlayerView();
+		initializeRobotDxPlayerView();
+		initializeRobotSxPlayerView();
 		
 		setJMenuBar(creaBarraMenu());
 		getContentPane().setBackground(new Color(255, 255, 204));

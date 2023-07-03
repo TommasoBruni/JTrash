@@ -15,6 +15,9 @@ import javax.swing.border.Border;
 
 import eu.uniroma1.controller.PlayerController;
 import eu.uniroma1.controller.Resettable;
+import eu.uniroma1.model.exceptions.DeckFinishedException;
+import eu.uniroma1.model.exceptions.GameNotInProgressException;
+import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.utils.DeckPosition;
 
 public class ContainerPanel extends JPanel implements Resettable
@@ -28,11 +31,19 @@ public class ContainerPanel extends JPanel implements Resettable
 		pannelloCarte.reset();
 	}
 	
-	public ContainerPanel(CardsPanel pannelloCarte, AvatarScorePanel pannelloAvatarPunteggio,
-						  DeckPosition posizioneDelMazzo)
+	public ContainerPanel(PlayerController playerController, DeckPosition posizioneDelMazzo)
 	{
-		this.pannelloAvatarPunteggio = pannelloAvatarPunteggio;
-		this.pannelloCarte = pannelloCarte;
+		this.pannelloAvatarPunteggio = new AvatarScorePanel(playerController);
+		try 
+		{
+			this.pannelloCarte = new CardsPanel(posizioneDelMazzo, playerController);
+		}
+		catch (GameNotInProgressException | DeckFinishedException | MoveNotAllowedException e)
+		{
+			/* Nessuna delle tre eccezioni accadrà mai perché stiamo impostando in questo
+			 * momento la partita */
+			e.printStackTrace();
+		}
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(new GridBagLayout());
 
