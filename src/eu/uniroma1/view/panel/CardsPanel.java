@@ -254,6 +254,12 @@ public class CardsPanel extends JPanel implements Resettable
 		return true;
 	}
 	
+	public void enemyCardToTrash(Card card)
+	{
+		delayEnemyOperation();
+		FieldController.getInstance().newCardToTrash(card);
+	}
+	
 	public void enemyOperation(Card card)
 	{
 		Card oldCard;
@@ -277,15 +283,13 @@ public class CardsPanel extends JPanel implements Resettable
 					return;
 				}
 			}
-			delayEnemyOperation();
-			FieldController.getInstance().newCardToTrash(card);
+			enemyCardToTrash(card);
 			FieldController.getInstance().gameFinished(playerController);
 		}
 		else if (card.getValore().equals(Value.JACK) || 
 				 card.getValore().equals(Value.QUEEN))
 		{
-			delayEnemyOperation();
-			FieldController.getInstance().newCardToTrash(card);
+			enemyCardToTrash(card);
 		}
 		else
 		{
@@ -293,8 +297,7 @@ public class CardsPanel extends JPanel implements Resettable
 			
 			if (cards[intValue].isFaceUpCard() || !cards[intValue].isVisible())
 			{
-				delayEnemyOperation();
-				FieldController.getInstance().newCardToTrash(card);
+				enemyCardToTrash(card);
 				return;
 			}
 			
