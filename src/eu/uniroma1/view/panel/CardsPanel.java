@@ -505,6 +505,8 @@ public class CardsPanel extends JPanel implements Resettable
 				continue;
 			}
 			
+			cardButton.setVisible(true);
+			
 			try 
 			{
 				cardButton.setBaseCard(FieldController.getInstance().nextCard());

@@ -110,7 +110,8 @@ public class FieldController extends Observable implements Resettable
 		
 		initializeDeck();
 		
-		playerControllers.add(MainPlayerController.getInstance());
+		if (playerControllers.size() == 0)
+			playerControllers.add(MainPlayerController.getInstance());
 		
 		for (i = 1; i < numeroGiocatoriInPartita; i++)
 		{
