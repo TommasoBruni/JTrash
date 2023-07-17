@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.*;
 
+import eu.uniroma1.controller.Enableable;
 import eu.uniroma1.controller.EnemyController;
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
@@ -39,7 +40,6 @@ import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.controller.Restartable;
 import eu.uniroma1.view.dialog.ProfileDialog;
-import eu.uniroma1.view.utils.interfaces.Closeable;
 import eu.uniroma1.view.panel.AnimationPanel;
 import eu.uniroma1.view.panel.AvatarScorePanel;
 import eu.uniroma1.view.panel.CardsPanel;
@@ -50,7 +50,7 @@ import eu.uniroma1.view.utils.DeckPosition;
 /**
  * Classe per creare il frame di gioco
  */
-public class GameFrame extends JFrame implements Closeable, Observer, Resettable
+public class GameFrame extends JFrame implements Enableable, Observer, Resettable
 {
 	private ContainerPanel mainPlayerPanel;
 	private ContainerPanel robotDxPlayerPanel;
@@ -117,13 +117,13 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 	}
 	
 	@Override
-	public void enableComponent()
+	public void enable()
 	{
 		this.setEnabled(true);
 	}
 	
 	@Override
-	public void disableComponent()
+	public void disable()
 	{
 		this.setEnabled(false);
 	}
@@ -160,7 +160,6 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		if (mainPlayerPanel == null)
 		{
 			mainPlayerPanel = new ContainerPanel(MainPlayerController.getInstance(), DeckPosition.IN_ALTO);
-			mainPlayerPanel.setVisible(true);
 			gbc.gridx = 0;
 			gbc.gridy = 2;
 			gbc.weightx = 0.1;
@@ -171,8 +170,8 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		else
 		{
 			mainPlayerPanel.reset();
-			mainPlayerPanel.setVisible(true);
 		}
+		mainPlayerPanel.setVisible(true);
 	}
 	
 	public void initializeRobotFrontPlayerView()
@@ -182,7 +181,6 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		if (robotFrontPlayerPanel == null)
 		{
 			robotFrontPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.IN_BASSO);
-			robotFrontPlayerPanel.setVisible(true);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.weightx = 0.1;
@@ -193,8 +191,8 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 		else
 		{
 			robotFrontPlayerPanel.reset();
-			robotFrontPlayerPanel.setVisible(true);
 		}
+		robotFrontPlayerPanel.setVisible(true);
 	}
 	
 	public void initializeRobotDxPlayerView()
@@ -206,7 +204,6 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			if (robotDxPlayerPanel == null)
 			{
 				robotDxPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.SULLA_SX);
-				robotDxPlayerPanel.setVisible(true);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -217,8 +214,8 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			else
 			{
 				robotDxPlayerPanel.reset();
-				robotDxPlayerPanel.setVisible(true);
 			}
+			robotDxPlayerPanel.setVisible(true);
 		}
 	}
 	
@@ -231,7 +228,6 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			if (robotSxPlayerPanel == null)
 			{
 				robotSxPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.SULLA_DX);
-				robotSxPlayerPanel.setVisible(true);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -242,8 +238,8 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			else
 			{
 				robotSxPlayerPanel.reset();
-				robotSxPlayerPanel.setVisible(true);
-			}			
+			}
+			robotSxPlayerPanel.setVisible(true);
 		}
 	}
 	
@@ -287,7 +283,7 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				disableComponent();
+				disable();
 				ProfileDialog dialogProfilo = new ProfileDialog(GameFrame.this);
 				dialogProfilo.setVisible(true);
 			}
@@ -337,10 +333,20 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 	
 	private class ObserverForVictory implements Observer, Restartable
 	{
+		private boolean wholeGameFinished;
+		
 		@Override
 		public void restart() 
 		{
-			impostaCampoDiGioco();
+			if (!wholeGameFinished)
+			{
+				impostaCampoDiGioco();
+			}
+			else
+			{
+				mostraInserimentoNumeroGiocatori();
+				wholeGameFinished = false;
+			}
 		}
 		
 		@Override
@@ -349,8 +355,17 @@ public class GameFrame extends JFrame implements Closeable, Observer, Resettable
 			PlayerController playerController = (PlayerController)arg;
 			
 			reset();
+			
 			FieldController.getInstance().setItemToRestart(this);
-			JOptionPane.showMessageDialog(new JFrame(), "Vincitore!", "Il vincitore e': " + playerController.getPlayerData().getNomeGiocatore(), JOptionPane.INFORMATION_MESSAGE);
+			if (playerController.getCardsInHand() > 1)
+			{
+				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore di questa partita e': " + playerController.getPlayerData().getNomeGiocatore(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore finale e': " + playerController.getPlayerData().getNomeGiocatore(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
+				wholeGameFinished = true;
+			}			
 		}
 	}
 	

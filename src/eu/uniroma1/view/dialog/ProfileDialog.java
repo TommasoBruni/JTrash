@@ -22,10 +22,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import eu.uniroma1.controller.Enableable;
 import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.view.frame.GameFrame;
-import eu.uniroma1.view.utils.interfaces.Closeable;
 
 public class ProfileDialog extends JDialog
 {
@@ -38,7 +38,7 @@ public class ProfileDialog extends JDialog
 	private JButton buttonSelezionaAvatar;
 	private AvatarSelectionDialog dialogSelezioneAvatar;
 	
-	public <T extends Frame & Closeable> ProfileDialog(T ownerFrame)
+	public <T extends Frame & Enableable> ProfileDialog(T ownerFrame)
 	{
 		super(ownerFrame, "Profilo", true);
 		setResizable(false);
@@ -83,7 +83,7 @@ public class ProfileDialog extends JDialog
 				MainPlayerController.getInstance().getPlayerData().aggiornaDatiGiocatore(nomeUtente, nickname, 
 																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
 																	 MainPlayerController.getInstance().getPlayerData().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
-				ownerFrame.enableComponent();
+				ownerFrame.enable();
 				dispose();
 			}
 		});
@@ -92,7 +92,7 @@ public class ProfileDialog extends JDialog
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				ownerFrame.enableComponent();
+				ownerFrame.enable();
 				dispose();
 			}
 		});
@@ -140,7 +140,7 @@ public class ProfileDialog extends JDialog
 			@Override
 			public void windowClosing(WindowEvent e) 
 			{
-				ownerFrame.enableComponent();
+				ownerFrame.enable();
 			}
 			
 			@Override

@@ -17,6 +17,7 @@ import javax.swing.border.Border;
 import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.PlayerController;
 import eu.uniroma1.controller.PlayerData;
+import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.model.Player;
 
 public class AvatarScorePanel extends JPanel implements Observer
@@ -47,6 +48,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 		labelIcon = new JLabel(playerData.getAvatarGiocatore());
 		setBackground(new Color(255, 255, 204));
 		
+		playerData.addObserver(this);	
 		if (playerController instanceof MainPlayerController)
 		{
 			GridBagConstraints gbcPerPunteggi = new GridBagConstraints();
@@ -57,7 +59,6 @@ public class AvatarScorePanel extends JPanel implements Observer
 			labelPartiteGiocate = new JLabel("Giocate: " + playerData.getPartiteGiocateGiocatore() + " ");
 			labelPartiteVinte = new JLabel("Vinte: " + playerData.getPartiteVinteGiocatore() + " ");
 			labelPartitePerse = new JLabel("Perse: " + playerData.getPartitePerseGiocatore() + " ");
-			playerController.getPlayerData().addObserver(this);
 			
 			gbcPerPunteggi.gridx = 0;
 			gbcPerPunteggi.gridy = 0;

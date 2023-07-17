@@ -45,7 +45,7 @@ public class FieldController extends Observable implements Resettable
 	public void nextTurn() 
 	{
 		/* E' il turno del prossimo giocatore */
-		if (playerIndex > playerControllers.size() - 1)
+		if (playerIndex > numeroGiocatoriInPartita - 1)
 			playerIndex = 0;
 		currentPlayerController = playerControllers.get(playerIndex++);
 		try 
@@ -61,7 +61,7 @@ public class FieldController extends Observable implements Resettable
 	
 	public EnemyController getNextEnemy()
 	{
-		if (enemyIndex > playerControllers.size() - 1)
+		if (enemyIndex > numeroGiocatoriInPartita - 1)
 			enemyIndex = 1;
 		return (EnemyController)playerControllers.get(enemyIndex++);
 	}
@@ -105,25 +105,25 @@ public class FieldController extends Observable implements Resettable
 	
 	public void initializeComponents()
 	{
-		int i = 0;
+		int i;
+		PlayerController current;
 		
 		initializeDeck();
 		
-		if (playerControllers.size() == 0)
+		playerControllers.add(MainPlayerController.getInstance());
+		
+		for (i = 1; i < numeroGiocatoriInPartita; i++)
 		{
-			/* Significa che il primo match effettivo */
-			playerControllers.add(MainPlayerController.getInstance());
-			/* Crea i nemici */
-			switch(numeroGiocatoriInPartita)
+			if (i + 1 > playerControllers.size())
 			{
-				case 4:
-					playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
-				case 3:
-					playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
-				default:
-					/* Solo due giocatori */
-					playerControllers.add(new EnemyController(enemiesIcon.get(i++)));
-					break;
+				playerControllers.add(new EnemyController(enemiesIcon.get(i - 1)));
+			}
+			else
+			{
+				current = playerControllers.get(i);
+				current.playerData.aggiornaDatiGiocatore(enemiesIcon.get(i - 1).getDescription(),
+														 enemiesIcon.get(i - 1).getDescription(),
+						                                 enemiesIcon.get(i - 1));
 			}
 		}
 	}
@@ -237,10 +237,18 @@ public class FieldController extends Observable implements Resettable
 		playerControllers.forEach((playerController) ->
 								  { 
 										if (playerController.equals(victoryPlayer))
-											playerController.setCardsInHand(victoryPlayer.getCardsInHand() - 1);
+											playerController.setCardsInHand(playerController.getCardsInHand() - 1);
 								  });
 		reset();
-		
+		if (victoryPlayer.getCardsInHand() == 0)
+		{
+			if (victoryPlayer.equals(MainPlayerController.getInstance()))
+				MainPlayerController.getInstance().playerData.aumentaPartiteVinteGiocatore();
+			else
+				MainPlayerController.getInstance().playerData.aumentaPartitePerseGiocatore();
+			
+			playerControllers.forEach(controller -> controller.restart());
+		}
 		itemToRestart.restart();
 	}
 	

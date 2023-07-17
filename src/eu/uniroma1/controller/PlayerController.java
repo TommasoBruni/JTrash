@@ -11,7 +11,7 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
-public abstract class PlayerController extends Observable implements Resettable
+public abstract class PlayerController extends Observable implements Resettable, Restartable, Enableable
 {
 	protected PlayerState playerState;
 	protected Card lastSelectedCard;
@@ -20,6 +20,7 @@ public abstract class PlayerController extends Observable implements Resettable
 	protected PlayerData playerData;
 	private int id;
 	private static int counter;
+	private boolean isEnabled;
 	private int cardsInHand;
 	
 	public abstract void operationWithSelectedCard(Card card) throws MoveNotAllowedException;
@@ -32,6 +33,18 @@ public abstract class PlayerController extends Observable implements Resettable
 	public void finishTurn() 
 	{
 		playerState = PlayerState.TURN_IS_OVER;
+	}
+	
+	@Override
+	public void enable() 
+	{
+		isEnabled = true;
+	}
+	
+	@Override
+	public void disable() 
+	{
+		isEnabled = false;
 	}
 	
 	@Override
@@ -135,6 +148,13 @@ public abstract class PlayerController extends Observable implements Resettable
 			return false;
 		PlayerController controller = (PlayerController)obj;
 		return controller.id == id;
+	}
+	
+	@Override
+	public void restart()
+	{
+		playerState = PlayerState.TURN_IS_OVER;
+		cardsInHand = 10;
 	}
 	
 	public PlayerController()

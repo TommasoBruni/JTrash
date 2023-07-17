@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import eu.uniroma1.controller.Enableable;
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.Resettable;
@@ -23,9 +24,8 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
-import eu.uniroma1.view.utils.interfaces.Closeable;
 
-public class TrashPanel extends JPanel implements Closeable, Resettable
+public class TrashPanel extends JPanel implements Enableable, Resettable
 {
 	private CardButton carteScartate;
 	private List<Card> discardedCards;
@@ -66,13 +66,13 @@ public class TrashPanel extends JPanel implements Closeable, Resettable
 	}
 	
 	@Override
-	public void enableComponent() 
+	public void enable() 
 	{
 		setEnabled(true);
 	}
 
 	@Override
-	public void disableComponent() 
+	public void disable() 
 	{
 		setEnabled(false);
 	}

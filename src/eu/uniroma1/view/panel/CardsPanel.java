@@ -436,6 +436,7 @@ public class CardsPanel extends JPanel implements Resettable
 						processForCardExchanging((CardButton)e.getSource());
 					}
 				});
+
 			if (isHorizontal)
 			{
 				gbcPerCarte.gridx = 0;
