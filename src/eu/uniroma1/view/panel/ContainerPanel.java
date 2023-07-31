@@ -22,7 +22,7 @@ import eu.uniroma1.view.utils.DeckPosition;
 
 public class ContainerPanel extends JPanel implements Resettable
 {
-	private CardsPanel pannelloCarte;
+	private CardsPanelTemporaneo pannelloCarte;
 	private AvatarScorePanel pannelloAvatarPunteggio;
 	
 	@Override
@@ -36,7 +36,7 @@ public class ContainerPanel extends JPanel implements Resettable
 		this.pannelloAvatarPunteggio = new AvatarScorePanel(playerController);
 		try 
 		{
-			this.pannelloCarte = new CardsPanel(posizioneDelMazzo, playerController);
+			this.pannelloCarte = new CardsPanelTemporaneo(posizioneDelMazzo, playerController);
 		}
 		catch (GameNotInProgressException | DeckFinishedException | MoveNotAllowedException e)
 		{

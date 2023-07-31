@@ -34,8 +34,15 @@ public class AvatarScorePanel extends JPanel implements Observer
 	{
 		Player giocatore = (Player)arg;
 		
-		labelNomeGiocatore.setText(giocatore.getNome());
+		labelNomeGiocatore.setText(giocatore.getNome() + " ");
 		labelIcon.setIcon(giocatore.getAvatar());
+		
+		if (labelPartiteGiocate != null)
+		{
+			labelPartiteGiocate.setText("Giocate: " + (giocatore.getPartitePerse() + giocatore.getPartiteVinte()) + " ");
+			labelPartiteVinte.setText("Vinte: " + giocatore.getPartiteVinte() + " ");
+			labelPartitePerse.setText("Perse: " + giocatore.getPartitePerse() + " ");
+		}
 	}
 	
 	public AvatarScorePanel(PlayerController playerController)

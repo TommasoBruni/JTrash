@@ -36,15 +36,20 @@ public abstract class PlayerController extends Observable implements Resettable,
 	}
 	
 	@Override
-	public void enable() 
+	public void enableObject() 
 	{
 		isEnabled = true;
 	}
 	
 	@Override
-	public void disable() 
+	public void disableObject() 
 	{
 		isEnabled = false;
+	}
+	
+	public boolean getIsEnabled()
+	{
+		return isEnabled;
 	}
 	
 	@Override
@@ -154,7 +159,7 @@ public abstract class PlayerController extends Observable implements Resettable,
 	public void restart()
 	{
 		playerState = PlayerState.TURN_IS_OVER;
-		cardsInHand = 10;
+		cardsInHand = 2;
 	}
 	
 	public PlayerController()
@@ -163,6 +168,6 @@ public abstract class PlayerController extends Observable implements Resettable,
 		playerState = PlayerState.TURN_IS_OVER;
 		collectedCardsObservable = new GenericObservable();
 		playerData = new PlayerData();
-		cardsInHand = 10;
+		cardsInHand = 2;
 	}
 }

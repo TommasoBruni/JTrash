@@ -66,13 +66,13 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 	}
 	
 	@Override
-	public void enable() 
+	public void enableObject() 
 	{
 		setEnabled(true);
 	}
 
 	@Override
-	public void disable() 
+	public void disableObject() 
 	{
 		setEnabled(false);
 	}

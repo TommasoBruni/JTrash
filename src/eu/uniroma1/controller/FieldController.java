@@ -3,6 +3,7 @@ package eu.uniroma1.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -59,11 +60,19 @@ public class FieldController extends Observable implements Resettable
 		}
 	}
 	
-	public EnemyController getNextEnemy()
+	public EnemyControllerTemporaneo getNextEnemy()
 	{
 		if (enemyIndex > numeroGiocatoriInPartita - 1)
 			enemyIndex = 1;
-		return (EnemyController)playerControllers.get(enemyIndex++);
+		for (; enemyIndex < numeroGiocatoriInPartita; enemyIndex++)
+		{
+			if (!playerControllers.get(enemyIndex).getIsEnabled())
+			{
+				playerControllers.get(enemyIndex).enableObject();
+				return (EnemyControllerTemporaneo)playerControllers.get(enemyIndex++);
+			}
+		}
+		return null;
 	}
 	
 	public Card getLastTrashCard()
@@ -117,7 +126,8 @@ public class FieldController extends Observable implements Resettable
 		{
 			if (i + 1 > playerControllers.size())
 			{
-				playerControllers.add(new EnemyController(enemiesIcon.get(i - 1)));
+				current = new EnemyControllerTemporaneo(enemiesIcon.get(i - 1));
+				playerControllers.add(current);
 			}
 			else
 			{
@@ -125,8 +135,12 @@ public class FieldController extends Observable implements Resettable
 				current.playerData.aggiornaDatiGiocatore(enemiesIcon.get(i - 1).getDescription(),
 														 enemiesIcon.get(i - 1).getDescription(),
 						                                 enemiesIcon.get(i - 1));
+				current.enableObject();
 			}
 		}
+		
+		for (; i < playerControllers.size(); i++)
+			playerControllers.get(i).disableObject();
 	}
 	
 	@Override

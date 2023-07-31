@@ -36,8 +36,6 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 	private JPanel cardsContainer;
 	private JPanel pickedCardSpace;
 	private boolean firstCard;
-	
-	//TODO: metodo per girare carta da pescare 
 
 	@Override
 	public void update(Observable o, Object arg) 

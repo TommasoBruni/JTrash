@@ -117,13 +117,13 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 	}
 	
 	@Override
-	public void enable()
+	public void enableObject()
 	{
 		this.setEnabled(true);
 	}
 	
 	@Override
-	public void disable()
+	public void disableObject()
 	{
 		this.setEnabled(false);
 	}
@@ -283,7 +283,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				disable();
+				disableObject();
 				ProfileDialog dialogProfilo = new ProfileDialog(GameFrame.this);
 				dialogProfilo.setVisible(true);
 			}

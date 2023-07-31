@@ -18,10 +18,18 @@ public class Player
 	
 	public Player(String nome, String nickname, ImageIcon avatar)
 	{
+		this(nome, nickname, avatar, 0, 0);
+	}
+	
+	public Player(String nome, String nickname, ImageIcon avatar, 
+			      long partiteVinte, long partitePerse)
+	{
 		this.nome = nome;
 		this.nickname = nickname;
 		this.avatar = avatar;
 		this.livello = Level.PRINCIPIANTE;
+		this.partiteVinte = partiteVinte;
+		this.partitePerse = partitePerse;
 		id = idCounter++;
 	}
 	

@@ -57,7 +57,10 @@ public class PlayerData extends Observable
 	
 	public void aggiornaDatiGiocatore(String nomeGiocatore, String nickname, ImageIcon avatar)
 	{
-		giocatore = new Player(nomeGiocatore, nickname, avatar);
+		if (giocatore == null)
+			giocatore = new Player(nomeGiocatore, nickname, avatar);
+		else
+			giocatore = new Player(nomeGiocatore, nickname, avatar, giocatore.getPartiteVinte(), giocatore.getPartitePerse());
 		
 		setChanged();
 		notifyObservers(giocatore);

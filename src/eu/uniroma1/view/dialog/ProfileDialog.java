@@ -83,7 +83,7 @@ public class ProfileDialog extends JDialog
 				MainPlayerController.getInstance().getPlayerData().aggiornaDatiGiocatore(nomeUtente, nickname, 
 																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
 																	 MainPlayerController.getInstance().getPlayerData().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
-				ownerFrame.enable();
+				ownerFrame.enableObject();
 				dispose();
 			}
 		});
@@ -92,7 +92,7 @@ public class ProfileDialog extends JDialog
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				ownerFrame.enable();
+				ownerFrame.enableObject();
 				dispose();
 			}
 		});
@@ -140,7 +140,7 @@ public class ProfileDialog extends JDialog
 			@Override
 			public void windowClosing(WindowEvent e) 
 			{
-				ownerFrame.enable();
+				ownerFrame.enableObject();
 			}
 			
 			@Override
