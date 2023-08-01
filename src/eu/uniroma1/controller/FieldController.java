@@ -245,9 +245,6 @@ public class FieldController extends Observable implements Resettable
 	
 	public void gameFinished(PlayerController victoryPlayer)
 	{
-		observableForGameFinish.setStatusChanged();
-		observableForGameFinish.notifyObservers(victoryPlayer);
-		
 		playerControllers.forEach((playerController) -> playerController.reset());
 		playerControllers.forEach((playerController) ->
 								  { 
@@ -255,6 +252,10 @@ public class FieldController extends Observable implements Resettable
 											playerController.setCardsInHand(playerController.getCardsInHand() - 1);
 								  });
 		reset();
+		
+		observableForGameFinish.setStatusChanged();
+		observableForGameFinish.notifyObservers(victoryPlayer);
+		
 		if (victoryPlayer.getCardsInHand() == 0)
 		{
 			if (victoryPlayer.equals(MainPlayerController.getInstance()))

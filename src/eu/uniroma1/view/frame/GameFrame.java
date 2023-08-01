@@ -357,7 +357,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 			reset();
 			
 			FieldController.getInstance().setItemToRestart(this);
-			if (playerController.getCardsInHand() > 1)
+			if (playerController.getCardsInHand() > 0)
 			{
 				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore di questa partita e': " + playerController.getPlayerData().getNomeGiocatore(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
 			}
