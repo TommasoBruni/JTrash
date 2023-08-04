@@ -24,7 +24,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 {
 	private JLabel labelIcon;
 	private JPanel pannelloPerPunteggi;
-	private JLabel labelNomeGiocatore;
+	private JLabel labelNicknameGiocatore;
 	private JLabel labelPartiteGiocate;
 	private JLabel labelPartiteVinte;
 	private JLabel labelPartitePerse;
@@ -34,7 +34,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 	{
 		Player giocatore = (Player)arg;
 		
-		labelNomeGiocatore.setText(giocatore.getNome() + " ");
+		labelNicknameGiocatore.setText(giocatore.getNickname() + " ");
 		labelIcon.setIcon(giocatore.getAvatar());
 		
 		if (labelPartiteGiocate != null)
@@ -51,7 +51,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setLayout(new GridBagLayout());
-		labelNomeGiocatore = new JLabel(playerData.getNomeGiocatore() + " ");
+		labelNicknameGiocatore = new JLabel(playerData.getNomeGiocatore() + " ");
 		labelIcon = new JLabel(playerData.getAvatarGiocatore());
 		setBackground(new Color(255, 255, 204));
 		
@@ -95,6 +95,6 @@ public class AvatarScorePanel extends JPanel implements Observer
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		add(labelNomeGiocatore, gbc);
+		add(labelNicknameGiocatore, gbc);
 	}
 }

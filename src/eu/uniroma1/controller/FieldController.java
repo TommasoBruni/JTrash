@@ -41,7 +41,7 @@ public class FieldController extends Observable implements Resettable
 	private List<ImageIcon> enemiesIcon;
 	private java.util.Timer nextTurnTimer;
 	private Restartable itemToRestart;
-	private static final int nextPlayerSpeed = 1000;
+	private static final int nextPlayerSpeed = 800;
 	
 	public void nextTurn() 
 	{
@@ -245,6 +245,8 @@ public class FieldController extends Observable implements Resettable
 	
 	public void gameFinished(PlayerController victoryPlayer)
 	{
+		PlayerData playerData;
+		
 		playerControllers.forEach((playerController) -> playerController.reset());
 		playerControllers.forEach((playerController) ->
 								  { 
@@ -258,11 +260,14 @@ public class FieldController extends Observable implements Resettable
 		
 		if (victoryPlayer.getCardsInHand() == 0)
 		{
+			playerData = MainPlayerController.getInstance().getPlayerData();
 			if (victoryPlayer.equals(MainPlayerController.getInstance()))
-				MainPlayerController.getInstance().playerData.aumentaPartiteVinteGiocatore();
+				playerData.aumentaPartiteVinteGiocatore();
 			else
-				MainPlayerController.getInstance().playerData.aumentaPartitePerseGiocatore();
+				playerData.aumentaPartitePerseGiocatore();
 			
+			/* This is to update won and lost games */
+			playerData.aggiornaDatiGiocatore(playerData.getNomeGiocatore(), playerData.getNicknameGiocatore(), playerData.getAvatarGiocatore());
 			playerControllers.forEach(controller -> controller.restart());
 		}
 		itemToRestart.restart();

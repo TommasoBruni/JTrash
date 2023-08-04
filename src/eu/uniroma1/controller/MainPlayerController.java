@@ -1,5 +1,9 @@
 package eu.uniroma1.controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -17,6 +21,7 @@ public class MainPlayerController extends PlayerController
 {	
 	private static MainPlayerController controller;
 	private GenericObservable observableForHint;
+	private static final String fileName = "my_account.ser";
 	
 	@Override
 	public void operationWithSelectedCard(Card card)
@@ -33,8 +38,18 @@ public class MainPlayerController extends PlayerController
 	
 	public static MainPlayerController getInstance()
 	{
+		PlayerData playerData;
+		
 		if (controller == null)
+		{
 			controller = new MainPlayerController();
+			
+			playerData = PlayerData.read(fileName);
+			if (playerData != null)
+				controller.playerData = playerData;
+			
+			controller.playerData.setFilename(fileName);
+		}
 		return controller;
 	}
 	

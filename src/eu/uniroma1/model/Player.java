@@ -1,14 +1,17 @@
 package eu.uniroma1.model;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class Player 
+public class Player implements Serializable
 {
-	private static int idCounter;
-	private int id;
+	/**
+	 * Serial version UID
+	 */
+	private static final long serialVersionUID = 1L;
 	private Level livello;
 	private String nome;
 	private String nickname;
@@ -30,11 +33,6 @@ public class Player
 		this.livello = Level.PRINCIPIANTE;
 		this.partiteVinte = partiteVinte;
 		this.partitePerse = partitePerse;
-		id = idCounter++;
-	}
-	
-	public int getId() {
-		return id;
 	}
 
 	public Level getLivello() {

@@ -57,6 +57,7 @@ public class CardsPanel extends JPanel implements Resettable
 	private int yMovement;
 	private DeckPosition relativeDeckPosition;
 	private PlayerController playerController;
+	private long enemyDelayMs = 1000;
 	
 	/*
 	@Override
@@ -106,7 +107,7 @@ public class CardsPanel extends JPanel implements Resettable
 	{
 		try 
 		{
-			Thread.sleep(1000);
+			Thread.sleep(enemyDelayMs);
 		}
 		catch (InterruptedException e) 
 		{
@@ -114,26 +115,14 @@ public class CardsPanel extends JPanel implements Resettable
 		}
 	}
 	
-	public void disableAllCards()
-	{
-		for (CardButton card : cards)
-			card.setEnabled(false);
-	}
-	
-	public void enableAllCards()
-	{
-		for (CardButton card : cards)
-			card.setEnabled(true);
-	}
-	
-	public void restoreAllCardImage()
+	private void restoreAllCardImage()
 	{
 		/* Restore all card images */
 		for (CardButton carta : cards)
 			carta.restoreCardImage();
 	}
 	
-	public void setupAllFutureCard()
+	private void setupAllFutureCard()
 	{
 		for (CardButton card : cards)
 			card.setupFutureCard();
@@ -142,8 +131,9 @@ public class CardsPanel extends JPanel implements Resettable
 	/**
 	 * Return true if a good place is found, otherwise false 
 	 */
-	private boolean setupCardsForHint(Value value)
+	private boolean setupCardsForHint(Card card)
 	{
+		Value value = card.getValore();
 		int intValue;
 		boolean result = false;
 		
@@ -187,80 +177,13 @@ public class CardsPanel extends JPanel implements Resettable
 		return true;
 	}
 	
-	public void processForCardExchanging(CardButton c)
-	{
-		Card newCard, oldCard;
-		
-		try 
-		{
-			newCard = playerController.getCardFromDeckTrash(c.getPositionInTheField());
-		}
-		catch (MoveNotAllowedException e1) 
-		{
-			return;
-		}
-		
-		if (newCard == null)
-		{
-			FieldController.getInstance().trashLastSelectedCard();
-			return;
-		}
-		/* Display the card so the user can see it and choose a good position.
-		 * The card could automatically go to the trash */
-		c.gira();
-		/* This means that a good choice is taken */
-		setupAllFutureCard();
-
-		/* Take the old one card and try to set hint cards that match this one */
-		oldCard = c.configureCardForFuture(newCard);
-
-		if (setupCardsForHint(oldCard.getValore()))
-		{
-			playerController.newCardSelectedForExchanging(oldCard);
-			return;
-		}
-		/* There is no good place for the old card, so discard it and update the current */
-		c.setupFutureCard();
-		if (!isVictory())
-			FieldController.getInstance().newCardToTrash(oldCard);			
-	}
-	
-	private int getRightPosBasedOnDeck(Value val)
-	{
-		int intValue = val.equals(Value.ASSO) ? 0 : Integer.parseInt(val.toString()) - 1;
-		
-		return getRightPosBasedOnDeck(intValue);
-	}
-	
-	private int getRightPosBasedOnDeck(int intValue)
-	{
-		if (relativeDeckPosition == DeckPosition.IN_BASSO)
-			intValue = (intValue + 9) - (intValue * 2);
-		else if (relativeDeckPosition == DeckPosition.SULLA_SX)
-			intValue = ((intValue + 4) - (intValue * 2)) < 0 ?  ((intValue + 4) - (intValue * 2)) + 10 : ((intValue + 4) - (intValue * 2));
-		else if (relativeDeckPosition == DeckPosition.SULLA_DX)
-			intValue = (intValue + 5) % 10;
-		return intValue;
-	}
-	
-	private boolean isVictory()
-	{
-		for (CardButton card : cards)
-		{
-			if (!card.isFaceUpCard() && card.isVisible())
-				return false;
-		}
-		FieldController.getInstance().gameFinished(playerController);
-		return true;
-	}
-	
-	public void enemyCardToTrash(Card card)
+	private void enemyCardToTrash(Card card)
 	{
 		delayEnemyOperation();
 		FieldController.getInstance().newCardToTrash(card);
 	}
 	
-	public void enemyOperation(Card card)
+	private void enemyOperation(Card card)
 	{
 		Card oldCard;
 		
@@ -308,8 +231,75 @@ public class CardsPanel extends JPanel implements Resettable
 				playerController.newCardSelectedForExchanging(oldCard);
 			}
 		}
+		return;
 	}
 	
+	private void processForCardExchanging(CardButton c)
+	{
+		Card newCard, oldCard;
+		
+		try 
+		{
+			newCard = playerController.getCardFromDeckTrash(c.getPositionInTheField());
+		}
+		catch (MoveNotAllowedException e1) 
+		{
+			return;
+		}
+		
+		if (newCard == null)
+		{
+			FieldController.getInstance().trashLastSelectedCard();
+			return;
+		}
+		/* Display the card so the user can see it and choose a good position.
+		 * The card could automatically go to the trash */
+		c.gira();
+		/* This means that a good choice is taken */
+		setupAllFutureCard();
+
+		/* Take the old one card and try to set hint cards that match this one */
+		oldCard = c.configureCardForFuture(newCard);
+
+		if (setupCardsForHint(oldCard))
+		{
+			playerController.newCardSelectedForExchanging(oldCard);
+			return;
+		}
+		/* There is no good place for the old card, so discard it and update the current */
+		c.setupFutureCard();
+		if (!isVictory())
+			FieldController.getInstance().newCardToTrash(oldCard);			
+	}
+	
+	private int getRightPosBasedOnDeck(Value val)
+	{
+		int intValue = val.equals(Value.ASSO) ? 0 : Integer.parseInt(val.toString()) - 1;
+		
+		return getRightPosBasedOnDeck(intValue);
+	}
+	
+	private int getRightPosBasedOnDeck(int intValue)
+	{
+		if (relativeDeckPosition == DeckPosition.IN_BASSO)
+			intValue = (intValue + 9) - (intValue * 2);
+		else if (relativeDeckPosition == DeckPosition.SULLA_SX)
+			intValue = ((intValue + 4) - (intValue * 2)) < 0 ?  ((intValue + 4) - (intValue * 2)) + 10 : ((intValue + 4) - (intValue * 2));
+		else if (relativeDeckPosition == DeckPosition.SULLA_DX)
+			intValue = (intValue + 5) % 10;
+		return intValue;
+	}
+	
+	private boolean isVictory()
+	{
+		for (CardButton card : cards)
+		{
+			if (!card.isFaceUpCard() && card.isVisible())
+				return false;
+		}
+		FieldController.getInstance().gameFinished(playerController);
+		return true;
+	}
 	
 	private List<Card> cardAlreadyCollected()
 	{
@@ -379,9 +369,78 @@ public class CardsPanel extends JPanel implements Resettable
 		return outputList;
 	}
 	
-	private void setupCards() throws GameNotInProgressException, DeckFinishedException
+	private void horizontalSetup() throws GameNotInProgressException, DeckFinishedException
 	{
-		boolean isHorizontal = (this.relativeDeckPosition == DeckPosition.SULLA_DX || this.relativeDeckPosition == DeckPosition.SULLA_SX);
+		int j, i, minCard;
+		JPanel pannelloCarteSuperiori = new JPanel();
+		JPanel pannelloCarteInferiori = new JPanel();
+		GridBagConstraints gbcTraPanelInfESup = new GridBagConstraints();
+		GridBagConstraints gbcPerCarte = new GridBagConstraints();
+		
+		pannelloCarteSuperiori.setLayout(new GridBagLayout());
+		pannelloCarteInferiori.setLayout(new GridBagLayout());
+		pannelloCarteInferiori.setBackground(new Color(255, 255, 204));
+		pannelloCarteSuperiori.setBackground(new Color(255, 255, 204));
+		setLayout(new GridBagLayout());
+		
+		cards = new CardButton[playerController.getCardsInHand()];
+		minCard = cards.length < 5 ? cards.length : 5;
+		
+		for (i = 0; i < minCard; i++)
+		{
+			cards[i] = new CardButton(FieldController.getInstance().nextCard(), this.relativeDeckPosition, i);
+			if (playerController instanceof MainPlayerController)
+				cards[i].addActionListener(new ActionListener() {	
+					@Override
+					public void actionPerformed(ActionEvent e) 
+					{
+						processForCardExchanging((CardButton)e.getSource());
+					}
+				});
+			
+			gbcPerCarte.gridx = 0;
+			gbcPerCarte.gridy = i;
+			gbcPerCarte.insets = new Insets(0, 0, 15, 0);
+			
+			pannelloCarteSuperiori.add(cards[i], gbcPerCarte);
+		}
+		
+		for (j = 0; j + i < (cards.length - minCard) + 5; j++)
+		{
+			cards[j + i] = new CardButton(FieldController.getInstance().nextCard(), this.relativeDeckPosition, i + j);
+			if (playerController instanceof MainPlayerController)
+				cards[j + i].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) 
+					{
+						processForCardExchanging((CardButton)e.getSource());
+					}
+				});
+
+			gbcPerCarte.gridx = 0;
+			gbcPerCarte.gridy = j;
+			gbcPerCarte.insets = new Insets(0, 0, 15, 0);
+			pannelloCarteInferiori.add(cards[j + i], gbcPerCarte);
+		}
+		
+		gbcTraPanelInfESup.insets = new Insets(0, 0, 0, 5);
+		
+		gbcTraPanelInfESup.gridx = 0;
+		gbcTraPanelInfESup.gridy = 0;
+		gbcTraPanelInfESup.weightx = 0.1;
+		gbcTraPanelInfESup.weighty = 0.1;
+		
+		add(pannelloCarteSuperiori, gbcTraPanelInfESup);
+		gbcTraPanelInfESup.weightx = 1;
+		gbcTraPanelInfESup.weighty = 1;
+		
+	    gbcTraPanelInfESup.gridx = 1;
+	    gbcTraPanelInfESup.gridy = 0;
+		add(pannelloCarteInferiori, gbcTraPanelInfESup);
+	}
+	
+	private void verticalSetup() throws GameNotInProgressException, DeckFinishedException
+	{
 		int i, j, minCard;
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();
@@ -409,18 +468,9 @@ public class CardsPanel extends JPanel implements Resettable
 					}
 				});
 			
-			if (isHorizontal)
-			{
-				gbcPerCarte.gridx = 0;
-				gbcPerCarte.gridy = i;
-				gbcPerCarte.insets = new Insets(0, 0, 15, 0);
-			}
-			else
-			{
-				gbcPerCarte.gridx = i;
-				gbcPerCarte.gridy = 0;
-				gbcPerCarte.insets = new Insets(0, 0, 0, 15);
-			}
+			gbcPerCarte.gridx = i;
+			gbcPerCarte.gridy = 0;
+			gbcPerCarte.insets = new Insets(0, 0, 0, 15);
 			
 			pannelloCarteSuperiori.add(cards[i], gbcPerCarte);
 		}
@@ -437,55 +487,39 @@ public class CardsPanel extends JPanel implements Resettable
 					}
 				});
 
-			if (isHorizontal)
-			{
-				gbcPerCarte.gridx = 0;
-				gbcPerCarte.gridy = j;
-				gbcPerCarte.insets = new Insets(0, 0, 15, 0);
-			}
-			else
-			{
-				gbcPerCarte.gridx = j;
-				gbcPerCarte.gridy = 0;
-				gbcPerCarte.insets = new Insets(0, 0, 0, 15);
-			}
+
+			gbcPerCarte.gridx = j;
+			gbcPerCarte.gridy = 0;
+			gbcPerCarte.insets = new Insets(0, 0, 0, 15);
 			pannelloCarteInferiori.add(cards[j + i], gbcPerCarte);
 		}
 		
-		if (isHorizontal)
-			gbcTraPanelInfESup.insets = new Insets(0, 0, 0, 5);
-		else
-			gbcTraPanelInfESup.insets = new Insets(0, 0, 5, 0);
+		gbcTraPanelInfESup.insets = new Insets(0, 0, 5, 0);
 		
-		if (!isHorizontal)
-		{
-			gbcTraPanelInfESup.gridx = 1;
-			gbcTraPanelInfESup.gridy = 0;
-			gbcTraPanelInfESup.weightx = 0.1;
-			gbcTraPanelInfESup.weighty = 0.1;
-		}
-		else
-		{
-			gbcTraPanelInfESup.gridx = 0;
-			gbcTraPanelInfESup.gridy = 0;
-			gbcTraPanelInfESup.weightx = 0.1;
-			gbcTraPanelInfESup.weighty = 0.1;
-		}
+		gbcTraPanelInfESup.gridx = 1;
+		gbcTraPanelInfESup.gridy = 0;
+		gbcTraPanelInfESup.weightx = 0.1;
+		gbcTraPanelInfESup.weighty = 0.1;
 		
 		add(pannelloCarteSuperiori, gbcTraPanelInfESup);
 		gbcTraPanelInfESup.weightx = 1;
 		gbcTraPanelInfESup.weighty = 1;
-		if (isHorizontal)
-		{
-		    gbcTraPanelInfESup.gridx = 1;
-		    gbcTraPanelInfESup.gridy = 0;
-		}
-		else
-		{
-		    gbcTraPanelInfESup.gridx = 1;
-		    gbcTraPanelInfESup.gridy = 1;
-		}
+
+
+	    gbcTraPanelInfESup.gridx = 1;
+	    gbcTraPanelInfESup.gridy = 1;
+	    
 		add(pannelloCarteInferiori, gbcTraPanelInfESup);
+	}
+	
+	private void setupCards() throws GameNotInProgressException, DeckFinishedException
+	{
+		boolean isHorizontal = (this.relativeDeckPosition == DeckPosition.SULLA_DX || this.relativeDeckPosition == DeckPosition.SULLA_SX);
+
+		if (isHorizontal)
+			horizontalSetup();
+		else
+			verticalSetup();
 	}
 	
 	@Override
@@ -528,7 +562,7 @@ public class CardsPanel extends JPanel implements Resettable
 					
 					@Override
 					public void update(Observable o, Object arg) {
-						if (!setupCardsForHint(((Card)arg).getValore()))
+						if (!setupCardsForHint((Card)arg))
 							FieldController.getInstance().trashLastSelectedCard();
 					}
 				});

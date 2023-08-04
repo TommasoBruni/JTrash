@@ -90,8 +90,11 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
         if (numeroGiocatori < 0)
         	System.exit(0);
         FieldController.getInstance().updateNumberOfPlayers(possibileNumeroGiocatori[numeroGiocatori]);
-        /* Sono consecutivi */
-        setupPerInserimentoDati();
+        if (MainPlayerController.getInstance().getPlayerData().isEmptyData())
+	        /* Sono consecutivi */
+	        setupPerInserimentoDati();
+        else
+        	mostraDialogInserimentoNemici();
 	}
 	
 	public void mostraDialogInserimentoNemici()
