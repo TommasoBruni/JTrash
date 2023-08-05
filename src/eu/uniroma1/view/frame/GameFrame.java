@@ -362,11 +362,11 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 			FieldController.getInstance().setItemToRestart(this);
 			if (playerController.getCardsInHand() > 0)
 			{
-				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore di questa partita e': " + playerController.getPlayerData().getNomeGiocatore(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore di questa partita e': " + playerController.getPlayerData().getPlayerName(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore finale e': " + playerController.getPlayerData().getNomeGiocatore(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore finale e': " + playerController.getPlayerData().getPlayerName(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
 				wholeGameFinished = true;
 			}			
 		}

@@ -1,8 +1,20 @@
 package eu.uniroma1.model;
 
+/**
+ * Level of game. 
+ */
 public enum Level 
 {
-	PRINCIPIANTE,
-	INTERMEDIO,
-	AVANZATO
+	/**
+	 * Beginner level 
+	 */
+	BEGINNER,
+	/**
+	 * Intermediate level 
+	 */
+	INTERMEDIATE,
+	/**
+	 * Advanced level.
+	 */
+	ADVANCED
 }

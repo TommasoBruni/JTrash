@@ -36,6 +36,10 @@ public class MainPlayerController extends PlayerController
 		observableForHint.addObserver(o);
 	}
 	
+	/**
+	 * Method to get the main player controller instance.
+	 * @return main player controller. 
+	 */
 	public static MainPlayerController getInstance()
 	{
 		PlayerData playerData;

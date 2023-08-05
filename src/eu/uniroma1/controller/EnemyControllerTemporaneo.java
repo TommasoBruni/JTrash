@@ -122,9 +122,9 @@ public class EnemyControllerTemporaneo extends PlayerController
 	}
 	
 	@Override
-	public boolean canPeekCard() 
+	public boolean canPickCard() 
 	{
-		return super.canPeekCard() && requestCardFromDeck;
+		return super.canPickCard() && requestCardFromDeck;
 	}
 	
 	@Override
@@ -137,6 +137,6 @@ public class EnemyControllerTemporaneo extends PlayerController
 	
 	public EnemyControllerTemporaneo(ImageIcon imageIcon)
 	{
-		playerData.aggiornaDatiGiocatore(imageIcon.getDescription(), imageIcon.getDescription(), imageIcon);
+		playerData.updatePlayerData(imageIcon.getDescription(), imageIcon.getDescription(), imageIcon);
 	}
 }

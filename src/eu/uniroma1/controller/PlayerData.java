@@ -9,63 +9,100 @@ import javax.swing.ImageIcon;
 import eu.uniroma1.model.Level;
 import eu.uniroma1.model.Player;
 
+/**
+ * Player data class
+ */
 public class PlayerData extends Observable
 {
-	private Player giocatore;
+	private Player player;
 	private String filename;
 	
+	/**
+	 * Check if the data are consistent.
+	 * @return result of the check. 
+	 */
 	public boolean isEmptyData()
 	{
-		return giocatore == null;
+		return player == null;
 	}
 	
 	/**
-	 * Ritorna il nome dell'ultimo giocatore, ovvero quello che sta giocando
-	 * @return Nome ultimo giocatore 
+	 * Get name of the player.
+	 * @return get name of the player. 
 	 */
-	public String getNomeGiocatore()
+	public String getPlayerName()
 	{
-		return giocatore.getNome();
+		return player.getName();
 	}
 	
+	/**
+	 * Get level of the player.
+	 * @return {@link Level} of the player. 
+	 */
 	public Level getLevel()
 	{
-		return giocatore.getLevel();
+		return player.getLevel();
 	}
 	
-	public String getNicknameGiocatore()
+	/**
+	 * Get nickname of the player.
+	 * @return nickname of the player. 
+	 */
+	public String getPlayerNickname()
 	{
-		return giocatore.getNickname();
+		return player.getNickname();
 	}
 	
-	public ImageIcon getAvatarGiocatore()
+	/**
+	 * Get avatar of the player.
+	 * @return avatar of the player. 
+	 */
+	public ImageIcon getPlayerAvatar()
 	{
-		return giocatore.getAvatar();
+		return player.getAvatar();
 	}
 	
-	public long getPartiteGiocateGiocatore()
+	/**
+	 * Get the amount of games played by the player.
+	 * @return games played by the player.
+	 */
+	public long getPlayedGames()
 	{
-		return giocatore.getPartiteVinte() + giocatore.getPartitePerse();
+		return player.getPartiteVinte() + player.getPartitePerse();
 	}
 	
-	public long getPartiteVinteGiocatore()
+	/**
+	 * Get the games won by the player.
+	 * @return games won by the player. 
+	 */
+	public long getWonGames()
 	{
-		return giocatore.getPartiteVinte();
+		return player.getPartiteVinte();
 	}
 	
-	public long getPartitePerseGiocatore()
+	/**
+	 * Get the games lost by the player.
+	 * @return games lost by the player.
+	 */
+	public long getLostGames()
 	{
-		return giocatore.getPartitePerse();
+		return player.getPartitePerse();
 	}
 	
-	public void aumentaPartiteVinteGiocatore()
+	/**
+	 * Increase player won games.
+	 */
+	public void increasePlayerWonGames()
 	{
-		giocatore.incrementaPartiteVinte();
+		player.increasePlayerWonGames();
 	}
 	
-	public void aumentaPartitePerseGiocatore()
+	/**
+	 * Increase player lost games. 
+	 */
+	public void increasePlayerLostGames()
 	{
-		giocatore.incrementaPartitePerse();
+		player.increasePlayerLostGames();
 	}
 	
 	private void save()
@@ -81,7 +118,7 @@ public class PlayerData extends Observable
 			
 			os = new ObjectOutputStream(fos);
 			
-			os.writeObject(giocatore);
+			os.writeObject(player);
 		} 
 		catch (IOException e) 
 		{
@@ -103,34 +140,51 @@ public class PlayerData extends Observable
 		}
 	}
 	
+	/**
+	 * Set filename where to save player data.
+	 * @param filename where to save player data.
+	 */
 	public void setFilename(String filename)
 	{
 		this.filename = filename;
 	}
 	
+	/**
+	 * Player data builder.
+	 */
 	public PlayerData()
 	{
 	}
 	
 	private PlayerData(Player player)
 	{
-		this.giocatore = player;
+		this.player = player;
 	}
 	
-	public void aggiornaDatiGiocatore(String nomeGiocatore, String nickname, ImageIcon avatar)
+	/**
+	 * Update player data.
+	 * @param name name of the player
+	 * @param nickname nickname of the player
+	 * @param avatar avatar of the player
+	 */
+	public void updatePlayerData(String name, String nickname, ImageIcon avatar)
 	{
-		if (giocatore == null)
-			giocatore = new Player(nomeGiocatore, nickname, avatar);
+		if (player == null)
+			player = new Player(name, nickname, avatar);
 		else
-			giocatore = new Player(nomeGiocatore, nickname, avatar, giocatore.getPartiteVinte(), giocatore.getPartitePerse());
+			player = new Player(name, nickname, avatar, player.getPartiteVinte(), player.getPartitePerse());
 		
 		if (filename != null)
 			save();
 		
 		setChanged();
-		notifyObservers(giocatore);
+		notifyObservers(player);
 	}
 	
+	/**
+	 * Method to read the serialized player data.
+	 * @return player data built from the file.
+	 */
 	public static PlayerData read(String filename)
 	{
 		FileInputStream fis = null;

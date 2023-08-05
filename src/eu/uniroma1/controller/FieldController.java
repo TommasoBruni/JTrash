@@ -161,7 +161,7 @@ public class FieldController extends Observable implements Resettable
 			else
 			{
 				current = playerControllers.get(i);
-				current.playerData.aggiornaDatiGiocatore(enemiesIcon.get(i - 1).getDescription(),
+				current.playerData.updatePlayerData(enemiesIcon.get(i - 1).getDescription(),
 														 enemiesIcon.get(i - 1).getDescription(),
 						                                 enemiesIcon.get(i - 1));
 				current.enableObject();
@@ -224,12 +224,12 @@ public class FieldController extends Observable implements Resettable
 	}
 	
 	/**
-	 * Check if the current controller can peek a card. 
+	 * Check if the current controller can pick a card. 
 	 * @return result of the check.
 	 */
-	public boolean canPeekCard()
+	public boolean canPickCard()
 	{
-		return currentPlayerController.canPeekCard();
+		return currentPlayerController.canPickCard();
 	}
 	
 	/**
@@ -337,12 +337,12 @@ public class FieldController extends Observable implements Resettable
 		{
 			playerData = MainPlayerController.getInstance().getPlayerData();
 			if (victoryPlayer.equals(MainPlayerController.getInstance()))
-				playerData.aumentaPartiteVinteGiocatore();
+				playerData.increasePlayerWonGames();
 			else
-				playerData.aumentaPartitePerseGiocatore();
+				playerData.increasePlayerLostGames();
 			
 			/* This is to update won and lost games */
-			playerData.aggiornaDatiGiocatore(playerData.getNomeGiocatore(), playerData.getNicknameGiocatore(), playerData.getAvatarGiocatore());
+			playerData.updatePlayerData(playerData.getPlayerName(), playerData.getPlayerNickname(), playerData.getPlayerAvatar());
 			playerControllers.forEach(controller -> controller.restart());
 		}
 		itemToRestart.restart();
@@ -395,7 +395,8 @@ public class FieldController extends Observable implements Resettable
 	}
 	
 	/**
-	 * Method to get the instance of field controller (it is a singleton). 
+	 * Method to get the instance of field controller (it is a singleton).
+	 * @return field controller. 
 	 */
 	public static FieldController getInstance()
 	{

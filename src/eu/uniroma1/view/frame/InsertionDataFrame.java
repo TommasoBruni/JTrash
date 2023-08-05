@@ -80,7 +80,7 @@ public class InsertionDataFrame extends JInternalFrame
 					return;
 				}
 					
-				MainPlayerController.getInstance().getPlayerData().aggiornaDatiGiocatore(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
+				MainPlayerController.getInstance().getPlayerData().updatePlayerData(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
 				/* Dispose utile per chiudere la finestra corrente */
 				dispose();
 				frameParent.mostraDialogInserimentoNemici();

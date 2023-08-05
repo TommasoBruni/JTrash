@@ -19,36 +19,59 @@ public class Player implements Serializable
 	private long matchesLost;
 	private ImageIcon avatar;
 	
-	public Player(String nome, String nickname, ImageIcon avatar)
+	/**
+	 * Player builder.
+	 * @param name name of player
+	 * @param nickname nickname of player.
+	 * @param avatar avatar of player.
+	 */
+	public Player(String name, String nickname, ImageIcon avatar)
 	{
-		this(nome, nickname, avatar, 0, 0);
+		this(name, nickname, avatar, 0, 0);
 	}
 	
+	/**
+	 * Player builder.
+	 * @param name name of player
+	 * @param nickname nickname of player.
+	 * @param avatar avatar of player.
+	 * @param matchesWon matches won
+	 * @param matchesLost matches lost.
+	 */
 	public Player(String nome, String nickname, ImageIcon avatar, 
-			      long partiteVinte, long partitePerse)
+			      long matchesWon, long matchesLost)
 	{
 		this.name = nome;
 		this.nickname = nickname;
 		this.avatar = avatar;
-		this.level = Level.PRINCIPIANTE;
-		this.matchesWon = partiteVinte;
-		this.matchesLost = partitePerse;
+		this.level = Level.BEGINNER;
+		this.matchesWon = matchesWon;
+		this.matchesLost = matchesLost;
 	}
 
-	public Level getLevel() {
+	/**
+	 * Get level of player.
+	 * @return {@link Level} level of the player. 
+	 */
+	public Level getLevel() 
+	{
 		return level;
 	}
 
+	/**
+	 * Set level of player.
+	 * @param level level of the player. 
+	 */
 	public void setLevel(Level level) {
 		this.level = level;
 	}
 
-	public String getNome() {
+	public String getName() {
 		return name;
 	}
 
-	public void setNome(String nome) {
-		this.name = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getNickname() {
@@ -63,7 +86,7 @@ public class Player implements Serializable
 		return matchesWon;
 	}
 
-	public void incrementaPartiteVinte()
+	public void increasePlayerWonGames()
 	{
 		this.matchesWon++;
 	}
@@ -72,7 +95,7 @@ public class Player implements Serializable
 		return matchesLost;
 	}
 
-	public void incrementaPartitePerse()
+	public void increasePlayerLostGames()
 	{
 		this.matchesLost++;
 	}

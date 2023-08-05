@@ -77,7 +77,7 @@ public class EnemyController extends PlayerController
 									  lastTrashCard.getValore().equals(Value.JOLLY) ||
 									  !isAlreadyPresent(lastTrashCard)))
 		{
-			/* Peek card from deck */
+			/* Pick card from deck */
 			removeFromDeckOrTrash = lastTrashCard;
 			/* Notify trash to remove the card from it. */
 			FieldController.getInstance().notifyForReplacing(lastTrashCard);
@@ -95,9 +95,9 @@ public class EnemyController extends PlayerController
 	public void newCardSelectedForExchanging(Card card) 
 	{
 		/*
-		 * It's called when the first card (from trash or deck) is already peeked,
+		 * It's called when the first card (from trash or deck) is already picked,
 		 * so this method is called for the old cards that were in the position of the new
-		 * peeked card.
+		 * picked card.
 		 */
 		super.newCardSelectedForExchanging(card);
 		delayGame();
@@ -119,9 +119,9 @@ public class EnemyController extends PlayerController
 	}
 	
 	@Override
-	public boolean canPeekCard() 
+	public boolean canPickCard() 
 	{
-		return super.canPeekCard() && requestCardFromDeck;
+		return super.canPickCard() && requestCardFromDeck;
 	}
 	
 	@Override
@@ -138,6 +138,6 @@ public class EnemyController extends PlayerController
 	 */
 	public EnemyController(ImageIcon imageIcon)
 	{
-		playerData.aggiornaDatiGiocatore(imageIcon.getDescription(), imageIcon.getDescription(), imageIcon);
+		playerData.updatePlayerData(imageIcon.getDescription(), imageIcon.getDescription(), imageIcon);
 	}
 }

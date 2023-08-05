@@ -74,7 +74,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		
 		carta = cartaPescata.getCarta();
 
-		if (!FieldController.getInstance().canPeekCard())
+		if (!FieldController.getInstance().canPickCard())
 		{
 			/* Fai il restore delle informazioni */
 			FieldController.getInstance().backupCard();
@@ -97,7 +97,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		} 
 		catch (MoveNotAllowedException e1)
 		{
-			/* Non può succedere dato che la canPeekCard verifica questa situazione */
+			/* Non può succedere dato che la canPickCard verifica questa situazione */
 		}
 	}
 	

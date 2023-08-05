@@ -46,16 +46,16 @@ public class ProfileDialog extends JDialog
 		
 		labelNome = new JLabel("Nome utente");
 		fieldNome = new JTextField(15);
-		fieldNome.setText(MainPlayerController.getInstance().getPlayerData().getNomeGiocatore());
+		fieldNome.setText(MainPlayerController.getInstance().getPlayerData().getPlayerName());
 		labelNickname = new JLabel("Nickname");
 		fieldNickname = new JTextField(15);
-		fieldNickname.setText(MainPlayerController.getInstance().getPlayerData().getNicknameGiocatore());
+		fieldNickname.setText(MainPlayerController.getInstance().getPlayerData().getPlayerNickname());
 		buttonOk = new JButton("Ok");
 		buttonAnnulla = new JButton("Annulla");
 		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
 		buttonSelezionaAvatar = new JButton("Cambia avatar");
 		dialogSelezioneAvatar = new AvatarSelectionDialog(new JFrame(), 
-				MainPlayerController.getInstance().getPlayerData().getAvatarGiocatore().getDescription());
+				MainPlayerController.getInstance().getPlayerData().getPlayerAvatar().getDescription());
 		
 		buttonSelezionaAvatar.addActionListener(new ActionListener() {
 			@Override
@@ -80,9 +80,9 @@ public class ProfileDialog extends JDialog
 					return;
 				}
 				
-				MainPlayerController.getInstance().getPlayerData().aggiornaDatiGiocatore(nomeUtente, nickname, 
+				MainPlayerController.getInstance().getPlayerData().updatePlayerData(nomeUtente, nickname, 
 																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
-																	 MainPlayerController.getInstance().getPlayerData().getAvatarGiocatore() : dialogSelezioneAvatar.getSelectedAvatar());
+																	 MainPlayerController.getInstance().getPlayerData().getPlayerAvatar() : dialogSelezioneAvatar.getSelectedAvatar());
 				ownerFrame.enableObject();
 				dispose();
 			}

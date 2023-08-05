@@ -53,8 +53,8 @@ public class AvatarScorePanel extends JPanel implements Observer
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setLayout(new GridBagLayout());
-		labelNicknameGiocatore = new JLabel(playerData.getNomeGiocatore() + " ");
-		labelIcon = new JLabel(playerData.getAvatarGiocatore());
+		labelNicknameGiocatore = new JLabel(playerData.getPlayerName() + " ");
+		labelIcon = new JLabel(playerData.getPlayerAvatar());
 		setBackground(new Color(255, 255, 204));
 		
 		playerData.addObserver(this);	
@@ -65,9 +65,9 @@ public class AvatarScorePanel extends JPanel implements Observer
 			pannelloPerPunteggi = new JPanel();
 			pannelloPerPunteggi.setLayout(new GridBagLayout());
 			/* This is the real player not a robot. */
-			labelPartiteGiocate = new JLabel("Giocate: " + playerData.getPartiteGiocateGiocatore() + " ");
-			labelPartiteVinte = new JLabel("Vinte: " + playerData.getPartiteVinteGiocatore() + " ");
-			labelPartitePerse = new JLabel("Perse: " + playerData.getPartitePerseGiocatore() + " ");
+			labelPartiteGiocate = new JLabel("Giocate: " + playerData.getPlayedGames() + " ");
+			labelPartiteVinte = new JLabel("Vinte: " + playerData.getWonGames() + " ");
+			labelPartitePerse = new JLabel("Perse: " + playerData.getLostGames() + " ");
 			labelLevel = new JLabel(playerData.getLevel().toString() + " ");
 			
 			gbcPerPunteggi.gridx = 0;
