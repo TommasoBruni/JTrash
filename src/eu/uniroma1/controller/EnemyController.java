@@ -11,6 +11,9 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
+/**
+ * Enemy controller class 
+ */
 public class EnemyController extends PlayerController
 {
 	private static final long gameSpeed = 750;
@@ -63,8 +66,7 @@ public class EnemyController extends PlayerController
 	public void startTurn() throws GameNotInProgressException, DeckFinishedException
 	{
 		super.startTurn();
-		/* Chiediamo le carte che sono già state scoperte così
-		 * da fare la scelta più corretta */
+		/* Ask for already collected cards.*/
 		collectedCardsObservable.setStatusChanged();
 		collectedCardsObservable.notifyObservers();
 		Card lastTrashCard = FieldController.getInstance().getLastTrashCard();
@@ -75,9 +77,9 @@ public class EnemyController extends PlayerController
 									  lastTrashCard.getValore().equals(Value.JOLLY) ||
 									  !isAlreadyPresent(lastTrashCard)))
 		{
-			/* Pesca la carta dal trash */
+			/* Peek card from deck */
 			removeFromDeckOrTrash = lastTrashCard;
-			/* Notifica il trash di rimuovere la carta da lì */
+			/* Notify trash to remove the card from it. */
 			FieldController.getInstance().notifyForReplacing(lastTrashCard);
 			setChanged();
 			notifyObservers(lastTrashCard);
@@ -89,14 +91,14 @@ public class EnemyController extends PlayerController
 		}
 	}
 	
-	/**
-	 * Viene chiamata quando la prima carta (da trash o dal deck) è già stata pescata,
-	 * quindi viene chiamato questo metodo per le vecchie carte che erano nella posizione
-	 * della nuova carta pescata. 
-	 */
 	@Override
 	public void newCardSelectedForExchanging(Card card) 
 	{
+		/*
+		 * It's called when the first card (from trash or deck) is already peeked,
+		 * so this method is called for the old cards that were in the position of the new
+		 * peeked card.
+		 */
 		super.newCardSelectedForExchanging(card);
 		delayGame();
 		/* In order to remove the card from the trash or deck */
@@ -130,6 +132,10 @@ public class EnemyController extends PlayerController
 		requestCardFromDeck = false;
 	}
 	
+	/**
+	 * Enemy controller builder
+	 * @param imageIcon icon to setup to the enemy. 
+	 */
 	public EnemyController(ImageIcon imageIcon)
 	{
 		playerData.aggiornaDatiGiocatore(imageIcon.getDescription(), imageIcon.getDescription(), imageIcon);

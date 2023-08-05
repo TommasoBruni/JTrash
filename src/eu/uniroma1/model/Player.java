@@ -12,11 +12,11 @@ public class Player implements Serializable
 	 * Serial version UID
 	 */
 	private static final long serialVersionUID = 1L;
-	private Level livello;
-	private String nome;
+	private Level level;
+	private String name;
 	private String nickname;
-	private long partiteVinte;
-	private long partitePerse;
+	private long matchesWon;
+	private long matchesLost;
 	private ImageIcon avatar;
 	
 	public Player(String nome, String nickname, ImageIcon avatar)
@@ -27,28 +27,28 @@ public class Player implements Serializable
 	public Player(String nome, String nickname, ImageIcon avatar, 
 			      long partiteVinte, long partitePerse)
 	{
-		this.nome = nome;
+		this.name = nome;
 		this.nickname = nickname;
 		this.avatar = avatar;
-		this.livello = Level.PRINCIPIANTE;
-		this.partiteVinte = partiteVinte;
-		this.partitePerse = partitePerse;
+		this.level = Level.PRINCIPIANTE;
+		this.matchesWon = partiteVinte;
+		this.matchesLost = partitePerse;
 	}
 
-	public Level getLivello() {
-		return livello;
+	public Level getLevel() {
+		return level;
 	}
 
-	public void setLivello(Level livello) {
-		this.livello = livello;
+	public void setLevel(Level level) {
+		this.level = level;
 	}
 
 	public String getNome() {
-		return nome;
+		return name;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.name = nome;
 	}
 
 	public String getNickname() {
@@ -60,21 +60,21 @@ public class Player implements Serializable
 	}
 
 	public long getPartiteVinte() {
-		return partiteVinte;
+		return matchesWon;
 	}
 
 	public void incrementaPartiteVinte()
 	{
-		this.partiteVinte++;
+		this.matchesWon++;
 	}
 
 	public long getPartitePerse() {
-		return partitePerse;
+		return matchesLost;
 	}
 
 	public void incrementaPartitePerse()
 	{
-		this.partitePerse++;
+		this.matchesLost++;
 	}
 
 	public ImageIcon getAvatar() {

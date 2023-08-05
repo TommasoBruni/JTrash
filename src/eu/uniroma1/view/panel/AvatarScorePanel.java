@@ -28,6 +28,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 	private JLabel labelPartiteGiocate;
 	private JLabel labelPartiteVinte;
 	private JLabel labelPartitePerse;
+	private JLabel labelLevel;
 
 	@Override
 	public void update(Observable o, Object arg)
@@ -42,6 +43,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 			labelPartiteGiocate.setText("Giocate: " + (giocatore.getPartitePerse() + giocatore.getPartiteVinte()) + " ");
 			labelPartiteVinte.setText("Vinte: " + giocatore.getPartiteVinte() + " ");
 			labelPartitePerse.setText("Perse: " + giocatore.getPartitePerse() + " ");
+			labelLevel.setText(giocatore.getLevel().toString() + " ");
 		}
 	}
 	
@@ -62,10 +64,11 @@ public class AvatarScorePanel extends JPanel implements Observer
 			
 			pannelloPerPunteggi = new JPanel();
 			pannelloPerPunteggi.setLayout(new GridBagLayout());
-			/* Significa che è il giocatore reale e non un robot */
+			/* This is the real player not a robot. */
 			labelPartiteGiocate = new JLabel("Giocate: " + playerData.getPartiteGiocateGiocatore() + " ");
 			labelPartiteVinte = new JLabel("Vinte: " + playerData.getPartiteVinteGiocatore() + " ");
 			labelPartitePerse = new JLabel("Perse: " + playerData.getPartitePerseGiocatore() + " ");
+			labelLevel = new JLabel(playerData.getLevel().toString() + " ");
 			
 			gbcPerPunteggi.gridx = 0;
 			gbcPerPunteggi.gridy = 0;
@@ -80,12 +83,16 @@ public class AvatarScorePanel extends JPanel implements Observer
 			gbcPerPunteggi.gridy = 2;
 			pannelloPerPunteggi.add(labelPartitePerse, gbcPerPunteggi);
 			
+			gbcPerPunteggi.gridx = 0;
+			gbcPerPunteggi.gridy = 3;
+			pannelloPerPunteggi.add(labelLevel, gbcPerPunteggi);
+			
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 10, 0, 0);
 			add(pannelloPerPunteggi, gbc);
 			pannelloPerPunteggi.setBackground(new Color(255, 255, 204));
-		}		
+		}
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(0, 0, 5, 0);

@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import eu.uniroma1.controller.FieldController;
+import eu.uniroma1.controller.MainPlayerController;
 
 public class EnemiesSelectionFrame extends JInternalFrame
 {
@@ -134,7 +135,10 @@ public class EnemiesSelectionFrame extends JInternalFrame
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	dispose();
-                owner.setupPerInserimentoDati();
+            	if (MainPlayerController.getInstance().getPlayerData().isEmptyData())
+            		owner.setupPerInserimentoDati();
+            	else
+            		owner.mostraInserimentoNumeroGiocatori();
             }
         });
         

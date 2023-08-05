@@ -20,6 +20,9 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
+/**
+ * Field controller class 
+ */
 public class FieldController extends Observable implements Resettable
 {
 	private static FieldController controller;
@@ -43,6 +46,9 @@ public class FieldController extends Observable implements Resettable
 	private Restartable itemToRestart;
 	private static final int nextPlayerSpeed = 800;
 	
+	/**
+	 * To notify the next controller to start the turn. 
+	 */
 	public void nextTurn() 
 	{
 		/* E' il turno del prossimo giocatore */
@@ -60,6 +66,10 @@ public class FieldController extends Observable implements Resettable
 		}
 	}
 	
+	/**
+	 * Get next instance of enemy.
+	 * @return new enemy. 
+	 */
 	public EnemyControllerTemporaneo getNextEnemy()
 	{
 		if (enemyIndex > numeroGiocatoriInPartita - 1)
@@ -75,21 +85,36 @@ public class FieldController extends Observable implements Resettable
 		return null;
 	}
 	
+	/**
+	 * Return the last trashed card.
+	 * @return last trashed card.
+	 */
 	public Card getLastTrashCard()
 	{
 		return lastTrashCard;
 	}
 	
+	/**
+	 * Set last trashed card.
+	 * @param lastTrashCard last trashed card.
+	 */
 	public void setLastTrashCard(Card lastTrashCard)
 	{
 		this.lastTrashCard = lastTrashCard;
 	}
 	
+	/**
+	 * Set last card of the deck.
+	 * @param lastCardOfDeck last card of deck.
+	 */
 	public void setLastCardOfDeck(Card lastCardOfDeck)
 	{
 		this.lastCardOfDeck = lastCardOfDeck;
 	}
 	
+	/**
+	 * Initialize and shuffle the deck. 
+	 */
 	public void initializeDeck()
 	{
 		deck = switch(numeroGiocatoriInPartita)
@@ -105,6 +130,7 @@ public class FieldController extends Observable implements Resettable
 	}
 	
 	/**
+	 * Start the game notifying the next turn.
 	 * Call this method only when all data are configured 
 	 */
 	public void startGame()
@@ -112,6 +138,9 @@ public class FieldController extends Observable implements Resettable
 		nextTurn();
 	}
 	
+	/**
+	 * Initialize all data necessary to start the game. 
+	 */
 	public void initializeComponents()
 	{
 		int i;
@@ -151,10 +180,10 @@ public class FieldController extends Observable implements Resettable
 	}
 	
 	/**
-	 * Ritorna la carta successiva nel mazzo se presente
-	 * @return carta successiva nel mazzo
-	 * @throws GameNotInProgressException se la partita non è iniziata oppure è appena finita
-	 * @throws DeckFinishedException se non ci sono più carte nel mazzo 
+	 * Returns the next card of the deck if present.
+	 * @return next card of deck.
+	 * @throws GameNotInProgressException if the game is not started yet, or it is just finished.
+	 * @throws DeckFinishedException if there are no more cards in the deck.
 	 * @throws MoveNotAllowedException this move is not allowed for the current state
 	 */
 	public Card nextCard() throws GameNotInProgressException, DeckFinishedException
@@ -176,21 +205,37 @@ public class FieldController extends Observable implements Resettable
 		return carta;
 	}
 	
+	/**
+	 * Method to come back to the previous card in the deck. 
+	 */
 	public void backupCard()
 	{
 		deck.backupCard();
 	}
 	
+	/**
+	 * Last card selected.
+	 * @param card last card selected.
+	 * @throws MoveNotAllowedException this move is not allowed for the current state
+	 */
 	public void cardSelected(Card card) throws MoveNotAllowedException
 	{
 		currentPlayerController.newCardSelected(card);
 	}
 	
-	public boolean canPeekCard(Card card)
+	/**
+	 * Check if the current controller can peek a card. 
+	 * @return result of the check.
+	 */
+	public boolean canPeekCard()
 	{
 		return currentPlayerController.canPeekCard();
 	}
 	
+	/**
+	 * To notify that there is a new card to trash.
+	 * @param card card to trash.
+	 */
 	public void newCardToTrash(Card card)
 	{
 		observableForTrashUpdating.setStatusChanged();
@@ -206,43 +251,73 @@ public class FieldController extends Observable implements Resettable
 		}, nextPlayerSpeed);
 	}
 	
+	/**
+	 * Needs to notify to the observers to replace the current card from the stack.
+	 * @param card to replace.
+	 */
 	public void notifyForReplacing(Card card)
 	{
 		observableForReplacingCards.setStatusChanged();
 		observableForReplacingCards.notifyObservers(card);
 	}
 	
+	/**
+	 * Notifies observers to move as if the user has made a choice. 
+	 */
 	public void notifyForAutoSelecting()
 	{
 		observableForAutoSelectedCards.setStatusChanged();
 		observableForAutoSelectedCards.notifyObservers();
 	}
 	
+	/**
+	 * Notify the current controller to trash the last selected card.
+	 */
 	public void trashLastSelectedCard()
 	{
 		currentPlayerController.trashLastSelectedCard();
 	}
 	
+	/**
+	 * Get observable for replacing cards events.
+	 * @return observable for replacing cards.
+	 */
 	public Observable getObservableForReplacingCards()
 	{
 		return observableForReplacingCards;
 	}
 	
+	/**
+	 * Get observable for trash updating.
+	 * @return the observable helpful to notify the trash about updates. 
+	 */
 	public Observable getObservableForTrashUpdating()
 	{
 		return observableForTrashUpdating;
 	}
 	
+	/**
+	 * Get observable to notify the end of the game.
+	 * @return observable for the end of the game.
+	 */
 	public GenericObservable getObservableForGameFinish()
 	{
 		return observableForGameFinish;
 	}
 	
+	/**
+	 * Get observable for auto selected cards.
+	 * @return observable for auto selected cards. 
+	 */
 	public GenericObservable getObservableForAutoSelectedCards() 
 	{
 		return observableForAutoSelectedCards;
 	}
 	
+	/**
+	 * Method to indicate the end of the game.
+	 * @param victory player controller. 
+	 */
 	public void gameFinished(PlayerController victoryPlayer)
 	{
 		PlayerData playerData;
@@ -273,44 +348,55 @@ public class FieldController extends Observable implements Resettable
 		itemToRestart.restart();
 	}
 	
+	/**
+	 * Get the list of enemies icons.
+	 * @return list of enemies icons. 
+	 */
 	public List<ImageIcon> getEnemiesIcon() 
 	{
 		return enemiesIcon;
 	}
 
+	/**
+	 * Set list of enemies icons.
+	 * @param list of enemies icons.
+	 */
 	public void setEnemiesIcon(List<ImageIcon> enemiesIcon)
 	{
 		this.enemiesIcon = enemiesIcon;
 	}
 	
 	/**
+	 * Updates current playing players (2, 3 or 4).
+	 * @param player
 	 * Aggiorna i giocatori che attualmente stanno giocando (2, 3 o 4) 
-	 * @param nGiocatori numero di giocatori attualmente in gioco
+	 * @param number of players currently in the game
 	 */
 	public void updateNumberOfPlayers(int nGiocatori)
 	{
 		numeroGiocatoriInPartita = nGiocatori;
 	}
 	
-	public Restartable getItemToRestart()
+	/**
+	 * Returns number of players currently in the game.
+	 * @return number of players currently in the game
+	 */
+	public int getNumberOfPlayingPlayers()
 	{
-		return itemToRestart;
+		return numeroGiocatoriInPartita;
 	}
 
+	/**
+	 * Set item that needs to be restarted.
+	 */
 	public void setItemToRestart(Restartable itemToRestart) 
 	{
 		this.itemToRestart = itemToRestart;
 	}
 	
 	/**
-	 * Restituisce il numero di giocatori in partita
-	 * @return numero giocatori attualmente in partita 
+	 * Method to get the instance of field controller (it is a singleton). 
 	 */
-	public int getNumberOfPlayingPlayers()
-	{
-		return numeroGiocatoriInPartita;
-	}
-	
 	public static FieldController getInstance()
 	{
 		if (controller == null)

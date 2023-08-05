@@ -74,7 +74,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		
 		carta = cartaPescata.getCarta();
 
-		if (!FieldController.getInstance().canPeekCard(carta))
+		if (!FieldController.getInstance().canPeekCard())
 		{
 			/* Fai il restore delle informazioni */
 			FieldController.getInstance().backupCard();

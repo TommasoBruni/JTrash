@@ -180,7 +180,7 @@ public abstract class PlayerController extends Observable implements Resettable,
 	}
 	
 	/**
-	 * To know if the current state lets to peek a card.
+	 * To know if it's possible to peek a card.
 	 * @return result of the check. 
 	 */
 	public boolean canPeekCard()

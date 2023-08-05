@@ -114,26 +114,14 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 		}
 	}
 	
-	public void disableAllCards()
-	{
-		for (CardButton card : cards)
-			card.setEnabled(false);
-	}
-	
-	public void enableAllCards()
-	{
-		for (CardButton card : cards)
-			card.setEnabled(true);
-	}
-	
-	public void restoreAllCardImage()
+	private void restoreAllCardImage()
 	{
 		/* Restore all card images */
 		for (CardButton carta : cards)
 			carta.restoreCardImage();
 	}
 	
-	public void setupAllFutureCard()
+	private void setupAllFutureCard()
 	{
 		for (CardButton card : cards)
 			card.setupFutureCard();
@@ -142,8 +130,9 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 	/**
 	 * Return true if a good place is found, otherwise false 
 	 */
-	private boolean setupCardsForHint(Value value)
+	private boolean setupCardsForHint(Card card)
 	{
+		Value value = card.getValore();
 		int intValue;
 		boolean result = false;
 		
@@ -215,7 +204,7 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 		/* Take the old one card and try to set hint cards that match this one */
 		oldCard = c.configureCardForFuture(newCard);
 
-		if (setupCardsForHint(oldCard.getValore()))
+		if (setupCardsForHint(oldCard))
 		{
 			playerController.newCardSelectedForExchanging(oldCard);
 			return;
@@ -527,7 +516,7 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 					
 					@Override
 					public void update(Observable o, Object arg) {
-						if (!setupCardsForHint(((Card)arg).getValore()))
+						if (!setupCardsForHint((Card)arg))
 							FieldController.getInstance().trashLastSelectedCard();
 					}
 				});

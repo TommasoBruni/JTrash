@@ -6,6 +6,7 @@ import java.util.Observable;
 
 import javax.swing.ImageIcon;
 
+import eu.uniroma1.model.Level;
 import eu.uniroma1.model.Player;
 
 public class PlayerData extends Observable
@@ -25,6 +26,11 @@ public class PlayerData extends Observable
 	public String getNomeGiocatore()
 	{
 		return giocatore.getNome();
+	}
+	
+	public Level getLevel()
+	{
+		return giocatore.getLevel();
 	}
 	
 	public String getNicknameGiocatore()
@@ -64,6 +70,7 @@ public class PlayerData extends Observable
 	
 	private void save()
 	{
+		ObjectOutputStream os = null;
 		try 
 		{
 		    File myObj = new File(filename); 
@@ -72,15 +79,27 @@ public class PlayerData extends Observable
 			
 			FileOutputStream fos = new FileOutputStream(filename);
 			
-			ObjectOutputStream os = new ObjectOutputStream(fos);
+			os = new ObjectOutputStream(fos);
 			
 			os.writeObject(giocatore);
-			
-			os.close();
 		} 
 		catch (IOException e) 
 		{
 			e.printStackTrace();
+		}
+		finally
+		{
+			if (os != null)
+			{
+				try 
+				{
+					os.close();
+				} 
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
