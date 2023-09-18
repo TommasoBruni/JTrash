@@ -123,10 +123,10 @@ public abstract class PlayerController extends Observable implements Resettable,
 	 */
 	private boolean goodCard(int position)
 	{
-		return lastSelectedCard.getValore().toString().equals("" + (position)) || 
-			   lastSelectedCard.getValore().equals(Value.KING) ||
-			   lastSelectedCard.getValore().equals(Value.JOLLY) ||
-			   (lastSelectedCard.getValore().equals(Value.ASSO) && position == 1);
+		return lastSelectedCard.getValue().toString().equals("" + (position)) || 
+			   lastSelectedCard.getValue().equals(Value.KING) ||
+			   lastSelectedCard.getValue().equals(Value.JOLLY) ||
+			   (lastSelectedCard.getValue().equals(Value.ACE) && position == 1);
 	}
 	
 	/**

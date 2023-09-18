@@ -4,6 +4,6 @@ public class GameNotInProgressException extends Exception
 {
 	public GameNotInProgressException()
 	{
-		super("La partita non è ancora iniziata!");
+		super("The game is not started yet!");
 	}
 }

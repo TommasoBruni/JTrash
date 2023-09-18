@@ -87,7 +87,7 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 			FieldController.getInstance().setLastTrashCard(firstCard);
 			discardedCards.add(firstCard);
 			carteScartate.setBaseCard(firstCard);
-			carteScartate.gira();
+			carteScartate.turn();
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e)
 		{
@@ -111,7 +111,7 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 				{
 					try 
 					{
-						FieldController.getInstance().cardSelected(carteScartate.getCarta());
+						FieldController.getInstance().cardSelected(carteScartate.getCard());
 					}
 					catch (MoveNotAllowedException e1)
 					{
@@ -119,7 +119,7 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 					}
 				}
 			});
-			carteScartate.gira();
+			carteScartate.turn();
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e)
 		{

@@ -6,6 +6,9 @@ import java.io.Serializable;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+/**
+ * Player class 
+ */
 public class Player implements Serializable
 {
 	/**

@@ -42,7 +42,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 	{
 		Card selectedCard = (Card)arg;
 		Card discardedCard = trashSpace.getLastCard();
-		Card pickedCard = cartaPescata.getCarta();
+		Card pickedCard = cartaPescata.getCard();
 		
 		if (selectedCard.equals(discardedCard))
 			/* The user selects the card from the trash */
@@ -57,7 +57,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		Card carta, oldCard;
 		
 		AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\sliding_card.wav"));
-		oldCard = cartaPescata.getCarta();
+		oldCard = cartaPescata.getCard();
 		if (!firstCard)
 		{
 			try 
@@ -72,7 +72,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 			}
 		}
 		
-		carta = cartaPescata.getCarta();
+		carta = cartaPescata.getCard();
 
 		if (!FieldController.getInstance().canPickCard())
 		{
@@ -118,7 +118,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		try 
 		{
 			cartaPescata.setBaseCard(FieldController.getInstance().nextCard());
-			cartaPescata.gira();
+			cartaPescata.turn();
 			cartaPescata.setVisible(false);
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e) 
@@ -151,7 +151,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 			});
 			trashSpace = new TrashPanel();
 			cartaPescata = new CardButton(FieldController.getInstance().nextCard());
-			cartaPescata.gira();
+			cartaPescata.turn();
 			cartaPescata.setVisible(false);
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e)

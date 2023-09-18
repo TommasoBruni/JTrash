@@ -15,7 +15,7 @@ import javax.swing.Timer;
 
 import eu.uniroma1.model.carte.Card;
 import eu.uniroma1.model.carte.Deck;
-import eu.uniroma1.model.carte.Deck.MazzoDiCarteBuilder;
+import eu.uniroma1.model.carte.Deck.DeckBuilder;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
@@ -119,11 +119,11 @@ public class FieldController extends Observable implements Resettable
 	{
 		deck = switch(numeroGiocatoriInPartita)
 				   {
-				        case 2 -> new MazzoDiCarteBuilder()
+				        case 2 -> new DeckBuilder()
 						.shuffle()
 						.build();
-				        default-> new MazzoDiCarteBuilder()
-				        .join(new MazzoDiCarteBuilder().build())
+				        default-> new DeckBuilder()
+				        .join(new DeckBuilder().build())
 						.shuffle()
 						.build(); 
 				   };

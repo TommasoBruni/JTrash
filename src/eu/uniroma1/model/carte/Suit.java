@@ -1,37 +1,37 @@
 package eu.uniroma1.model.carte;
 
 /**
- * Enumerato dei semi 
+ * Suits enumerate
  */
 public enum Suit
 {
-	NESSUNO(),
-	CUORI("♥"), 
-	QUADRI("♦"), 
-	FIORI("♣"), 
-	PICCHE("♠");
+	NOTHING(),
+	HEARTS("♥"), 
+	DIAMONDS("♦"), 
+	CLUBS("♣"), 
+	SPADES("♠");
 	
 	@Override
 	public String toString() 
 	{
-		return simbolo;
+		return symbol;
 	}
 	
 	/**
-	 * Simbolo del seme 
+	 * Symbol of the suit
 	 */
-	String simbolo;
+	String symbol;
 
 	/**
-	 * Costruttore enumerato seme
+	 * Builder of the enumerate
 	 */
-	Suit(String simbolo)
+	Suit(String symbol)
 	{
-		this.simbolo = simbolo;
+		this.symbol = symbol;
 	}
 	
 	/**
-	 * Costruttore enumerato seme
+	 * Builder of the enumerate
 	 */
 	Suit()
 	{

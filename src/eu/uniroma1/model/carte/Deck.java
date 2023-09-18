@@ -58,12 +58,12 @@ public class Deck implements Iterable<Card>
 		};
 	}
 	
-	private Deck(Card[] mazzo)
+	private Deck(Card[] cards)
 	{
-		this.cards = mazzo;
+		this.cards = cards;
 	}
 	
-	public static class MazzoDiCarteBuilder
+	public static class DeckBuilder
 	{
 		private Card[] deck;
 		
@@ -72,9 +72,9 @@ public class Deck implements Iterable<Card>
 			return new Deck(deck);
 		}
 		
-		public MazzoDiCarteBuilder shuffle()
+		public DeckBuilder shuffle()
 		{
-			Random random=new Random();
+			Random random = new Random();
 			int j;
 			Card tmp;
 			
@@ -88,16 +88,16 @@ public class Deck implements Iterable<Card>
 			return this;
 		} 
 		
-		public MazzoDiCarteBuilder join(Deck newMazzoDiCarte)
+		public DeckBuilder join(Deck newDeck)
 		{
-		    Card[] result = Arrays.copyOf(deck, deck.length + newMazzoDiCarte.cards.length);
+		    Card[] result = Arrays.copyOf(deck, deck.length + newDeck.cards.length);
 		    
-		    System.arraycopy(newMazzoDiCarte.cards, 0, result, deck.length, newMazzoDiCarte.cards.length);
+		    System.arraycopy(newDeck.cards, 0, result, deck.length, newDeck.cards.length);
 		    deck = result;
 		    return this;
 		}
 		
-		public MazzoDiCarteBuilder()
+		public DeckBuilder()
 		{
 			deck = Card.values();
 		}

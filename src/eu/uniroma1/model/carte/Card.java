@@ -2,98 +2,98 @@ package eu.uniroma1.model.carte;
 
 public enum Card
 {
-	C1(Suit.CUORI, Value.ASSO, CardColor.ROSSO),
-	Q1(Suit.QUADRI, Value.ASSO, CardColor.ROSSO),
-	F1(Suit.FIORI, Value.ASSO, CardColor.NERO),
-	P1(Suit.PICCHE, Value.ASSO, CardColor.NERO),
+	C1(Suit.HEARTS, Value.ACE, CardColor.RED),
+	Q1(Suit.DIAMONDS, Value.ACE, CardColor.RED),
+	F1(Suit.CLUBS, Value.ACE, CardColor.BLACK),
+	P1(Suit.SPADES, Value.ACE, CardColor.BLACK),
 	
-	C2(Suit.CUORI, Value.DUE, CardColor.ROSSO),
-	Q2(Suit.QUADRI, Value.DUE, CardColor.ROSSO),
-	F2(Suit.FIORI, Value.DUE, CardColor.NERO),
-	P2(Suit.PICCHE, Value.DUE, CardColor.NERO),
+	C2(Suit.HEARTS, Value.TWO, CardColor.RED),
+	Q2(Suit.DIAMONDS, Value.TWO, CardColor.RED),
+	F2(Suit.CLUBS, Value.TWO, CardColor.BLACK),
+	P2(Suit.SPADES, Value.TWO, CardColor.BLACK),
 	
-	C3(Suit.CUORI, Value.TRE, CardColor.ROSSO),
-	Q3(Suit.QUADRI, Value.TRE, CardColor.ROSSO),
-	F3(Suit.FIORI, Value.TRE, CardColor.NERO),
-	P3(Suit.PICCHE, Value.TRE, CardColor.NERO),
+	C3(Suit.HEARTS, Value.THREE, CardColor.RED),
+	Q3(Suit.DIAMONDS, Value.THREE, CardColor.RED),
+	F3(Suit.CLUBS, Value.THREE, CardColor.BLACK),
+	P3(Suit.SPADES, Value.THREE, CardColor.BLACK),
 	
-	C4(Suit.CUORI, Value.QUATTRO, CardColor.ROSSO),
-	Q4(Suit.QUADRI, Value.QUATTRO, CardColor.ROSSO),
-	F4(Suit.FIORI, Value.QUATTRO, CardColor.NERO),
-	P4(Suit.PICCHE, Value.QUATTRO, CardColor.NERO),
+	C4(Suit.HEARTS, Value.FOUR, CardColor.RED),
+	Q4(Suit.DIAMONDS, Value.FOUR, CardColor.RED),
+	F4(Suit.CLUBS, Value.FOUR, CardColor.BLACK),
+	P4(Suit.SPADES, Value.FOUR, CardColor.BLACK),
 	
-	C5(Suit.CUORI, Value.CINQUE, CardColor.ROSSO),
-	Q5(Suit.QUADRI, Value.CINQUE, CardColor.ROSSO),
-	F5(Suit.FIORI, Value.CINQUE, CardColor.NERO),
-	P5(Suit.PICCHE, Value.CINQUE, CardColor.NERO),
+	C5(Suit.HEARTS, Value.FIVE, CardColor.RED),
+	Q5(Suit.DIAMONDS, Value.FIVE, CardColor.RED),
+	F5(Suit.CLUBS, Value.FIVE, CardColor.BLACK),
+	P5(Suit.SPADES, Value.FIVE, CardColor.BLACK),
 	
-	C6(Suit.CUORI, Value.SEI, CardColor.ROSSO),
-	Q6(Suit.QUADRI, Value.SEI, CardColor.ROSSO),
-	F6(Suit.FIORI, Value.SEI, CardColor.NERO),
-	P6(Suit.PICCHE, Value.SEI, CardColor.NERO),
+	C6(Suit.HEARTS, Value.SIX, CardColor.RED),
+	Q6(Suit.DIAMONDS, Value.SIX, CardColor.RED),
+	F6(Suit.CLUBS, Value.SIX, CardColor.BLACK),
+	P6(Suit.SPADES, Value.SIX, CardColor.BLACK),
 	
-	C7(Suit.CUORI, Value.SETTE, CardColor.ROSSO),
-	Q7(Suit.QUADRI, Value.SETTE, CardColor.ROSSO),
-	F7(Suit.FIORI, Value.SETTE, CardColor.NERO),
-	P7(Suit.PICCHE, Value.SETTE, CardColor.NERO),
+	C7(Suit.HEARTS, Value.SEVEN, CardColor.RED),
+	Q7(Suit.DIAMONDS, Value.SEVEN, CardColor.RED),
+	F7(Suit.CLUBS, Value.SEVEN, CardColor.BLACK),
+	P7(Suit.SPADES, Value.SEVEN, CardColor.BLACK),
 	
-	C8(Suit.CUORI, Value.OTTO, CardColor.ROSSO),
-	Q8(Suit.QUADRI, Value.OTTO, CardColor.ROSSO),
-	F8(Suit.FIORI, Value.OTTO, CardColor.NERO),
-	P8(Suit.PICCHE, Value.OTTO, CardColor.NERO),
+	C8(Suit.HEARTS, Value.EIGHT, CardColor.RED),
+	Q8(Suit.DIAMONDS, Value.EIGHT, CardColor.RED),
+	F8(Suit.CLUBS, Value.EIGHT, CardColor.BLACK),
+	P8(Suit.SPADES, Value.EIGHT, CardColor.BLACK),
 	
-	C9(Suit.CUORI, Value.NOVE, CardColor.ROSSO),
-	Q9(Suit.QUADRI, Value.NOVE, CardColor.ROSSO),
-	F9(Suit.FIORI, Value.NOVE, CardColor.NERO),
-	P9(Suit.PICCHE, Value.NOVE, CardColor.NERO),
+	C9(Suit.HEARTS, Value.NINE, CardColor.RED),
+	Q9(Suit.DIAMONDS, Value.NINE, CardColor.RED),
+	F9(Suit.CLUBS, Value.NINE, CardColor.BLACK),
+	P9(Suit.SPADES, Value.NINE, CardColor.BLACK),
 	
-	C10(Suit.CUORI, Value.DIECI, CardColor.ROSSO),
-	Q10(Suit.QUADRI, Value.DIECI, CardColor.ROSSO),
-	F10(Suit.FIORI, Value.DIECI, CardColor.NERO),
-	P10(Suit.PICCHE, Value.DIECI, CardColor.NERO),
+	C10(Suit.HEARTS, Value.TEN, CardColor.RED),
+	Q10(Suit.DIAMONDS, Value.TEN, CardColor.RED),
+	F10(Suit.CLUBS, Value.TEN, CardColor.BLACK),
+	P10(Suit.SPADES, Value.TEN, CardColor.BLACK),
 	
-	CJ(Suit.CUORI, Value.JACK, CardColor.ROSSO),
-	QJ(Suit.QUADRI, Value.JACK, CardColor.ROSSO),
-	FJ(Suit.FIORI, Value.JACK, CardColor.NERO),
-	PJ(Suit.PICCHE, Value.JACK, CardColor.NERO),
+	CJ(Suit.HEARTS, Value.JACK, CardColor.RED),
+	QJ(Suit.DIAMONDS, Value.JACK, CardColor.RED),
+	FJ(Suit.CLUBS, Value.JACK, CardColor.BLACK),
+	PJ(Suit.SPADES, Value.JACK, CardColor.BLACK),
 	
-	CQ(Suit.CUORI, Value.QUEEN, CardColor.ROSSO),
-	QQ(Suit.QUADRI, Value.QUEEN, CardColor.ROSSO),
-	FQ(Suit.FIORI, Value.QUEEN, CardColor.NERO),
-	PQ(Suit.PICCHE, Value.QUEEN, CardColor.NERO),
+	CQ(Suit.HEARTS, Value.QUEEN, CardColor.RED),
+	QQ(Suit.DIAMONDS, Value.QUEEN, CardColor.RED),
+	FQ(Suit.CLUBS, Value.QUEEN, CardColor.BLACK),
+	PQ(Suit.SPADES, Value.QUEEN, CardColor.BLACK),
 	
-	CK(Suit.CUORI, Value.KING, CardColor.ROSSO),
-	QK(Suit.QUADRI, Value.KING, CardColor.ROSSO),
-	FK(Suit.FIORI, Value.KING, CardColor.NERO),
-	PK(Suit.PICCHE, Value.KING, CardColor.NERO),
+	CK(Suit.HEARTS, Value.KING, CardColor.RED),
+	QK(Suit.DIAMONDS, Value.KING, CardColor.RED),
+	FK(Suit.CLUBS, Value.KING, CardColor.BLACK),
+	PK(Suit.SPADES, Value.KING, CardColor.BLACK),
 	
-	JOLLY_ROSSO(Suit.NESSUNO, Value.JOLLY, CardColor.ROSSO),
-	JOLLY_NERO(Suit.NESSUNO, Value.JOLLY, CardColor.NERO);
+	RED_JOLLY(Suit.NOTHING, Value.JOLLY, CardColor.RED),
+	BLACK_JOLLY(Suit.NOTHING, Value.JOLLY, CardColor.BLACK);
 	
-	Value valore;
-	Suit seme;
-	CardColor colore;
+	Value value;
+	Suit suit;
+	CardColor colour;
 	
 	@Override
 	public String toString()
 	{
-		return seme.toString() + valore.toString();
+		return suit.toString() + value.toString();
 	}
 	
-	public CardColor getColore()
+	public CardColor getColour()
 	{
-		return colore;
+		return colour;
 	}
 	
-	public Value getValore()
+	public Value getValue()
 	{
-		return valore;
+		return value;
 	}
 	
-	Card(Suit seme, Value valore, CardColor colore)
+	Card(Suit suit, Value value, CardColor colour)
 	{
-		this.seme = seme;
-		this.valore = valore;
-		this.colore = colore;
+		this.suit = suit;
+		this.value = value;
+		this.colour = colour;
 	}
 }

@@ -133,7 +133,7 @@ public class CardsPanel extends JPanel implements Resettable
 	 */
 	private boolean setupCardsForHint(Card card)
 	{
-		Value value = card.getValore();
+		Value value = card.getValue();
 		int intValue;
 		boolean result = false;
 		
@@ -145,7 +145,7 @@ public class CardsPanel extends JPanel implements Resettable
 		}
 		catch(NumberFormatException ex)
 		{
-			if (value.equals(Value.ASSO))
+			if (value.equals(Value.ACE))
 			{
 				intValue = 0;
 			}
@@ -188,14 +188,14 @@ public class CardsPanel extends JPanel implements Resettable
 		Card oldCard;
 		
 		setupAllFutureCard();
-		if (card.getValore().equals(Value.KING) ||
-			card.getValore().equals(Value.JOLLY))
+		if (card.getValue().equals(Value.KING) ||
+			card.getValue().equals(Value.JOLLY))
 		{
 			for (CardButton cardButton : cards)
 			{
 				if (!cardButton.isFaceUpCard() && cardButton.isVisible())
 				{
-					cardButton.gira();
+					cardButton.turn();
 					
 					if (!isVictory())
 					{
@@ -209,14 +209,14 @@ public class CardsPanel extends JPanel implements Resettable
 			enemyCardToTrash(card);
 			FieldController.getInstance().gameFinished(playerController);
 		}
-		else if (card.getValore().equals(Value.JACK) || 
-				 card.getValore().equals(Value.QUEEN))
+		else if (card.getValue().equals(Value.JACK) || 
+				 card.getValue().equals(Value.QUEEN))
 		{
 			enemyCardToTrash(card);
 		}
 		else
 		{
-			int intValue = getRightPosBasedOnDeck(card.getValore());
+			int intValue = getRightPosBasedOnDeck(card.getValue());
 			
 			if (cards[intValue].isFaceUpCard() || !cards[intValue].isVisible())
 			{
@@ -224,7 +224,7 @@ public class CardsPanel extends JPanel implements Resettable
 				return;
 			}
 			
-			cards[intValue].gira();
+			cards[intValue].turn();
 			if (!isVictory())
 			{
 				oldCard = cards[intValue].configureCardForFuture(card);
@@ -254,7 +254,7 @@ public class CardsPanel extends JPanel implements Resettable
 		}
 		/* Display the card so the user can see it and choose a good position.
 		 * The card could automatically go to the trash */
-		c.gira();
+		c.turn();
 		/* This means that a good choice is taken */
 		setupAllFutureCard();
 
@@ -274,7 +274,7 @@ public class CardsPanel extends JPanel implements Resettable
 	
 	private int getRightPosBasedOnDeck(Value val)
 	{
-		int intValue = val.equals(Value.ASSO) ? 0 : Integer.parseInt(val.toString()) - 1;
+		int intValue = val.equals(Value.ACE) ? 0 : Integer.parseInt(val.toString()) - 1;
 		
 		return getRightPosBasedOnDeck(intValue);
 	}
@@ -312,9 +312,9 @@ public class CardsPanel extends JPanel implements Resettable
 				for (i = cards.length - 1; i >= 0; i--)
 				{
 					if (cards[i].isFaceUpCard())
-						outputList.add(cards[i].getCarta());
+						outputList.add(cards[i].getCard());
 					else if (!cards[i].isVisible())
-						outputList.add(Card.JOLLY_NERO);
+						outputList.add(Card.BLACK_JOLLY);
 					else
 						outputList.add(null);
 				}
@@ -323,18 +323,18 @@ public class CardsPanel extends JPanel implements Resettable
 				for (i = cards.length / 2 - 1; i >= 0; i--)
 				{
 					if (cards[i].isFaceUpCard())
-						outputList.add(cards[i].getCarta());
+						outputList.add(cards[i].getCard());
 					else if (!cards[i].isVisible())
-						outputList.add(Card.JOLLY_NERO);
+						outputList.add(Card.BLACK_JOLLY);
 					else
 						outputList.add(null);
 				}
 				for (i = cards.length - 1; i >= cards.length / 2; i--)
 				{
 					if (cards[i].isFaceUpCard())
-						outputList.add(cards[i].getCarta());
+						outputList.add(cards[i].getCard());
 					else if (!cards[i].isVisible())
-						outputList.add(Card.JOLLY_NERO);
+						outputList.add(Card.BLACK_JOLLY);
 					else
 						outputList.add(null);
 				}
@@ -343,9 +343,9 @@ public class CardsPanel extends JPanel implements Resettable
 					for (i = cards.length / 2; i < cards.length; i++)
 					{
 						if (cards[i].isFaceUpCard())
-							outputList.add(cards[i].getCarta());
+							outputList.add(cards[i].getCard());
 						else if (!cards[i].isVisible())
-							outputList.add(Card.JOLLY_NERO);
+							outputList.add(Card.BLACK_JOLLY);
 						else
 							outputList.add(null);
 					}
@@ -353,16 +353,16 @@ public class CardsPanel extends JPanel implements Resettable
 					for (i = 0; i < cards.length / 2; i++)
 					{
 						if (cards[i].isFaceUpCard())
-							outputList.add(cards[i].getCarta());
+							outputList.add(cards[i].getCard());
 						else if (!cards[i].isVisible())
-							outputList.add(Card.JOLLY_NERO);
+							outputList.add(Card.BLACK_JOLLY);
 						else
 							outputList.add(null);
 					}
 			break;
 		default:
 				outputList = Arrays.stream(cards)
-				   .map((cardButton) -> cardButton.isFaceUpCard() ? cardButton.getCarta() : cardButton.isVisible() ? null : Card.JOLLY_NERO)
+				   .map((cardButton) -> cardButton.isFaceUpCard() ? cardButton.getCard() : cardButton.isVisible() ? null : Card.BLACK_JOLLY)
 				   .collect(Collectors.toList());
 			break;
 		}

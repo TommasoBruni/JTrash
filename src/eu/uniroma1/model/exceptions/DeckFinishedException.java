@@ -4,6 +4,6 @@ public class DeckFinishedException extends Exception
 {
 	public DeckFinishedException()
 	{
-		super("Il mazzo è finito!");
+		super("The deck is finished!");
 	}
 }

@@ -12,11 +12,14 @@ import javax.swing.ImageIcon;
 
 import eu.uniroma1.model.Player;
 import eu.uniroma1.model.carte.*;
-import eu.uniroma1.model.carte.Deck.MazzoDiCarteBuilder;
+import eu.uniroma1.model.carte.Deck.DeckBuilder;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 
+/**
+ * Main player controller class 
+ */
 public class MainPlayerController extends PlayerController
 {	
 	private static MainPlayerController controller;

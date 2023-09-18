@@ -23,11 +23,11 @@ public class CardButton extends JButton implements Resettable
 	private ImageIcon icon;
 	private Card currentCard;
 	private Card futureCard;
-	private static final String fileCartaGiocoVerticale = "carta_da_gioco_verticale.jpg";
-	private static final String fileCartaGiocoOrizzontale = "carta_da_gioco_orizzontale.jpg";
-	private static final String fileCartaGiocoVerticalePerSuggerimento = "carta_da_gioco_verticale_per_suggerimento.jpg";
+	private static final String fileVerticalCard = "carta_da_gioco_verticale.jpg";
+	private static final String fileHorizontalCard = "carta_da_gioco_orizzontale.jpg";
+	private static final String fileVerticalCardForSuggestions = "carta_da_gioco_verticale_per_suggerimento.jpg";
 	private boolean faceUp;
-	private DeckPosition posizioneDelMazzo;
+	private DeckPosition deckPosition;
 	private int positionInTheField;
 	
 	@Override
@@ -36,27 +36,27 @@ public class CardButton extends JButton implements Resettable
 		super.paint(g);
 		if (faceUp)
 		{
-			/* Imposta il colore bianco */
+			/* Set white colour*/
 			g.setColor(Color.WHITE);
-			/* Colora tutto il button di bianco */
+			/* Paint whole button with white */
 			g.fillRect(0, 0, getWidth(), getHeight());
-			/* Imposta il colore nero */
+			/* Set black colour */
 	        g.setColor(Color.BLACK);
-	        /* Colora il "bordo" di nero */
+	        /* Set border to black */
 	        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 	        
-	        /* Se fosse una carta rossa imposta il rosso come colore */
-	        if (currentCard.getColore() == CardColor.ROSSO)
+	        /* If it is a red card set red as colour */
+	        if (currentCard.getColour() == CardColor.RED)
 	        	g.setColor(Color.RED);
 	        Font font;
-	        if (currentCard == Card.JOLLY_NERO || currentCard == Card.JOLLY_ROSSO)
+	        if (currentCard == Card.BLACK_JOLLY || currentCard == Card.RED_JOLLY)
 	        	font = new Font("Arial", Font.BOLD, 12);
 	        else
 	        	font = new Font("Arial", Font.BOLD, 18);
 	        AffineTransform affineTransform = new AffineTransform();
 	        Font rotatedFont;
 	        
-	        switch(posizioneDelMazzo)
+	        switch(deckPosition)
 	        {
 	        case SULLA_SX:
 				/* REF: https://www.codejava.net/java-se/graphics/how-to-draw-text-vertically-with-graphics2d */
@@ -85,7 +85,7 @@ public class CardButton extends JButton implements Resettable
 		}
 	}
 	
-	public void gira()
+	public void turn()
 	{
 		if (!faceUp)
 		{
@@ -120,19 +120,19 @@ public class CardButton extends JButton implements Resettable
 	{
 		if (faceUp)
 			return;
-		setIconP(fileCartaGiocoVerticalePerSuggerimento);
+		setIconP(fileVerticalCardForSuggestions);
 	}
 	
 	/**
-	 * Re-imposta l'immagine che c'era inizialmente solo se girata
+	 * Reset the starting image only if turned
 	 */
 	public void restoreCardImage()
 	{
 		if (faceUp)
 			return;
-		setIconP(posizioneDelMazzo == DeckPosition.SULLA_SX || 
-				  posizioneDelMazzo == DeckPosition.SULLA_DX ?
-				  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale);
+		setIconP(deckPosition == DeckPosition.SULLA_SX || 
+				  deckPosition == DeckPosition.SULLA_DX ?
+				  fileHorizontalCard : fileVerticalCard);
 	}
 	
 	public boolean isFaceUpCard()
@@ -144,20 +144,20 @@ public class CardButton extends JButton implements Resettable
 	{
 		try
 		{
-			/* Leggo l'immagine salvata nella directory "resources" dentro il progetto */
+			/* Read the image*/
 			icon = new ImageIcon(System.getProperty("user.dir").
 						concat("\\resources\\" + s));
 		} 
 		catch (Exception ex) 
 		{
-			/* Lanciare un'altra eccezione */
+			/* Throw the exception */
 		    throw ex;
 		}
 		
 		setIcon(icon);
 	}
 	
-	public Card getCarta()
+	public Card getCard()
 	{
 		return currentCard;
 	}
@@ -172,9 +172,9 @@ public class CardButton extends JButton implements Resettable
 		this(carta, DeckPosition.IN_ALTO);
 	}
 	
-	public CardButton(Card carta, DeckPosition posizioneDelMazzo)
+	public CardButton(Card carta, DeckPosition deckPosition)
 	{
-		this(carta, posizioneDelMazzo, 0);
+		this(carta, deckPosition, 0);
 	}
 	
 	@Override
@@ -189,14 +189,14 @@ public class CardButton extends JButton implements Resettable
 		this.currentCard = card;
 	}
 	
-	public CardButton(Card carta, DeckPosition posizioneDelMazzo, int positionInTheField)
+	public CardButton(Card card, DeckPosition deckPosition, int positionInTheField)
 	{
-		this.currentCard = carta;
-		this.posizioneDelMazzo = posizioneDelMazzo;
+		this.currentCard = card;
+		this.deckPosition = deckPosition;
 		this.positionInTheField = positionInTheField;
-		setIconP(posizioneDelMazzo == DeckPosition.SULLA_SX || 
-												  posizioneDelMazzo == DeckPosition.SULLA_DX ?
-												  fileCartaGiocoOrizzontale : fileCartaGiocoVerticale);
+		setIconP(deckPosition == DeckPosition.SULLA_SX || 
+				deckPosition == DeckPosition.SULLA_DX ?
+												  fileHorizontalCard : fileVerticalCard);
 		setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		setMinimumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));

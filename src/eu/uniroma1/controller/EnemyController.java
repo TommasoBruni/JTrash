@@ -34,7 +34,7 @@ public class EnemyController extends PlayerController
 	
 	private int cardToInt(Card card)
 	{
-		return card.getValore().equals(Value.ASSO) ? 0 : Integer.parseInt(card.getValore().toString()) - 1;
+		return card.getValue().equals(Value.ACE) ? 0 : Integer.parseInt(card.getValue().toString()) - 1;
 	}
 	
 	private boolean isAlreadyPresent(Card card)
@@ -42,7 +42,7 @@ public class EnemyController extends PlayerController
 		Card current;
 		
 		/* I jolly e i king sono sempre ben accetti */
-		if (card.getValore().equals(Value.KING) || card.getValore().equals(Value.JOLLY))
+		if (card.getValue().equals(Value.KING) || card.getValue().equals(Value.JOLLY))
 			return false;
 		
 		for (int i = 0; i < alreadyCollectedCards.size(); i++)
@@ -55,7 +55,7 @@ public class EnemyController extends PlayerController
 			 * (nel caso in questa posizione ci fosse un jolly o un re il
 			 * controllo di uguaglianza fallirebbe ma vediamo se la carta
 			 * da controllare è uguale alla posizione corrente) */
-			if (current.getValore().equals(card.getValore()) || 
+			if (current.getValue().equals(card.getValue()) || 
 				cardToInt(card) == i)
 				return true;
 		}
@@ -71,10 +71,10 @@ public class EnemyController extends PlayerController
 		collectedCardsObservable.notifyObservers();
 		Card lastTrashCard = FieldController.getInstance().getLastTrashCard();
 		
-		if (lastTrashCard != null && !(lastTrashCard.getValore().equals(Value.QUEEN) ||
-									   lastTrashCard.getValore().equals(Value.JACK)) 
-				                  && (lastTrashCard.getValore().equals(Value.KING) || 
-									  lastTrashCard.getValore().equals(Value.JOLLY) ||
+		if (lastTrashCard != null && !(lastTrashCard.getValue().equals(Value.QUEEN) ||
+									   lastTrashCard.getValue().equals(Value.JACK)) 
+				                  && (lastTrashCard.getValue().equals(Value.KING) || 
+									  lastTrashCard.getValue().equals(Value.JOLLY) ||
 									  !isAlreadyPresent(lastTrashCard)))
 		{
 			/* Pick card from deck */

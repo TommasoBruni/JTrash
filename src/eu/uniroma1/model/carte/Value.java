@@ -2,31 +2,31 @@ package eu.uniroma1.model.carte;
 
 public enum Value
 {
-	ASSO("A"),
-	DUE("2"),
-	TRE("3"),
-	QUATTRO("4"),
-	CINQUE("5"),
-	SEI("6"),
-	SETTE("7"),
-	OTTO("8"),
-	NOVE("9"),
-	DIECI("10"),
+	ACE("A"),
+	TWO("2"),
+	THREE("3"),
+	FOUR("4"),
+	FIVE("5"),
+	SIX("6"),
+	SEVEN("7"),
+	EIGHT("8"),
+	NINE("9"),
+	TEN("10"),
 	JACK("J"),
 	QUEEN("Q"),
 	KING("K"),
 	JOLLY("Jolly");
 
-	String nome;
+	String name;
 	
 	@Override
 	public String toString()
 	{
-		return nome;
+		return name;
 	}
 	
-	Value(String nome) 
+	Value(String name) 
 	{
-		this.nome=nome;
+		this.name = name;
 	}
 }
