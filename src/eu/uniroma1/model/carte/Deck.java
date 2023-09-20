@@ -6,6 +6,9 @@ import eu.uniroma1.model.exceptions.DeckFinishedException;
 
 import java.util.*;
 
+/**
+ * Deck class 
+ */
 public class Deck implements Iterable<Card>
 {
 	private Card[] cards;
@@ -24,6 +27,11 @@ public class Deck implements Iterable<Card>
 		return strB.toString();
 	}
 	
+	/**
+	 * Provide next card if available
+	 * @throws DeckFinishedException if there is no more cards
+	 * @return next card 
+	 */
 	public Card nextCard() throws DeckFinishedException
 	{
 		if (currentIndex + 1 >= cards.length)
@@ -31,6 +39,9 @@ public class Deck implements Iterable<Card>
 		return cards[currentIndex++];
 	}
 	
+	/**
+	 * Specify to the deck to restore the old one card
+	 */
 	public void backupCard()
 	{
 		if (currentIndex > 0)
@@ -63,15 +74,26 @@ public class Deck implements Iterable<Card>
 		this.cards = cards;
 	}
 	
+	/**
+	 * Deck class builder 
+	 */
 	public static class DeckBuilder
 	{
 		private Card[] deck;
 		
+		/**
+		 * Build the deck
+		 * @return new instance of deck 
+		 */
 		public Deck build()
 		{
 			return new Deck(deck);
 		}
 		
+		/**
+		 * Shuffle the current deck
+		 * @return a new shuffled deck builder 
+		 */
 		public DeckBuilder shuffle()
 		{
 			Random random = new Random();
@@ -88,6 +110,10 @@ public class Deck implements Iterable<Card>
 			return this;
 		} 
 		
+		/**
+		 * Aggregate a new deck to the current one
+		 * @return new deck builder joined with another deck
+		 */
 		public DeckBuilder join(Deck newDeck)
 		{
 		    Card[] result = Arrays.copyOf(deck, deck.length + newDeck.cards.length);
@@ -97,6 +123,9 @@ public class Deck implements Iterable<Card>
 		    return this;
 		}
 		
+		/**
+		 * Deck builder constructor 
+		 */
 		public DeckBuilder()
 		{
 			deck = Card.values();

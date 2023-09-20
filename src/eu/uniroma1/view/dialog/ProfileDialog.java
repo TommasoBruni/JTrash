@@ -29,35 +29,35 @@ import eu.uniroma1.view.frame.GameFrame;
 
 public class ProfileDialog extends JDialog
 {
-	private JLabel labelNome;
-	private JTextField fieldNome;
+	private JLabel labelName;
+	private JTextField fieldName;
 	private JLabel labelNickname;
 	private JTextField fieldNickname;
 	private JButton buttonOk;
-	private JButton buttonAnnulla;
-	private JButton buttonSelezionaAvatar;
+	private JButton cancelButton;
+	private JButton buttonAvatarSelection;
 	private AvatarSelectionDialog dialogSelezioneAvatar;
 	
 	public <T extends Frame & Enableable> ProfileDialog(T ownerFrame)
 	{
-		super(ownerFrame, "Profilo", true);
+		super(ownerFrame, "Profile", true);
 		setResizable(false);
-		JPanel pannelloContenitore = new JPanel();
+		JPanel containerPanel = new JPanel();
 		
-		labelNome = new JLabel("Nome utente");
-		fieldNome = new JTextField(15);
-		fieldNome.setText(MainPlayerController.getInstance().getPlayerData().getPlayerName());
+		labelName = new JLabel("Nome utente");
+		fieldName = new JTextField(15);
+		fieldName.setText(MainPlayerController.getInstance().getPlayerData().getPlayerName());
 		labelNickname = new JLabel("Nickname");
 		fieldNickname = new JTextField(15);
 		fieldNickname.setText(MainPlayerController.getInstance().getPlayerData().getPlayerNickname());
 		buttonOk = new JButton("Ok");
-		buttonAnnulla = new JButton("Annulla");
-		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
-		buttonSelezionaAvatar = new JButton("Cambia avatar");
+		cancelButton = new JButton("Annulla");
+		buttonOk.setPreferredSize(cancelButton.getPreferredSize());
+		buttonAvatarSelection = new JButton("Cambia avatar");
 		dialogSelezioneAvatar = new AvatarSelectionDialog(new JFrame(), 
 				MainPlayerController.getInstance().getPlayerData().getPlayerAvatar().getDescription());
 		
-		buttonSelezionaAvatar.addActionListener(new ActionListener() {
+		buttonAvatarSelection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -70,13 +70,13 @@ public class ProfileDialog extends JDialog
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				String nomeUtente = fieldNome.getText();
+				String nomeUtente = fieldName.getText();
 				String nickname = fieldNickname.getText();
 				
-				/* Si controlla che non siano vuoti e che non contengano solamente spazi */
+				/* Check if they are not blank */
 				if (nomeUtente.isBlank() || nickname.isBlank())
 				{
-					JOptionPane.showMessageDialog(new JFrame(), "Inserire dati validi!", "Errore inserimento dati", JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(new JFrame(), "Insert valid data!", "Error data insertion", JOptionPane.OK_OPTION);
 					return;
 				}
 				
@@ -88,7 +88,7 @@ public class ProfileDialog extends JDialog
 			}
 		});
 		
-		buttonAnnulla.addActionListener(new ActionListener() {
+		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -99,15 +99,15 @@ public class ProfileDialog extends JDialog
 		
 		//pannelloContenitore.setPreferredSize(new Dimension(250, 200));
 		setPreferredSize(new Dimension(200, 200));
-		pannelloContenitore.add(labelNome);
-		pannelloContenitore.add(fieldNome);
-		pannelloContenitore.add(labelNickname);
-		pannelloContenitore.add(fieldNickname);
-		pannelloContenitore.add(buttonSelezionaAvatar);
-		pannelloContenitore.add(buttonOk);
-		pannelloContenitore.add(buttonAnnulla);
+		containerPanel.add(labelName);
+		containerPanel.add(fieldName);
+		containerPanel.add(labelNickname);
+		containerPanel.add(fieldNickname);
+		containerPanel.add(buttonAvatarSelection);
+		containerPanel.add(buttonOk);
+		containerPanel.add(cancelButton);
 		
-		add(pannelloContenitore);
+		add(containerPanel);
 		
 		setLocationRelativeTo(ownerFrame);
 		

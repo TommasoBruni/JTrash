@@ -22,7 +22,7 @@ public class AvatarSelectionDialog extends JDialog
     private ImageIcon selectedAvatar;
     private ImageIcon[] avatarArray;
     private JLabel avatarLabel;
-    private int indiceIcone;
+    private int iconsIndex;
     
     public AvatarSelectionDialog(Frame parent)
     {
@@ -41,27 +41,27 @@ public class AvatarSelectionDialog extends JDialog
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_1.gif"), "Megumi gif")};
         if (defaultAvatarDescr != null)
         {
-        	while (indiceIcone < avatarArray.length &&
-        		   !defaultAvatarDescr.equals(avatarArray[indiceIcone].getDescription()))
-        		indiceIcone++;
+        	while (iconsIndex < avatarArray.length &&
+        		   !defaultAvatarDescr.equals(avatarArray[iconsIndex].getDescription()))
+        		iconsIndex++;
         }
         selectedAvatar = null;
         GridBagConstraints gbc = new GridBagConstraints();
         
         setResizable(false);
         JPanel panel = new JPanel(new GridBagLayout());
-        JButton scorriADestra = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_a_destra.png")));
-        JButton scorriASinistra = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_a_sinistra.png")));
+        JButton goRight = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_a_destra.png")));
+        JButton goLeft = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_a_sinistra.png")));
 
-        scorriADestra.setBackground(Color.ORANGE);
-        scorriASinistra.setBackground(Color.ORANGE);
+        goRight.setBackground(Color.ORANGE);
+        goLeft.setBackground(Color.ORANGE);
         
         //setMinimumSize(new Dimension(300, 300));
-        avatarLabel = new JLabel(avatarArray[indiceIcone]);
+        avatarLabel = new JLabel(avatarArray[iconsIndex]);
         
-		avatarLabel.setPreferredSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
-		avatarLabel.setMaximumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
-		avatarLabel.setMinimumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+		avatarLabel.setPreferredSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
+		avatarLabel.setMaximumSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
+		avatarLabel.setMinimumSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
 
 		/*
         avatarButton.addActionListener(new ActionListener() {
@@ -125,50 +125,50 @@ public class AvatarSelectionDialog extends JDialog
         
         //cancelButton.setPreferredSize(new Dimension(100, 100));
         
-        scorriADestra.addActionListener(new ActionListener() {
+        goRight.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (indiceIcone + 1 < avatarArray.length)
+				if (iconsIndex + 1 < avatarArray.length)
 				{
-					avatarLabel.setIcon(avatarArray[++indiceIcone]);
-					avatarLabel.setPreferredSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
-					avatarLabel.setMaximumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
-					avatarLabel.setMinimumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+					avatarLabel.setIcon(avatarArray[++iconsIndex]);
+					avatarLabel.setPreferredSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
+					avatarLabel.setMaximumSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
+					avatarLabel.setMinimumSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
 				}
 				pack();
 			}
 		});
         
-        scorriADestra.setPreferredSize(new Dimension(50, 50));
-        scorriASinistra.addActionListener(new ActionListener() {
+        goRight.setPreferredSize(new Dimension(50, 50));
+        goLeft.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (indiceIcone - 1 >= 0)
+				if (iconsIndex - 1 >= 0)
 				{
-					avatarLabel.setIcon(avatarArray[--indiceIcone]);
-					avatarLabel.setPreferredSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
-					avatarLabel.setMaximumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
-					avatarLabel.setMinimumSize(new Dimension(avatarArray[indiceIcone].getIconWidth(), avatarArray[indiceIcone].getIconHeight()));
+					avatarLabel.setIcon(avatarArray[--iconsIndex]);
+					avatarLabel.setPreferredSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
+					avatarLabel.setMaximumSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
+					avatarLabel.setMinimumSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
 				}
 				pack();
 			}
 		});
         
-        scorriASinistra.setPreferredSize(new Dimension(50, 50));
+        goLeft.setPreferredSize(new Dimension(50, 50));
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.LINE_END;
-        panel.add(scorriADestra, gbc);
+        panel.add(goRight, gbc);
         
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.LINE_START;
-        panel.add(scorriASinistra, gbc);
+        panel.add(goLeft, gbc);
         
 		gbc.gridx = 1;
 		gbc.gridy = 1;

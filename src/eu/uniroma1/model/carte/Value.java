@@ -1,5 +1,8 @@
 package eu.uniroma1.model.carte;
 
+/**
+ * Card value enumerate
+ */
 public enum Value
 {
 	ACE("A"),

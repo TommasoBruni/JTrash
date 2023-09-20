@@ -41,10 +41,10 @@ public class Player implements Serializable
 	 * @param matchesWon matches won
 	 * @param matchesLost matches lost.
 	 */
-	public Player(String nome, String nickname, ImageIcon avatar, 
+	public Player(String name, String nickname, ImageIcon avatar, 
 			      long matchesWon, long matchesLost)
 	{
-		this.name = nome;
+		this.name = name;
 		this.nickname = nickname;
 		this.avatar = avatar;
 		this.level = Level.BEGINNER;
@@ -85,7 +85,7 @@ public class Player implements Serializable
 		this.nickname = nickname;
 	}
 
-	public long getPartiteVinte() {
+	public long getWonMatches() {
 		return matchesWon;
 	}
 

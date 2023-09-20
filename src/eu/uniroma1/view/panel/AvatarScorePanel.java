@@ -40,8 +40,8 @@ public class AvatarScorePanel extends JPanel implements Observer
 		
 		if (labelPartiteGiocate != null)
 		{
-			labelPartiteGiocate.setText("Giocate: " + (giocatore.getPartitePerse() + giocatore.getPartiteVinte()) + " ");
-			labelPartiteVinte.setText("Vinte: " + giocatore.getPartiteVinte() + " ");
+			labelPartiteGiocate.setText("Giocate: " + (giocatore.getPartitePerse() + giocatore.getWonMatches()) + " ");
+			labelPartiteVinte.setText("Vinte: " + giocatore.getWonMatches() + " ");
 			labelPartitePerse.setText("Perse: " + giocatore.getPartitePerse() + " ");
 			labelLevel.setText(giocatore.getLevel().toString() + " ");
 		}

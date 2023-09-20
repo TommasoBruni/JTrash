@@ -68,7 +68,7 @@ public class PlayerData extends Observable
 	 */
 	public long getPlayedGames()
 	{
-		return player.getPartiteVinte() + player.getPartitePerse();
+		return player.getWonMatches() + player.getPartitePerse();
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class PlayerData extends Observable
 	 */
 	public long getWonGames()
 	{
-		return player.getPartiteVinte();
+		return player.getWonMatches();
 	}
 	
 	/**
@@ -172,7 +172,7 @@ public class PlayerData extends Observable
 		if (player == null)
 			player = new Player(name, nickname, avatar);
 		else
-			player = new Player(name, nickname, avatar, player.getPartiteVinte(), player.getPartitePerse());
+			player = new Player(name, nickname, avatar, player.getWonMatches(), player.getPartitePerse());
 		
 		if (filename != null)
 			save();

@@ -1,5 +1,8 @@
 package eu.uniroma1.model.carte;
 
+/**
+ * Cards enumerate 
+ */
 public enum Card
 {
 	C1(Suit.HEARTS, Value.ACE, CardColor.RED),
@@ -80,16 +83,30 @@ public enum Card
 		return suit.toString() + value.toString();
 	}
 	
+	/**
+	 * Get colour of card
+	 * @return card colour
+	 */
 	public CardColor getColour()
 	{
 		return colour;
 	}
 	
+	/**
+	 * Get value of card
+	 * @return card value
+	 */
 	public Value getValue()
 	{
 		return value;
 	}
 	
+	/**
+	 * Card builder
+	 * @param suit suit of card
+	 * @param value value of card
+	 * @param colour colour of card 
+	 */
 	Card(Suit suit, Value value, CardColor colour)
 	{
 		this.suit = suit;

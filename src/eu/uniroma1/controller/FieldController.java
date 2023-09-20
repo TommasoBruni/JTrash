@@ -40,7 +40,7 @@ public class FieldController extends Observable implements Resettable
 	private Card lastCardOfDeck;
 	private int playerIndex;
 	private int enemyIndex;
-	private int numeroGiocatoriInPartita;
+	private int nPlayersInGame;
 	private List<ImageIcon> enemiesIcon;
 	private java.util.Timer nextTurnTimer;
 	private Restartable itemToRestart;
@@ -51,8 +51,8 @@ public class FieldController extends Observable implements Resettable
 	 */
 	public void nextTurn() 
 	{
-		/* E' il turno del prossimo giocatore */
-		if (playerIndex > numeroGiocatoriInPartita - 1)
+		/* Is the next player turn */
+		if (playerIndex > nPlayersInGame - 1)
 			playerIndex = 0;
 		currentPlayerController = playerControllers.get(playerIndex++);
 		try 
@@ -72,9 +72,9 @@ public class FieldController extends Observable implements Resettable
 	 */
 	public EnemyControllerTemporaneo getNextEnemy()
 	{
-		if (enemyIndex > numeroGiocatoriInPartita - 1)
+		if (enemyIndex > nPlayersInGame - 1)
 			enemyIndex = 1;
-		for (; enemyIndex < numeroGiocatoriInPartita; enemyIndex++)
+		for (; enemyIndex < nPlayersInGame; enemyIndex++)
 		{
 			if (!playerControllers.get(enemyIndex).getIsEnabled())
 			{
@@ -117,7 +117,7 @@ public class FieldController extends Observable implements Resettable
 	 */
 	public void initializeDeck()
 	{
-		deck = switch(numeroGiocatoriInPartita)
+		deck = switch(nPlayersInGame)
 				   {
 				        case 2 -> new DeckBuilder()
 						.shuffle()
@@ -151,7 +151,7 @@ public class FieldController extends Observable implements Resettable
 		if (playerControllers.size() == 0)
 			playerControllers.add(MainPlayerController.getInstance());
 		
-		for (i = 1; i < numeroGiocatoriInPartita; i++)
+		for (i = 1; i < nPlayersInGame; i++)
 		{
 			if (i + 1 > playerControllers.size())
 			{
@@ -198,7 +198,7 @@ public class FieldController extends Observable implements Resettable
 		}
 		catch(DeckFinishedException ex)
 		{
-			/* Partita finita. */
+			/* Game finished */
 			deck = null;
 			throw ex;
 		}
@@ -368,13 +368,11 @@ public class FieldController extends Observable implements Resettable
 	
 	/**
 	 * Updates current playing players (2, 3 or 4).
-	 * @param player
-	 * Aggiorna i giocatori che attualmente stanno giocando (2, 3 o 4) 
-	 * @param number of players currently in the game
+	 * @param nPlayers number of players currently in the game
 	 */
-	public void updateNumberOfPlayers(int nGiocatori)
+	public void updateNumberOfPlayers(int nPlayers)
 	{
-		numeroGiocatoriInPartita = nGiocatori;
+		nPlayersInGame = nPlayers;
 	}
 	
 	/**
@@ -383,7 +381,7 @@ public class FieldController extends Observable implements Resettable
 	 */
 	public int getNumberOfPlayingPlayers()
 	{
-		return numeroGiocatoriInPartita;
+		return nPlayersInGame;
 	}
 
 	/**

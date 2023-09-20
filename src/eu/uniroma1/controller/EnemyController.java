@@ -41,7 +41,7 @@ public class EnemyController extends PlayerController
 	{
 		Card current;
 		
-		/* I jolly e i king sono sempre ben accetti */
+		/* Jolly and king are always accepted. */
 		if (card.getValue().equals(Value.KING) || card.getValue().equals(Value.JOLLY))
 			return false;
 		
@@ -50,7 +50,9 @@ public class EnemyController extends PlayerController
 			current = alreadyCollectedCards.get(i);
 			if (current == null)
 				continue;
-			/* Qualcosa c'è in questa posizione vediamo se è uguale
+			/* 
+			 * NOTA:
+			 * Qualcosa c'è in questa posizione vediamo se è uguale
 			 * alla carta da controllare oppure è un king o un jolly
 			 * (nel caso in questa posizione ci fosse un jolly o un re il
 			 * controllo di uguaglianza fallirebbe ma vediamo se la carta

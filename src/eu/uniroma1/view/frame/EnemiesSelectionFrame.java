@@ -131,7 +131,7 @@ public class EnemiesSelectionFrame extends JInternalFrame
     		panel.add(scorriInBasso, gbc);
         }
 		
-        JButton cancelButton = new JButton("Annulla");
+        JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	dispose();
@@ -142,7 +142,7 @@ public class EnemiesSelectionFrame extends JInternalFrame
             }
         });
         
-        JButton goButton = new JButton("Inizia partita ");
+        JButton goButton = new JButton("Start game ");
         goButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	FieldController.getInstance().setEnemiesIcon(Arrays.stream(avatarLabels)
