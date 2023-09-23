@@ -30,7 +30,7 @@ public class Player implements Serializable
 	 */
 	public Player(String name, String nickname, ImageIcon avatar)
 	{
-		this(name, nickname, avatar, 0, 0);
+		this(name, nickname, avatar, 0, 0, Level.BEGINNER);
 	}
 	
 	/**
@@ -40,14 +40,15 @@ public class Player implements Serializable
 	 * @param avatar avatar of player.
 	 * @param matchesWon matches won
 	 * @param matchesLost matches lost.
+	 * @param level level of the player
 	 */
 	public Player(String name, String nickname, ImageIcon avatar, 
-			      long matchesWon, long matchesLost)
+			      long matchesWon, long matchesLost, Level level)
 	{
 		this.name = name;
 		this.nickname = nickname;
 		this.avatar = avatar;
-		this.level = Level.BEGINNER;
+		this.level = level;
 		this.matchesWon = matchesWon;
 		this.matchesLost = matchesLost;
 	}
@@ -61,12 +62,12 @@ public class Player implements Serializable
 		return level;
 	}
 
-	/**
-	 * Set level of player.
-	 * @param level level of the player. 
-	 */
-	public void setLevel(Level level) {
-		this.level = level;
+	public void upgradeLevel()
+	{
+		if (level == Level.BEGINNER)
+			level = Level.INTERMEDIATE;
+		else if (level == Level.INTERMEDIATE)
+			level = Level.ADVANCED;
 	}
 
 	public String getName() {

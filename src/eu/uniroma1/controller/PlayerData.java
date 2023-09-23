@@ -16,6 +16,7 @@ public class PlayerData extends Observable
 {
 	private Player player;
 	private String filename;
+	private static int levelUpgrade = 1;
 	
 	/**
 	 * Check if the data are consistent.
@@ -95,6 +96,8 @@ public class PlayerData extends Observable
 	public void increasePlayerWonGames()
 	{
 		player.increasePlayerWonGames();
+		if ((player.getWonMatches() % levelUpgrade) == 0)
+			player.upgradeLevel();
 	}
 	
 	/**
@@ -172,7 +175,7 @@ public class PlayerData extends Observable
 		if (player == null)
 			player = new Player(name, nickname, avatar);
 		else
-			player = new Player(name, nickname, avatar, player.getWonMatches(), player.getPartitePerse());
+			player = new Player(name, nickname, avatar, player.getWonMatches(), player.getPartitePerse(), player.getLevel());
 		
 		if (filename != null)
 			save();
@@ -183,6 +186,7 @@ public class PlayerData extends Observable
 	
 	/**
 	 * Method to read the serialized player data.
+	 * @param filename file name of the player
 	 * @return player data built from the file.
 	 */
 	public static PlayerData read(String filename)

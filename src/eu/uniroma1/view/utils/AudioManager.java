@@ -14,10 +14,16 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * Audio manager class 
+ */
 public class AudioManager {
 
 	private static AudioManager instance;
 
+	/**
+	 * To get the instance of audio manager 
+	 */
 	public static AudioManager getInstance() {
 		if (instance == null)
 			instance = new AudioManager();
@@ -25,9 +31,12 @@ public class AudioManager {
 	}
 
 	private AudioManager() {
-
 	}
 
+	/**
+	 * To start an audio.
+	 * @param filename filename of the audio to start 
+	 */
 	public void play(String filename) {
 
 		try {
@@ -47,6 +56,11 @@ public class AudioManager {
 		}
 	}
 	
+	
+	/**
+	 * To start an audio in loop.
+	 * @param filename filename of the audio to start
+	 */
 	public void loopPlay(String filename) {
 
 		try {
