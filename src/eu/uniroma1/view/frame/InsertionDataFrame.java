@@ -29,91 +29,101 @@ import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.view.dialog.AvatarSelectionDialog;
 
+/**
+ * Insertion data frame class
+ */
 public class InsertionDataFrame extends JInternalFrame 
 {
-	private JPanel pannelloContenitore;
-	private JLabel labelNomeUtente;
-	private JTextField textFieldNomeUtente;
+	private JPanel containerPanel;
+	private JLabel usernameLabel;
+	private JTextField textFieldUsername;
 	private JLabel labelNickname;
 	private JTextField textFieldNickname;
 	private JButton buttonOk;
-	private JButton buttonAnnulla;
-	private JButton buttonSelezionaAvatar;
-	private AvatarSelectionDialog dialogSelezioneAvatar;
+	private JButton buttonCancel;
+	private JButton buttonSelectAvatar;
+	private AvatarSelectionDialog dialogSelectAvatar;
 	
-	public ImageIcon getAvatarSelezionato()
+	/**
+	 * Get selected avatar
+	 * @return image icon of selected avatar 
+	 */
+	public ImageIcon getSelectedAvatar()
 	{
-		return dialogSelezioneAvatar.getSelectedAvatar();
+		return dialogSelectAvatar.getSelectedAvatar();
 	}
 	
+	/**
+	 * Insertion data frame class builder
+	 */
 	public InsertionDataFrame(GameFrame frameParent)
 	{
-		super("Inserimento dati");
+		super("Data insertion");
 		
-		labelNomeUtente = new JLabel("Nome utente:");
-		textFieldNomeUtente = new JTextField(15);
+		usernameLabel = new JLabel("Username:");
+		textFieldUsername = new JTextField(15);
 		labelNickname = new JLabel("Nickname:");
 		textFieldNickname = new JTextField(15);
-		pannelloContenitore = new JPanel();
+		containerPanel = new JPanel();
 		buttonOk = new JButton("Ok");
-		buttonAnnulla = new JButton("Annulla");
-		buttonOk.setPreferredSize(buttonAnnulla.getPreferredSize());
-		buttonSelezionaAvatar = new JButton("Seleziona avatar");
-		dialogSelezioneAvatar = new AvatarSelectionDialog(new JFrame());
+		buttonCancel = new JButton("Cancel");
+		buttonOk.setPreferredSize(buttonCancel.getPreferredSize());
+		buttonSelectAvatar = new JButton("Select avatar");
+		dialogSelectAvatar = new AvatarSelectionDialog(new JFrame());
 		
 		buttonOk.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String nomeUtente = textFieldNomeUtente.getText();
+				String nomeUtente = textFieldUsername.getText();
 				String nickname = textFieldNickname.getText();
 				
-				/* Si controlla che non siano vuoti e che non contengano solamente spazi vuoti */
+				/* Check that they are not blank. */
 				if (nomeUtente.isBlank() || nickname.isBlank())
 				{
-					JOptionPane.showMessageDialog(new JFrame(), "Inserire dati validi!", "Errore inserimento dati", JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(new JFrame(), "Insert valid data!", "Error data insertion", JOptionPane.OK_OPTION);
 					return;
 				}
 				
-				if (dialogSelezioneAvatar.getSelectedAvatar() == null)
+				if (dialogSelectAvatar.getSelectedAvatar() == null)
 				{
-					JOptionPane.showMessageDialog(new JFrame(), "Selezionare avatar!", "Errore inserimento dati", JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(new JFrame(), "Select avatar!", "Error data insertion", JOptionPane.OK_OPTION);
 					return;
 				}
 					
-				MainPlayerController.getInstance().getPlayerData().updatePlayerData(nomeUtente, nickname, dialogSelezioneAvatar.getSelectedAvatar());
-				/* Dispose utile per chiudere la finestra corrente */
+				MainPlayerController.getInstance().getPlayerData().updatePlayerData(nomeUtente, nickname, dialogSelectAvatar.getSelectedAvatar());
+				/* Dispose will close the current window */
 				dispose();
-				frameParent.mostraDialogInserimentoNemici();
+				frameParent.showEnemiesInsertionDialog();
 			}
 		});
 		
-		buttonAnnulla.addActionListener(new ActionListener() {
+		buttonCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/* Rimuove esattamente questa finestra */
+				/* Remove this window */
 				dispose();
-				frameParent.mostraInserimentoNumeroGiocatori();				
+				frameParent.showInsertionNPlayers();				
 			}
 		});
 		
-		buttonSelezionaAvatar.addActionListener(new ActionListener() {
+		buttonSelectAvatar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				dialogSelezioneAvatar.setVisible(true);
+				dialogSelectAvatar.setVisible(true);
 			}
 		});
 		
 		setPreferredSize(new Dimension(200, 200));
 		
-		pannelloContenitore.add(labelNomeUtente);
-		pannelloContenitore.add(textFieldNomeUtente);
-		pannelloContenitore.add(labelNickname);
-		pannelloContenitore.add(textFieldNickname);
-		pannelloContenitore.add(buttonSelezionaAvatar);
-		pannelloContenitore.add(buttonOk);
-		pannelloContenitore.add(buttonAnnulla);
-		add(pannelloContenitore);
+		containerPanel.add(usernameLabel);
+		containerPanel.add(textFieldUsername);
+		containerPanel.add(labelNickname);
+		containerPanel.add(textFieldNickname);
+		containerPanel.add(buttonSelectAvatar);
+		containerPanel.add(buttonOk);
+		containerPanel.add(buttonCancel);
+		add(containerPanel);
 	}
 }

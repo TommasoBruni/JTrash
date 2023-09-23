@@ -48,7 +48,7 @@ import eu.uniroma1.view.panel.DeckPanel;
 import eu.uniroma1.view.utils.DeckPosition;
 
 /**
- * Classe per creare il frame di gioco
+ * Game frame class
  */
 public class GameFrame extends JFrame implements Enableable, Observer, Resettable
 {
@@ -60,9 +60,9 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 	private InsertionDataFrame dataInsertionFrame;
 	private EnemiesSelectionFrame enemiesSelectionFrame;
 	private ObserverForVictory observerVictory;
-	private JPanel pannelloPerInternalFrame;
+	private JPanel internalFramePanel;
 	
-	public void setupPerInserimentoDati()
+	public void setupForDataInsertion()
 	{
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -75,29 +75,29 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		dataInsertionFrame = new InsertionDataFrame(this);
 		dataInsertionFrame.setVisible(true);
         
-        pannelloPerInternalFrame.add(dataInsertionFrame, gbc);
-        add(pannelloPerInternalFrame);
+        internalFramePanel.add(dataInsertionFrame, gbc);
+        add(internalFramePanel);
 	}
 	
-	public void mostraInserimentoNumeroGiocatori()
+	public void showInsertionNPlayers()
 	{
-		Integer[] possibileNumeroGiocatori = { 2, 3, 4 };
-        int numeroGiocatori = JOptionPane.showOptionDialog(this, "Numero giocatori:",
-                "Inserimento numero giocatori",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, possibileNumeroGiocatori,
-                possibileNumeroGiocatori[0]);
+		Integer[] possibleNumberOfPlayers = { 2, 3, 4 };
+        int numeroGiocatori = JOptionPane.showOptionDialog(this, "Number of players:",
+                "Number of players insertion",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, possibleNumberOfPlayers,
+                possibleNumberOfPlayers[0]);
         
         if (numeroGiocatori < 0)
         	System.exit(0);
-        FieldController.getInstance().updateNumberOfPlayers(possibileNumeroGiocatori[numeroGiocatori]);
+        FieldController.getInstance().updateNumberOfPlayers(possibleNumberOfPlayers[numeroGiocatori]);
         if (MainPlayerController.getInstance().getPlayerData().isEmptyData())
-	        /* Sono consecutivi */
-	        setupPerInserimentoDati();
+	        /* Are consecutive */
+	        setupForDataInsertion();
         else
-        	mostraDialogInserimentoNemici();
+        	showEnemiesInsertionDialog();
 	}
 	
-	public void mostraDialogInserimentoNemici()
+	public void showEnemiesInsertionDialog()
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -109,9 +109,9 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		
 		enemiesSelectionFrame = new EnemiesSelectionFrame(this);
 		enemiesSelectionFrame.setVisible(true);
-		pannelloPerInternalFrame.add(enemiesSelectionFrame, gbc);
+		internalFramePanel.add(enemiesSelectionFrame, gbc);
 
-		add(pannelloPerInternalFrame);
+		add(internalFramePanel);
 	}
 	
 	public void setGridBagLayout()
@@ -137,11 +137,11 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		
 		if (deckPanel == null)
 		{
-			/* Sono sicuro che quando arrivo qui il nome giocatore è già stato impostato */
+			/* Tha name of the player is already  */
 			deckPanel = new DeckPanel(FieldController.getInstance().getObservableForReplacingCards());
 			setGridBagLayout();
 			deckPanel.setVisible(true);
-			// Inserisco il mazzo
+			/* Insert deck */
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.weightx = 0.1;
@@ -162,7 +162,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		
 		if (mainPlayerPanel == null)
 		{
-			mainPlayerPanel = new ContainerPanel(MainPlayerController.getInstance(), DeckPosition.IN_ALTO);
+			mainPlayerPanel = new ContainerPanel(MainPlayerController.getInstance(), DeckPosition.TOP);
 			gbc.gridx = 0;
 			gbc.gridy = 2;
 			gbc.weightx = 0.1;
@@ -183,7 +183,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		
 		if (robotFrontPlayerPanel == null)
 		{
-			robotFrontPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.IN_BASSO);
+			robotFrontPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.DOWN);
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.weightx = 0.1;
@@ -206,7 +206,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		{
 			if (robotDxPlayerPanel == null)
 			{
-				robotDxPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.SULLA_SX);
+				robotDxPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.ON_THE_LEFT);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -230,7 +230,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		{
 			if (robotSxPlayerPanel == null)
 			{
-				robotSxPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.SULLA_DX);
+				robotSxPlayerPanel = new ContainerPanel(FieldController.getInstance().getNextEnemy(), DeckPosition.ON_THE_RIGHT);
 				gbc.gridx = 0;
 				gbc.gridy = 1;
 				gbc.weightx = 0.1;
@@ -246,7 +246,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		}
 	}
 	
-	public void impostaCampoDiGioco()
+	public void setGameField()
 	{
 		FieldController.getInstance().initializeComponents();
 		AnimationPanel pannelloAnimazione;	
@@ -269,18 +269,18 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		initializeRobotDxPlayerView();
 		initializeRobotSxPlayerView();
 		
-		setJMenuBar(creaBarraMenu());
+		setJMenuBar(createMenuBar());
 		getContentPane().setBackground(new Color(255, 255, 204));
-		/* Dice al controller di iniziare la partita */
+		/* Indicate to the controller to start the game */
 		FieldController.getInstance().startGame();
 	}
 	
-	private JMenuBar creaBarraMenu()
+	private JMenuBar createMenuBar()
 	{
 		JMenuBar barraMenu = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
-		JMenuItem profiloUtente = new JMenuItem("Profilo");
-		JMenuItem menuItemEsci = new JMenuItem("Esci");
+		JMenuItem profiloUtente = new JMenuItem("Profile");
+		JMenuItem menuItemEsci = new JMenuItem("Exit");
 		
 		profiloUtente.addActionListener(new ActionListener() {
 			
@@ -296,17 +296,15 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/* Il primo parametro è il componente genitore, solitamente si utilizza
-				 * la classe frame sottostante. */
-				int azioneFinestra = JOptionPane.showConfirmDialog(new JFrame(), "Vuoi uscire dall'applicazione?", "Chiusura applicazione",
+				/* The first parameter is the parent component, usually it is used the underlying frame class */
+				int azioneFinestra = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to exit the application?", "Closing application",
 											  JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (azioneFinestra == JOptionPane.OK_OPTION)
 					System.exit(0);
 			}
 		});
 		
-		
-		/* Per aggiungere un separatore logico tra gli item importa/esporta ed esci */
+		/* To add a logic separator between import/export and exit */
 		menuFile.add(profiloUtente);
 		menuFile.addSeparator();
 		menuFile.add(menuItemEsci);
@@ -331,7 +329,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		JOptionPane.showMessageDialog(new JFrame(), "Non ci sono più carte!", "Partita finita!", JOptionPane.OK_OPTION);
+		JOptionPane.showMessageDialog(new JFrame(), "No more cards!", "Game finished!", JOptionPane.OK_OPTION);
 	}
 	
 	private class ObserverForVictory implements Observer, Restartable
@@ -343,11 +341,11 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		{
 			if (!wholeGameFinished)
 			{
-				impostaCampoDiGioco();
+				setGameField();
 			}
 			else
 			{
-				mostraInserimentoNumeroGiocatori();
+				showInsertionNPlayers();
 				wholeGameFinished = false;
 			}
 		}
@@ -362,44 +360,44 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 			FieldController.getInstance().setItemToRestart(this);
 			if (playerController.getCardsInHand() > 0)
 			{
-				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore di questa partita e': " + playerController.getPlayerData().getPlayerName(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), "The winner of this game is: " + playerController.getPlayerData().getPlayerName(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(new JFrame(), "Il vincitore finale e': " + playerController.getPlayerData().getPlayerName(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), "The final winner of this game is: " + playerController.getPlayerData().getPlayerName(), "Vincitore!", JOptionPane.INFORMATION_MESSAGE);
 				wholeGameFinished = true;
 			}			
 		}
 	}
 	
 	/**
-	 * Costruttore frame di gioco
+	 * Game frame class builder
 	 */
 	public GameFrame()
 	{
-		/* Imposta il nome al frame */
+		/* Set the name to the frame */
 		super("JTrash");
 		
 		observerVictory = new ObserverForVictory();
 		
-		pannelloPerInternalFrame = new JPanel(new GridBagLayout());
+		internalFramePanel = new JPanel(new GridBagLayout());
 		
-		/* Imposta una grandezza iniziale */
+		/* Set starting size */
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		/* Imposta a 200 pixel dal lato sinistro e 200 dall'alto */
+		/* Set to 200 pixel from left side and 200 from the top */
 		setLocation(0, 0);
 		
-		/* Imposta il fatto di chiudere l'applicazione quando viene chiuso il frame */
+		/* Set application close when this frame is closed */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		/* Il layout si imposta in seguito */
+		/* Layout will be set later */
 		
-		/* Imposta il frame visibile */
+		/* Set frame visible */
 		setVisible(true);
 		//AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
 		FieldController.getInstance().addObserver(this);
 		FieldController.getInstance().getObservableForGameFinish().addObserver(observerVictory);
-		mostraInserimentoNumeroGiocatori();
+		showInsertionNPlayers();
 	}
 }

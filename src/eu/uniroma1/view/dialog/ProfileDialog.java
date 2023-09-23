@@ -27,6 +27,9 @@ import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.view.frame.GameFrame;
 
+/**
+ * Profile dialog class 
+ */
 public class ProfileDialog extends JDialog
 {
 	private JLabel labelName;
@@ -38,6 +41,10 @@ public class ProfileDialog extends JDialog
 	private JButton buttonAvatarSelection;
 	private AvatarSelectionDialog dialogSelezioneAvatar;
 	
+	/**
+	 * Profile dialog class builder
+	 * @param ownerFrame frame to make start the dialog
+	 */
 	public <T extends Frame & Enableable> ProfileDialog(T ownerFrame)
 	{
 		super(ownerFrame, "Profile", true);
@@ -116,25 +123,25 @@ public class ProfileDialog extends JDialog
 			@Override
 			public void windowOpened(WindowEvent e) 
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 			
 			@Override
 			public void windowIconified(WindowEvent e) 
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 			
 			@Override
 			public void windowDeiconified(WindowEvent e) 
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 			
 			@Override
 			public void windowDeactivated(WindowEvent e) 
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 			
 			@Override
@@ -146,13 +153,13 @@ public class ProfileDialog extends JDialog
 			@Override
 			public void windowClosed(WindowEvent e) 
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 			
 			@Override
 			public void windowActivated(WindowEvent e) 
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 		});
 		pack();

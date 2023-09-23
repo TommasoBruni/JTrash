@@ -52,7 +52,7 @@ public class ContainerPanel extends JPanel implements Resettable
 									   this.pannelloAvatarPunteggio.getPreferredSize().height + this.pannelloCarte.getPreferredSize().height));
 		*/
 		switch (posizioneDelMazzo) {
-		case SULLA_SX:
+		case ON_THE_LEFT:
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 0, 30);
@@ -64,7 +64,7 @@ public class ContainerPanel extends JPanel implements Resettable
 			gbc.insets = new Insets(0, 0, 0, 0);
 			add(this.pannelloAvatarPunteggio, gbc);
 			break;
-		case SULLA_DX:
+		case ON_THE_RIGHT:
 			/* Significa che è un giocatore laterale */
 			gbc.gridx = 0;
 			gbc.gridy = 0;
@@ -76,7 +76,7 @@ public class ContainerPanel extends JPanel implements Resettable
 			gbc.insets = new Insets(0, 0, 0, 0);
 			add(this.pannelloCarte, gbc);
 			break;
-		case IN_BASSO:
+		case DOWN:
 			/* Significa che è un giocatore verticale */
 			gbc.gridx = 0;
 			gbc.gridy = 0;

@@ -27,6 +27,9 @@ import javax.swing.JPanel;
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
 
+/**
+ * Enemies selection frame class 
+ */
 public class EnemiesSelectionFrame extends JInternalFrame
 {
 	private List<ImageIcon> selectedAvatars;
@@ -38,9 +41,13 @@ public class EnemiesSelectionFrame extends JInternalFrame
 		private int i;
 	}
 	
+	/**
+	 * Enemies selection frame class builder
+	 * @param owner frame to make start the frame 
+	 */
 	public EnemiesSelectionFrame(GameFrame owner)
 	{
-		super("Seleziona nemici");
+		super("Select enemies");
 		
 		avatarArray = new ImageIcon[] { new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_7.gif"), "Obito"),
 									    new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_5.gif"), "John"),
@@ -54,8 +61,8 @@ public class EnemiesSelectionFrame extends JInternalFrame
         
         int i;
         JPanel panel = new JPanel(new GridBagLayout());
-        JButton scorriInAlto;
-        JButton scorriInBasso;
+        JButton scrollUp;
+        JButton scrollDown;
         avatarLabels = new JLabel[FieldController.getInstance().getNumberOfPlayingPlayers() - 1];
         
         for (i = 0; i < avatarLabels.length; i++)
@@ -69,42 +76,42 @@ public class EnemiesSelectionFrame extends JInternalFrame
         for (i = 0; i < FieldController.getInstance().getNumberOfPlayingPlayers() - 1; i++)
         {
         	JLabel currAvatarLabel = avatarLabels[i];
-        	IndexManager currentIndiceIcone = new IndexManager();
-            scorriInAlto = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_in_alto.png")));
-            scorriInBasso = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_in_basso.png")));
+        	IndexManager currentIconsIndex = new IndexManager();
+            scrollUp = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_in_alto.png")));
+            scrollDown = new JButton(new ImageIcon(System.getProperty("user.dir").concat("\\resources\\icona_scorrimento_in_basso.png")));
         	
-            scorriInAlto.setBackground(Color.ORANGE);
-            scorriInBasso.setBackground(Color.ORANGE);
+            scrollUp.setBackground(Color.ORANGE);
+            scrollDown.setBackground(Color.ORANGE);
             
-            scorriInAlto.addActionListener(new ActionListener() {
+            scrollUp.addActionListener(new ActionListener() {
             	private JLabel labelToOperate = currAvatarLabel;
-            	private IndexManager indiceIcone = currentIndiceIcone;
+            	private IndexManager iconsIndex = currentIconsIndex;
             	
     			@Override
     			public void actionPerformed(ActionEvent e) {
-    				if (indiceIcone.i - 1 >= 0)
+    				if (iconsIndex.i - 1 >= 0)
     				{
-    					labelToOperate.setIcon(avatarArray[--indiceIcone.i]);
-    					labelToOperate.setPreferredSize(new Dimension(avatarArray[indiceIcone.i].getIconWidth() + 10, avatarArray[indiceIcone.i].getIconHeight() + 10));
-    					labelToOperate.setMaximumSize(new Dimension(avatarArray[indiceIcone.i].getIconWidth() + 10, avatarArray[indiceIcone.i].getIconHeight() + 10));
-    					labelToOperate.setMinimumSize(new Dimension(avatarArray[indiceIcone.i].getIconWidth() + 10, avatarArray[indiceIcone.i].getIconHeight() + 10));
+    					labelToOperate.setIcon(avatarArray[--iconsIndex.i]);
+    					labelToOperate.setPreferredSize(new Dimension(avatarArray[iconsIndex.i].getIconWidth() + 10, avatarArray[iconsIndex.i].getIconHeight() + 10));
+    					labelToOperate.setMaximumSize(new Dimension(avatarArray[iconsIndex.i].getIconWidth() + 10, avatarArray[iconsIndex.i].getIconHeight() + 10));
+    					labelToOperate.setMinimumSize(new Dimension(avatarArray[iconsIndex.i].getIconWidth() + 10, avatarArray[iconsIndex.i].getIconHeight() + 10));
     				}
     				pack();
     			}
     		});
             
-            scorriInBasso.addActionListener(new ActionListener() {
+            scrollDown.addActionListener(new ActionListener() {
             	private JLabel labelToOperate = currAvatarLabel;
-            	private IndexManager indiceIcone = currentIndiceIcone;
+            	private IndexManager iconsIndex = currentIconsIndex;
             	
     			@Override
     			public void actionPerformed(ActionEvent e) {
-    				if (indiceIcone.i + 1 < avatarArray.length)
+    				if (iconsIndex.i + 1 < avatarArray.length)
     				{
-    					labelToOperate.setIcon(avatarArray[++indiceIcone.i]);
-    					labelToOperate.setPreferredSize(new Dimension(avatarArray[indiceIcone.i].getIconWidth() + 10, avatarArray[indiceIcone.i].getIconHeight() + 10));
-    					labelToOperate.setMaximumSize(new Dimension(avatarArray[indiceIcone.i].getIconWidth() + 10, avatarArray[indiceIcone.i].getIconHeight() + 10));
-    					labelToOperate.setMinimumSize(new Dimension(avatarArray[indiceIcone.i].getIconWidth() + 10, avatarArray[indiceIcone.i].getIconHeight() + 10));
+    					labelToOperate.setIcon(avatarArray[++iconsIndex.i]);
+    					labelToOperate.setPreferredSize(new Dimension(avatarArray[iconsIndex.i].getIconWidth() + 10, avatarArray[iconsIndex.i].getIconHeight() + 10));
+    					labelToOperate.setMaximumSize(new Dimension(avatarArray[iconsIndex.i].getIconWidth() + 10, avatarArray[iconsIndex.i].getIconHeight() + 10));
+    					labelToOperate.setMinimumSize(new Dimension(avatarArray[iconsIndex.i].getIconWidth() + 10, avatarArray[iconsIndex.i].getIconHeight() + 10));
     				}
     				pack();
     			}
@@ -115,7 +122,7 @@ public class EnemiesSelectionFrame extends JInternalFrame
     		gbc.weightx = 0.1;
     		gbc.weighty = 0.1;
     		gbc.insets = new Insets(10, 0, 0, 0);
-    		panel.add(scorriInAlto, gbc);
+    		panel.add(scrollUp, gbc);
             
     		gbc.gridx = i;
     		gbc.gridy = 1;
@@ -128,7 +135,7 @@ public class EnemiesSelectionFrame extends JInternalFrame
     		gbc.weightx = 0.1;
     		gbc.weighty = 0.1;
     		gbc.insets = new Insets(0, 0, 10, 0);
-    		panel.add(scorriInBasso, gbc);
+    		panel.add(scrollDown, gbc);
         }
 		
         JButton cancelButton = new JButton("Cancel");
@@ -136,9 +143,9 @@ public class EnemiesSelectionFrame extends JInternalFrame
             public void actionPerformed(ActionEvent e) {
             	dispose();
             	if (MainPlayerController.getInstance().getPlayerData().isEmptyData())
-            		owner.setupPerInserimentoDati();
+            		owner.setupForDataInsertion();
             	else
-            		owner.mostraInserimentoNumeroGiocatori();
+            		owner.showInsertionNPlayers();
             }
         });
         
@@ -150,7 +157,7 @@ public class EnemiesSelectionFrame extends JInternalFrame
             													   .collect(Collectors.toList()));
             	
             	dispose();
-            	owner.impostaCampoDiGioco();
+            	owner.setGameField();
             }
         });
         

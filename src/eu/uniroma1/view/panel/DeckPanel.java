@@ -134,7 +134,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		firstCard = true;
 		try 
 		{
-			carteDaPescare = new CardButton(FieldController.getInstance().nextCard(), DeckPosition.IN_ALTO);
+			carteDaPescare = new CardButton(FieldController.getInstance().nextCard(), DeckPosition.TOP);
 			FieldController.getInstance().getObservableForTrashUpdating().addObserver(new Observer() {
 				@Override
 				public void update(Observable o, Object arg) {

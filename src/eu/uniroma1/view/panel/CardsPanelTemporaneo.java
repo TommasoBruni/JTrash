@@ -224,9 +224,9 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 	
 	private int getRightPosBasedOnDeck(int intValue)
 	{
-		if (relativeDeckPosition == DeckPosition.IN_BASSO || relativeDeckPosition == DeckPosition.SULLA_DX)
+		if (relativeDeckPosition == DeckPosition.DOWN || relativeDeckPosition == DeckPosition.ON_THE_RIGHT)
 			intValue = intValue > 1 ? 9 : intValue == 0 ? 1 : 0; 
-		else if (relativeDeckPosition == DeckPosition.SULLA_SX)
+		else if (relativeDeckPosition == DeckPosition.ON_THE_LEFT)
 			intValue = intValue > 1 ? 9 : intValue;
 		return intValue;
 	}
@@ -306,7 +306,7 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 		
 		switch(relativeDeckPosition)
 		{
-		case IN_BASSO:
+		case DOWN:
 				for (i = cards.length - 1; i >= 0; i--)
 				{
 					if (cards[i].isFaceUpCard())
@@ -317,7 +317,7 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 						outputList.add(null);
 				}
 			break;
-		case SULLA_SX:
+		case ON_THE_LEFT:
 				for (i = cards.length / 2 - 1; i >= 0; i--)
 				{
 					if (cards[i].isFaceUpCard())
@@ -337,7 +337,7 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 						outputList.add(null);
 				}
 			break;
-		case SULLA_DX:
+		case ON_THE_RIGHT:
 					for (i = cards.length / 2; i < cards.length; i++)
 					{
 						if (cards[i].isFaceUpCard())
@@ -369,7 +369,7 @@ public class CardsPanelTemporaneo extends JPanel implements Resettable
 	
 	private void setupCards() throws GameNotInProgressException, DeckFinishedException
 	{
-		boolean isHorizontal = (this.relativeDeckPosition == DeckPosition.SULLA_DX || this.relativeDeckPosition == DeckPosition.SULLA_SX);
+		boolean isHorizontal = (this.relativeDeckPosition == DeckPosition.ON_THE_RIGHT || this.relativeDeckPosition == DeckPosition.ON_THE_LEFT);
 		int i, j, minCard;
 		JPanel pannelloCarteSuperiori = new JPanel();
 		JPanel pannelloCarteInferiori = new JPanel();

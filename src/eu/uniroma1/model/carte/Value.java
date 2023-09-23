@@ -28,6 +28,9 @@ public enum Value
 		return name;
 	}
 	
+	/**
+	 * Card value builder 
+	 */
 	Value(String name) 
 	{
 		this.name = name;

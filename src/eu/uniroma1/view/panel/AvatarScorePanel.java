@@ -20,78 +20,84 @@ import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.model.Player;
 
+/**
+ * Avatar score panel class 
+ */
 public class AvatarScorePanel extends JPanel implements Observer
 {
 	private JLabel labelIcon;
-	private JPanel pannelloPerPunteggi;
-	private JLabel labelNicknameGiocatore;
-	private JLabel labelPartiteGiocate;
-	private JLabel labelPartiteVinte;
-	private JLabel labelPartitePerse;
+	private JPanel scorePanel;
+	private JLabel playerNicknameLabel;
+	private JLabel playedGamesLabel;
+	private JLabel wonGamesLabel;
+	private JLabel lostGamesLabel;
 	private JLabel labelLevel;
 
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		Player giocatore = (Player)arg;
+		Player player = (Player)arg;
 		
-		labelNicknameGiocatore.setText(giocatore.getNickname() + " ");
-		labelIcon.setIcon(giocatore.getAvatar());
+		playerNicknameLabel.setText(player.getNickname() + " ");
+		labelIcon.setIcon(player.getAvatar());
 		
-		if (labelPartiteGiocate != null)
+		if (playedGamesLabel != null)
 		{
-			labelPartiteGiocate.setText("Giocate: " + (giocatore.getPartitePerse() + giocatore.getWonMatches()) + " ");
-			labelPartiteVinte.setText("Vinte: " + giocatore.getWonMatches() + " ");
-			labelPartitePerse.setText("Perse: " + giocatore.getPartitePerse() + " ");
-			labelLevel.setText(giocatore.getLevel().toString() + " ");
+			playedGamesLabel.setText("Giocate: " + (player.getPartitePerse() + player.getWonMatches()) + " ");
+			wonGamesLabel.setText("Vinte: " + player.getWonMatches() + " ");
+			lostGamesLabel.setText("Perse: " + player.getPartitePerse() + " ");
+			labelLevel.setText(player.getLevel().toString() + " ");
 		}
 	}
 	
+	/**
+	 * Avatar score panel builder 
+	 */
 	public AvatarScorePanel(PlayerController playerController)
 	{
 		PlayerData playerData = playerController.getPlayerData();
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setLayout(new GridBagLayout());
-		labelNicknameGiocatore = new JLabel(playerData.getPlayerName() + " ");
+		playerNicknameLabel = new JLabel(playerData.getPlayerName() + " ");
 		labelIcon = new JLabel(playerData.getPlayerAvatar());
 		setBackground(new Color(255, 255, 204));
 		
 		playerData.addObserver(this);	
 		if (playerController instanceof MainPlayerController)
 		{
-			GridBagConstraints gbcPerPunteggi = new GridBagConstraints();
+			GridBagConstraints gbcForScores = new GridBagConstraints();
 			
-			pannelloPerPunteggi = new JPanel();
-			pannelloPerPunteggi.setLayout(new GridBagLayout());
+			scorePanel = new JPanel();
+			scorePanel.setLayout(new GridBagLayout());
 			/* This is the real player not a robot. */
-			labelPartiteGiocate = new JLabel("Giocate: " + playerData.getPlayedGames() + " ");
-			labelPartiteVinte = new JLabel("Vinte: " + playerData.getWonGames() + " ");
-			labelPartitePerse = new JLabel("Perse: " + playerData.getLostGames() + " ");
+			playedGamesLabel = new JLabel("Giocate: " + playerData.getPlayedGames() + " ");
+			wonGamesLabel = new JLabel("Vinte: " + playerData.getWonGames() + " ");
+			lostGamesLabel = new JLabel("Perse: " + playerData.getLostGames() + " ");
 			labelLevel = new JLabel(playerData.getLevel().toString() + " ");
 			
-			gbcPerPunteggi.gridx = 0;
-			gbcPerPunteggi.gridy = 0;
-			pannelloPerPunteggi.add(labelPartiteGiocate, gbcPerPunteggi);
+			gbcForScores.gridx = 0;
+			gbcForScores.gridy = 0;
+			scorePanel.add(playedGamesLabel, gbcForScores);
 			
 			
-			gbcPerPunteggi.gridx = 0;
-			gbcPerPunteggi.gridy = 1;
-			pannelloPerPunteggi.add(labelPartiteVinte, gbcPerPunteggi);
+			gbcForScores.gridx = 0;
+			gbcForScores.gridy = 1;
+			scorePanel.add(wonGamesLabel, gbcForScores);
 
-			gbcPerPunteggi.gridx = 0;
-			gbcPerPunteggi.gridy = 2;
-			pannelloPerPunteggi.add(labelPartitePerse, gbcPerPunteggi);
+			gbcForScores.gridx = 0;
+			gbcForScores.gridy = 2;
+			scorePanel.add(lostGamesLabel, gbcForScores);
 			
-			gbcPerPunteggi.gridx = 0;
-			gbcPerPunteggi.gridy = 3;
-			pannelloPerPunteggi.add(labelLevel, gbcPerPunteggi);
+			gbcForScores.gridx = 0;
+			gbcForScores.gridy = 3;
+			scorePanel.add(labelLevel, gbcForScores);
 			
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 10, 0, 0);
-			add(pannelloPerPunteggi, gbc);
-			pannelloPerPunteggi.setBackground(new Color(255, 255, 204));
+			add(scorePanel, gbc);
+			scorePanel.setBackground(new Color(255, 255, 204));
 		}
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -102,6 +108,6 @@ public class AvatarScorePanel extends JPanel implements Observer
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		add(labelNicknameGiocatore, gbc);
+		add(playerNicknameLabel, gbc);
 	}
 }

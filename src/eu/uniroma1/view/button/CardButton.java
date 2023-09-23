@@ -18,6 +18,9 @@ import eu.uniroma1.view.utils.DeckPosition;
 import java.awt.geom.AffineTransform;
 import java.awt.Graphics2D;
 
+/**
+ * Card button class 
+ */
 public class CardButton extends JButton implements Resettable
 {
 	private ImageIcon icon;
@@ -58,20 +61,20 @@ public class CardButton extends JButton implements Resettable
 	        
 	        switch(deckPosition)
 	        {
-	        case SULLA_SX:
+	        case ON_THE_LEFT:
 				/* REF: https://www.codejava.net/java-se/graphics/how-to-draw-text-vertically-with-graphics2d */
 				affineTransform.rotate(-(Math.PI / 2));
 				rotatedFont = font.deriveFont(affineTransform);
 				g.setFont(rotatedFont);
 				g.drawString(currentCard.toString(), 26, 34);
 	        	break;
-	        case SULLA_DX:
+	        case ON_THE_RIGHT:
 	        	affineTransform.rotate(Math.PI / 2);
 	        	rotatedFont = font.deriveFont(affineTransform);
 	        	g.setFont(rotatedFont);
 	        	g.drawString(currentCard.toString(), 30, 6);
 	        	break;
-	        case IN_BASSO:
+	        case DOWN:
 	        	affineTransform.rotate(Math.PI);
 	        	rotatedFont = font.deriveFont(affineTransform);
 	        	g.setFont(rotatedFont);
@@ -85,6 +88,9 @@ public class CardButton extends JButton implements Resettable
 		}
 	}
 	
+	/**
+	 * Turns the card face up (if it's not yet).
+	 */
 	public void turn()
 	{
 		if (!faceUp)
@@ -95,6 +101,10 @@ public class CardButton extends JButton implements Resettable
 		}
 	}
 	
+	/**
+	 * Switch the current card with the input one.
+	 * @param card card to change with.
+	 */
 	public void changeCard(Card card)
 	{
 		faceUp = true;
@@ -102,12 +112,20 @@ public class CardButton extends JButton implements Resettable
 		repaint();
 	}
 	
+	/**
+	 * Store a card that will be used in the future.
+	 * @param futureCard future card.
+	 * @return the current card. 
+	 */
 	public Card configureCardForFuture(Card futureCard)
 	{
 		this.futureCard = futureCard;
 		return currentCard;
 	}
 	
+	/**
+	 * Set the configured future card (if any) as current card. 
+	 */
 	public void setupFutureCard()
 	{
 		if (futureCard == null)
@@ -116,6 +134,9 @@ public class CardButton extends JButton implements Resettable
 		futureCard = null;
 	}
 	
+	/**
+	 * Set red the current card (if face down) to give an hint.
+	 */
 	public void setHintCard()
 	{
 		if (faceUp)
@@ -124,17 +145,21 @@ public class CardButton extends JButton implements Resettable
 	}
 	
 	/**
-	 * Reset the starting image only if turned
+	 * Reset the starting image only if face down.
 	 */
 	public void restoreCardImage()
 	{
 		if (faceUp)
 			return;
-		setIconP(deckPosition == DeckPosition.SULLA_SX || 
-				  deckPosition == DeckPosition.SULLA_DX ?
+		setIconP(deckPosition == DeckPosition.ON_THE_LEFT || 
+				  deckPosition == DeckPosition.ON_THE_RIGHT ?
 				  fileHorizontalCard : fileVerticalCard);
 	}
 	
+	/**
+	 * Check if the card is face up.
+	 * @return boolean to indicate if the card is face up. 
+	 */
 	public boolean isFaceUpCard()
 	{
 		return faceUp;
@@ -157,24 +182,22 @@ public class CardButton extends JButton implements Resettable
 		setIcon(icon);
 	}
 	
+	/**
+	 * Get the current card.
+	 * @return current card. 
+	 */
 	public Card getCard()
 	{
 		return currentCard;
 	}
 	
+	/**
+	 * Get position in the field (1 to 10).
+	 * @return position in the field.
+	 */
 	public int getPositionInTheField()
 	{
 		return positionInTheField;
-	}
-	
-	public CardButton(Card carta)
-	{
-		this(carta, DeckPosition.IN_ALTO);
-	}
-	
-	public CardButton(Card carta, DeckPosition deckPosition)
-	{
-		this(carta, deckPosition, 0);
 	}
 	
 	@Override
@@ -184,18 +207,46 @@ public class CardButton extends JButton implements Resettable
 		restoreCardImage();
 	}
 	
+	/**
+	 * Directly set the current card
+	 */
 	public void setBaseCard(Card card)
 	{
 		this.currentCard = card;
 	}
 	
+	/**
+	 * Card button builder.
+	 * @param card to set to the button.
+	 */
+	public CardButton(Card card)
+	{
+		this(card, DeckPosition.TOP);
+	}
+	
+	/**
+	 * Card button builder.
+	 * @param card card to set to the button.
+	 * @param deckPosition position of the deck relative to the position of the user.
+	 */
+	public CardButton(Card card, DeckPosition deckPosition)
+	{
+		this(card, deckPosition, 0);
+	}
+	
+	/**
+	 * Card button builder.
+	 * @param card card to set to the button.
+	 * @param deckPosition position of the deck relative to the position of the user.
+	 * @param positionInTheField position in the game field (1 to 10).
+	 */
 	public CardButton(Card card, DeckPosition deckPosition, int positionInTheField)
 	{
 		this.currentCard = card;
 		this.deckPosition = deckPosition;
 		this.positionInTheField = positionInTheField;
-		setIconP(deckPosition == DeckPosition.SULLA_SX || 
-				deckPosition == DeckPosition.SULLA_DX ?
+		setIconP(deckPosition == DeckPosition.ON_THE_LEFT || 
+				deckPosition == DeckPosition.ON_THE_RIGHT ?
 												  fileHorizontalCard : fileVerticalCard);
 		setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));

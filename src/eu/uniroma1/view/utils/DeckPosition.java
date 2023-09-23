@@ -1,9 +1,12 @@
 package eu.uniroma1.view.utils;
 
+/**
+ * Deck position relative to the user position. 
+ */
 public enum DeckPosition 
 {
-	SULLA_SX,
-	SULLA_DX,
-	IN_ALTO,
-	IN_BASSO
+	ON_THE_LEFT,
+	ON_THE_RIGHT,
+	TOP,
+	DOWN
 }

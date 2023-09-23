@@ -48,6 +48,9 @@ import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
 import eu.uniroma1.view.utils.DeckPosition;
 
+/**
+ * Cards panel class 
+ */
 public class CardsPanel extends JPanel implements Resettable
 {
 	private CardButton[] cards;
@@ -128,15 +131,13 @@ public class CardsPanel extends JPanel implements Resettable
 			card.setupFutureCard();
 	}
 	
-	/**
-	 * Return true if a good place is found, otherwise false 
-	 */
 	private boolean setupCardsForHint(Card card)
 	{
 		Value value = card.getValue();
 		int intValue;
 		boolean result = false;
 		
+		/* Return true if a good place is found, otherwise false*/
 		restoreAllCardImage();
 		
 		try
@@ -281,11 +282,11 @@ public class CardsPanel extends JPanel implements Resettable
 	
 	private int getRightPosBasedOnDeck(int intValue)
 	{
-		if (relativeDeckPosition == DeckPosition.IN_BASSO)
+		if (relativeDeckPosition == DeckPosition.DOWN)
 			intValue = (intValue + 9) - (intValue * 2);
-		else if (relativeDeckPosition == DeckPosition.SULLA_SX)
+		else if (relativeDeckPosition == DeckPosition.ON_THE_LEFT)
 			intValue = ((intValue + 4) - (intValue * 2)) < 0 ?  ((intValue + 4) - (intValue * 2)) + 10 : ((intValue + 4) - (intValue * 2));
-		else if (relativeDeckPosition == DeckPosition.SULLA_DX)
+		else if (relativeDeckPosition == DeckPosition.ON_THE_RIGHT)
 			intValue = (intValue + 5) % 10;
 		return intValue;
 	}
@@ -308,7 +309,7 @@ public class CardsPanel extends JPanel implements Resettable
 		
 		switch(relativeDeckPosition)
 		{
-		case IN_BASSO:
+		case DOWN:
 				for (i = cards.length - 1; i >= 0; i--)
 				{
 					if (cards[i].isFaceUpCard())
@@ -319,7 +320,7 @@ public class CardsPanel extends JPanel implements Resettable
 						outputList.add(null);
 				}
 			break;
-		case SULLA_SX:
+		case ON_THE_LEFT:
 				for (i = cards.length / 2 - 1; i >= 0; i--)
 				{
 					if (cards[i].isFaceUpCard())
@@ -339,7 +340,7 @@ public class CardsPanel extends JPanel implements Resettable
 						outputList.add(null);
 				}
 			break;
-		case SULLA_DX:
+		case ON_THE_RIGHT:
 					for (i = cards.length / 2; i < cards.length; i++)
 					{
 						if (cards[i].isFaceUpCard())
@@ -514,7 +515,7 @@ public class CardsPanel extends JPanel implements Resettable
 	
 	private void setupCards() throws GameNotInProgressException, DeckFinishedException
 	{
-		boolean isHorizontal = (this.relativeDeckPosition == DeckPosition.SULLA_DX || this.relativeDeckPosition == DeckPosition.SULLA_SX);
+		boolean isHorizontal = (this.relativeDeckPosition == DeckPosition.ON_THE_RIGHT || this.relativeDeckPosition == DeckPosition.ON_THE_LEFT);
 
 		if (isHorizontal)
 			horizontalSetup();
@@ -547,12 +548,13 @@ public class CardsPanel extends JPanel implements Resettable
 			} 
 			catch (GameNotInProgressException | DeckFinishedException e)
 			{
-				/* Non può accadere, stiamo riavviando la partita */
+				/* This cannot happen, the game is restarting */
 			}
 		}
 	}
 	
-	public void initializeControllerEvents()
+	
+	private void initializeControllerEvents()
 	{
 		if (playerController != null)
 		{
@@ -589,6 +591,14 @@ public class CardsPanel extends JPanel implements Resettable
 		}
 	}
 	
+	/**
+	 * Cards panel class builder
+	 * @param deckPosition deck position relative to the user position
+	 * @param playerController player controller
+	 * @throws GameNotInProgressException if the game is not started
+	 * @throws DeckFinishedException if there are no more cards
+	 * @throws MoveNotAllowedException if a move is done without the permission 
+	 */
 	public CardsPanel(DeckPosition deckPosition, PlayerController playerController) throws GameNotInProgressException, DeckFinishedException, MoveNotAllowedException
 	{
 		//animationTimer = new Timer();

@@ -17,6 +17,9 @@ import javax.swing.JDialog;
 import javax.swing.border.Border;
 import javax.swing.*;
 
+/**
+ * Avatar selection dialog 
+ */
 public class AvatarSelectionDialog extends JDialog
 {
     private ImageIcon selectedAvatar;
@@ -24,11 +27,20 @@ public class AvatarSelectionDialog extends JDialog
     private JLabel avatarLabel;
     private int iconsIndex;
     
+    /**
+     * Avatar selection dialog class builder
+     * @param parent frame parent to start the dialog. 
+     */
     public AvatarSelectionDialog(Frame parent)
     {
     	this(parent, null);
     }
     
+    /**
+     * Avatar selection dialog class builder
+     * @param parent frame parent to start the dialog.
+     * @param defaultAvatarDescr default avatar descriptor if any. 
+     */
     public AvatarSelectionDialog(Frame parent, String defaultAvatarDescr) 
     {
         super(parent, "Selezione Avatar", true);
@@ -79,7 +91,7 @@ public class AvatarSelectionDialog extends JDialog
 			@Override
 			public void mouseReleased(MouseEvent e)
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 			
 			@Override
@@ -92,19 +104,19 @@ public class AvatarSelectionDialog extends JDialog
 			@Override
 			public void mouseExited(MouseEvent e)
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) 
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
-				/* Non interessante */
+				/* Not interesting */
 			}
 		});
         
@@ -185,7 +197,12 @@ public class AvatarSelectionDialog extends JDialog
         setLocationRelativeTo(parent);
     }
 
-    public ImageIcon getSelectedAvatar() {
+    /**
+     * Get the selected avatar.
+     * @return image icon of the avatar
+     */
+    public ImageIcon getSelectedAvatar()
+    {
         return selectedAvatar;
     }
 }
