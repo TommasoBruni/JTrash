@@ -28,11 +28,14 @@ import eu.uniroma1.view.utils.DeckPosition;
 
 import javax.swing.*;
 
+/**
+ * Deck panel class 
+ */
 public class DeckPanel extends JPanel implements Observer, Resettable
 {
-	private CardButton carteDaPescare;
+	private CardButton cardToPickButton;
 	private TrashPanel trashSpace;
-	private CardButton cartaPescata;
+	private CardButton pickedCardButton;
 	private JPanel cardsContainer;
 	private JPanel pickedCardSpace;
 	private boolean firstCard;
@@ -42,62 +45,64 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 	{
 		Card selectedCard = (Card)arg;
 		Card discardedCard = trashSpace.getLastCard();
-		Card pickedCard = cartaPescata.getCard();
+		Card pickedCard = pickedCardButton.getCard();
 		
 		if (selectedCard.equals(discardedCard))
 			/* The user selects the card from the trash */
 			trashSpace.removeCardFromTop();
 		else if(selectedCard.equals(pickedCard))
 			/* The user selects the card from the deck */
-			cartaPescata.setVisible(false);
+			pickedCardButton.setVisible(false);
 	}
 	
+	/**
+	 * Indicate to the deck that there is a request to pick the card 
+	 */
 	public void cardToPickEvent()
 	{
-		Card carta, oldCard;
+		Card card, oldCard;
 		
 		AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\sliding_card.wav"));
-		oldCard = cartaPescata.getCard();
+		oldCard = pickedCardButton.getCard();
 		if (!firstCard)
 		{
 			try 
 			{
-				cartaPescata.changeCard(FieldController.getInstance().nextCard());
+				pickedCardButton.changeCard(FieldController.getInstance().nextCard());
 			}
 			catch (GameNotInProgressException | DeckFinishedException e1) 
 			{
-				carteDaPescare.setVisible(false);
-				JOptionPane.showMessageDialog(new JFrame(), "Non ci sono più carte!", "Partita finita!", JOptionPane.OK_OPTION);
+				cardToPickButton.setVisible(false);
+				JOptionPane.showMessageDialog(new JFrame(), "No more cards!", "Game finished!", JOptionPane.OK_OPTION);
 				return;
 			}
 		}
 		
-		carta = cartaPescata.getCard();
+		card = pickedCardButton.getCard();
 
 		if (!FieldController.getInstance().canPickCard())
 		{
-			/* Fai il restore delle informazioni */
+			/* Restore the information */
 			FieldController.getInstance().backupCard();
-			cartaPescata.changeCard(oldCard);
+			pickedCardButton.changeCard(oldCard);
 			return;
 		}
 		
-		/* Se è la prima carta basta solo impostare il button visibile
-		 * altrimenti bisogna cambiare la carta */
-		cartaPescata.setVisible(true);
+		/* If it is the first card it is only necessary the button visible otherwise it is needed change the card */
+		pickedCardButton.setVisible(true);
 		
-		FieldController.getInstance().setLastCardOfDeck(carta);
+		FieldController.getInstance().setLastCardOfDeck(card);
 		
 		firstCard = false;
 		
 		try
 		{
-			/* Fa partire il processo del giocatore che ha pescato la carta */
-			FieldController.getInstance().cardSelected(carta);
+			/* Start the process of the player that picked the card */
+			FieldController.getInstance().cardSelected(card);
 		} 
 		catch (MoveNotAllowedException e1)
 		{
-			/* Non può succedere dato che la canPickCard verifica questa situazione */
+			/* This cannot happen, canPickCard check this situation */
 		}
 	}
 	
@@ -108,25 +113,29 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		trashSpace.reset();
 		try 
 		{
-			/* Questa non è mai girata */
-			carteDaPescare.setBaseCard(FieldController.getInstance().nextCard());
+			/* This is never face up */
+			cardToPickButton.setBaseCard(FieldController.getInstance().nextCard());
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e) 
 		{
-			/* Non può succedere stiamo riavviando la partita */
+			/* Cannot happen, the game is restarting */
 		}
 		try 
 		{
-			cartaPescata.setBaseCard(FieldController.getInstance().nextCard());
-			cartaPescata.turn();
-			cartaPescata.setVisible(false);
+			pickedCardButton.setBaseCard(FieldController.getInstance().nextCard());
+			pickedCardButton.turn();
+			pickedCardButton.setVisible(false);
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e) 
 		{
-			/* Non può succedere stiamo riavviando la partita */
+			/* Cannot happen, the game is restarting */
 		}
 	}
 	
+	/**
+	 * Deck panel class builder
+	 * @param observable observable to get notifications
+	 */
 	public DeckPanel(Observable observable)
 	{
 		pickedCardSpace = new JPanel();
@@ -134,12 +143,12 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		firstCard = true;
 		try 
 		{
-			carteDaPescare = new CardButton(FieldController.getInstance().nextCard(), DeckPosition.TOP);
+			cardToPickButton = new CardButton(FieldController.getInstance().nextCard(), DeckPosition.TOP);
 			FieldController.getInstance().getObservableForTrashUpdating().addObserver(new Observer() {
 				@Override
 				public void update(Observable o, Object arg) {
 					trashSpace.addCardToTop((Card)arg);
-					cartaPescata.setVisible(false);
+					pickedCardButton.setVisible(false);
 				}
 			});
 			
@@ -150,17 +159,17 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 				}
 			});
 			trashSpace = new TrashPanel();
-			cartaPescata = new CardButton(FieldController.getInstance().nextCard());
-			cartaPescata.turn();
-			cartaPescata.setVisible(false);
+			pickedCardButton = new CardButton(FieldController.getInstance().nextCard());
+			pickedCardButton.turn();
+			pickedCardButton.setVisible(false);
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e)
 		{
-			/* Non accadrà mai stiamo creando adesso il campo di gioco */
+			/* Cannot happen, the game is creating */
 			e.printStackTrace();
 		}
 		
-		carteDaPescare.addActionListener(new ActionListener() {
+		cardToPickButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) 
@@ -181,7 +190,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		gbc.anchor = GridBagConstraints.LINE_END;
         
 		cardsContainer = new JPanel(new GridBagLayout());
-		cardsContainer.add(carteDaPescare, gbc);
+		cardsContainer.add(cardToPickButton, gbc);
         
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -193,7 +202,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		gbc.insets = new Insets(0, 5, 0, 0);
 		
 		pickedCardSpace.setPreferredSize(new Dimension(60, 63));
-		pickedCardSpace.add(cartaPescata);
+		pickedCardSpace.add(pickedCardButton);
 		pickedCardSpace.setBackground(new Color(255, 255, 204));
 		cardsContainer.add(pickedCardSpace, gbc);
         
@@ -205,7 +214,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		
 		gbc.anchor = GridBagConstraints.LINE_START;
 		
-		/* Per inserire un po' di spazio tra le carte da pescare, la pescata e quelle scartate */
+		/* To insert a bit of space between the cards to pick, the picked card and the discarded cards */
 		gbc.insets = new Insets(0, 30, 0, 0);
 		cardsContainer.add(trashSpace, gbc);
 		cardsContainer.setBackground(new Color(255, 255, 204));

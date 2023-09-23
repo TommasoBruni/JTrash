@@ -20,28 +20,35 @@ import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.utils.DeckPosition;
 
+/**
+ * Container panel class 
+ */
 public class ContainerPanel extends JPanel implements Resettable
 {
-	private CardsPanelTemporaneo pannelloCarte;
-	private AvatarScorePanel pannelloAvatarPunteggio;
+	private CardsPanelTemporaneo cardsPanel;
+	private AvatarScorePanel scoreAvatarPanel;
 	
 	@Override
 	public void reset() 
 	{
-		pannelloCarte.reset();
+		cardsPanel.reset();
 	}
 	
-	public ContainerPanel(PlayerController playerController, DeckPosition posizioneDelMazzo)
+	/**
+	 * Container panel class builder
+	 * @param playerController player controller of the class
+	 * @param positionOfDeck position of the deck relative to the user 
+	 */
+	public ContainerPanel(PlayerController playerController, DeckPosition positionOfDeck)
 	{
-		this.pannelloAvatarPunteggio = new AvatarScorePanel(playerController);
+		this.scoreAvatarPanel = new AvatarScorePanel(playerController);
 		try 
 		{
-			this.pannelloCarte = new CardsPanelTemporaneo(posizioneDelMazzo, playerController);
+			this.cardsPanel = new CardsPanelTemporaneo(positionOfDeck, playerController);
 		}
 		catch (GameNotInProgressException | DeckFinishedException | MoveNotAllowedException e)
 		{
-			/* Nessuna delle tre eccezioni accadrà mai perché stiamo impostando in questo
-			 * momento la partita */
+			/* None will be launched because the match is set right now*/
 			e.printStackTrace();
 		}
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -51,54 +58,54 @@ public class ContainerPanel extends JPanel implements Resettable
 		setPreferredSize(new Dimension(this.pannelloAvatarPunteggio.getPreferredSize().width + this.pannelloCarte.getPreferredSize().width,
 									   this.pannelloAvatarPunteggio.getPreferredSize().height + this.pannelloCarte.getPreferredSize().height));
 		*/
-		switch (posizioneDelMazzo) {
+		switch (positionOfDeck) {
 		case ON_THE_LEFT:
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 0, 30);
-			/* Significa che è un giocatore laterale */
-			add(this.pannelloCarte, gbc);
+			/* It is a lateral player */
+			add(this.cardsPanel, gbc);
 			
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 0, 0);
-			add(this.pannelloAvatarPunteggio, gbc);
+			add(this.scoreAvatarPanel, gbc);
 			break;
 		case ON_THE_RIGHT:
-			/* Significa che è un giocatore laterale */
+			/* It is a lateral player */
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 0, 30);
-			add(this.pannelloAvatarPunteggio, gbc);
+			add(this.scoreAvatarPanel, gbc);
 			
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 0, 0);
-			add(this.pannelloCarte, gbc);
+			add(this.cardsPanel, gbc);
 			break;
 		case DOWN:
-			/* Significa che è un giocatore verticale */
+			/* It is a vertical player */
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 30, 0);
-			add(this.pannelloAvatarPunteggio, gbc);
+			add(this.scoreAvatarPanel, gbc);
 			
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 0, 0, 0);
-			add(this.pannelloCarte, gbc);
+			add(this.cardsPanel, gbc);
 			break;
 		default:
-			/* Significa che è un giocatore verticale */
+			/* It is a vertical player */
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 0, 30, 0);
-			add(this.pannelloCarte, gbc);
+			add(this.cardsPanel, gbc);
 			
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 0, 0, 0);
-			add(this.pannelloAvatarPunteggio, gbc);
+			add(this.scoreAvatarPanel, gbc);
 		}
 		
 		setBackground(new Color(255, 255, 204));

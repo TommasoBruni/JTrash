@@ -25,13 +25,21 @@ import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
 import eu.uniroma1.view.button.CardButton;
 
+
+/**
+ * Trash panel class
+ */
 public class TrashPanel extends JPanel implements Enableable, Resettable
 {
-	private CardButton carteScartate;
+	private CardButton discardedCardsButton;
 	private List<Card> discardedCards;
 	private Border compoundBorder;
 	private JPanel internalPanel;
 	
+	/**
+	 * Get last card from the list
+	 * @return last card of the list 
+	 */
 	public Card getLastCard()
 	{
 		if (discardedCards.size() > 0)
@@ -39,6 +47,9 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 		return null;
 	}
 	
+	/**
+	 * Remove the card from the top of the list 
+	 */
 	public void removeCardFromTop()
 	{
 		Card newCard;
@@ -47,22 +58,25 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 		if (discardedCards.size() > 0)
 		{
 			newCard = discardedCards.get(discardedCards.size() - 1);
-			carteScartate.changeCard(newCard);	
+			discardedCardsButton.changeCard(newCard);	
 		}
 		else
 		{
-			carteScartate.setVisible(false);
+			discardedCardsButton.setVisible(false);
 			newCard = null;
 		}
 		FieldController.getInstance().setLastTrashCard(newCard);
 	}
 	
+	/**
+	 * Add the card to the top of the list 
+	 */
 	public void addCardToTop(Card card)
 	{
 		FieldController.getInstance().setLastTrashCard(card);
 		discardedCards.add(card);
-		carteScartate.changeCard(card);
-		carteScartate.setVisible(true);
+		discardedCardsButton.changeCard(card);
+		discardedCardsButton.setVisible(true);
 	}
 	
 	@Override
@@ -86,8 +100,8 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 			Card firstCard = FieldController.getInstance().nextCard();
 			FieldController.getInstance().setLastTrashCard(firstCard);
 			discardedCards.add(firstCard);
-			carteScartate.setBaseCard(firstCard);
-			carteScartate.turn();
+			discardedCardsButton.setBaseCard(firstCard);
+			discardedCardsButton.turn();
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e)
 		{
@@ -95,6 +109,9 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 		}
 	}
 	
+	/**
+	 * Trash panel class builder 
+	 */
 	public TrashPanel()
 	{
 		discardedCards = new ArrayList<>();
@@ -104,14 +121,14 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 			
 			FieldController.getInstance().setLastTrashCard(firstCard);
 			discardedCards.add(firstCard);
-			carteScartate = new CardButton(firstCard);
-			carteScartate.addActionListener(new ActionListener() {
+			discardedCardsButton = new CardButton(firstCard);
+			discardedCardsButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
 					try 
 					{
-						FieldController.getInstance().cardSelected(carteScartate.getCard());
+						FieldController.getInstance().cardSelected(discardedCardsButton.getCard());
 					}
 					catch (MoveNotAllowedException e1)
 					{
@@ -119,11 +136,11 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 					}
 				}
 			});
-			carteScartate.turn();
+			discardedCardsButton.turn();
 		} 
 		catch (GameNotInProgressException | DeckFinishedException e)
 		{
-			/* Non accadrà mai stiamo creando adesso il campo di gioco */
+			/* Cannot happen, the game is creating right now */
 			e.printStackTrace();
 		}
 		Border bordoInterno = BorderFactory.createTitledBorder("Trash");
@@ -139,7 +156,7 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 		
 		gbc.weightx = 0.01;
 		gbc.weighty = 0.01;
-		internalPanel.add(carteScartate, gbc);
+		internalPanel.add(discardedCardsButton, gbc);
 		internalPanel.setBackground(new Color(255, 255, 204));
 		
 		setBorder(compoundBorder);
