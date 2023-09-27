@@ -51,16 +51,16 @@ public class ProfileDialog extends JDialog
 		setResizable(false);
 		JPanel containerPanel = new JPanel();
 		
-		labelName = new JLabel("Nome utente");
+		labelName = new JLabel("Username");
 		fieldName = new JTextField(15);
 		fieldName.setText(MainPlayerController.getInstance().getPlayerData().getPlayerName());
 		labelNickname = new JLabel("Nickname");
 		fieldNickname = new JTextField(15);
 		fieldNickname.setText(MainPlayerController.getInstance().getPlayerData().getPlayerNickname());
 		buttonOk = new JButton("Ok");
-		cancelButton = new JButton("Annulla");
+		cancelButton = new JButton("Cancel");
 		buttonOk.setPreferredSize(cancelButton.getPreferredSize());
-		buttonAvatarSelection = new JButton("Cambia avatar");
+		buttonAvatarSelection = new JButton("Change avatar");
 		dialogSelezioneAvatar = new AvatarSelectionDialog(new JFrame(), 
 				MainPlayerController.getInstance().getPlayerData().getPlayerAvatar().getDescription());
 		

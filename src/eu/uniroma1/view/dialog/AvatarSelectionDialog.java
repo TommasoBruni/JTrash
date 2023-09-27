@@ -75,17 +75,6 @@ public class AvatarSelectionDialog extends JDialog
 		avatarLabel.setMaximumSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
 		avatarLabel.setMinimumSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
 
-		/*
-        avatarButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				selectedAvatar = avatarArray[indiceIcone];
-				dispose();
-			}
-		});
-		*/
         avatarLabel.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -127,7 +116,7 @@ public class AvatarSelectionDialog extends JDialog
 		gbc.anchor = GridBagConstraints.CENTER;
         panel.add(avatarLabel, gbc);
 
-        JButton cancelButton = new JButton("Annulla");
+        JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedAvatar = null;

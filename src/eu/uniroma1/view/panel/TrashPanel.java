@@ -19,7 +19,7 @@ import eu.uniroma1.controller.Enableable;
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.Resettable;
-import eu.uniroma1.model.carte.Card;
+import eu.uniroma1.model.cards.Card;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;

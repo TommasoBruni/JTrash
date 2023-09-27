@@ -10,9 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import eu.uniroma1.controller.Resettable;
-import eu.uniroma1.model.carte.Card;
-import eu.uniroma1.model.carte.CardColor;
-import eu.uniroma1.model.carte.Value;
+import eu.uniroma1.model.cards.Card;
+import eu.uniroma1.model.cards.CardColor;
+import eu.uniroma1.model.cards.Value;
 import eu.uniroma1.view.utils.DeckPosition;
 
 import java.awt.geom.AffineTransform;

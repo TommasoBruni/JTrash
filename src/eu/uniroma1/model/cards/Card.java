@@ -1,4 +1,4 @@
-package eu.uniroma1.model.carte;
+package eu.uniroma1.model.cards;
 
 /**
  * Cards enumerate 

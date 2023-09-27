@@ -16,7 +16,7 @@ public class PlayerData extends Observable
 {
 	private Player player;
 	private String filename;
-	private static int levelUpgrade = 1;
+	private static int levelUpgrade = 15;
 	
 	/**
 	 * Check if the data are consistent.

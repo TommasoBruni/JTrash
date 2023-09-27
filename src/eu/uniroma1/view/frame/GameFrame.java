@@ -40,11 +40,11 @@ import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.controller.Restartable;
 import eu.uniroma1.view.dialog.ProfileDialog;
-import eu.uniroma1.view.panel.AnimationPanel;
 import eu.uniroma1.view.panel.AvatarScorePanel;
 import eu.uniroma1.view.panel.CardsPanel;
 import eu.uniroma1.view.panel.ContainerPanel;
 import eu.uniroma1.view.panel.DeckPanel;
+import eu.uniroma1.view.utils.AudioManager;
 import eu.uniroma1.view.utils.DeckPosition;
 
 /**
@@ -249,20 +249,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 	public void setGameField()
 	{
 		FieldController.getInstance().initializeComponents();
-		AnimationPanel pannelloAnimazione;	
 		
-		/*
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0.1;
-		gbc.anchor = GridBagConstraints.CENTER;
-		*/
-		//pannelloAnimazione = new PannelloAnimazione();
-		//add(pannelloAnimazione);
-		
-		
-		//pannelloGiocatorePrincipale.startAnimazione();
 		initializeDeckView();
 		initializeMainPlayerView();
 		initializeRobotFrontPlayerView();
@@ -277,41 +264,41 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 	
 	private JMenuBar createMenuBar()
 	{
-		JMenuBar barraMenu = new JMenuBar();
+		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
-		JMenuItem profiloUtente = new JMenuItem("Profile");
-		JMenuItem menuItemEsci = new JMenuItem("Exit");
+		JMenuItem userProfile = new JMenuItem("Profile");
+		JMenuItem menuItemExit = new JMenuItem("Exit");
 		
-		profiloUtente.addActionListener(new ActionListener() {
+		userProfile.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				disableObject();
-				ProfileDialog dialogProfilo = new ProfileDialog(GameFrame.this);
-				dialogProfilo.setVisible(true);
+				ProfileDialog profileDialog = new ProfileDialog(GameFrame.this);
+				profileDialog.setVisible(true);
 			}
 		});
 		
-		menuItemEsci.addActionListener(new ActionListener() {
+		menuItemExit.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				/* The first parameter is the parent component, usually it is used the underlying frame class */
-				int azioneFinestra = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to exit the application?", "Closing application",
+				int actionWindow = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to exit the application?", "Closing application",
 											  JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-				if (azioneFinestra == JOptionPane.OK_OPTION)
+				if (actionWindow == JOptionPane.OK_OPTION)
 					System.exit(0);
 			}
 		});
 		
 		/* To add a logic separator between import/export and exit */
-		menuFile.add(profiloUtente);
+		menuFile.add(userProfile);
 		menuFile.addSeparator();
-		menuFile.add(menuItemEsci);
+		menuFile.add(menuItemExit);
 		
-		barraMenu.add(menuFile);
+		menuBar.add(menuFile);
 		
-		return barraMenu;
+		return menuBar;
 	}
 	
 	@Override
@@ -395,7 +382,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		
 		/* Set frame visible */
 		setVisible(true);
-		//AudioManager.getInstance().play(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
+		AudioManager.getInstance().loopPlay(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
 		FieldController.getInstance().addObserver(this);
 		FieldController.getInstance().getObservableForGameFinish().addObserver(observerVictory);
 		showInsertionNPlayers();

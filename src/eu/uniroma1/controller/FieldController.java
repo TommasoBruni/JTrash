@@ -13,9 +13,9 @@ import java.util.function.Consumer;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-import eu.uniroma1.model.carte.Card;
-import eu.uniroma1.model.carte.Deck;
-import eu.uniroma1.model.carte.Deck.DeckBuilder;
+import eu.uniroma1.model.cards.Card;
+import eu.uniroma1.model.cards.Deck;
+import eu.uniroma1.model.cards.Deck.DeckBuilder;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
@@ -70,7 +70,7 @@ public class FieldController extends Observable implements Resettable
 	 * Get next instance of enemy.
 	 * @return new enemy. 
 	 */
-	public EnemyControllerTemporaneo getNextEnemy()
+	public EnemyController getNextEnemy()
 	{
 		if (enemyIndex > nPlayersInGame - 1)
 			enemyIndex = 1;
@@ -79,7 +79,7 @@ public class FieldController extends Observable implements Resettable
 			if (!playerControllers.get(enemyIndex).getIsEnabled())
 			{
 				playerControllers.get(enemyIndex).enableObject();
-				return (EnemyControllerTemporaneo)playerControllers.get(enemyIndex++);
+				return (EnemyController)playerControllers.get(enemyIndex++);
 			}
 		}
 		return null;
@@ -155,7 +155,7 @@ public class FieldController extends Observable implements Resettable
 		{
 			if (i + 1 > playerControllers.size())
 			{
-				current = new EnemyControllerTemporaneo(enemiesIcon.get(i - 1));
+				current = new EnemyController(enemiesIcon.get(i - 1));
 				playerControllers.add(current);
 			}
 			else

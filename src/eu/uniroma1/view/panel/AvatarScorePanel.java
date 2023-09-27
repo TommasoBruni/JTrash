@@ -43,9 +43,9 @@ public class AvatarScorePanel extends JPanel implements Observer
 		
 		if (playedGamesLabel != null)
 		{
-			playedGamesLabel.setText("Giocate: " + (player.getPartitePerse() + player.getWonMatches()) + " ");
-			wonGamesLabel.setText("Vinte: " + player.getWonMatches() + " ");
-			lostGamesLabel.setText("Perse: " + player.getPartitePerse() + " ");
+			playedGamesLabel.setText("Played: " + (player.getPartitePerse() + player.getWonMatches()) + " ");
+			wonGamesLabel.setText("Won: " + player.getWonMatches() + " ");
+			lostGamesLabel.setText("Lost: " + player.getPartitePerse() + " ");
 			labelLevel.setText(player.getLevel().toString() + " ");
 		}
 	}
@@ -71,9 +71,9 @@ public class AvatarScorePanel extends JPanel implements Observer
 			scorePanel = new JPanel();
 			scorePanel.setLayout(new GridBagLayout());
 			/* This is the real player not a robot. */
-			playedGamesLabel = new JLabel("Giocate: " + playerData.getPlayedGames() + " ");
-			wonGamesLabel = new JLabel("Vinte: " + playerData.getWonGames() + " ");
-			lostGamesLabel = new JLabel("Perse: " + playerData.getLostGames() + " ");
+			playedGamesLabel = new JLabel("Played: " + playerData.getPlayedGames() + " ");
+			wonGamesLabel = new JLabel("Won: " + playerData.getWonGames() + " ");
+			lostGamesLabel = new JLabel("Lost: " + playerData.getLostGames() + " ");
 			labelLevel = new JLabel(playerData.getLevel().toString() + " ");
 			
 			gbcForScores.gridx = 0;

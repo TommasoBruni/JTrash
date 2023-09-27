@@ -5,8 +5,8 @@ import java.util.Observable;
 
 import javax.swing.ImageIcon;
 
-import eu.uniroma1.model.carte.Card;
-import eu.uniroma1.model.carte.Value;
+import eu.uniroma1.model.cards.Card;
+import eu.uniroma1.model.cards.Value;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;

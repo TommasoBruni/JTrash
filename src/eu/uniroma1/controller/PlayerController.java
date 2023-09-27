@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
 
-import eu.uniroma1.model.carte.Card;
-import eu.uniroma1.model.carte.Value;
+import eu.uniroma1.model.cards.Card;
+import eu.uniroma1.model.cards.Value;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
@@ -25,6 +25,7 @@ public abstract class PlayerController extends Observable implements Resettable,
 	private static int counter;
 	private boolean isEnabled;
 	private int cardsInHand;
+	private static int cardsForPlayer = 10;
 	
 	/**
 	 * Customized operation that a controller does with the selected card.
@@ -231,6 +232,6 @@ public abstract class PlayerController extends Observable implements Resettable,
 		playerState = PlayerState.TURN_IS_OVER;
 		collectedCardsObservable = new GenericObservable();
 		playerData = new PlayerData();
-		cardsInHand = 2;
+		cardsInHand = cardsForPlayer;
 	}
 }

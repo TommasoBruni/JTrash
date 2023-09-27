@@ -11,8 +11,8 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 
 import eu.uniroma1.model.Player;
-import eu.uniroma1.model.carte.*;
-import eu.uniroma1.model.carte.Deck.DeckBuilder;
+import eu.uniroma1.model.cards.*;
+import eu.uniroma1.model.cards.Deck.DeckBuilder;
 import eu.uniroma1.model.exceptions.DeckFinishedException;
 import eu.uniroma1.model.exceptions.GameNotInProgressException;
 import eu.uniroma1.model.exceptions.MoveNotAllowedException;
