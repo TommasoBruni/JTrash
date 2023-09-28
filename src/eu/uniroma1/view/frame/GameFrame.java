@@ -2,25 +2,9 @@ package eu.uniroma1.view.frame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.beans.PropertyVetoException;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.security.Provider;
 import java.util.Observable;
 import java.util.Observer;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -29,19 +13,12 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 import eu.uniroma1.controller.Enableable;
-import eu.uniroma1.controller.EnemyController;
 import eu.uniroma1.controller.FieldController;
 import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.PlayerController;
-import eu.uniroma1.model.exceptions.DeckFinishedException;
-import eu.uniroma1.model.exceptions.GameNotInProgressException;
-import eu.uniroma1.model.exceptions.MoveNotAllowedException;
-import eu.uniroma1.controller.PlayerData;
 import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.controller.Restartable;
 import eu.uniroma1.view.dialog.ProfileDialog;
-import eu.uniroma1.view.panel.AvatarScorePanel;
-import eu.uniroma1.view.panel.CardsPanel;
 import eu.uniroma1.view.panel.ContainerPanel;
 import eu.uniroma1.view.panel.DeckPanel;
 import eu.uniroma1.view.utils.AudioManager;
@@ -114,7 +91,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		add(internalFramePanel);
 	}
 	
-	public void setGridBagLayout()
+	private void setGridBagLayout()
 	{
 		setLayout(new GridBagLayout());
 	}
@@ -131,7 +108,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		this.setEnabled(false);
 	}
 	
-	public void initializeDeckView()
+	private void initializeDeckView()
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -156,7 +133,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		}
 	}
 	
-	public void initializeMainPlayerView()
+	private void initializeMainPlayerView()
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -177,7 +154,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		mainPlayerPanel.setVisible(true);
 	}
 	
-	public void initializeRobotFrontPlayerView()
+	private void initializeRobotFrontPlayerView()
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -198,7 +175,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		robotFrontPlayerPanel.setVisible(true);
 	}
 	
-	public void initializeRobotDxPlayerView()
+	private void initializeRobotDxPlayerView()
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -222,7 +199,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		}
 	}
 	
-	public void initializeRobotSxPlayerView()
+	private void initializeRobotSxPlayerView()
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
 		

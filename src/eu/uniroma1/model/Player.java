@@ -95,7 +95,7 @@ public class Player implements Serializable
 		this.matchesWon++;
 	}
 
-	public long getPartitePerse() {
+	public long getLostMatches() {
 		return matchesLost;
 	}
 

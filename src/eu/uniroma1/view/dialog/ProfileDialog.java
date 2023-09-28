@@ -39,7 +39,7 @@ public class ProfileDialog extends JDialog
 	private JButton buttonOk;
 	private JButton cancelButton;
 	private JButton buttonAvatarSelection;
-	private AvatarSelectionDialog dialogSelezioneAvatar;
+	private AvatarSelectionDialog avatarSelectionDialog;
 	
 	/**
 	 * Profile dialog class builder
@@ -61,14 +61,14 @@ public class ProfileDialog extends JDialog
 		cancelButton = new JButton("Cancel");
 		buttonOk.setPreferredSize(cancelButton.getPreferredSize());
 		buttonAvatarSelection = new JButton("Change avatar");
-		dialogSelezioneAvatar = new AvatarSelectionDialog(new JFrame(), 
+		avatarSelectionDialog = new AvatarSelectionDialog(new JFrame(), 
 				MainPlayerController.getInstance().getPlayerData().getPlayerAvatar().getDescription());
 		
 		buttonAvatarSelection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				dialogSelezioneAvatar.setVisible(true);
+				avatarSelectionDialog.setVisible(true);
 			}
 		});
 		
@@ -88,8 +88,8 @@ public class ProfileDialog extends JDialog
 				}
 				
 				MainPlayerController.getInstance().getPlayerData().updatePlayerData(nomeUtente, nickname, 
-																	 dialogSelezioneAvatar.getSelectedAvatar() == null ?
-																	 MainPlayerController.getInstance().getPlayerData().getPlayerAvatar() : dialogSelezioneAvatar.getSelectedAvatar());
+																	 avatarSelectionDialog.getSelectedAvatar() == null ?
+																	 MainPlayerController.getInstance().getPlayerData().getPlayerAvatar() : avatarSelectionDialog.getSelectedAvatar());
 				ownerFrame.enableObject();
 				dispose();
 			}

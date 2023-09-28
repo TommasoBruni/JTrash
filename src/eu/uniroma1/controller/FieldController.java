@@ -37,7 +37,6 @@ public class FieldController extends Observable implements Resettable
 	private GenericObservable observableForGameFinish;
 	private Deck deck;
 	private Card lastTrashCard;
-	private Card lastCardOfDeck;
 	private int playerIndex;
 	private int enemyIndex;
 	private int nPlayersInGame;
@@ -101,15 +100,6 @@ public class FieldController extends Observable implements Resettable
 	public void setLastTrashCard(Card lastTrashCard)
 	{
 		this.lastTrashCard = lastTrashCard;
-	}
-	
-	/**
-	 * Set last card of the deck.
-	 * @param lastCardOfDeck last card of deck.
-	 */
-	public void setLastCardOfDeck(Card lastCardOfDeck)
-	{
-		this.lastCardOfDeck = lastCardOfDeck;
 	}
 	
 	/**

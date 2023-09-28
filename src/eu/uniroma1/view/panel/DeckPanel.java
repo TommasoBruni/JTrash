@@ -58,7 +58,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 	/**
 	 * Indicate to the deck that there is a request to pick the card 
 	 */
-	public void cardToPickEvent()
+	private void cardToPickEvent()
 	{
 		Card card, oldCard;
 		
@@ -90,8 +90,6 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		
 		/* If it is the first card it is only necessary the button visible otherwise it is needed change the card */
 		pickedCardButton.setVisible(true);
-		
-		FieldController.getInstance().setLastCardOfDeck(card);
 		
 		firstCard = false;
 		

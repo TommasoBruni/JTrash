@@ -92,9 +92,9 @@ public abstract class PlayerController extends Observable implements Resettable,
 	}
 	
 	/**
-	 * Method used to obtain the cards already collected.
+	 * Method used to set the cards already collected.
 	 */
-	public void alreadyCollectedCard(List<Card> collectedCards)
+	public void setAlreadyCollectedCards(List<Card> collectedCards)
 	{
 		alreadyCollectedCards = collectedCards;
 	}

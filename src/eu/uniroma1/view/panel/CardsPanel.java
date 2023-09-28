@@ -54,10 +54,6 @@ import eu.uniroma1.view.utils.DeckPosition;
 public class CardsPanel extends JPanel implements Resettable
 {
 	private CardButton[] cards;
-	private Timer animationTimer;
-	private boolean firstTime;
-	private int xMovement;
-	private int yMovement;
 	private DeckPosition relativeDeckPosition;
 	private PlayerController playerController;
 	private long enemyDelayMs = 1000;
@@ -258,7 +254,7 @@ public class CardsPanel extends JPanel implements Resettable
 		return true;
 	}
 	
-	private List<Card> cardAlreadyCollected()
+	private List<Card> cardsAlreadyCollected()
 	{
 		List<Card> outputList = new ArrayList<>();
 		int i;
@@ -540,7 +536,7 @@ public class CardsPanel extends JPanel implements Resettable
 					@Override
 					public void update(Observable o, Object arg)
 					{
-						playerController.alreadyCollectedCard(cardAlreadyCollected());
+						playerController.setAlreadyCollectedCards(cardsAlreadyCollected());
 					}
 				});
 			}
@@ -562,8 +558,7 @@ public class CardsPanel extends JPanel implements Resettable
 		setBackground(new Color(255, 255, 204));
 		this.playerController = playerController;
 		initializeControllerEvents();
-		
-		firstTime = true;
+
 		setupCards();
 	}
 }
