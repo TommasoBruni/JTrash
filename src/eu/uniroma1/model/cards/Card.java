@@ -5,72 +5,234 @@ package eu.uniroma1.model.cards;
  */
 public enum Card
 {
-	C1(Suit.HEARTS, Value.ACE, CardColor.RED),
-	Q1(Suit.DIAMONDS, Value.ACE, CardColor.RED),
-	F1(Suit.CLUBS, Value.ACE, CardColor.BLACK),
-	P1(Suit.SPADES, Value.ACE, CardColor.BLACK),
+	/**
+	 * Ace of hearts
+	 */
+	H1(Suit.HEARTS, Value.ACE, CardColor.RED),
+	/**
+	 * Ace of diamonds
+	 */
+	D1(Suit.DIAMONDS, Value.ACE, CardColor.RED),
+	/**
+	 * Ace of clubs
+	 */
+	C1(Suit.CLUBS, Value.ACE, CardColor.BLACK),
+	/**
+	 * Ace of spades
+	 */
+	S1(Suit.SPADES, Value.ACE, CardColor.BLACK),
 	
-	C2(Suit.HEARTS, Value.TWO, CardColor.RED),
-	Q2(Suit.DIAMONDS, Value.TWO, CardColor.RED),
-	F2(Suit.CLUBS, Value.TWO, CardColor.BLACK),
-	P2(Suit.SPADES, Value.TWO, CardColor.BLACK),
+	/**
+	 * Two of hearts
+	 */
+	H2(Suit.HEARTS, Value.TWO, CardColor.RED),
+	/**
+	 * Two of diamonds
+	 */
+	D2(Suit.DIAMONDS, Value.TWO, CardColor.RED),
+	/**
+	 * Two of clubs
+	 */
+	C2(Suit.CLUBS, Value.TWO, CardColor.BLACK),
+	/**
+	 * Two of spades
+	 */
+	S2(Suit.SPADES, Value.TWO, CardColor.BLACK),
 	
-	C3(Suit.HEARTS, Value.THREE, CardColor.RED),
-	Q3(Suit.DIAMONDS, Value.THREE, CardColor.RED),
-	F3(Suit.CLUBS, Value.THREE, CardColor.BLACK),
-	P3(Suit.SPADES, Value.THREE, CardColor.BLACK),
+	/**
+	 * Three of hearts
+	 */
+	H3(Suit.HEARTS, Value.THREE, CardColor.RED),
+	/**
+	 * Three of diamonds
+	 */
+	D3(Suit.DIAMONDS, Value.THREE, CardColor.RED),
+	/**
+	 * Three of clubs
+	 */
+	C3(Suit.CLUBS, Value.THREE, CardColor.BLACK),
+	/**
+	 * Three of spades
+	 */
+	S3(Suit.SPADES, Value.THREE, CardColor.BLACK),
 	
-	C4(Suit.HEARTS, Value.FOUR, CardColor.RED),
-	Q4(Suit.DIAMONDS, Value.FOUR, CardColor.RED),
-	F4(Suit.CLUBS, Value.FOUR, CardColor.BLACK),
-	P4(Suit.SPADES, Value.FOUR, CardColor.BLACK),
+	/**
+	 * Four of hearts
+	 */
+	H4(Suit.HEARTS, Value.FOUR, CardColor.RED),
+	/**
+	 * Four of diamonds
+	 */
+	D4(Suit.DIAMONDS, Value.FOUR, CardColor.RED),
+	/**
+	 * Four of clubs
+	 */
+	C4(Suit.CLUBS, Value.FOUR, CardColor.BLACK),
+	/**
+	 * Four of spades
+	 */
+	S4(Suit.SPADES, Value.FOUR, CardColor.BLACK),
 	
-	C5(Suit.HEARTS, Value.FIVE, CardColor.RED),
-	Q5(Suit.DIAMONDS, Value.FIVE, CardColor.RED),
-	F5(Suit.CLUBS, Value.FIVE, CardColor.BLACK),
-	P5(Suit.SPADES, Value.FIVE, CardColor.BLACK),
+	/**
+	 * Five of hearts
+	 */
+	H5(Suit.HEARTS, Value.FIVE, CardColor.RED),
+	/**
+	 * Five of diamonds
+	 */
+	D5(Suit.DIAMONDS, Value.FIVE, CardColor.RED),
+	/**
+	 * Five of clubs
+	 */
+	C5(Suit.CLUBS, Value.FIVE, CardColor.BLACK),
+	/**
+	 * Five of spades
+	 */
+	S5(Suit.SPADES, Value.FIVE, CardColor.BLACK),
 	
-	C6(Suit.HEARTS, Value.SIX, CardColor.RED),
-	Q6(Suit.DIAMONDS, Value.SIX, CardColor.RED),
-	F6(Suit.CLUBS, Value.SIX, CardColor.BLACK),
-	P6(Suit.SPADES, Value.SIX, CardColor.BLACK),
+	/**
+	 * Six of hearts
+	 */
+	H6(Suit.HEARTS, Value.SIX, CardColor.RED),
+	/**
+	 * Six of diamonds
+	 */
+	D6(Suit.DIAMONDS, Value.SIX, CardColor.RED),
+	/**
+	 * Six of clubs
+	 */
+	C6(Suit.CLUBS, Value.SIX, CardColor.BLACK),
+	/**
+	 * Six of spades
+	 */
+	S6(Suit.SPADES, Value.SIX, CardColor.BLACK),
 	
-	C7(Suit.HEARTS, Value.SEVEN, CardColor.RED),
-	Q7(Suit.DIAMONDS, Value.SEVEN, CardColor.RED),
-	F7(Suit.CLUBS, Value.SEVEN, CardColor.BLACK),
-	P7(Suit.SPADES, Value.SEVEN, CardColor.BLACK),
+	/**
+	 * Seven of hearts
+	 */
+	H7(Suit.HEARTS, Value.SEVEN, CardColor.RED),
+	/**
+	 * Seven of diamonds
+	 */
+	D7(Suit.DIAMONDS, Value.SEVEN, CardColor.RED),
+	/**
+	 * Seven of clubs
+	 */
+	C7(Suit.CLUBS, Value.SEVEN, CardColor.BLACK),
+	/**
+	 * Seven of spades
+	 */
+	S7(Suit.SPADES, Value.SEVEN, CardColor.BLACK),
 	
-	C8(Suit.HEARTS, Value.EIGHT, CardColor.RED),
-	Q8(Suit.DIAMONDS, Value.EIGHT, CardColor.RED),
-	F8(Suit.CLUBS, Value.EIGHT, CardColor.BLACK),
-	P8(Suit.SPADES, Value.EIGHT, CardColor.BLACK),
+	/**
+	 * Eight of hearts
+	 */
+	H8(Suit.HEARTS, Value.EIGHT, CardColor.RED),
+	/**
+	 * Eight of diamonds
+	 */
+	D8(Suit.DIAMONDS, Value.EIGHT, CardColor.RED),
+	/**
+	 * Eight of clubs
+	 */
+	C8(Suit.CLUBS, Value.EIGHT, CardColor.BLACK),
+	/**
+	 * Eight of spades
+	 */
+	S8(Suit.SPADES, Value.EIGHT, CardColor.BLACK),
 	
-	C9(Suit.HEARTS, Value.NINE, CardColor.RED),
-	Q9(Suit.DIAMONDS, Value.NINE, CardColor.RED),
-	F9(Suit.CLUBS, Value.NINE, CardColor.BLACK),
-	P9(Suit.SPADES, Value.NINE, CardColor.BLACK),
+	/**
+	 * Nine of hearts
+	 */
+	H9(Suit.HEARTS, Value.NINE, CardColor.RED),
+	/**
+	 * Nine of diamonds
+	 */
+	D9(Suit.DIAMONDS, Value.NINE, CardColor.RED),
+	/**
+	 * Nine of clubs
+	 */
+	C9(Suit.CLUBS, Value.NINE, CardColor.BLACK),
+	/**
+	 * Nine of spades
+	 */
+	S9(Suit.SPADES, Value.NINE, CardColor.BLACK),
 	
-	C10(Suit.HEARTS, Value.TEN, CardColor.RED),
-	Q10(Suit.DIAMONDS, Value.TEN, CardColor.RED),
-	F10(Suit.CLUBS, Value.TEN, CardColor.BLACK),
-	P10(Suit.SPADES, Value.TEN, CardColor.BLACK),
+	/**
+	 * Ten of hearts
+	 */
+	H10(Suit.HEARTS, Value.TEN, CardColor.RED),
+	/**
+	 * Ten of diamonds
+	 */
+	D10(Suit.DIAMONDS, Value.TEN, CardColor.RED),	
+	/**
+	 * Ten of clubs
+	 */
+	C10(Suit.CLUBS, Value.TEN, CardColor.BLACK),
+	/**
+	 * Ten of spades
+	 */
+	S10(Suit.SPADES, Value.TEN, CardColor.BLACK),
 	
-	CJ(Suit.HEARTS, Value.JACK, CardColor.RED),
-	QJ(Suit.DIAMONDS, Value.JACK, CardColor.RED),
-	FJ(Suit.CLUBS, Value.JACK, CardColor.BLACK),
-	PJ(Suit.SPADES, Value.JACK, CardColor.BLACK),
+	/**
+	 * Jack of hearts
+	 */
+	HJ(Suit.HEARTS, Value.JACK, CardColor.RED),
+	/**
+	 * Jack of diamonds
+	 */
+	DJ(Suit.DIAMONDS, Value.JACK, CardColor.RED),
+	/**
+	 * Jack of clubs
+	 */
+	CJ(Suit.CLUBS, Value.JACK, CardColor.BLACK),
+	/**
+	 * Jack of spades
+	 */
+	SJ(Suit.SPADES, Value.JACK, CardColor.BLACK),
 	
-	CQ(Suit.HEARTS, Value.QUEEN, CardColor.RED),
-	QQ(Suit.DIAMONDS, Value.QUEEN, CardColor.RED),
-	FQ(Suit.CLUBS, Value.QUEEN, CardColor.BLACK),
-	PQ(Suit.SPADES, Value.QUEEN, CardColor.BLACK),
+	/**
+	 * Queen of hearts
+	 */
+	HQ(Suit.HEARTS, Value.QUEEN, CardColor.RED),
+	/**
+	 * Queen of diamonds
+	 */
+	DQ(Suit.DIAMONDS, Value.QUEEN, CardColor.RED),
+	/**
+	 * Queen of clubs
+	 */
+	CQ(Suit.CLUBS, Value.QUEEN, CardColor.BLACK),
+	/**
+	 * Queen of spades
+	 */
+	SQ(Suit.SPADES, Value.QUEEN, CardColor.BLACK),
 	
-	CK(Suit.HEARTS, Value.KING, CardColor.RED),
-	QK(Suit.DIAMONDS, Value.KING, CardColor.RED),
-	FK(Suit.CLUBS, Value.KING, CardColor.BLACK),
-	PK(Suit.SPADES, Value.KING, CardColor.BLACK),
+	/**
+	 * King of hearts
+	 */
+	HK(Suit.HEARTS, Value.KING, CardColor.RED),
+	/**
+	 * King of diamonds
+	 */
+	DK(Suit.DIAMONDS, Value.KING, CardColor.RED),
+	/**
+	 * King of clubs
+	 */
+	CK(Suit.CLUBS, Value.KING, CardColor.BLACK),
+	/**
+	 * King of spades
+	 */
+	SK(Suit.SPADES, Value.KING, CardColor.BLACK),
 	
+	/**
+	 * Red jolly
+	 */
 	RED_JOLLY(Suit.NOTHING, Value.JOLLY, CardColor.RED),
+	/**
+	 * Black jolly
+	 */
 	BLACK_JOLLY(Suit.NOTHING, Value.JOLLY, CardColor.BLACK);
 	
 	Value value;
@@ -84,8 +246,8 @@ public enum Card
 	}
 	
 	/**
-	 * Get colour of card
-	 * @return card colour
+	 * Get color of card
+	 * @return card color
 	 */
 	public CardColor getColour()
 	{

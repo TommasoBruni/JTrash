@@ -1,16 +1,16 @@
 package eu.uniroma1.model.cards;
 
 /**
- * Card colour enumerate 
+ * Card color enumerate 
  */
 public enum CardColor 
 {
 	/**
-	 * Red colour 
+	 * Red color 
 	 */
 	RED,
 	/**
-	 * Black colour 
+	 * Black color 
 	 */
 	BLACK
 }

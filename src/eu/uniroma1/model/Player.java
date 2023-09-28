@@ -62,6 +62,9 @@ public class Player implements Serializable
 		return level;
 	}
 
+	/**
+	 * Upgrade level of the player 
+	 */
 	public void upgradeLevel()
 	{
 		if (level == Level.BEGINNER)
@@ -70,45 +73,91 @@ public class Player implements Serializable
 			level = Level.ADVANCED;
 	}
 
-	public String getName() {
+	/**
+	 * Get name of the player
+	 * @return name of the player
+	 */
+	public String getName() 
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	/**
+	 * Set name of the player
+	 * @param name new name of the player 
+	 */
+	public void setName(String name) 
+	{
 		this.name = name;
 	}
 
-	public String getNickname() {
+	/**
+	 * Get nickname of the player.
+	 * @return nickname of the player
+	 */
+	public String getNickname() 
+	{
 		return nickname;
 	}
 
-	public void setNickname(String nickname) {
+	/**
+	 * Set nickname of the player
+	 * @param nickname new nickname of the player
+	 */
+	public void setNickname(String nickname)
+	{
 		this.nickname = nickname;
 	}
 
-	public long getWonMatches() {
+	/**
+	 * Get won matches of the player
+	 * @return number of won matches of the player 
+	 */
+	public long getWonMatches() 
+	{
 		return matchesWon;
 	}
 
+	/**
+	 * Increase the number of won matches of the player
+	 */
 	public void increasePlayerWonGames()
 	{
 		this.matchesWon++;
 	}
 
-	public long getLostMatches() {
+	/**
+	 * Get lost matches of the player
+	 * @return the number of lost matches of the player 
+	 */
+	public long getLostMatches()
+	{
 		return matchesLost;
 	}
 
+	/**
+	 * Increase the number of lost matches of the player
+	 */
 	public void increasePlayerLostGames()
 	{
 		this.matchesLost++;
 	}
 
-	public ImageIcon getAvatar() {
+	/**
+	 * Get avatar of the player
+	 * @return the avatar of the player
+	 */
+	public ImageIcon getAvatar()
+	{
 		return avatar;
 	}
 
-	public void setAvatar(ImageIcon avatar) {
+	/**
+	 * Set avatar of the player
+	 * @param avatar new avatar of the player
+	 */
+	public void setAvatar(ImageIcon avatar) 
+	{
 		this.avatar = avatar;
 	}
 }

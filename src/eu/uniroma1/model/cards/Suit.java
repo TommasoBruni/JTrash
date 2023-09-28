@@ -5,10 +5,25 @@ package eu.uniroma1.model.cards;
  */
 public enum Suit
 {
+	/**
+	 * No suit 
+	 */
 	NOTHING(),
+	/**
+	 * Hearts suit 
+	 */
 	HEARTS("♥"), 
-	DIAMONDS("♦"), 
-	CLUBS("♣"), 
+	/**
+	 * Diamonds suit 
+	 */
+	DIAMONDS("♦"),
+	/**
+	 * Clubs suit 
+	 */
+	CLUBS("♣"),
+	/**
+	 * Spades suit
+	 */
 	SPADES("♠");
 	
 	@Override
