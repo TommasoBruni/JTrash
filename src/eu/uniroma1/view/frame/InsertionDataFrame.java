@@ -102,7 +102,7 @@ public class InsertionDataFrame extends JInternalFrame
 			public void actionPerformed(ActionEvent e) {
 				/* Remove this window */
 				dispose();
-				frameParent.showInsertionNPlayers();				
+				frameParent.showInsertionNPlayersDialog();				
 			}
 		});
 		

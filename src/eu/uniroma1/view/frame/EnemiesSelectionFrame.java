@@ -143,9 +143,9 @@ public class EnemiesSelectionFrame extends JInternalFrame
             public void actionPerformed(ActionEvent e) {
             	dispose();
             	if (MainPlayerController.getInstance().getPlayerData().isEmptyData())
-            		owner.setupForDataInsertion();
+            		owner.showInsertionDataFrame();
             	else
-            		owner.showInsertionNPlayers();
+            		owner.showInsertionNPlayersDialog();
             }
         });
         

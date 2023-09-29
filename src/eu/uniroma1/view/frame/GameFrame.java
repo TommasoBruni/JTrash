@@ -39,7 +39,10 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 	private ObserverForVictory observerVictory;
 	private JPanel internalFramePanel;
 	
-	public void setupForDataInsertion()
+	/**
+	 * Show insertion data frame.
+	 */
+	public void showInsertionDataFrame()
 	{
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -56,24 +59,30 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
         add(internalFramePanel);
 	}
 	
-	public void showInsertionNPlayers()
+	/**
+	 * Show insertion number of players dialog
+	 */
+	public void showInsertionNPlayersDialog()
 	{
 		Integer[] possibleNumberOfPlayers = { 2, 3, 4 };
-        int numeroGiocatori = JOptionPane.showOptionDialog(this, "Number of players:",
+        int nPlayers = JOptionPane.showOptionDialog(this, "Number of players:",
                 "Number of players insertion",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, possibleNumberOfPlayers,
                 possibleNumberOfPlayers[0]);
         
-        if (numeroGiocatori < 0)
+        if (nPlayers < 0)
         	System.exit(0);
-        FieldController.getInstance().updateNumberOfPlayers(possibleNumberOfPlayers[numeroGiocatori]);
+        FieldController.getInstance().updateNumberOfPlayers(possibleNumberOfPlayers[nPlayers]);
         if (MainPlayerController.getInstance().getPlayerData().isEmptyData())
 	        /* Are consecutive */
-	        setupForDataInsertion();
+	        showInsertionDataFrame();
         else
         	showEnemiesInsertionDialog();
 	}
 	
+	/**
+	 * Show enemies insertion dialog
+	 */
 	public void showEnemiesInsertionDialog()
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -223,6 +232,9 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		}
 	}
 	
+	/**
+	 * Setup the game field
+	 */
 	public void setGameField()
 	{
 		FieldController.getInstance().initializeComponents();
@@ -309,7 +321,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 			}
 			else
 			{
-				showInsertionNPlayers();
+				showInsertionNPlayersDialog();
 				wholeGameFinished = false;
 			}
 		}
@@ -362,6 +374,6 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		AudioManager.getInstance().loopPlay(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
 		FieldController.getInstance().addObserver(this);
 		FieldController.getInstance().getObservableForGameFinish().addObserver(observerVictory);
-		showInsertionNPlayers();
+		showInsertionNPlayersDialog();
 	}
 }

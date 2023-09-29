@@ -328,7 +328,7 @@ public class CardsPanel extends JPanel implements Resettable
 		JPanel panelTopCards = new JPanel();
 		JPanel panelDownCards = new JPanel();
 		GridBagConstraints gbcBetweenTopDown = new GridBagConstraints();
-		GridBagConstraints gbcPerCarte = new GridBagConstraints();
+		GridBagConstraints gbcForCards = new GridBagConstraints();
 		
 		panelTopCards.setLayout(new GridBagLayout());
 		panelDownCards.setLayout(new GridBagLayout());
@@ -351,11 +351,11 @@ public class CardsPanel extends JPanel implements Resettable
 					}
 				});
 			
-			gbcPerCarte.gridx = 0;
-			gbcPerCarte.gridy = i;
-			gbcPerCarte.insets = new Insets(0, 0, 15, 0);
+			gbcForCards.gridx = 0;
+			gbcForCards.gridy = i;
+			gbcForCards.insets = new Insets(0, 0, 15, 0);
 			
-			panelTopCards.add(cards[i], gbcPerCarte);
+			panelTopCards.add(cards[i], gbcForCards);
 		}
 		
 		for (j = 0; j + i < (cards.length - minCard) + 5; j++)
@@ -370,10 +370,10 @@ public class CardsPanel extends JPanel implements Resettable
 					}
 				});
 
-			gbcPerCarte.gridx = 0;
-			gbcPerCarte.gridy = j;
-			gbcPerCarte.insets = new Insets(0, 0, 15, 0);
-			panelDownCards.add(cards[j + i], gbcPerCarte);
+			gbcForCards.gridx = 0;
+			gbcForCards.gridy = j;
+			gbcForCards.insets = new Insets(0, 0, 15, 0);
+			panelDownCards.add(cards[j + i], gbcForCards);
 		}
 		
 		gbcBetweenTopDown.insets = new Insets(0, 0, 0, 5);
@@ -395,15 +395,15 @@ public class CardsPanel extends JPanel implements Resettable
 	private void verticalSetup() throws GameNotInProgressException, DeckFinishedException
 	{
 		int i, j, minCard;
-		JPanel pannelloCarteSuperiori = new JPanel();
-		JPanel pannelloCarteInferiori = new JPanel();
+		JPanel topCardsPanel = new JPanel();
+		JPanel belowCardsPanel = new JPanel();
 		GridBagConstraints gbcBetweenTopDown = new GridBagConstraints();
 		GridBagConstraints gbcForCards = new GridBagConstraints();
 		
-		pannelloCarteSuperiori.setLayout(new GridBagLayout());
-		pannelloCarteInferiori.setLayout(new GridBagLayout());
-		pannelloCarteInferiori.setBackground(new Color(255, 255, 204));
-		pannelloCarteSuperiori.setBackground(new Color(255, 255, 204));
+		topCardsPanel.setLayout(new GridBagLayout());
+		belowCardsPanel.setLayout(new GridBagLayout());
+		belowCardsPanel.setBackground(new Color(255, 255, 204));
+		topCardsPanel.setBackground(new Color(255, 255, 204));
 		setLayout(new GridBagLayout());
 		
 		cards = new CardButton[playerController.getCardsInHand()];
@@ -425,7 +425,7 @@ public class CardsPanel extends JPanel implements Resettable
 			gbcForCards.gridy = 0;
 			gbcForCards.insets = new Insets(0, 0, 0, 15);
 			
-			pannelloCarteSuperiori.add(cards[i], gbcForCards);
+			topCardsPanel.add(cards[i], gbcForCards);
 		}
 		
 		for (j = 0; j + i < (cards.length - minCard) + 5; j++)
@@ -444,7 +444,7 @@ public class CardsPanel extends JPanel implements Resettable
 			gbcForCards.gridx = j;
 			gbcForCards.gridy = 0;
 			gbcForCards.insets = new Insets(0, 0, 0, 15);
-			pannelloCarteInferiori.add(cards[j + i], gbcForCards);
+			belowCardsPanel.add(cards[j + i], gbcForCards);
 		}
 		
 		gbcBetweenTopDown.insets = new Insets(0, 0, 5, 0);
@@ -454,7 +454,7 @@ public class CardsPanel extends JPanel implements Resettable
 		gbcBetweenTopDown.weightx = 0.1;
 		gbcBetweenTopDown.weighty = 0.1;
 		
-		add(pannelloCarteSuperiori, gbcBetweenTopDown);
+		add(topCardsPanel, gbcBetweenTopDown);
 		gbcBetweenTopDown.weightx = 1;
 		gbcBetweenTopDown.weighty = 1;
 
@@ -462,7 +462,7 @@ public class CardsPanel extends JPanel implements Resettable
 		gbcBetweenTopDown.gridx = 1;
 		gbcBetweenTopDown.gridy = 1;
 	    
-		add(pannelloCarteInferiori, gbcBetweenTopDown);
+		add(belowCardsPanel, gbcBetweenTopDown);
 	}
 	
 	private void setupCards() throws GameNotInProgressException, DeckFinishedException
