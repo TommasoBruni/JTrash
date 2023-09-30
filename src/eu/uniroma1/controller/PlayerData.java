@@ -17,6 +17,7 @@ public class PlayerData extends Observable
 	private Player player;
 	private String filename;
 	private static int levelUpgrade = 15;
+	private static String accountsPath = "accounts";
 	
 	/**
 	 * Check if the data are consistent.
@@ -113,11 +114,15 @@ public class PlayerData extends Observable
 		ObjectOutputStream os = null;
 		try 
 		{
-		    File myObj = new File(filename); 
+			File accountDirectory = new File(accountsPath);
+			
+			if (!accountDirectory.exists())
+				accountDirectory.mkdirs();
+		    File myObj = new File(accountDirectory.getPath().concat("\\".concat(filename))); 
 		    
 		    myObj.delete();
 			
-			FileOutputStream fos = new FileOutputStream(filename);
+			FileOutputStream fos = new FileOutputStream(myObj.getPath());
 			
 			os = new ObjectOutputStream(fos);
 			
@@ -196,7 +201,7 @@ public class PlayerData extends Observable
 		
         try
         {
-        	fis = new FileInputStream(filename);
+        	fis = new FileInputStream(accountsPath.concat("\\".concat(filename)));
         	is = new ObjectInputStream(fis);
         	Player player = (Player)is.readObject();
             

@@ -60,7 +60,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		setLayout(new GridBagLayout());
-		playerNicknameLabel = new JLabel(playerData.getPlayerName() + " ");
+		playerNicknameLabel = new JLabel(playerData.getPlayerNickname() + " ");
 		labelIcon = new JLabel(playerData.getPlayerAvatar());
 		setBackground(new Color(255, 255, 204));
 		
