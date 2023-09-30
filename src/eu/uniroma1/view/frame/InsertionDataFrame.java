@@ -75,11 +75,11 @@ public class InsertionDataFrame extends JInternalFrame
 		buttonOk.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String nomeUtente = textFieldUsername.getText();
+				String username = textFieldUsername.getText();
 				String nickname = textFieldNickname.getText();
 				
 				/* Check that they are not blank. */
-				if (nomeUtente.isBlank() || nickname.isBlank())
+				if (username.isBlank() || nickname.isBlank())
 				{
 					JOptionPane.showMessageDialog(new JFrame(), "Insert valid data!", "Error data insertion", JOptionPane.OK_OPTION);
 					return;
@@ -91,7 +91,7 @@ public class InsertionDataFrame extends JInternalFrame
 					return;
 				}
 					
-				MainPlayerController.getInstance().getPlayerData().updatePlayerData(nomeUtente, nickname, dialogSelectAvatar.getSelectedAvatar());
+				MainPlayerController.getInstance().getPlayerData().updatePlayerData(username, nickname, dialogSelectAvatar.getSelectedAvatar());
 				/* Dispose will close the current window */
 				dispose();
 				frameParent.showEnemiesInsertionDialog();

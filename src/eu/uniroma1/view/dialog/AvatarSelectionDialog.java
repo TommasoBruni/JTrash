@@ -68,7 +68,6 @@ public class AvatarSelectionDialog extends JDialog
         goRight.setBackground(Color.ORANGE);
         goLeft.setBackground(Color.ORANGE);
         
-        //setMinimumSize(new Dimension(300, 300));
         avatarLabel = new JLabel(avatarArray[iconsIndex]);
         
 		avatarLabel.setPreferredSize(new Dimension(avatarArray[iconsIndex].getIconWidth(), avatarArray[iconsIndex].getIconHeight()));
@@ -124,8 +123,6 @@ public class AvatarSelectionDialog extends JDialog
             }
         });
         
-        //cancelButton.setPreferredSize(new Dimension(100, 100));
-        
         goRight.addActionListener(new ActionListener() {
 			
 			@Override
@@ -176,7 +173,7 @@ public class AvatarSelectionDialog extends JDialog
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.anchor = GridBagConstraints.PAGE_END;
-		//gbc.insets = new Insets(10, 0, 0, 0);
+		
 		gbc.ipadx = 50;
 		gbc.ipady = 10;
         panel.add(cancelButton, gbc);
