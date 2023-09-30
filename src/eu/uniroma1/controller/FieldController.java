@@ -367,15 +367,6 @@ public class FieldController extends Observable implements Resettable
 		}
 		itemToRestart.restart();
 	}
-	
-	/**
-	 * Get the list of enemies icons.
-	 * @return list of enemies icons. 
-	 */
-	public List<ImageIcon> getEnemiesIcon() 
-	{
-		return enemiesIcon;
-	}
 
 	/**
 	 * Set list of enemies icons.
