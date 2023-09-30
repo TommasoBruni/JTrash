@@ -45,15 +45,45 @@ public class FieldController extends Observable implements Resettable
 	private Restartable itemToRestart;
 	private static final int nextPlayerSpeed = 800;
 	
+	private void setPlayerIndex()
+	{
+		switch (playerIndex)
+		{
+		case 0:
+			if (nPlayersInGame > 2)
+				playerIndex = 2;
+			else
+				playerIndex = 1;
+			break;
+		case 1:
+			if (nPlayersInGame > 3)
+				playerIndex = 3;
+			else
+				playerIndex = 0;
+			break;
+		case 2:
+			playerIndex = 1;
+			break;
+			default:
+				playerIndex = 0;
+				break;
+		}
+	}
+	
 	/**
-	 * To notify the next controller to start the turn. 
+	 * To notify the next controller to start the turn.
 	 */
-	public void nextTurn() 
+	public void nextTurn()
+	{
+		nextTurn(false);
+	}
+
+	private void nextTurn(boolean skipSetIndex) 
 	{
 		/* Is the next player turn */
-		if (playerIndex > nPlayersInGame - 1)
-			playerIndex = 0;
-		currentPlayerController = playerControllers.get(playerIndex++);
+		if (!skipSetIndex)
+			setPlayerIndex();
+		currentPlayerController = playerControllers.get(playerIndex);
 		try 
 		{
 			currentPlayerController.startTurn();
@@ -125,7 +155,8 @@ public class FieldController extends Observable implements Resettable
 	 */
 	public void startGame()
 	{
-		nextTurn();
+		playerIndex = 0;
+		nextTurn(true);
 	}
 	
 	/**
