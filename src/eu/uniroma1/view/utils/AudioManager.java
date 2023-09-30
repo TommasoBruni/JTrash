@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.naming.ldap.ManageReferralControl;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -22,7 +23,8 @@ public class AudioManager {
 	private static AudioManager instance;
 
 	/**
-	 * To get the instance of audio manager 
+	 * To get the instance of audio
+	 * @return new instance of AudioManager
 	 */
 	public static AudioManager getInstance() {
 		if (instance == null)

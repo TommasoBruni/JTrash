@@ -209,6 +209,7 @@ public class CardButton extends JButton implements Resettable
 	
 	/**
 	 * Directly set the current card
+	 * @param card card to set as base card
 	 */
 	public void setBaseCard(Card card)
 	{

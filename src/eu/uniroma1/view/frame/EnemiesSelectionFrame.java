@@ -32,7 +32,6 @@ import eu.uniroma1.controller.MainPlayerController;
  */
 public class EnemiesSelectionFrame extends JInternalFrame
 {
-	private List<ImageIcon> selectedAvatars;
 	private ImageIcon[] avatarArray;
 	private JLabel[] avatarLabels;
 	
@@ -55,8 +54,6 @@ public class EnemiesSelectionFrame extends JInternalFrame
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_11.gif"), "Deidara"),
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_14.gif"), "Timmy"),
 					  					new ImageIcon(System.getProperty("user.dir").concat("\\resources\\AVATAR_IMAGE_4.gif"), "Chuck")};
-		
-		selectedAvatars = null;
         GridBagConstraints gbc = new GridBagConstraints();
         
         int i;

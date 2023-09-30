@@ -66,7 +66,8 @@ public abstract class PlayerController extends Observable implements Resettable,
 	
 	/**
 	 * Get if the object is enabled
-	 **/
+	 * @return true if it is enabled, otherwise false
+	 */
 	public boolean getIsEnabled()
 	{
 		return isEnabled;
@@ -93,6 +94,7 @@ public abstract class PlayerController extends Observable implements Resettable,
 	
 	/**
 	 * Method used to set the cards already collected.
+	 * @param collectedCards already collected cards
 	 */
 	public void setAlreadyCollectedCards(List<Card> collectedCards)
 	{
@@ -167,7 +169,7 @@ public abstract class PlayerController extends Observable implements Resettable,
 	/**
 	 * Setup the last card selected.
 	 * @param card last selected card.
-	 * @throws MoveNotAllowedException if the state is different by {@link PlayerState.TURN_STARTED}
+	 * @throws MoveNotAllowedException if the state is different by PlayerState.TURN_STARTED
 	 */
 	public void newCardSelected(Card card) throws MoveNotAllowedException
 	{
@@ -200,7 +202,7 @@ public abstract class PlayerController extends Observable implements Resettable,
 
 	/**
 	 * Set the number of cards in hand.
-	 * @return number of cards in hand.
+	 * @param nCardsInHand new number of cards in hand.
 	 */
 	public void setCardsInHand(int nCardsInHand)
 	{

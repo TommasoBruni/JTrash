@@ -51,7 +51,8 @@ public class AvatarScorePanel extends JPanel implements Observer
 	}
 	
 	/**
-	 * Avatar score panel builder 
+	 * Avatar score panel builder
+	 * @param playerController player controller for the current avatar score panel
 	 */
 	public AvatarScorePanel(PlayerController playerController)
 	{

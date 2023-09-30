@@ -174,7 +174,6 @@ public class FieldController extends Observable implements Resettable
 	 * @return next card of deck.
 	 * @throws GameNotInProgressException if the game is not started yet, or it is just finished.
 	 * @throws DeckFinishedException if there are no more cards in the deck.
-	 * @throws MoveNotAllowedException this move is not allowed for the current state
 	 */
 	public Card nextCard() throws GameNotInProgressException, DeckFinishedException
 	{
@@ -306,7 +305,7 @@ public class FieldController extends Observable implements Resettable
 	
 	/**
 	 * Method to indicate the end of the game.
-	 * @param victory player controller. 
+	 * @param victoryPlayer controller of the victory player. 
 	 */
 	public void gameFinished(PlayerController victoryPlayer)
 	{
@@ -349,7 +348,7 @@ public class FieldController extends Observable implements Resettable
 
 	/**
 	 * Set list of enemies icons.
-	 * @param list of enemies icons.
+	 * @param enemiesIcon of enemies icons.
 	 */
 	public void setEnemiesIcon(List<ImageIcon> enemiesIcon)
 	{
@@ -376,6 +375,7 @@ public class FieldController extends Observable implements Resettable
 
 	/**
 	 * Set item that needs to be restarted.
+	 * @param itemToRestart item that needs to be restarted
 	 */
 	public void setItemToRestart(Restartable itemToRestart) 
 	{

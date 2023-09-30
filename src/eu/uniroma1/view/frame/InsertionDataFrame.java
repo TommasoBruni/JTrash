@@ -55,6 +55,7 @@ public class InsertionDataFrame extends JInternalFrame
 	
 	/**
 	 * Insertion data frame class builder
+	 * @param frameParent frame parent of this frame
 	 */
 	public InsertionDataFrame(GameFrame frameParent)
 	{

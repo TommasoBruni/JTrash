@@ -69,7 +69,8 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 	}
 	
 	/**
-	 * Add the card to the top of the list 
+	 * Add the card to the top of the list
+	 * @param card card to add to the top of trash
 	 */
 	public void addCardToTop(Card card)
 	{

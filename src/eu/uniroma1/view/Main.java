@@ -2,6 +2,9 @@ package eu.uniroma1.view;
 
 import eu.uniroma1.view.frame.GameFrame;
 
+/**
+ * Main class of JTrash application 
+ */
 public class Main 
 {
 	/**

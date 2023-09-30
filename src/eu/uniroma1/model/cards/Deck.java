@@ -112,6 +112,7 @@ public class Deck implements Iterable<Card>
 		
 		/**
 		 * Aggregate a new deck to the current one
+		 * @param newDeck new deck to aggregate with the current one
 		 * @return new deck builder joined with another deck
 		 */
 		public DeckBuilder join(Deck newDeck)
