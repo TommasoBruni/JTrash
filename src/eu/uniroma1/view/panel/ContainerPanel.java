@@ -54,10 +54,6 @@ public class ContainerPanel extends JPanel implements Resettable
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(new GridBagLayout());
 
-		/*
-		setPreferredSize(new Dimension(this.pannelloAvatarPunteggio.getPreferredSize().width + this.pannelloCarte.getPreferredSize().width,
-									   this.pannelloAvatarPunteggio.getPreferredSize().height + this.pannelloCarte.getPreferredSize().height));
-		*/
 		switch (positionOfDeck) {
 		case ON_THE_LEFT:
 			gbc.gridx = 0;
