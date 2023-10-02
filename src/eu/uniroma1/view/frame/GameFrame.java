@@ -248,7 +248,33 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		setJMenuBar(createMenuBar());
 		getContentPane().setBackground(new Color(255, 255, 204));
 		/* Indicate to the controller to start the game */
-		FieldController.getInstance().startGame();
+		FieldController.getInstance().startGame((currentPlayer, nPlayerInGame) -> {
+			int playerIndex;
+			
+			/* Only the view know how the players are arranged */
+			switch (currentPlayer)
+			{
+			case 0:
+				if (nPlayerInGame > 2)
+					playerIndex = 2;
+				else
+					playerIndex = 1;
+				break;
+			case 1:
+				if (nPlayerInGame > 3)
+					playerIndex = 3;
+				else
+					playerIndex = 0;
+				break;
+			case 2:
+				playerIndex = 1;
+				break;
+				default:
+					playerIndex = 0;
+					break;
+			}
+			return playerIndex;
+		});
 	}
 	
 	private JMenuBar createMenuBar()

@@ -30,6 +30,7 @@ public class FieldController extends Observable implements Resettable
 	private PlayerController currentPlayerController;
 	private GenericObservable observableForTrashUpdating;
 	private GenericObservable observableForAutoSelectedCards;
+	private Turnable nextPlayerTurn;
 	/**
 	 * Needs to update trash or deck 
 	 */
@@ -82,7 +83,7 @@ public class FieldController extends Observable implements Resettable
 	{
 		/* Is the next player turn */
 		if (!skipSetIndex)
-			setPlayerIndex();
+			playerIndex = nextPlayerTurn.getNextTurn(playerIndex, nPlayersInGame);
 		currentPlayerController = playerControllers.get(playerIndex);
 		try 
 		{
@@ -152,9 +153,11 @@ public class FieldController extends Observable implements Resettable
 	/**
 	 * Start the game notifying the next turn.
 	 * Call this method only when all data are configured 
+	 * @param nextPlayerTurn interface to get the right next turn
 	 */
-	public void startGame()
+	public void startGame(Turnable nextPlayerTurn)
 	{
+		this.nextPlayerTurn = nextPlayerTurn;
 		playerIndex = 0;
 		nextTurn(true);
 	}
