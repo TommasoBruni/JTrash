@@ -46,31 +46,6 @@ public class FieldController extends Observable implements Resettable
 	private Restartable itemToRestart;
 	private static final int nextPlayerSpeed = 800;
 	
-	private void setPlayerIndex()
-	{
-		switch (playerIndex)
-		{
-		case 0:
-			if (nPlayersInGame > 2)
-				playerIndex = 2;
-			else
-				playerIndex = 1;
-			break;
-		case 1:
-			if (nPlayersInGame > 3)
-				playerIndex = 3;
-			else
-				playerIndex = 0;
-			break;
-		case 2:
-			playerIndex = 1;
-			break;
-			default:
-				playerIndex = 0;
-				break;
-		}
-	}
-	
 	/**
 	 * To notify the next controller to start the turn.
 	 */
