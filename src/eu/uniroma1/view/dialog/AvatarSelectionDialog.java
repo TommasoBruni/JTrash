@@ -14,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JDialog;
-import javax.swing.border.Border;
 import javax.swing.*;
 
 /**

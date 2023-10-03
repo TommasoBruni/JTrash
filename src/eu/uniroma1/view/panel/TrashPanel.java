@@ -164,18 +164,5 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 		setPreferredSize(new Dimension(70, 90));
 		add(internalPanel);
 		setBackground(new Color(255, 255, 204));
-		/*
-		setBorder(compoundBorder);
-		setPreferredSize(new Dimension(70, 85));
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		
-		gbc.weightx = 0.01;
-		gbc.weighty = 0.01;
-		add(carteScartate, gbc);
-		*/
 	}
 }

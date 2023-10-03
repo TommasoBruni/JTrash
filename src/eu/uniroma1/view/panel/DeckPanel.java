@@ -1,6 +1,5 @@
 package eu.uniroma1.view.panel;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -176,7 +175,6 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 			}
 		});
 		
-        //setBorder(new EmptyBorder(10, 10, 10, 10));	
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();

@@ -150,7 +150,7 @@ public class EnemiesSelectionFrame extends JInternalFrame
         goButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	FieldController.getInstance().setEnemiesIcon(Arrays.stream(avatarLabels)
-            													   .map((label) -> (ImageIcon)label.getIcon())
+            													   .map(label -> (ImageIcon)label.getIcon())
             													   .collect(Collectors.toList()));
             	
             	dispose();

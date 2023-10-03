@@ -251,7 +251,8 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		FieldController.getInstance().startGame((currentPlayer, nPlayerInGame) -> {
 			int playerIndex;
 			
-			/* Only the view know how the players are arranged */
+			/* Only the view know how the players are arranged.
+			 * This is for counterclockwise rotation. */
 			switch (currentPlayer)
 			{
 			case 0:

@@ -8,16 +8,12 @@ import java.awt.Insets;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import eu.uniroma1.controller.MainPlayerController;
 import eu.uniroma1.controller.PlayerController;
 import eu.uniroma1.controller.PlayerData;
-import eu.uniroma1.controller.Resettable;
 import eu.uniroma1.model.Player;
 
 /**

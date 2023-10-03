@@ -104,7 +104,6 @@ public class ProfileDialog extends JDialog
 			}
 		});
 		
-		//pannelloContenitore.setPreferredSize(new Dimension(250, 200));
 		setPreferredSize(new Dimension(200, 200));
 		containerPanel.add(labelName);
 		containerPanel.add(fieldName);
