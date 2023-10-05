@@ -71,7 +71,6 @@ public class AudioManager {
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioIn);
 			clip.loop(javax.sound.sampled.Clip.LOOP_CONTINUOUSLY);
-			//clip.start();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {
