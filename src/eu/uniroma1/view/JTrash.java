@@ -5,7 +5,7 @@ import eu.uniroma1.view.frame.GameFrame;
 /**
  * Main class of JTrash application 
  */
-public class Main 
+public class JTrash 
 {
 	/**
 	 * Starts the application
