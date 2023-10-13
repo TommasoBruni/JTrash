@@ -29,7 +29,7 @@ import eu.uniroma1.view.button.CardButton;
 /**
  * Trash panel class
  */
-public class TrashPanel extends JPanel implements Enableable, Resettable
+public class TrashPanel extends JPanel implements Resettable
 {
 	private CardButton discardedCardsButton;
 	private List<Card> discardedCards;
@@ -78,18 +78,6 @@ public class TrashPanel extends JPanel implements Enableable, Resettable
 		discardedCards.add(card);
 		discardedCardsButton.changeCard(card);
 		discardedCardsButton.setVisible(true);
-	}
-	
-	@Override
-	public void enableObject() 
-	{
-		setEnabled(true);
-	}
-
-	@Override
-	public void disableObject() 
-	{
-		setEnabled(false);
 	}
 	
 	@Override
