@@ -112,6 +112,7 @@ public class AvatarSelectionDialog extends JDialog
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
 		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(0, 0, 10, 0);
         panel.add(avatarLabel, gbc);
 
         JButton cancelButton = new JButton("Cancel");

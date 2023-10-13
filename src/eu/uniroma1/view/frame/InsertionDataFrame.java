@@ -2,6 +2,9 @@ package eu.uniroma1.view.frame;
 
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -56,6 +59,7 @@ public class InsertionDataFrame extends JInternalFrame
 	public InsertionDataFrame(GameFrame frameParent)
 	{
 		super("Data insertion");
+		GridBagConstraints gbc = new GridBagConstraints();
 		
 		usernameLabel = new JLabel("Username:");
 		textFieldUsername = new JTextField(15);
@@ -112,15 +116,48 @@ public class InsertionDataFrame extends JInternalFrame
 			}
 		});
 		
-		setPreferredSize(new Dimension(200, 200));
+		//setPreferredSize(new Dimension(200, 200));
+		containerPanel.setLayout(new GridBagLayout());
 		
-		containerPanel.add(usernameLabel);
-		containerPanel.add(textFieldUsername);
-		containerPanel.add(labelNickname);
-		containerPanel.add(textFieldNickname);
-		containerPanel.add(buttonSelectAvatar);
-		containerPanel.add(buttonOk);
-		containerPanel.add(buttonCancel);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		
+		containerPanel.add(usernameLabel, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		containerPanel.add(textFieldUsername, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		containerPanel.add(labelNickname, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		
+		containerPanel.add(textFieldNickname, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 4;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		containerPanel.add(buttonSelectAvatar, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		gbc.insets = new Insets(0, 10, 10, 0);
+		gbc.anchor = GridBagConstraints.CENTER;
+		containerPanel.add(buttonOk, gbc);
+		
+		gbc.gridx = 2;
+		gbc.gridy = 5;
+		gbc.insets = new Insets(0, 0, 10, 10);
+		gbc.anchor = GridBagConstraints.CENTER;
+		containerPanel.add(buttonCancel, gbc);
 		add(containerPanel);
+		pack();
 	}
 }
