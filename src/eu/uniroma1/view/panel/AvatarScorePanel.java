@@ -40,7 +40,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 		if (playedGamesLabel != null)
 		{
 			playedGamesLabel.setText("Played: " + (player.getLostMatches() + player.getWonMatches()) + "     ");
-			wonGamesLabel.setText("Won: " + player.getWonMatches() + "    ");
+			wonGamesLabel.setText("Won: " + player.getWonMatches() + "   ");
 			lostGamesLabel.setText("Lost: " + player.getLostMatches() + "    ");
 			labelLevel.setText(player.getLevel().toString() + " ");
 		}
@@ -69,7 +69,7 @@ public class AvatarScorePanel extends JPanel implements Observer
 			scorePanel.setLayout(new GridBagLayout());
 			/* This is the real player not a robot. */
 			playedGamesLabel = new JLabel("Played:   " + playerData.getPlayedGames() + "    ");
-			wonGamesLabel = new JLabel("Won:   " + playerData.getWonGames() + "    ");
+			wonGamesLabel = new JLabel("Won:   " + playerData.getWonGames() + "   ");
 			lostGamesLabel = new JLabel("Lost:   " + playerData.getLostGames() + "    ");
 			labelLevel = new JLabel(playerData.getLevel().toString() + " ");
 			
