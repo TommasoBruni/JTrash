@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-10-14T09:31:15.159Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="fvHHOWDiKMw48xqAcsiI" version="22.0.2" type="device" pages="3">
+<mxfile host="Electron" modified="2023-10-14T11:11:56.187Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="udVgqVKPlO7uBC9iblwi" version="22.0.2" type="device" pages="3">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="View">
-    <mxGraphModel dx="1050" dy="621" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -174,18 +174,6 @@
             <mxRectangle x="10" y="280" width="100" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="SMRdPaCOJSe27qhVjgNf-47" value="CardButton" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="270" y="1218" width="520" height="420" as="geometry" />
-        </mxCell>
-        <mxCell id="SMRdPaCOJSe27qhVjgNf-48" value="- icon : ImageIcon&lt;br&gt;- currentCard : Card&lt;br&gt;- futureCard : Card&lt;br&gt;&lt;u&gt;- fileVerticalCard : String = &quot;carta_da_gioco_verticale.jpg&quot;&lt;br&gt;- fileHorizontalCard : String = &quot;carta_da_gioco_orizzontale.jpg&quot;&lt;br&gt;- fileVerticalCardForSuggestions : String = &quot;carta_da_gioco_verticale_per_suggerimento.jpg&quot;&lt;/u&gt;&lt;br&gt;- faceUp: boolean&lt;br&gt;- deckPosition : DeckPosition&lt;br&gt;- positionInTheField : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="SMRdPaCOJSe27qhVjgNf-47" vertex="1">
-          <mxGeometry y="26" width="520" height="144" as="geometry" />
-        </mxCell>
-        <mxCell id="SMRdPaCOJSe27qhVjgNf-49" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="SMRdPaCOJSe27qhVjgNf-47" vertex="1">
-          <mxGeometry y="170" width="520" height="8" as="geometry" />
-        </mxCell>
-        <mxCell id="SMRdPaCOJSe27qhVjgNf-50" value="+ CardButton (card : Card)&lt;br&gt;+ CardButton (card : Card, deckPosition : DeckPosition)&lt;br&gt;+ CardButton (card : Card, deckPosition : DeckPosition, positionInTheField : int)&lt;br&gt;+ paint (g: Graphics)&lt;br&gt;+ turn ()&lt;br&gt;+ changeCard (card: Card)&lt;br&gt;+ configureCardForFuture (futureCard : Card) : Card&lt;br&gt;+ setupFutureCard ()&lt;br&gt;+ setHintCard ()&lt;br&gt;+ restoreCardImage ()&lt;br&gt;+ isHintCard () : boolean&lt;br&gt;+ isFaceUpCard () : boolean&lt;br&gt;- setIconP (s : String)&lt;br&gt;+ getCard (): Card&lt;br&gt;+ getPositionInTheField () : int&lt;br&gt;+ reset ()&lt;br&gt;+ setBaseCard (card : Card)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="SMRdPaCOJSe27qhVjgNf-47" vertex="1">
-          <mxGeometry y="178" width="520" height="242" as="geometry" />
-        </mxCell>
         <mxCell id="SMRdPaCOJSe27qhVjgNf-51" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=-0.003;exitY=0.294;exitDx=0;exitDy=0;exitPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="SMRdPaCOJSe27qhVjgNf-48" target="BmwFRalXUi7RjEicNa1M-43" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="1070" y="1194" as="sourcePoint" />
@@ -194,9 +182,21 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="SMRdPaCOJSe27qhVjgNf-52" value="view.button" style="swimlane;startSize=20;horizontal=1;containerType=tree;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="250" y="1169" width="560" height="480" as="geometry">
+          <mxGeometry x="263" y="1150" width="560" height="488" as="geometry">
             <mxRectangle x="10" y="280" width="100" height="30" as="alternateBounds" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="SMRdPaCOJSe27qhVjgNf-47" value="CardButton" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="SMRdPaCOJSe27qhVjgNf-52" vertex="1">
+          <mxGeometry x="20" y="30" width="520" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="SMRdPaCOJSe27qhVjgNf-48" value="- icon : ImageIcon&lt;br&gt;- currentCard : Card&lt;br&gt;- futureCard : Card&lt;br&gt;&lt;u&gt;- fileVerticalCard : String = &quot;carta_da_gioco_verticale.jpg&quot;&lt;br&gt;- fileHorizontalCard : String = &quot;carta_da_gioco_orizzontale.jpg&quot;&lt;br&gt;- fileVerticalCardForSuggestions : String = &quot;carta_da_gioco_verticale_per_suggerimento.jpg&quot;&lt;/u&gt;&lt;br&gt;- faceUp: boolean&lt;br&gt;- deckPosition : DeckPosition&lt;br&gt;- positionInTheField : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="SMRdPaCOJSe27qhVjgNf-47" vertex="1">
+          <mxGeometry y="26" width="520" height="144" as="geometry" />
+        </mxCell>
+        <mxCell id="SMRdPaCOJSe27qhVjgNf-49" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="SMRdPaCOJSe27qhVjgNf-47" vertex="1">
+          <mxGeometry y="170" width="520" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="SMRdPaCOJSe27qhVjgNf-50" value="+ CardButton (card : Card)&lt;br&gt;+ CardButton (card : Card, deckPosition : DeckPosition)&lt;br&gt;+ CardButton (card : Card, deckPosition : DeckPosition, positionInTheField : int)&lt;br&gt;+ paint (g: Graphics)&lt;br&gt;+ turn ()&lt;br&gt;+ changeCard (card: Card)&lt;br&gt;+ configureCardForFuture (futureCard : Card) : Card&lt;br&gt;+ setupFutureCard ()&lt;br&gt;+ setHintCard ()&lt;br&gt;+ restoreCardImage ()&lt;br&gt;+ isHintCard () : boolean&lt;br&gt;+ isFaceUpCard () : boolean&lt;br&gt;- setIconP (s : String)&lt;br&gt;+ getCard (): Card&lt;br&gt;+ getPositionInTheField () : int&lt;br&gt;+ reset ()&lt;br&gt;+ setBaseCard (card : Card)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="SMRdPaCOJSe27qhVjgNf-47" vertex="1">
+          <mxGeometry y="178" width="520" height="262" as="geometry" />
         </mxCell>
         <mxCell id="BmwFRalXUi7RjEicNa1M-58" value="view.panel" style="swimlane;startSize=20;horizontal=1;containerType=tree;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="2" y="50" width="810" height="880" as="geometry">
