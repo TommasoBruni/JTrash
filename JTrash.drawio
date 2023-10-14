@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-10-14T11:11:56.187Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="udVgqVKPlO7uBC9iblwi" version="22.0.2" type="device" pages="3">
+<mxfile host="Electron" modified="2023-10-14T12:10:04.991Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="wBB5LqB_oJ0N72l5_sDf" version="22.0.2" type="device" pages="3">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="View">
-    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1036" dy="614" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -216,7 +216,7 @@
           <mxGeometry y="118" width="220" height="112" as="geometry" />
         </mxCell>
         <mxCell id="BmwFRalXUi7RjEicNa1M-36" value="CardsPanel" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="BmwFRalXUi7RjEicNa1M-58" vertex="1">
-          <mxGeometry x="351" y="304" width="450" height="350" as="geometry" />
+          <mxGeometry x="351" y="304" width="450" height="370" as="geometry" />
         </mxCell>
         <mxCell id="BmwFRalXUi7RjEicNa1M-37" value="- cards: CardButton&lt;br&gt;- relativeDeckPosition: DeckPosition&lt;br&gt;- playerController: PlayerController&lt;br&gt;- enemyDelayMs: long = 1000" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="BmwFRalXUi7RjEicNa1M-36" vertex="1">
           <mxGeometry y="26" width="450" height="62" as="geometry" />
@@ -225,7 +225,7 @@
           <mxGeometry y="88" width="450" height="8" as="geometry" />
         </mxCell>
         <mxCell id="BmwFRalXUi7RjEicNa1M-39" value="+ CardsPanel (deckPosition : DeckPosition, playerController : PlayerController)&lt;br&gt;- delayEnemyOperation ()&lt;br&gt;- restoreAllCardImage ()&lt;br&gt;- setupAllFutureCard ()&lt;br&gt;- setupCardsForHint (card: Card) : boolean&lt;br&gt;- enemyCardToTrash (card: Card)&lt;br&gt;- enemyOperation (card: Card)&lt;br&gt;- processForCardExchanging (c: CardButton)&lt;br&gt;- anyHintCard () : boolean&lt;br&gt;- getRightPosBasedOnDeck (val: Value) : int&lt;br&gt;- getRightPosBasedOnDeck (intValue: int) : int&lt;br&gt;- isVictory () : boolean&lt;br&gt;- cardsAlreadyCollected () : List&amp;lt;Card&amp;gt;&lt;br&gt;- horizontalSetup ()&lt;br&gt;- verticalSetup ()&lt;br&gt;- setupCards ()&lt;br&gt;+ reset ()&lt;br&gt;- initializeControllerEvents ()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="BmwFRalXUi7RjEicNa1M-36" vertex="1">
-          <mxGeometry y="96" width="450" height="254" as="geometry" />
+          <mxGeometry y="96" width="450" height="274" as="geometry" />
         </mxCell>
         <mxCell id="BmwFRalXUi7RjEicNa1M-27" value="DeckPanel" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="BmwFRalXUi7RjEicNa1M-58" vertex="1">
           <mxGeometry x="61" y="550" width="270" height="200" as="geometry" />
