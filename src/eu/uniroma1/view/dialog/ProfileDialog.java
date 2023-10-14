@@ -43,6 +43,7 @@ public class ProfileDialog extends JDialog
 	
 	/**
 	 * Profile dialog class builder
+	 * @param <T> the class and the interface that the ownerFrame implements
 	 * @param ownerFrame frame to make start the dialog
 	 */
 	public <T extends Frame & Enableable> ProfileDialog(T ownerFrame)

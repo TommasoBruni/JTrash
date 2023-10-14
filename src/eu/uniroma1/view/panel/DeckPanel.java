@@ -138,6 +138,7 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 		pickedCardSpace = new JPanel();
 		observable.addObserver(this);
 		firstCard = true;
+		trashSpace = new TrashPanel();
 		try 
 		{
 			cardToPickButton = new CardButton(FieldController.getInstance().nextCard(), DeckPosition.TOP);
@@ -155,7 +156,6 @@ public class DeckPanel extends JPanel implements Observer, Resettable
 					cardToPickEvent();
 				}
 			});
-			trashSpace = new TrashPanel();
 			pickedCardButton = new CardButton(FieldController.getInstance().nextCard());
 			pickedCardButton.turn();
 			pickedCardButton.setVisible(false);

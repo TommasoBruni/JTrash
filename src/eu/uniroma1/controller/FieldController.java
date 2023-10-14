@@ -117,10 +117,12 @@ public class FieldController extends Observable implements Resettable
 				   {
 				        case 2 -> new DeckBuilder()
 						.shuffle()
+						.preferredFirstCard(Card.SJ)
 						.build();
 				        default-> new DeckBuilder()
 				        .join(new DeckBuilder().build())
 						.shuffle()
+						.preferredFirstCard(Card.SJ)
 						.build(); 
 				   };
 	}

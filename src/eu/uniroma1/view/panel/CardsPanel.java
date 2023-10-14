@@ -187,9 +187,20 @@ public class CardsPanel extends JPanel implements Resettable
 		return;
 	}
 	
+	private boolean anyHintCard()
+	{
+		for (CardButton card : cards)
+			if (card.isHintCard())
+				return true;
+		return false;
+	}
+	
 	private void processForCardExchanging(CardButton c)
 	{
 		Card newCard, oldCard;
+		
+		if (c.isFaceUpCard() || (anyHintCard() && !c.isHintCard()))
+			return;
 		
 		try 
 		{

@@ -108,7 +108,30 @@ public class Deck implements Iterable<Card>
 				deck[j] = tmp;
 			}
 			return this;
-		} 
+		}
+		
+		/**
+		 * Allow to choose the first card of the deck
+		 * @param card card to set as first card.
+		 * @return a new deck builder with the first card set
+		 * to the wanted one.
+		 */
+		public DeckBuilder preferredFirstCard(Card card)
+		{
+			Card tmp;
+			
+			for (int i = 0; i < deck.length; i++)
+			{
+				if (card.equals(deck[i]))
+				{
+					tmp = deck[i];
+					deck[i] = deck[0];
+					deck[0] = tmp;
+					break;
+				}
+			}
+			return this;
+		}
 		
 		/**
 		 * Aggregate a new deck to the current one

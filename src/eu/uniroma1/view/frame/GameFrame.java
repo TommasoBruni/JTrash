@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -398,6 +400,7 @@ public class GameFrame extends JFrame implements Enableable, Observer, Resettabl
 		
 		/* Set frame visible */
 		setVisible(true);
+		
 		AudioManager.getInstance().loopPlay(System.getProperty("user.dir").concat("\\resources\\canzone_di_sottofondo.wav"));
 		FieldController.getInstance().addObserver(this);
 		FieldController.getInstance().getObservableForGameFinish().addObserver(observerVictory);

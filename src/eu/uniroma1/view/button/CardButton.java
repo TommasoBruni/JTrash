@@ -30,6 +30,7 @@ public class CardButton extends JButton implements Resettable
 	private static final String fileHorizontalCard = "carta_da_gioco_orizzontale.jpg";
 	private static final String fileVerticalCardForSuggestions = "carta_da_gioco_verticale_per_suggerimento.jpg";
 	private boolean faceUp;
+	private boolean hintCard;
 	private DeckPosition deckPosition;
 	private int positionInTheField;
 	
@@ -141,7 +142,17 @@ public class CardButton extends JButton implements Resettable
 	{
 		if (faceUp)
 			return;
+		hintCard = true;
 		setIconP(fileVerticalCardForSuggestions);
+	}
+	
+	/**
+	 * Check if it is set as hint card.
+	 * @return true if it is an hint card, otherwise false.
+	 */
+	public boolean isHintCard()
+	{
+		return hintCard;
 	}
 	
 	/**
@@ -151,6 +162,7 @@ public class CardButton extends JButton implements Resettable
 	{
 		if (faceUp)
 			return;
+		hintCard = false; 
 		setIconP(deckPosition == DeckPosition.ON_THE_LEFT || 
 				  deckPosition == DeckPosition.ON_THE_RIGHT ?
 				  fileHorizontalCard : fileVerticalCard);

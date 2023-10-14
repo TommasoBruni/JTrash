@@ -132,9 +132,9 @@ public class TrashPanel extends JPanel implements Resettable
 			/* Cannot happen, the game is creating right now */
 			e.printStackTrace();
 		}
-		Border bordoInterno = BorderFactory.createTitledBorder("Trash");
-		Border bordoEsterno = BorderFactory.createEmptyBorder(0, 5, 5, 5);
-		compoundBorder = BorderFactory.createCompoundBorder(bordoEsterno, bordoInterno);
+		Border internalBorder = BorderFactory.createTitledBorder("Trash");
+		Border externalBorder = BorderFactory.createEmptyBorder(0, 5, 5, 5);
+		compoundBorder = BorderFactory.createCompoundBorder(externalBorder, internalBorder);
 		
 		internalPanel = new JPanel();
 		internalPanel.setLayout(new GridBagLayout());
@@ -145,6 +145,7 @@ public class TrashPanel extends JPanel implements Resettable
 		
 		gbc.weightx = 0.01;
 		gbc.weighty = 0.01;
+		
 		internalPanel.add(discardedCardsButton, gbc);
 		internalPanel.setBackground(new Color(255, 255, 204));
 		
